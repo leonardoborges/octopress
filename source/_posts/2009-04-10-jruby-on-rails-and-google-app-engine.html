@@ -1,0 +1,17 @@
+--- 
+title: JRuby on Rails and Google App Engine
+excerpt: As many of you know the new language supported at GAE now is Java, as officially announced on their blog. As a Ruby/Rails developer you might not be interested on it but here is a reason you should be...
+date: 2009/04/10
+updated_at: 2009/04/10
+comments: true
+layout: post
+categories: 
+- Java
+- JRuby
+- Rails
+---
+
+<p>
+As many of you know the new language supported at <a href="http://code.google.com/appengine/" target="_blank">GAE</a> now is Java, as officially announced on their <a href="http://googleappengine.blogspot.com/2009/04/seriously-this-time-new-language-on-app.html" target="_blank">blog</a>. As a Ruby/Rails developer you might not be interested on it but here is a reason you should be: <a href="http://jruby.codehaus.org/" target="_blank">JRuby</a>.<br><br>It was only a matter of time until we saw some people deploying JRuby on Rails apps on GAE, like Ola Bini's <a href="http://olabini.com/blog/2009/04/jruby-on-rails-on-google-app-engine/" target="_blank">mini blog app</a>. Guess that was the first one really, as he was beta testing the service in secret. Google App Engine imposes a few catches to any java application deployed there and any JRuby app wouldn't be different. For instance, your Java API access is limited to <a href="http://code.google.com/appengine/docs/java/jrewhitelist.html" target="_blank">these classes - called JRE Class whitelist</a>.<br><br>As you can see on his blog, you don't need active record and in fact shouldn't even be loading that on your app.<br><br>I felt compelled to try it and the timing was perfect. I am currently developing a JRuby on Rails app at the company I work for and it was a perfect fit, since we are not using ActiveRecord. The reason is that we get the data we need from other sources, such as web services and even text files.<br><br>Ola Bini's tips were crucial here. He provides a small script you can use to prepare the jars you're sending to your app. Another important piece was the <a href="http://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Java" target="_blank">Google App Engine SDK for Java</a>. It ships with a server that emulates GAE's behaviour locally so you're less likely to have problems once you deploy it.<br><br>I did have a problem though with the number of files uploaded to my appspot. It's currently limited to 1000 - a thousand - and a Rails app can easily exceed this limit. So before deploying, remove anything that is not crucial: activerecord - you should've done it already - , all tests directories - including the ones inside gems your app needs in order to work, fixtures and etc.<br><br>After that it was rewarding seeing a custom JRuby On Rails application working perfectly on GAE. And as much as I'd like to, I can't really share the URL since it's a private app but I encourage people to try it. I believe GAE will ultimately help the community improve JRuby even more.<br><br>And as a last tip, this time thanks to <a href="http://akitaonrails.com/" target="_blank">Fabio Akita</a>, is <a href="http://gist.github.com/91684" target="_blank">this snippet</a>. You should redirect your log so you can debug your app form GAE's dashboard.<br><br>Have fun!
+</p>
+

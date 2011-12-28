@@ -1,0 +1,21 @@
+--- 
+title: Are you testing your javascript yet?
+excerpt: |-
+  What's the difference between your application's javascript code and its java/ruby/python/whatever code?
+  
+  Think about it for a second. Done? Well, the answer is: none!
+  
+  In today's web applications you...
+date: 2010/06/14
+updated_at: 2010/06/14
+comments: true
+layout: post
+categories: 
+- Javascript
+- Testing
+---
+
+<p>
+What's the difference between your application's javascript code and its java/ruby/python/whatever code?<br><br>Think about it for a second. Done? Well, the answer is: none!<br><br>In today's web applications your javascript code is no different from the rest of your code base but yet we treat it with disregard - and we're all to blame.<br><br>We often see developers investing time writing all sorts of automated tests around their code base but fail to do the same for their javascript -  and yet they get surprised when their client can't click on a button on their web app that depends on that ajax call that has been manually tested once when the page was first released.<br><br>Ask yourself this question if you're not sure if you should be testing your javascript: If it breaks, can my users still benefit from my app? - I think the answer for most web apps is obvious.<br><br>As for tools, I can only speak of two, <a href="http://code.google.com/p/js-test-driver/" target="_blank">JsTestDriver</a> and <a href="http://github.com/nkallen/screw-unit" target="_blank">screw-unit</a>, the latter being the one we're using in my current project at <a href="http://www.thoughtworks.com" target="_blank">ThoughtWorks</a>.<br><br>What I liked about screw-unit is that it's very easy to get it up and running. Being a Behavior-Driven Testing Framework it's not surprising it has a syntax similar to <a href="http://rspec.info/" target="_blank">Rspec</a> -which I prefer over JsTestDriver's similarity to <a href="http://www.junit.org/" target="_blank">JUnit's</a>.<br><br><script src="https://gist.github.com/790871.js?file=gistfile1.js"></script> This is how a test written with screw-unit could look like:  <script src="https://gist.github.com/790873.js?file=gistfile1.js"></script><br><br>Not too bad for a javascript test suite huh?<br><br>So the next time you write a javascript line of code, how about writing a test for it? Consider using screw-unit as your tool but if you have been writing tests using a different framework and you're happy with it, share your experience.<br>I'm always keen to learn better ways of doing what I do.<br><br>Cheers!
+</p>
+

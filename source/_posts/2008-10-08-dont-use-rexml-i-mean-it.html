@@ -1,0 +1,19 @@
+--- 
+title: Don't use REXML. I mean it.
+excerpt: |-
+  REXML is the standard XML processing library for Ruby. It's on Ruby's core and is terribly slow.
+  
+  Yeah, I know it's pretty simple to use, got a nice interface and, again, it's just there. And it is a ...
+date: 2008/10/08
+updated_at: 2008/10/08
+comments: true
+layout: post
+categories: 
+- Rails
+- Ruby
+---
+
+<p>
+<a href="http://www.germane-software.com/software/rexml/">REXML</a> is the standard XML processing library for Ruby. It's on Ruby's core and is terribly <strong>slow</strong>.<br><br>Yeah, I know it's pretty simple to use, got a nice interface and, again, it's just there. And it is a good library, for most things. But if you, as me, came to a point that processing XML is taking 50% of the time to render a rails action, it's time to change.<br><br>My tip? Use <a href="http://libxml.rubyforge.org/">libxml</a> instead. The numbers on their home page speak for themselves. Try it yourself, you won't be disappointed. And I'm really happy with the performance increase on our app.
+</p>
+

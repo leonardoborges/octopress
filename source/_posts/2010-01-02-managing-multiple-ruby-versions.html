@@ -1,0 +1,16 @@
+--- 
+title: Managing multiple ruby versions
+excerpt: "Today I read a nice post - in Portuguese - by F\xC3\xA1bio Akita on how to manage multiple ruby versions on your machine. I've tried it once with some tool I can't even remember the name but failed miserably..."
+date: 2010/01/02
+updated_at: 2010/01/02
+comments: true
+layout: post
+categories: 
+- JRuby
+- Ruby
+---
+
+<p>
+Today I read a nice <a href="http://akitaonrails.com/2010/01/01/limpando-meu-ambiente-de-desenvolvimento" target="_blank">post</a> - in Portuguese - by <a href="http://akitaonrails.com/" target="_blank">Fábio Akita</a> on how to manage multiple ruby versions on your machine. I've tried it once with some tool I can't even remember the name but failed miserably.<br><br>But this time things look very different. The tool here is the <a href="http://rvm.beginrescueend.com" target="_blank">rvm</a> - short for Ruby Version manager - and it works just great.<br><br>Let's cut to the chase and imagine that you, like me, want to run/develop/test your code on both ruby 1.8.7 and ruby 1.9.1. These steps would get you up and running in a few minutes:<br><br><strong>Install rvm:</strong><br><pre lang="bash"><br>$ gem sources -a http://gemcutter.org/<br>$ gem install rvm<br>$ rvm-install<br>$ echo "if [[ ! -z $HOME/.rvm ]] ; then source $HOME/.rvm ; fi" >> ~/.bash_profile<br>$ source ~/.rvm/scripts/rvm<br></pre><br><br><strong>Install the ruby interpreters you want to use:</strong><br><pre lang="bash"><br>$ rvm  install ruby-1.8.7-p160<br>$ rvm  install ruby-1.9.1<br></pre><br><br>Now it's important to notice that at this point you have separate gem installations for each of the interpreters you've installed in the previous step. That said, just go ahead and switch between your interpreters and use your command line scripts - ruby, gem, etc... - as usual.<br><br><strong>Switching between interpreters:</strong><br><pre lang="bash"><br>$ rvm ruby-1.8.7-p160  #switch to the specified version <br>$ ruby -v<br>ruby 1.8.7 (2009-04-08 patchlevel 160) [i686-darwin9.8.0]<br>$ gem install rails  #note I'm not using sudo since the new gem paths point to the user's home directory <br><br>$ rvm ruby-1.9.1  #switch to the specified version <br>$ ruby -v<br>ruby 1.9.1p376 (2009-12-07 revision 26041) [i386-darwin9.8.0]<br>$ gem install rails  #note I'm not using sudo since the new gem paths point to the user's home directory<br></pre><br><br>And that's it, just go on and install rails, merb, sinatra or whatever rocks your boat!<br>rvm will work with MRI/YARV, JRuby, Ruby EE and Rubinius. Enjoy and don't forget to check <a href="http://rvm.beginrescueend.com" target="_blank">rvm</a>'s website for the complete documentation! :) 
+</p>
+

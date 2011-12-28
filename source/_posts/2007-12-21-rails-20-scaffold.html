@@ -1,0 +1,19 @@
+--- 
+title: "Rails 2.0: Scaffold"
+excerpt: |-
+  Following the Rails 2.0 hype, I've been playing around with it and decided to share a first impression: Scaffolding is gone!
+  
+  But wait, before you knock your head against the wall, let me tell you som...
+date: 2007/12/21
+updated_at: 2007/12/21
+comments: true
+layout: post
+categories: 
+- Rails
+- Ruby
+---
+
+<p>
+Following the Rails 2.0 hype, I've been playing around with it and decided to share a first impression: Scaffolding is gone!<br><br>But wait, before you knock your head against the wall, let me tell you something: I lied :)<br><br>Scaffolding is not really gone. It's just changed a bit.<br><br>How can I tell? Well, as a good developer I thought: "I'll just create a scaffold with the new version and see what's different"<br><br>I fired up a terminal, created a news rails application and generated a new model:<br><br><strong><code>$ script/generate model Contact name:string email:string</code></strong> - yes you can do this in rails 2.0, and these fields get into your model's migration!<br><br>Now the I have a new model, it's time for a controller to manage it:<br><br><strong><code>$ script/generate controller Contacts</code></strong><br><br>So your controller would look something like this huh?<br><br><strong><code>class ContactsController &lt; ApplicationController<br>scaffold :contact<br>end</code></strong><br><br>Well, too bad! The method scaffold is gone from ActionController::Base! And I'm not lying this time!<br><br>Now that the dynamic scaffold is gone, we're left with the static one.<br>Ok, let's try it then:<br><br><strong><code>$ script/generate scaffold contact</code></strong><br><br>And it won't work again! ;) At the end of the output, you will get something like this:<br><br><code>Another migration is already named create_contacts: db/migrate/001_create_contacts.rb</code><br><br>It really means that if your model is meant to be used by a scaffold, you better generate it in the same line. It will fail, afaik, if the model previously existed. Destroy yout model and controller, and execute the following:<br><br><strong><code>$ script/generate scaffold Contact name:string email:string</code></strong><br><br>Done! Just run your migrations, startup your server and your new scaffold in rails 2.0 will be working gracefully!<br><br>It took me a while to discover this changes because I didn't find it well documented. But maybe I was not looking in the right places. :)
+</p>
+

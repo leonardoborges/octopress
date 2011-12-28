@@ -1,0 +1,55 @@
+---
+date: 2011-10-12
+excerpt: Last Tuesday we held ThoughtWorks' Australia first Clojure meetup here in Sydney. It was a lot of fun so I thought I'd share a few words about it.
+comments: true
+layout: post
+publish: true
+categories:
+- ThoughtWorks
+- clojure
+title: "Report: Clojure Meetup #1"
+---
+
+<p>Last Tuesday we held ThoughtWorks' Australia first Clojure meetup here in Sydney. It was a lot of fun so I thought I'd share a few words about it.</p>
+
+<p>The format was rather simple. First, we had a brief introduction to the language syntax by breaking down a couple of snippets and understanding how each bit worked. For instance, this is one of those snippets:</p>
+
+``` clojure
+;;word count
+(reduce #(if (%1 %2)
+              (assoc %1 %2 (inc (%1 %2)))
+              (assoc %1 %2 1))
+{}
+(clojure.string/split "Clojure 101 - this is is gonna be be great great great" #"\s"))
+```
+
+<p>The cool thing here is that a simple example like this can show quite a few things about Clojure's syntax:</p>
+
+<ul>
+  <li><a href="http://en.wikipedia.org/wiki/Polish_notation">Polish notation</a> - this is really the first thing you need to get used to</li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/fn">Anonymous functions</a></li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/hash-map">The hash map literal and how to use it as a function</a></li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/re-pattern">Regular expressions</a></li>
+</ul>
+
+<p>After this brief discussion about Clojure's API, we split up in pairs to solve a simple <a
+    href="http://projecteuler.net/problem=1">problem</a> from <a href="http://projecteuler.net/">Project Euler</a>:</p>
+
+<p><i>Add all the natural numbers below one thousand that are multiples of 3 or 5.</i></p>
+
+<p>It's the easiest on the site so it allowed us to focus entirely on the language. My first thought was to implement it in an imperative way,
+but that wouldn't really teach me anything new so Kurman - the colleague I was pairing with - and I came up with this solution, which I really like:</p>
+
+``` clojure
+(reduce #(if (or (= (rem %2 3) 0) (= (rem %2 5) 0)) (+ %1 %2)
+           %1)
+      0
+      (take 1000 (iterate inc 0)))
+```
+
+<p>A simple, concise solution that demanded a functional approach. It allowed us to explore Clojure's APIs and concepts such as lazyness through the use of an
+  <a href="http://en.wikibooks.org/wiki/Clojure_Programming/Examples/Cookbook#Infinite_Sequences">infinite sequence</a>. Fun :)</p>
+
+<p>I created a <a href="https://github.com/leonardoborges/twoz-clojure-meetup">github repository</a> to host this and upcoming solutions from our group. Feel free to browse around.</p>
+
+<p>Can't wait for our next meetup, when we'll hack on <a href="http://overtone.github.com/">Overtone</a>!</p>

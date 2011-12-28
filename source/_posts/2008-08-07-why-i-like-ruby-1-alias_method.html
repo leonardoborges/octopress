@@ -1,0 +1,19 @@
+--- 
+title: "Why I like Ruby #1: alias_method"
+excerpt: |-
+  So you found yourself in the need to override a method but still count on it's old behaviour?
+  
+  No problem! Override it with your new code, call super and.... Uh oh!! Suddenly this turned into a proble...
+date: 2008/08/07
+updated_at: 2008/08/07
+comments: true
+layout: post
+categories: 
+- Ruby
+- Why I Like Ruby
+---
+
+<p>
+So you found yourself in the need to override a method but still count on it's old behaviour?<br><br>No problem! Override it with your new code, call <strong>super</strong> and.... Uh oh!! Suddenly this turned into a problem... Let me give some more context.<br><br>I was testing <a href="http://ferret.davebalmain.com/trac/wiki">Ferret</a> (and the <a href="http://projects.jkraemer.net/acts_as_ferret/">acts_as_ferret</a> plugin) in a project to provide full text search capabilities to our models. One of the things the plugin does is to add a new method to ActiveRecord, called <em>find_with_ferret</em>. That way, every model can use it. Great!<br><br>So I thought that would make sense for me to remove all <a href="http://en.wikipedia.org/wiki/Diacritics">diatrictics</a> from the input text before letting ferret do its job. You know, like removing <a href="http://en.wikipedia.org/wiki/Umlaut_%28diacritic%29">umlauts</a> and all that.<br><br>I could do that by overriding this method with code to remove the undesired chars and then call its older version to finally do the search - something like calling super, but not quite. And I didn't want my models to inherit from anything else than ActiveRecord::Base. That wouldn't make any sense.<br><br><a href="http://www.ruby-doc.org/core/classes/Module.html#M000395">alias_method</a> to the rescue!<br><br>You know that to redefine a method in an existing class you can open it up and rewrite it. But since you don't wanna loose the behaviour provided by the original method, this is how you can achieve this:<br><br><pre lang="ruby" line="1"><br>module ActiveRecord<br>  class Base<br>    alias_method :find_with_ferret_original, :find_with_ferret<br><br>    def find_with_ferret(q, options = {}, find_options = {})<br>      remove_diatrictics!(q)<br>      find_with_ferret_original(q, options, find_options)<br>    end<br>  end<br>end<br></pre><br><br>And you're good to go. On line 3 you're just giving the original method an alias, making a copy of it.<br><br>Then you redefine it the way you like and on line 6 you call the old version to make sure u still got the same behaviour.  <br>Now all my models can benefit of this change without requiring them to call another method nor inherit from another class.<br><br>Cool, huh? :)
+</p>
+

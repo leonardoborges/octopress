@@ -1,0 +1,16 @@
+--- 
+title: "Rails 2.0: XML data type and DB2"
+excerpt: "[2008/04/30] Update: The ibm_db gem has been updated to support the new Rails 2.0 style migration. Now you can just use t.xml and it will work. Look here for more info. Thanks to Mario Briggs for poin..."
+date: 2008/01/02
+updated_at: 2008/01/02
+comments: true
+layout: post
+categories: 
+- Rails
+- Ruby
+---
+
+<p>
+<strong>[2008/04/30] Update:</strong> The ibm_db gem has been updated to support the new Rails 2.0 style migration. Now you can just use t.xml and it will work. Look <a href="http://rubyforge.org/forum/forum.php?forum_id=24055">here</a> for more info. Thanks to Mario Briggs for pointing me to the update.<br><br>---<br><br>In my new job we work with XML data natively stored on DB2. I have done some test with Rails and DB2 a few weeks ago and it's pretty interesting, specially the easiness that Rails deals with XML.<br><br>We decided to test some new features of DB2 9.5 and I decided to test them with Rails 2.0.<br><br>So I created a new Rails app, configured the database.yml to use the <a href="http://db2onrails.com/2007/10/17/ibm_db-gem-updated-to-090/">idm_db</a> gem and fired:<br><br><code>$ rake db:create</code><br><br>The output is nice but, the database isn't there! I suppose it's something with the gem that needs to be updated. But really don't know about it. It just doesn't work. But this will not hold us down. I will just create the database by hand and keep going with my tests.<br><br>After that, I created a new model <em>XmlDocument,</em> which has a column named <em>data</em>, of type XML. According to the new migrations syntax, my model's migration would look something similar with this:<br><br><code>class CreateXmlDocuments &lt; ActiveRecord::Migration<br>def self.up<br>create_table :xml_documents do |t|<br>t.xml :data<br>t.timestamps<br>end<br>end</code><br><br>def self.down<br>drop_table :xml_documents<br>end<br>end<br><br>Right? Ok, I fired up a terminal and lauched:<br><br><code>$ rake db:migrate</code><br><br>The output? Here it is:<br><br><code>== 3 CreateXmlDocuments: migrating ============================================<br>-- create_table(:xml_documents)<br>rake aborted!<br>undefined method `xml' for #<br></code><br><br>Yes, a big nice exception! The new migration syntax doesn't allow you to do <em>t.xml</em>! But please don't ask me why! :p<br>The solution? Well, although it's weird - imo - , it's also easy. You can mix the new and the old syntax in the same file. So our model's  migration  will now look like this:<br><br><code>class CreateXmlDocuments &lt; ActiveRecord::Migration<br>def self.up<br>create_table :xml_documents do |t|<br>t.column  :data, :xml<br>t.timestamps<br>end<br>end</code><br><br>def self.down<br>drop_table :xml_documents<br>end<br>end<br><br>And that's it! We're ready to go! I didn't find anything else different so far, besides what I described here. Hope this helps!
+</p>
+

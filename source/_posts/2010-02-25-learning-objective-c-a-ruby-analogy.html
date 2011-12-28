@@ -1,0 +1,20 @@
+--- 
+title: "Learning Objective-C: a Ruby analogy"
+excerpt: |-
+  Learning new programming languages is fun. And if it's your 2nd, 3rd...Nth programming language you will eventually look for features you already know and love.
+  
+  Coming from Ruby - but after having do...
+date: 2010/02/25
+updated_at: 2010/02/25
+comments: true
+layout: post
+categories: 
+- Objective-C
+- Programming
+- Ruby
+---
+
+<p>
+Learning new programming languages is fun. And if it's your 2nd, 3rd...Nth programming language you will eventually look for features you already know and love.<br><br>Coming from Ruby - but after having done my fair amount of Java for many years, among other things - I end up looking for features like <a href="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/" target="_blank">blocks</a>, <a href="http://rubylearning.com/satishtalim/ruby_open_classes.html" target="_blank">open classes</a> and syntax sugar like <a href="http://ruby-doc.org/core/classes/Module.html#M001681" target="_blank">automatic generation of attribute accessors.</a> These are hard to let go of.<br><br>Having decided to learn <a href="http://developer.apple.com/Mac/library/documentation/Cocoa/Conceptual/ObjectiveC/index.html" target="_blank">Objective-C</a> recently, I was delighted to find out that all of these are available - for better or for worse - and wanted to share this analogy with its Ruby counterparts.<br><br><strong>- Attribute accessors</strong><br><br><br>In ruby, this class definition<br><br><script src="https://gist.github.com/790881.js?file=gistfile1.rb"></script><br><br>implements for you the getters and setters of the instance variable <strong>name</strong>.<br><br><br>In Objective-C, the combination of the @property and @synthesize directives provides you with roughly the same result:<br><br><script src="https://gist.github.com/790882.js?file=gistfile1.m"></script><br><br>Now the compiler is responsible for writing those getters/setters for you.<br><br><strong>- Open classes & blocks</strong><br><br><br>Blocks in ruby are the structures that allow you to - among other things - iterate over arrays like this:<br><br><script src="https://gist.github.com/790883.js?file=gistfile1.rb"></script><br><br>Objective-C doesn't have an 'each' method in its root array class (NSArray) but since it does support blocks and open classes, you could just write it yourself:<br><br><script src="https://gist.github.com/790884.js?file=gistfile1.m"></script><br><br>Yes, I know the syntax isn't appealing, but using it in your program is a bit better:<br><br><script src="https://gist.github.com/790886.js?file=gistfile1.m"></script><br><br>Given the syntactic differences, the code above is very similar to its ruby counterpart. Iterating over an array is just one of the many things blocks are useful for. Others might include dealing with files, network sockets etc...<br><br>Blocks are powerful structures and are not created everyday, but it's nice to know that you can resort to them when the time comes. ;)<br>
+</p>
+

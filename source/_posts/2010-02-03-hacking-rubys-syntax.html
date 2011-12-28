@@ -1,0 +1,22 @@
+--- 
+title: Hacking Ruby's Syntax
+excerpt: |-
+  What?
+  
+  In Ruby you have basically two ways of defining private methods:
+  
+  
+  
+  I see a small problem with both approaches. In the first one, and the most obvious, is that you need to duplicate the method ...
+date: 2010/02/03
+updated_at: 2010/02/03
+comments: true
+layout: post
+categories: 
+- Ruby
+---
+
+<p>
+<strong>What?</strong><br><br>In Ruby you have basically two ways of defining private methods:<br><br><script src="https://gist.github.com/791025.js?file=test.rb"></script><br><br>I see a small problem with both approaches. In the first one, and the most obvious, is that you need to duplicate the method name as well as add an extra method call - private - just to change its visibility.<br><br>The second approach avoids this but adds the risk of accidentally putting a method that is intended to be public under the private section of the source file, which can render an annoying debugging session.<br><br><strong>Why?</strong><br><br>Personally, I like to have a <a href="http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/" target="_blank">smooth reading flow in my source files</a>. That means that if the public method_a makes use of the private method_b, I want method_b defined right below its caller, which is possible - but verbose - using the private method call:<br><br><script src="https://gist.github.com/791026.js?file=test.rb"></script><br><br>But can be somewhat harder to accomplish if you decide to split your source file in sections:<br><br><script src="https://gist.github.com/791028.js?file=test.rb"></script><br><br>I wanted to be able to define a private method with a single reserved keyword...<br><br><strong>How?</strong><br><br>What if I could define a private method using this new syntax:<br><br><script src="https://gist.github.com/791029.js?file=test.rb"></script><br><br>It turns out I can.<br><br>Notice the <strong>def_p</strong> keyword? This is a new keyword I created by changing ruby's parser and that behaves mostly like the <strong>def</strong> keyword, except that it defines a private method instead.<br><br>If you wanna read the code that allows this behavior and try it yourself, <a href="http://www.leonardoborges.com/writings/wp-content/uploads/2010/02/def_p_extension.diff">download the patch I wrote</a> and apply it to the ruby source code - I patched version <strong>1.9.1-p376</strong>.<br><br>After applying the patch, just build ruby as usual:<br><br><script src="https://gist.github.com/791031.js?file=gistfile1.eclass"></script><br><br>And then try running this script:<br><br><script src="https://gist.github.com/791033.js?file=test.rb"></script><br><br>You should see the following output:<br><br><script src="https://gist.github.com/791034.js?file=gistfile1.eclass"></script><br><br>Happy hacking :)
+</p>
+

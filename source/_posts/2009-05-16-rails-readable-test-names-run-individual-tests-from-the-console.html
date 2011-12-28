@@ -1,0 +1,25 @@
+--- 
+title: "Rails' readable test names: run individual tests from the console"
+excerpt: |-
+  As you probably know, since rails 2.1 you can write test methods in the following format:
+  
+  
+  test "hotel should return its permalink" do
+    #your test code here
+  end
+  
+  
+  Which is great, as the test name be...
+date: 2009/05/16
+updated_at: 2009/05/16
+comments: true
+layout: post
+categories: 
+- Rails
+- Ruby
+---
+
+<p>
+As you probably know, since rails 2.1 you can write test methods in the following format:<br><br><pre lang="ruby"><br>test "hotel should return its permalink" do<br>  #your test code here<br>end<br></pre><br><br>Which is great, as the test name becomes much more clear. But you can't simply run this test easily from the command line. You'd have to run something like:<br><br><pre lang="bash"><br>$ ruby your_test_file.rb -n test_hotel_should_return_its_permalink<br></pre><br><br>It annoys me. And it's not practical either to make the test fail just so you can get the test's real name.<br>I wanted to be able to just copy and paste the readable name in the console and have Test::Unit do the conversion and run it for me, like this:<br><br><pre lang="bash"><br>$ ruby your_test_file.rb -n "hotel should return its permalink"<br></pre><br><br>So I created <a href="http://github.com/leonardoborges/readable_test_names_runner/tree/master" target="_blank">readable_test_names_runner</a>. It's a tiny rails plugin that adds this feature for you.<br><br>Enjoy.
+</p>
+

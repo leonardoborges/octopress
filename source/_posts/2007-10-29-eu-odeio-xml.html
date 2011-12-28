@@ -1,0 +1,17 @@
+--- 
+title: Eu odeio XML
+excerpt: "Isso \xC3\x83\xC2\xA9 um fato. Cada linha de XML que eu escrevo me faz pensar em formas de evita-las. E isso n\xC3\x83\xC2\xA3o \xC3\x83\xC2\xA9 simples.\n\n\
+  Ultimamente, desde o Java 5, tem se trocado o XML pelas annotations. T\xC3\x83\xC2\xA1 bom, fica boni..."
+date: 2007/10/29
+updated_at: 2007/10/29
+comments: true
+layout: post
+categories: 
+- Java
+- Spring
+---
+
+<p>
+Isso Ã© um fato. Cada linha de XML que eu escrevo me faz pensar em formas de evita-las. E isso nÃ£o Ã© simples.<br><br>Ultimamente, desde o Java 5, tem se trocado o XML pelas <a href="http://http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html" title="Java Annotations">annotations</a>. TÃ¡ bom, fica bonitinho nÃ©? AtÃ© que fica. Em alguns casos, atÃ© mais organizado. O <a href="http://www.hibernate.org/hib_docs/annotations/reference/en/html_single/" title="Hibernate Annotations">Hibernate</a> desde a versÃ£o 3 faz uso das <a href="http://java.sun.com/javaee/overview/faq/persistence.jsp" title="Java Persistence API">annotaions da JPA</a> como alernativa ao seu XML de configuraÃ§Ã£o. E esse sim Ã© um belo caso de sucesso!<br><br>SÃ£o apenas algumas anotaÃ§Ãµes na classe para mapea-la e pronto, adeus xml! Mas como sempre, as anotaÃ§Ãµes jÃ¡ estÃ£o sendo exageradas por aÃ­. Basta decidir configurar uns 3 frameworks - e provavelmente dois deles sÃ£o descenessÃ¡rios no seu projeto - usando anotaÃ§Ãµes e as suas classes ficarÃ£o uma zona! E muito mais ilegÃ­veis que um arquivo XML!<br><br>As anotaÃ§Ãµes sÃ£o recursos muito poderosos e devem ser usadas de forma consciente. Use as que realmente valem a pena, como as que vou falar agora, que fazem parte da nova release do Spring framework, a <a href="http://www.springframework.org/node/548" title="Spring 2.5 rc1">2.5 RC1</a>. <!--more--><br><br>O Spring Ã© - dentre outras coisas - um dos mais falados containeres de injeÃ§Ã£o de dependÃªncia nos dias de hoje. Esse mecanismo sempre funcionou da seguinte forma:<br><br>Imagine uma classe que atua como um <em>faÃ§ade</em>, digamos LocadoraFacade, que declara dependencia de um objeto DAO:<br><br>[java]<br>public class LocadoraFacade {<br>private DAO dao;<br>public void setDao(){}<br><br>public void incluirDvd(Dvd dvd){}<br>}<br>}<br>[/java]<br><br>No xml de configuraÃ§Ã£o do Spring, eu teria 2 beans registrados:<br>[xml]<br><bean id="locadoraFacade" class="com.leonardoborges.LocadoraFacade"></bean><br><br><property name="dao"><ref bean="dao"></ref></property><bean id="dao" class="com.leonardoborges.BaseDao"></bean><br>[/xml]Lindo nÃ£o? Agora multiplique essas entradas pelo nÃºmero de beans que vocÃª normalmente tem numa aplicaÃ§Ã£o. E nÃ£o esqueÃ§a das dependÃªncias de cada um desses beans. Imaginou?<br><br>Isso mesmo! Eca!<br><br>Existem formas de dar uma simplificada nesse XML, mas vou focar na forma que mais gosto, as novas anotaÃ§Ãµes @Component, @Autowired e @Qualifier. Com essas anotaÃ§Ãµes, seu arquivo de configuraÃ§Ã£o cai de centenas para apenas algumas linhas de XML! Vale a pena dar uma pesquisada, ou aguardar meu prÃ³ximo post, onde darei mais detalhes de como essas anotaÃ§Ãµes funcionam no contexto Spring.
+</p>
+

@@ -1,0 +1,19 @@
+--- 
+title: Passenger (mod_rails) and problems with custom Apache installation
+excerpt: |-
+  This week we started to test mod_rails in a couple of projects where I work on. One in production.
+  
+  Of course it's too early for any conclusions, but I just wanted to share a couple of problems you mi...
+date: 2008/06/07
+updated_at: 2008/06/07
+comments: true
+layout: post
+categories: 
+- Rails
+- Ruby
+---
+
+<p>
+This week we started to test <a href="http://www.modrails.com/">mod_rails</a> in a couple of projects where I work on. One in production.<br><br>Of course it's too early for any conclusions, but I just wanted to share a couple of problems you might find when the installer tries to compile the Apache module.<br><br>In our case, and I believe it is the case of many servers out there, we have a custom Apache installation, what makes the installer not find it and/or not find the Apache Portable Runtime (APR) sometimes.<br><br>The first one is easy and is documented <a href="http://www.modrails.com/documentation/Users%20guide.html#specifying_correct_apache_in">here</a>. You just seed to export the following environment variable, pointing to your apache installation:<br><pre><tt><tt>export APXS2=/opt/apache2/bin/apxs<br></tt></tt></pre><br>The second one is a bit tricky but it happened only when I tried to install passenger in another server that had CentOS. In this case, you will also need the following environment variable, pointing to your Apache APR config:<br><pre>export APR_CONFIG=/usr/local/apache2/bin/<span class="nfakPe">apr</span>-1-config</pre><br>It took me a fair amount of time googling around to find this answer, so I hope it'll be useful for someone. :)
+</p>
+

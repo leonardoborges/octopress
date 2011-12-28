@@ -1,0 +1,21 @@
+--- 
+title: Final classes are evil
+excerpt: |-
+  Update: Go ahead and read this post in its entirety - including the comments. Then, read my other post where I expand the subject a little more. 
+  
+  --
+  
+  Every now and then I still do some Java coding. A...
+date: 2009/03/17
+updated_at: 2009/03/17
+comments: true
+layout: post
+categories: 
+- Architecture
+- Java
+---
+
+<p>
+<strong>Update:</strong> Go ahead and read this post in its entirety - including the comments. Then, read my other <a href="http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/">post where I expand the subject a little more</a>. <br><br>--<br><br>Every now and then I still do some Java coding. And I actually like it. I spent several years of my career developing primarily in Java and am very keen about the language.<br><br>I've been a fierce defender of it these days, specially with the wave of popularity of other languages such as Ruby and Groovy. But I must say that for the 1st time - actually the 2nd - I got pissed off at Java.<br><br>The reason? Final classes!<br><br>How arrogant of someone to say: "And from now on you shall not subclass my classes!"<br><br>Er.... Why?!?! I'm yet to find a good reason in favor of it. But I can share 2 that made me be completely against it. - I never actually liked it but it just didn't bother me that much in the past.<br><br>The first one happened while I was adding PostgreSQL XML support to <a href="http://hibernate.org/">Hibernate</a>. The basic idea is that the XML data type should behave mostly as a string, with the exception of the saving and loading operations.<br><br>The thing is, the String data type in Hibernate is declared final. So you cannot share behavior unless you copy and paste it. How smart.<br><br>And the second is in the testing area. We all love testing. And we all love mocking external dependencies so we can test our code in isolation and fast. Well, I hope your code doesn't depend on the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/net/URL.html">URL</a> class then.<br><br>It is declared final so you just can't mock it. Mocking frameworks like <a href="http://www.easymock.org/">easyMock</a> use subclassing to create your dependencies mock objects and obviously it doesn't work here.<br><br>Yeah yeah, of course you can refactor your code so it depends on an interface/class that wraps your URL class and then you can switch implementations. But just how stupid is that? Programming to interfaces makes sense, but not everywhere. Specially not when you're using a low level class like this one.<br><br>So please, software developers, architects and the like, design your systems for extensibility and stop being presumptuous.<br><br>P.S.: There is a testing framework called <a href="https://jmockit.dev.java.net/">jMockit</a> which uses instrumentation (Java 5+) to redefine methods in runtime so you can mock final classes. It works, but should we really be playing that much with the java class loader just so we can "easily" test our code?
+</p>
+

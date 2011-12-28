@@ -1,0 +1,19 @@
+--- 
+title: "Google IO: Thoughtworks on GAE"
+excerpt: |-
+  I've just watched a video from Google IO where Martin Fowler and Rebecca Parsons went through some of the aspects that involves the development of an application for the cloud - focusing on the JVM.
+  
+  ...
+date: 2009/06/22
+updated_at: 2009/06/22
+comments: true
+layout: post
+categories: 
+- Java
+- JRuby
+---
+
+<p>
+I've just watched a <a href="http://www.youtube.com/watch?v=-4fA_UciDaA">video</a> from <a href="http://code.google.com/events/io/">Google IO</a> where <a href="http://code.google.com/events/io/">Martin Fowler</a> and Rebecca Parsons went through some of the aspects that involves the development of an application for the cloud - focusing on the JVM.<br><br>In terms of the Google App Engine, you don't have access to a relational database, thing I found out <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">when I first tried it</a>.  Instead you get a <a href="http://labs.google.com/papers/bigtable.html">Big Table</a>.<br><br>Martin put out a good analogy and you can just think of it as a nested hash map. It's certainly a shift on how we think these days, but layers of abstraction like google's DataStore and the Java Persistence API will help in the transition.<br><br>Another interesting bit about the presentation was on how concurrency works on GAE.<br><br>Essentially, in an standard Java application you have a single memory space where you have at least one running thread. You can create threads on the fly, which will share the same memory space, thus making it easy to share data.<br><br>On the app engine, things work differently. What you have are separate memory spaces with a single thread on each one. Any attempt to create a new thread will result in an exception. The solution for sharing information in this case? Use the nested hash map (big table).<br><br>Now, whereas you might not be worried about this since your application doesn't span any threads, as well pointed by Martin Fowler, it's the code you don't see that you need to be careful with. Any Java application uses a number of 3rd party libraries that might span out threads of their own, which will result in your application blowing up.<br><br>That rang a bell. Again, back when <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">I was trying the app engine</a>, one of the configuration bits shared by <a href="http://olabini.com/blog/2009/04/jruby-on-rails-on-google-app-engine/">Ola Bini</a> looked like this:<br><pre>   config.webxml.jruby.min.runtimes = 1<br>   config.webxml.jruby.max.runtimes = 1<br>   config.webxml.jruby.init.serial = true</pre><br><br>I think the properties are pretty much self-explanatory but I didn't quite understand the reason for setting it back then.<br><br>If you happen to have bigger values for the number of runtimes you want, you need to set the serial property to true, otherwise JRuby will span several threads to create the runtimes.<br><br>This is a really good example of things that might fail whether you're migrating or developing a new app to deploy on the App Engine. Luckily for us, JRuby has a smart and neat way to handle this - the configuration I've just shown, but most of the libraries out there that might rely on threads are not prepared.<br><br>Martin and Rebecca's opinion on this is that new releases of these same libraries will start to take it into account, since a bigger adoption of the Cloud seem to be on the way.<br><br>Make sure you watch the video. I certainly left a lot of interesting stuff out.
+</p>
+

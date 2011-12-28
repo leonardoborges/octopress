@@ -1,0 +1,19 @@
+--- 
+title: OpenID
+excerpt: |-
+  I think I've been really lucky lately. In my new job I'm getting to work with many interesting things and OpenID is just one of them.
+  
+  We are investing high in Ruby on Rails and we have now a few inte...
+date: 2008/02/18
+updated_at: 2008/02/18
+comments: true
+layout: post
+categories: 
+- Rails
+- Ruby
+---
+
+<p>
+I think I've been really lucky lately. In my new job I'm getting to work with many interesting things and <a href="http://openid.net/">OpenID</a> is just one of them.<br><br>We are investing high in Ruby on Rails and we have now a few internal applications in development stages. Our manager wanted the ability to let people log in to our rails applications(for now) using their OpenID accounts.<br><br>It was a funny task, as I knew very little about OpenID. The idea actually is really good. Instead of creating a new user account on each new service/site you'd like to subscribe to, you create a single user account in a OpenID provider - like <a href="https://www.myopenid.com/">MyOpenID</a> - and use this identity to authenticate yourself in the services/sites that support this protocol.<br><br>What do we earn from that? Well, in my opinion, we can get a couple of benefits:<br><br>- You don't need to memorize 723 logins and 723 passwords (if you really care about creating different passwords for all of your user accounts)<br><br>- You don't authenticate yourself to the service you're attempting to use. This service actually asks to your provider if your identity is valid, and you authenticate yourself there. Nowhere else.<br><br>I strongly recommend you visit the <a href="http://openid.net/">OpenID</a> to understand more about it.<br><br>But, back to the problem, we needed to put it working in a rails app. And that's when I found the <a href="http://openidenabled.com/ruby-openid/">ruby-openid</a> library, provided by <a href="http://openidenabled.com/">OpenID Enabled</a>.<br><br>It is a complete library, really well documented that provides an abstraction layer both for consumer and server applications.<br><br>My first step was to develop the consumer. That's what you need if you are going to provide your users with OpenID authentication in your web site. The ruby-openid library comes with several samples that really helped me out here. They were developed using <a href="http://rubyonrails.org/">Ruby On Rails</a> and are a really good start point.<br><br>After this step, I was asked to evaluate the possibility of being a OpenID provider. At first I thought it would be a really complicated task, but again this ruby library had a great example of a simple provider. The drawback is that the samples were developed in an older version of Rails ( &lt; 2.x ) . So I had to freeze the Rails version to 1.2.5 so I could run the provider sample code.<br><br>I am now working on porting this code to Rails 2.x, into one of our applications and it's been flowing well so far. Just wanted to share this library for those of you trying something similar. It is really worth a look.
+</p>
+

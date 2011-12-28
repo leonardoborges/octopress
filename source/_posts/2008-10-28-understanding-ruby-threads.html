@@ -1,0 +1,15 @@
+--- 
+title: Understanding Ruby threads
+excerpt: This post is just to clarify some confusion I've noticed reading some posts around the web. There is some misunderstanding of the differences between Ruby 1.8 and Ruby 1.9 regarding threads. And the d...
+date: 2008/10/28
+updated_at: 2008/10/28
+comments: true
+layout: post
+categories: 
+- Ruby
+---
+
+<p>
+This post is just to clarify some confusion I've noticed reading some posts around the web. There is some misunderstanding of the differences between Ruby 1.8 and Ruby 1.9 regarding threads. And the difference between them and JRuby.<br><br>So I decided to write this small summary:<br><br><strong>Ruby 1.8</strong> - Supports only <a href="http://en.wikipedia.org/wiki/Green_threads">Green Threads</a><br><br>This means that the ruby interpreter has its own scheduler. No matter how many threads you create in your ruby program, there will be only one native thread on your OS. Therefore, your program cannot take advantage of multiple core environments.<br><br><strong>Ruby 1.9</strong> - Supports native threads (GIL)<br><br>Ruby 1.9 adopted <a href="http://www.atdot.net/yarv/">YARV</a> as the new VM implementation, which supports native threads. This means that now your ruby programs can take advantage of multiple core environments, but no truly parallel execution is achieved.<br><br>The catch is GIL - Global Interpreter Lock - and it means that each ruby thread runs on its own native thread, but only one of them can be executed at a time.<br><br><strong>JRuby</strong> - Ruby 1.8 compatible<br><br>I think this is the easy part. JRuby runs on the Java VM, which supports native threads and parallel execution.<br><br>On this environment, ruby threads are java threads.<br><br><strong>The future</strong><br><br>There doesn't seem to be any decision about what's gonna happen on the next versions of Ruby. At least to the extent of my research. But this is today's snapshot of Ruby threads and I hope it'll be useful to some folks.<br><br>c u around
+</p>
+

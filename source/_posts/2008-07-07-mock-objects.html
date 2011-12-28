@@ -1,0 +1,16 @@
+--- 
+title: Mock Objects
+excerpt: When testing it's pretty common to see the need for mocking a certain object, say, a Data Access Ojbect. This way you don't need to depend on a database and you can focus on the actual logic implement...
+date: 2008/07/07
+updated_at: 2008/07/07
+comments: true
+layout: post
+categories: 
+- Java
+- Testing
+---
+
+<p>
+When testing it's pretty common to see the need for mocking a certain object, say, a Data Access Ojbect. This way you don't need to depend on a database and you can focus on the actual logic implemented by the method being tested.<br><br>For that you have several alternatives like creating the Mock class by hand or - and this is the more common - use one of the various mocking libraries out there.<br><br>They all look the same but the past couple of days I've come accross to a new - at least for me - mocking library for Java. It's called <a href="http://code.google.com/p/mockito/">Mockito</a>. As the creators state, technically, Mockito is a fork of <a href="http://www.easymock.org/">EasyMock</a>.<br><br>I have used EasyMock already but I do think Mockito has its advantages. I find it clear and a bit less verbose to write.<br><br>From one of the stubbing examples on their website:<br><pre lang="java"><br>//You can mock concrete classes, not only interfaces<br>LinkedList mockedList = mock(LinkedList.class);<br><br>//stubbing - before execution<br>stub(mockedList.get(0)).toReturn("first");<br><br>//following prints "first"<br>System.out.println(mockedList.get(0));<br><br>//following prints "null" because get(999) was not stubbed<br>System.out.println(mockedList.get(999));<br></pre><br>Looking forward to using it in production! ;)
+</p>
+
