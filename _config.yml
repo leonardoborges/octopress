@@ -16,7 +16,7 @@ description: Ruby, java, clojure and some beer
 date_format: "ordinal"
 
 # RSS / Email (optional) subscription links (change if using something like Feedburner)
-subscribe_rss: /writings/atom.xml
+subscribe_rss: http://feeds.feedburner.com/leonardoborges
 subscribe_email:
 # RSS feeds can list your email address if you like
 email:
@@ -32,7 +32,7 @@ source: source
 destination: public/writings
 plugins: plugins
 code_dir: downloads/code
-category_dir: categories
+category_dir: tags
 markdown: rdiscount
 pygments: false # default python pygments have been replaced by pygments.rb
 
@@ -45,7 +45,8 @@ titlecase: true       # Converts page and post titles to tilecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+# default_asides: [custom/asides/social.markdown, asides/recent_posts.html, asides/twitter.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+default_asides: [custom/asides/social.markdown, asides/recent_posts.html]
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -58,13 +59,13 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.ht
 # ----------------------- #
 
 # Github repositories
-github_user:
-github_repo_count: 0
+github_user: leonardoborges
+github_repo_count: 5
 github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user:
+twitter_user: leonardo_borges
 twitter_tweet_count: 4
 twitter_show_replies: false
 twitter_follow_button: true
