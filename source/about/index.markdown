@@ -11,7 +11,7 @@ footer: true
 
 Hello!
 
-I’m Leonardo Borges, a Brazilian software engineer living in Sydney, Australia.
+I'm Leonardo Borges, a Brazilian software engineer living in Sydney, Australia.
 
 I love [writing code](http://github.com/leonardoborges "My github account"), and have even contributed to a few [open-source projects](http://www.leonardoborges.com/writings/projects/ "Projects"). I also enjoy giving [talks](http://www.slideshare.net/borgesleonardo "My talks on SlideShare") on subjects I feel strongly about.
 
