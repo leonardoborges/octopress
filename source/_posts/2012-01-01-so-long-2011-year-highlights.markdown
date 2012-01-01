@@ -19,7 +19,7 @@ Said project gave me the chance to speak at a few events, sharing this and other
 - Ruby On Rails Oceania User Group - Sydney - February ([slides][5] | [video][6])
 - CloudCamp - Sydney - July ([slides][5])
 - XConf (1) Australia - Melbourne - August
-- RubyConf Brazil - Sao Paulo - November ([slides][8] | [video][7])
+- [RubyConf Brazil - Sao Paulo - November][10] ([slides][8] | [video][7])
 
 (1) - XConf is an internal technical conference here at ThoughtWorks
 
@@ -34,7 +34,7 @@ Here in the blog, these are a few of the most popular articles for 2011:
 
 ### Languages
 
-I decided to learn Clojure and started an internal user group at ThoughtWorks Sydney - you can read a brief report on our first [here][9]. 
+I decided to learn Clojure and started an internal user group at ThoughtWorks Sydney - you can read a brief report on our first meetup [here][9]. 
 
 The group's been a bit off lately since I was on leave in Brazil and then the whole holiday season happened but it's definitely one of the things I want to make happen more often in the new year.
 
@@ -57,3 +57,4 @@ Happy new year everyone! I'm sure 2012 has a lot of new challenges and surprises
 [7]: http://www.eventials.com/rubyconfbr/recorded/M2UzZTJkMzY2MzdiNTg2NTUxNWM1MzI3NWY1YjRhMzYjIzM4Mg_3D_3D
 [8]: http://www.slideshare.net/borgesleonardo/clouds-against-the-floods-rubyconfbr2011
 [9]: http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/
+[10]: http://www.leonardoborges.com/writings/2011/11/10/rubyconf-brazil-2011/
