@@ -3,7 +3,7 @@ layout: post
 title: "Announcing the Sydney Clojure User Group"
 date: 2012-01-20 11:35
 comments: true
-categories: [clojure]
+categories: [clojure, clj-syd]
 ---
 
 [If you've been following my blog][1], you'll have noticed I started running internal Clojure meetups/hack nights at ThoughtWorks here in Sydney a while ago. While being closed, we've already had one international speaker - [Ola Bini][7] - come and share his experience as an attendee at [Clojure/conj][8]. I promise I'll blog about it soon.
