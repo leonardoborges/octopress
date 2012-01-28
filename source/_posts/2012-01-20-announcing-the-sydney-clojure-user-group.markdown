@@ -14,7 +14,7 @@ That's why last Tuesday, the first time we had external guests, we decided to ma
 
 It was great having people from outside ThoughtWorks sharing their real world experience with Clojure. One of them, Harry Binnendijk from [Whoto][2], even gave a presentation about how and why they're using Clojure *\[1\]*.
 
-There was another talk, by yours truly, on Continuation Passing Style and Macros in Clojure *\[2\]*. It was a great night.
+There was another talk, by yours truly, on [Continuation Passing Style and Macros in Clojure][3]. It was a great night.
 
 Interested? Read on.
 
@@ -39,11 +39,9 @@ And don't forget to add us to your calendar so you don't miss out - next meetup 
 
 \[1\] Link to the presentation will be available soon
 
-\[2\] Link to the presentation will be available soon
-
 [1]: http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/
 [2]: http://www.whoto.com/
-[3]: 
+[3]: http://www.slideshare.net/borgesleonardo/continuation-passing-style-and-macros-in-clojure-jan-2012
 [4]: 
 [5]: http://groups.google.com/group/clj-syd
 [6]: https://github.com/clj-syd/clj-syd/wiki
