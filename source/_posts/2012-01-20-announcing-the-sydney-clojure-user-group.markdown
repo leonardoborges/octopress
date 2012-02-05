@@ -6,6 +6,8 @@ comments: true
 categories: [clojure, clj-syd]
 ---
 
+__Update:__ We now have a [Meetup.com page][9]. Head over there to learn about our next meetups as well as to RSVP to them. We'll discontinue usage of the wiki for registering attendees, in favor of the new site. Everything else on this post however still holds.
+
 [If you've been following my blog][1], you'll have noticed I started running internal Clojure meetups/hack nights at ThoughtWorks here in Sydney a while ago. While being closed, we've already had one international speaker - [Ola Bini][7] - come and share his experience as an attendee at [Clojure/conj][8]. I promise I'll blog about it soon.
 
 We're a small but active group, eager to learn and as a natural result we couldn't stay closed for any longer! :)
@@ -47,3 +49,4 @@ And don't forget to add us to your calendar so you don't miss out - next meetup 
 [6]: https://github.com/clj-syd/clj-syd/wiki
 [7]: http://olabini.com/blog/
 [8]: http://clojure-conj.org/
+[9]: http://www.meetup.com/clj-syd/
