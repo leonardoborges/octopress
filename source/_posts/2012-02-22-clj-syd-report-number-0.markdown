@@ -43,7 +43,7 @@ project.
 
 Definetly worth a try.
 
-* **Where do I put my DependentStrategyTemplateAbstractFactory?** - Bayan Khalili
+* **[Where do I put my DependentStrategyTemplateAbstractFactory][16]?** - Bayan Khalili
 
 Bayan was in one of our internal meetups. Some people raised the fact that we don't
 see a lot of the design patterns made popular by the [GoF book][12] in languages such as Ruby, Python or Clojure
@@ -76,3 +76,4 @@ See you next time!
 [13]: http://groups.google.com/group/clj-syd
 [14]: https://github.com/clj-syd/clj-syd/wiki
 [15]: http://www.meetup.com/clj-syd/
+[16]: https://docs.google.com/open?id=0B-wuNsBziQXAZWZmMzdjMDQtYzM4Zi00NGNjLThhY2ItYTFhOTZkOTQ0OTBh
