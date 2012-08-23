@@ -41,7 +41,7 @@ The original platform was built in CFML around 2008. It was essentially monolith
 	* they found several thread safety bugs in the ColdFusion libraries
 * Built-in concurrency / parallelism support - [future](http://clojuredocs.org/clojure_core/clojure.core/future), [pmap](http://clojuredocs.org/clojure_core/clojure.core/pmap), [pvalues](http://clojuredocs.org/clojure_core/clojure.core/pvalues) etc.
 * Lazy sequences - being able to work with potentially ininite collections without bringing your server down.
-* All high quality, production ready Java libraries easily accessible via [java iterop](http://clojure.org/java_interop).
+* All high quality, production ready Java libraries easily accessible via [java interop](http://clojure.org/java_interop).
 
 ### What do they use it for?
 
