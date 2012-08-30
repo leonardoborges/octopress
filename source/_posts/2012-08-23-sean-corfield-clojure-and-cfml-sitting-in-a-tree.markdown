@@ -15,7 +15,7 @@ What follows is a mix of my own notes and what I could remember from the slides:
 
 ### Going faster
 
-The original platform was built in CFML around 2008. It was essentially monolithic procedural code. It was rewritten in 2009 - when they introduced OO and a new version of CFML
+The original platform was built in CFML between 2001 and 2008. It was essentially monolithic procedural code. It was rewritten in 2009 - when they introduced OO and a new version of CFML
 
 ### Brief Stats
 
@@ -25,8 +25,8 @@ The original platform was built in CFML around 2008. It was essentially monolith
 
 ### Clojure and WorldSingles
 
-* Tried .NET - ran into all sorts of trouble. Didn't even get this version of the platform in production
-* Tried Scala - this went live, however they dropped it due to the restrictive type system and bad tooling (at least back then).
+* Tried .NET - ran into all sorts of trouble. Didn't work well in production.
+* Tried Scala - Memory leaks in the built-in actor library were a deal breaker. The type system also wasn't a good cultural fit.
 * Evaluated Clojure in 2010 - seemed like a good language to squeeze performance out of lower level components
 * Clojure version released in production in 2011
 	* Rewrote remaining Scala Code
@@ -38,7 +38,7 @@ The original platform was built in CFML around 2008. It was essentially monolith
 
 * It's fast - compiles down to JVM bytecode (and it's faster than CFML)
 * Immutability (automatic thread safety)
-	* they found several thread safety bugs in the ColdFusion libraries
+	* they found several thread safety bugs in the third party ColdFusion libraries being used
 * Built-in concurrency / parallelism support - [future](http://clojuredocs.org/clojure_core/clojure.core/future), [pmap](http://clojuredocs.org/clojure_core/clojure.core/pmap), [pvalues](http://clojuredocs.org/clojure_core/clojure.core/pvalues) etc.
 * Lazy sequences - being able to work with potentially ininite collections without bringing your server down.
 * All high quality, production ready Java libraries easily accessible via [java interop](http://clojure.org/java_interop).
