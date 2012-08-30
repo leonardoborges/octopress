@@ -86,7 +86,7 @@ Having an active Community is crucial for language adoption and the clojure comm
 
 It was great to hear the many good things Sean had to say about Clojure. WorldSingles seem pretty happy with the decision of migration their heavy-lifting code to it and hopefully these slide notes will give you some insight into the sort of things Clojure is good at.
 
-Sean is likely to put his slides up somewhere so I'll link to it as soon as I have it. 	
+~~Sean is likely to put his slides up somewhere so I'll link to it as soon as I have it.~~ [Here they are.](http://corfield.org/articles/WorldSinglesWeb.pdf)
 
 If you want to know more about Clojure and be involved in the community, you should come to the next [clj-syd meetup](http://www.meetup.com/clj-syd/).
 	
