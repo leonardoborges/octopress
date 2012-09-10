@@ -9,6 +9,10 @@ footer: true
 
 Here you'll find a list of my most recent talks. You can also visit my [SlideShare](http://www.slideshare.net/borgesleonardo "SlideShare") profile if you like.
 
+* Sydney Clojure User Group - August, 2012 - Sydney, Australia
+
+<div style="width:425px" id="__ss_14123498"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/borgesleonardo/clojure-reducers-cljsyd-aug-2012" title="Clojure Reducers / clj-syd Aug 2012" target="_blank">Clojure Reducers / clj-syd Aug 2012</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/14123498" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/borgesleonardo" target="_blank">Leonardo Borges</a> </div> </div>
+
 * Sydney Clojure User Group - January, 2012 - Sydney, Australia
 
 <div style="width:425px" id="__ss_11308796"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/borgesleonardo/continuation-passing-style-and-macros-in-clojure-jan-2012" title="Continuation Passing Style and Macros in Clojure - Jan 2012" target="_blank">Continuation Passing Style and Macros in Clojure - Jan 2012</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/11308796" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/borgesleonardo" target="_blank">Leonardo Borges</a> </div> </div>

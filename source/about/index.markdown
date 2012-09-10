@@ -7,7 +7,7 @@ sharing: true
 footer: true
 ---
 
-{% img right /assets/images/about_photo.jpg 231 346 %}
+{% img left border /assets/images/about_photo.jpg 231 346 %}
 
 Hello!
 
@@ -23,6 +23,10 @@ Oh, have I mentioned I love [travelling](http://www.tripadvisor.com/MemberProfil
 
 P.S.: Were you looking for my [resume](http://leonardoborges.com/resume "Leonardo Borges' Resume")?
 
+
+Feel free to make comments and if you want to contact me directly, just drop me a line or IM me at leonardoborges.rj@gmail.com
+
+  
   <div id="ta_travelmap" style="width:430px;">
   <img src="http://www.tripadvisor.com/CommunityMapImage?id=16801229&type=TRIPADVISOR&size=LARGE">
   <ol id="ta_favoritelist">
@@ -39,4 +43,4 @@ P.S.: Were you looking for my [resume](http://leonardoborges.com/resume "Leonard
   <script src="http://www.tripadvisor.com/MapEmbed?mid=E.lg3sthmuTQ128pxMYDTzDg%3D%3D&nop=true&frm=pt&Version=VACATION_RENT_006"></script>
 
 
-Feel free to make comments and if you want to contact me directly, just drop me a line or IM me at leonardoborges.rj@gmail.com
+

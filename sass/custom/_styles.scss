@@ -1,6 +1,6 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
-
+/*
 aside.sidebar {
 	.social { 
 	  ul {
@@ -16,4 +16,45 @@ aside.sidebar {
 	    white-space:normal;
 	  }
 	}
+}
+*/
+//Theme: Slash
+#main-nav > ul > li{
+			margin-left: 15px;
+}
+
+img {
+  &.left { float: left; margin-right: 1.5em; }
+  &.right { float: right; margin-left: 1.5em; }
+  &.center { display:block; margin: 0 auto 1.5em; }
+  &.left, &.right { margin-bottom: .8em; }
+  &.border {border-radius: 0.3em;}
+  &.border {box-sizing: border-box;}
+  &.border {border: white 0.5em solid;}
+}
+
+#ta_travelmap {
+	&>div {
+		margin:0px !important;
+	}
+}
+
+
+/* fixing fonts path */
+$font-default: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+
+$font-icon: FontAwesome;
+$font-icon-path: "/writings/font/fontawesome-webfont";
+
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('#{$font-icon-path}.eot');
+	src: url('#{$font-icon-path}.eot?#iefix') format('embedded-opentype'),
+		url('#{$font-icon-path}.woff') format('woff'),
+		url('#{$font-icon-path}.ttf') format('truetype'),
+		url('#{$font-icon-path}.svgz#FontAwesomeRegular') format('svg'),
+		url('#{$font-icon-path}.svg#FontAwesomeRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
