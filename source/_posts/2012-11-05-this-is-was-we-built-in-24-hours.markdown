@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "This is was we built in 24 hours"
+title: "This is what we built in 24 hours"
 date: 2012-11-05 11:12
 comments: true
 categories: [mobile, ios, android]
