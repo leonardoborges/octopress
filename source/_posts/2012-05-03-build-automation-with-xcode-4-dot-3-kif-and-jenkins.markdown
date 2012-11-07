@@ -6,6 +6,12 @@ comments: true
 categories: [ios, iphone, ipad]
 ---
 
+__UPDATE:__ As pointed to me in [this commment](http://www.leonardoborges.com/writings/2012/05/03/build-automation-with-xcode-4-dot-3-kif-and-jenkins/#comment-703288043), sym links aren't necessary for Waxsim anymore. Check [Jonathan Penn's fork on github](https://github.com/jonathanpenn/WaxSim).
+
+
+* * *
+
+
 After coming back from my holidays in China - which were awesome - I had no downtime at ThoughtWorks and started at a brand new client/project - a much needed change from what I had been working on lately.
 
 It's an iOS project, more specifically an iPad app and that's pretty much all I can tell you about it. I will however tell you how my first few days in the project have been so far.
