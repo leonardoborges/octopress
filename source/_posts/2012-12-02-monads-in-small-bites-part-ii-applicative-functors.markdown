@@ -18,7 +18,7 @@ This is Part II of my Monads tutorial. Make sure you read the previous parts:
 
 ### Applicative Functors
 
-In [Part I](/2012/11/30/monads-in-small-bites-part-i-functors/) I talked a little about Haskell type signatures and introduced Functors, which provide a way to map standard functions over values which are *wrapped* inside a Functor - we used `fmap` for that. You might want to [skim through it]() again as a refresher.
+In [Part I](/2012/11/30/monads-in-small-bites-part-i-functors/) I talked a little about Haskell type signatures and introduced Functors, which provide a way to map standard functions over values which are *wrapped* inside a Functor - we used `fmap` for that. You might want to [skim through it](/2012/11/30/monads-in-small-bites-part-i-functors/) again as a refresher.
 
 Now suppose you have Functors that *wrap* functions and that you want to apply those *wrapped* functions to other Functors, maybe even composing new functions on the way! 
 
