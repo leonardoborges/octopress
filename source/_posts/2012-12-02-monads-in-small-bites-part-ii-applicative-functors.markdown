@@ -61,7 +61,7 @@ Let's revisit those definitions:
 Enough definitions though! Let's extend our List Functor and make it an Applicative as well. 
 
 
-While we'll still be using the List Functor we implemented in [Part I](), this time I'll implement its Applicative version using [multimethods](http://clojure.org/multimethods) for a change.  Here's the code:
+While we'll still be using the List Functor we implemented in [Part I](/2012/11/30/monads-in-small-bites-part-i-functors/), this time I'll implement its Applicative version using [multimethods](http://clojure.org/multimethods) for a change.  Here's the code:
 
 ```clojure
 ;; it dispatches on the record type since we could have implementations of pure for List, Maybe, Either etc...
