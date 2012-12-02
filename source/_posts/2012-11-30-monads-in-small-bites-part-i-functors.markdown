@@ -17,7 +17,7 @@ To that end, this tutorial will be split in four parts:
 
 * Part I   - Functors (this post)
 
-* Part II  - Applicative Functors
+* [Part II  - Applicative Functors](/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/)
 
 * Part III - Monoids
 
@@ -219,4 +219,4 @@ And the proof in Clojure:
 
 Nice! All laws hold so we can sleep peacefully in the knowledge that our Functor works as expected.
 
-Now go get a drink and stay tuned for Part II, where I'll introduce *Applicative Functors*.
+Now go get a drink and stay tuned for [Part II](/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/), where I'll introduce *Applicative Functors*.
