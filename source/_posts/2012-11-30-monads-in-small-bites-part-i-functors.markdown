@@ -19,7 +19,7 @@ To that end, this tutorial will be split in four parts:
 
 * [Part II  - Applicative Functors](/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/)
 
-* Part III - Monoids
+* [Part III - Monoids](/2012/12/05/monads-in-small-bites-part-iii-monoids/)
 
 * Part IV  - Monads
 

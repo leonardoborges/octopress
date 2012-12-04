@@ -12,7 +12,7 @@ This is Part II of my Monads tutorial. Make sure you read the previous parts:
 
 * Part II  - Applicative Functors (this post)
 
-* Part III - Monoids
+* [Part III - Monoids](/2012/12/05/monads-in-small-bites-part-iii-monoids/)
 
 * Part IV  - Monads
 
@@ -230,4 +230,4 @@ This brings us to the end or Part II. Two down and two to go.
 
 I hope you're still with me but go home now. 
 
-Or better yet go to the gym lift some weights and think about these Functors on steroids. When you're back, look out for Part III.
+Or better yet go to the gym lift some weights and think about these Functors on steroids. When you're back, look out for [Part III](/2012/12/05/monads-in-small-bites-part-iii-monoids/).
