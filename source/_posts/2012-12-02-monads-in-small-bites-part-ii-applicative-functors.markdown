@@ -14,7 +14,7 @@ This is Part II of my Monads tutorial. Make sure you read the previous parts:
 
 * [Part III - Monoids](/2012/12/05/monads-in-small-bites-part-iii-monoids/)
 
-* Part IV  - Monads
+* [Part IV  - Monads](/2012/12/08/monads-in-small-bites-part-iv-monads/)
 
 ### Applicative Functors
 

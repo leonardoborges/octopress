@@ -21,7 +21,7 @@ To that end, this tutorial will be split in four parts:
 
 * [Part III - Monoids](/2012/12/05/monads-in-small-bites-part-iii-monoids/)
 
-* Part IV  - Monads
+* [Part IV  - Monads](/2012/12/08/monads-in-small-bites-part-iv-monads/)
 
 You might want to bookmark this page - once the other parts are up, I'll update the list above with the links to them.
 

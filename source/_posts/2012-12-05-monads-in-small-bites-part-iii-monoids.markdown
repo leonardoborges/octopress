@@ -14,7 +14,7 @@ This is Part III of my Monads tutorial. Make sure you read the previous parts:
 
 * Part III - Monoids (this post)
 
-* Part IV  - Monads
+* [Part IV  - Monads](/2012/12/08/monads-in-small-bites-part-iv-monads/)
 
 
 ### Monoids
@@ -210,4 +210,4 @@ And the proof in Clojure - remember that calling the monoid function with two ar
 
 This puts an end to Part III. It's time to head to the pub. 
 
-When you're back look for the final post in these series - Part IV - where we will conclude our journey by finally introducing Monads!
+When you're back look for the final post in these series - [Part IV](/2012/12/08/monads-in-small-bites-part-iv-monads/) - where we will conclude our journey by finally introducing Monads!
