@@ -127,8 +127,8 @@ If you're wondering why I'm returning a two element vector from our little funct
 
 From its docstring:
 
-> **State Monad**: Monad describing stateful computations. The monadic values have the
-    structure (fn [old-state] [result new-state]).
+> **State Monad**: Monad describing stateful computations. The monadic values have the structure: 
+    (fn [old-state] [result new-state]).
 
 It expects a function that receives its old state and returns the result and the new state - these are called monadic values.
 
