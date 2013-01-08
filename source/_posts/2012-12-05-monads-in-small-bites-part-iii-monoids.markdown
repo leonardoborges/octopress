@@ -75,6 +75,10 @@ Did you notice that on the second call to `reduce` we did not provide an initial
 
 So that means we don't even need an `mconcat` function since in Clojure,  `reduce` works with monoids as well!
 
+> **Update**: this isn't entirely true. When I wrote this post I had in mind the version of `reduce` provided by the Clojure (1.5+) reducers library. The [source code](https://github.com/clojure/clojure/blob/master/src/clj/clojure/core/reducers.clj#L71) shows how that is the case.
+
+> The implementation of `reduce` in `clojure.core` however uses the first element of the collection being reduced over as its seed.
+
 But how the hell do you create a monoid in Clojure then? I'm glad you asked. Let's create our own *plus-monoid*!
 
 #### Your first monoid
