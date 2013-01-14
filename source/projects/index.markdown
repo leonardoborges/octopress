@@ -24,6 +24,7 @@ framework for Ruby ([commit #1][1])
 
 ### Clojure
 
+- [bouncer](https://github.com/leonardoborges/bouncer) - A validation DSL for Clojure apps (creator)
 - [clj-logging-config](https://github.com/malcolmsparks/clj-logging-config) - Easy logging configuration for Clojure ([commit #1][7])
 
 ### Fun/other projects
