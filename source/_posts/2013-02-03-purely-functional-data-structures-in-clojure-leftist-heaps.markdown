@@ -19,7 +19,7 @@ Luckily, I was right - and I recommend you do the same if you're not familiar wi
 Enough background though.
 
 
-The purpose of this post is two-fold: One is to share the github repository I created and that will contain the Clojure versions of the data structures in the book as well as most solutions to the exercises - or at least as many as my time-poor life allows me to implement.  
+The purpose of this post is two-fold: One is to share the [github repository](https://github.com/leonardoborges/purely-functional-data-structures) I created and that will contain the Clojure versions of the data structures in the book as well as most solutions to the exercises - or at least as many as my time-poor life allows me to implement.  
 
 The other is to walk you through some of the code and get a discussion going. Hopefully we will all learn something - as I certainly have when implementing these. Today, we'll start with Leftist Heaps.
 
@@ -172,4 +172,6 @@ Using it is equally simple:
 
 That's it for now.
 
-As I implement more of the book's code and exercises I'll add them to the github repo - it also includes tests for all implementations.
+As I implement more of the book's code and exercises I'll add them to the [github repo](https://github.com/leonardoborges/purely-functional-data-structures) - it also includes tests for all implementations.
+
+Enjoy :)
