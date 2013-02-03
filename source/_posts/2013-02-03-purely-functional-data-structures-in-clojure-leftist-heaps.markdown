@@ -12,9 +12,9 @@ However, all code samples in the book are written in [ML](http://bit.ly/YqYjtt) 
 
 I had no clue about Haskell's - much less ML's! - syntax and I was finding it very difficult to follow along. What I did notice is that their syntaxes are not so different from each other. 
 
-So I put the book down and read [Lear You a Haskell For Great Good!](http://amzn.to/VuD3jT) with the hopes that learning more about haskell's syntax - in particular, learning how to read its type signatures - would help me get going with *Puretly Functional Data Structures*. 
+So I put the book down and read [Learn You a Haskell For Great Good!](http://amzn.to/VuD3jT) with the hopes that learning more about haskell's syntax - in particular, learning how to read its type signatures - would help me get going with *Puretly Functional Data Structures*. 
 
-Luckily, I was right - and I recommend you do the same if you're not familiar with either of those languages. [Lear You a Haskell For Great Good!](http://amzn.to/VuD3jT) is a great book and I got a lot out of it. [My series on Monads](http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/) is a product of reading it.
+Luckily, I was right - and I recommend you do the same if you're not familiar with either of those languages. [Learn You a Haskell For Great Good!](http://amzn.to/VuD3jT) is a great book and I got a lot out of it. [My series on Monads](http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/) is a product of reading it.
 
 Enough background though.
 
