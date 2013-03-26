@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Clojure and 'Why calculating is better than scheming'"
-date: 2013-03-25 12:40
+date: 2013-03-26 11:00
 comments: true
 categories: [clojure, functional-programming, haskell]
 ---
