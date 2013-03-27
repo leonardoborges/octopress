@@ -6,7 +6,7 @@ comments: true
 categories: [clojure, functional-programming, haskell]
 ---
 
-Last week while attending [Clojure/West][1] in Portland I came across a paper called [Why calculating is better than scheming][2]. In a nutshell, this paper is a critique to [Abelson][5] and [Sussman][6]'s classic textbook [SICP - Structure and Interpretation of Computer Porgrams][3], 
+Last week while attending [Clojure/West][1] in Portland I came across a paper called [Why calculating is better than scheming][2]. In a nutshell, this paper is a critique to [Abelson][5] and [Sussman][6]'s classic textbook [SICP - Structure and Interpretation of Computer Programs][3], 
 used by MIT for many years to teach their introductory programming course.
 
 If you haven't read [SICP][3], you should. It's an amazing book. It uses [Scheme][4], a dialect of Lisp, as the vehicle to present fundamental programming concepts.
