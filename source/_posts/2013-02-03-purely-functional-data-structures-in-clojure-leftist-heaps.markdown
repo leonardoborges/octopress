@@ -6,6 +6,11 @@ comments: true
 categories: [clojure, functional-programming, functional-data-structures]
 ---
 
+> This post is part of a series about Chris Okasaki's [Purely Functional Data Structures](http://amzn.to/UcIidh). You can see all posts in the series by visiting the [functional-data-structures](http://www.leonardoborges.com/writings/tags/functional-data-structures/) category in this blog.
+
+* * *
+
+
 Last year I started reading a book called [Purely Functional Data Structures](http://amzn.to/UcIidh). It's a fascinating book and if you've ever wondered how Clojure's persistent data structures work, it's mandatory reading.
 
 However, all code samples in the book are written in [ML](http://bit.ly/YqYjtt) - with [Haskell](http://bit.ly/YqYmp6) versions in the end of the book. This means I got stuck in Chapter 3, where the ML snippets start.
