@@ -9,6 +9,12 @@ footer: true
 
 Here I keep a list of the open-source projects that I've either started or contributed to.
 
+### Clojure
+
+- [bouncer](https://github.com/leonardoborges/bouncer) - A validation DSL for Clojure apps (creator)
+- [clojure/algo.monads](https://github.com/clojure/algo.monads) - Macros for defining monads, and definition of the most common monads ([commits](https://github.com/clojure/algo.monads/commits?author=leonardoborges))
+- [clj-logging-config](https://github.com/malcolmsparks/clj-logging-config) - Easy logging configuration for Clojure ([commit #1][7])
+
 ### Ruby
 
 - [AppConstants](http://github.com/leonardoborges/app_constants) - A clean way to manage environment specific constants (creator)
@@ -21,11 +27,6 @@ framework for Ruby ([commit #1][1])
 - [Readable test names runner](http://github.com/leonardoborges/readable_test_names_runner/tree/maste) - Run individual tests in rails using their readable names (creator)
 - [Rcov_plugin](http://github.com/commondream/rcov_plugin/tree/master) - Rails plugin for rcov ([commit #1][5], [commit #2][6])
 
-
-### Clojure
-
-- [bouncer](https://github.com/leonardoborges/bouncer) - A validation DSL for Clojure apps (creator)
-- [clj-logging-config](https://github.com/malcolmsparks/clj-logging-config) - Easy logging configuration for Clojure ([commit #1][7])
 
 ### Fun/other projects
 
