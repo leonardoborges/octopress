@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Functional composition with Monads, Kleislis and Functors"
-date: 2014-06-17 12:00
+date: 2014-06-17 11:00
 comments: true
 categories: [functional-programming, scala]
 ---
