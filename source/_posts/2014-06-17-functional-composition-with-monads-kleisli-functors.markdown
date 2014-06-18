@@ -13,6 +13,9 @@ Today I'll be exploring a few different ways in which you can compose programs. 
 The examples that follow all deal with Vehicles - more specifically makes and parts:
 
 ```scala
+  import scalaz._, Scalaz._
+  import scalaz.Kleisli._
+
   case class Make(id: Int, name: String)
   case class Part(id: Int, name: String)
 ```
