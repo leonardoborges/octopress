@@ -31,4 +31,4 @@ A few months ago Atlassian acquired [WikiDocs](https://wikidocs.com/), a startup
 
 When I started learning Clojure over 3 years ago, little did I know that I'd be working full-time with the language so soon and I am super excited about it. It's great to see that much effort paying off like this.
 
-My start date at Atlassian is the 5th on January and I am looking forward to meeting a bunch of great people and making new friends.
+My start date at Atlassian is the 5th of January and I am looking forward to meeting a bunch of great people and making new friends.
