@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Staring a new chapter"
+title: "A new chapter begins"
 date: 2014-12-27 14:04
 comments: true
 categories: [misc]
