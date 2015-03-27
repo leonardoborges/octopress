@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Clojure Reactive Programming has been published"
-date: 2015-03-24 12:35
+date: 2015-03-27 15:10
 comments: true
 categories: [clojure, functional-programming, books]
 ---
