@@ -8,7 +8,7 @@ categories: [misc]
 
 I should have published this post still in 2015 but as I was on holidays traveling around Australia I didn't really have the time to do it. Better late than never, right?
 
-2015 has been a unusually quiet year in this blog. Thankfully that is becuase I have been extremely busy in many other areas. I'd like to take the opportunity and look back at 2015's highlights.
+2015 has been a unusually quiet year in this blog. Thankfully that is because I have been extremely busy in many other areas. I'd like to take the opportunity and look back at 2015's highlights.
 
 ## Atlassian
 
@@ -29,9 +29,9 @@ As for courses I decided to give [MOOCs](https://en.wikipedia.org/wiki/Massive_o
 **Coursera:**
 
 - [R Programming](https://www.coursera.org/learn/r-programming) - This is a great source for anyone who'd like to get started with data processing. Even though R isn't one of my favourite languages I cannot deny how easy it is to start making sense of your data.
-- [Principles of Reactive Programming](https://www.coursera.org/course/reactive) - As I have been into Reactive Programming myself for quite a while this gave me a bit of perspective on what Scala people mean by it. In particular the parts about Actor systems have been really valuable. Additionally the exercises are challening and do drive the point home.
+- [Principles of Reactive Programming](https://www.coursera.org/course/reactive) - As I have been into Reactive Programming myself for quite a while this gave me a bit of perspective on what Scala people mean by it. In particular the parts about Actor systems have been really valuable. Additionally the exercises are challenging and do drive the point home.
 - [Introduction to Guitar](https://www.coursera.org/learn/guitar) - I have been playing the guitar for a long time now but I have never had any proper education on the matter. I decided to give it a go with this MOOC by Berkeley and am pleased with the results. Especially since I can now put names to things I have done for years :)
-- [Leading People and Teams Specialization](https://www.coursera.org/specializations/leading-teams) - Leadership is a broad area and having been under both good and bad leadership I don't want to make some of the same mistakes I've seen in the past. As such, I am seeking advice from multiple different sources - such as some of the books in my GoodReads profile above - as well as this Specialization. It has 5 courses in total. I'm two in and have enjoyed it so far.
+- [Leading People and Teams Specialisation](https://www.coursera.org/specializations/leading-teams) - Leadership is a broad area and having been under both good and bad leadership I don't want to make some of the same mistakes I've seen in the past. As such, I am seeking advice from multiple different sources - such as some of the books in my GoodReads profile above - as well as this specialisation. It has 5 courses in total. I'm two in and have enjoyed it so far.
 
 **Edx:**
 
@@ -44,7 +44,7 @@ I have also been dabbling more and more with [Elm](http://elm-lang.org/) and [Pu
 Another good year in this area. Here's what I spoke about this year:
 
 
-- [Concurrent programming with Futures (in portuguese)](http://www.slideshare.net/borgesleonardo/futures-e-abstrao-qcon-so-paulo-2015) - QCon, March 2015 - Sao Paulo, Brazil
+- [Concurrent programming with Futures (in Portuguese)](http://www.slideshare.net/borgesleonardo/futures-e-abstrao-qcon-so-paulo-2015) - QCon, March 2015 - Sao Paulo, Brazil
 - Something about types being useful? - Sydney Clojure User Group, May 2015 - Sydney, Australia
 - [Workshop: From Zero to Pong Using Elm](https://github.com/leonardoborges/elm-workshop-ylj2015) - LambdaJam, May 2015 - Brisbane, Australia
 - [Realtime Collaboration with Clojure](https://www.youtube.com/watch?v=3QR8meTrh5g) - EuroClojure, June 2015 - Barcelona, Spain
@@ -53,7 +53,7 @@ Another good year in this area. Here's what I spoke about this year:
 
 In case you don't know one of my hobbies is weightlifting. Names such as Clean, Clean & Jerk, Snatches and Deadlifts are common in my day to day and 2015 has been a super year for my strength goals. In particular I've reached **120kg** for my Squats and **140kg** for my deadlifts which are my all time goals. For a bit of perspective I currently weigh **69kg**.
 
-These numbers are **good** but they are not elite level. However what makes them impressive - for me anyway - is that four years ago I injured my lowerback and was diagnosed with Level 1 spondylolisthesis. My doctor at the time told me I wouldn't be able to lift anymore and I was extremely down for quite a while. It wasn't until I switched doctors and dedicated 100% to having proper form that I was able to reach a whole new strength level. 
+These numbers are **good** but they are not elite level. However what makes them impressive - for me anyway - is that four years ago I injured my lower back and was diagnosed with Level 1 spondylolisthesis. My doctor at the time told me I wouldn't be able to lift anymore and I was extremely down for quite a while. It wasn't until I switched doctors and dedicated 100% to having proper form that I was able to reach a whole new strength level. 
 
 These results make me extremely happy. In case you're into this sort of thing you can check a [short video of my best lifts here](https://www.youtube.com/watch?v=6OhYvZqPuTM).
 
