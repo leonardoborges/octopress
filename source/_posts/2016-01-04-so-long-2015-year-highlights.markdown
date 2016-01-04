@@ -1,12 +1,12 @@
 ---
 layout: post
 title: "So Long 2015: Year Highlights"
-date: 2016-01-02 16:30
+date: 2016-01-04 16:10
 comments: true
 categories: [misc]
 ---
 
-I should have published this post still in 2015 but as I was on holidays traveling around Australia I didn't really have the time to do it. Better late than never, right?
+I should have published this post still in 2015 but as I was on holidays traveling around Australia I didn't really have the time to do it. Better late than never, right? (also Linode - the provider hosting this site - has been under a [severe DDoS attack](https://news.ycombinator.com/item?id=10825425) so the site just came back up today)
 
 2015 has been a unusually quiet year in this blog. Thankfully that is because I have been extremely busy in many other areas. I'd like to take the opportunity and look back at 2015's highlights.
 
