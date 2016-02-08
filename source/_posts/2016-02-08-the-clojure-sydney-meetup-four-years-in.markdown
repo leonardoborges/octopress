@@ -33,4 +33,4 @@ We're now in 2016 and the group shows no signs of slowing down. In fact, we're p
 
 I would like to thank ThoughtWorks for all the support in starting and running the meetup. I wouldn't have been able to do it if it wasn't for them.
 
-See you at the [next meetup](link to the meetup here)!
+See you at the [next meetup](http://www.meetup.com/clj-syd/events/228691721/)!
