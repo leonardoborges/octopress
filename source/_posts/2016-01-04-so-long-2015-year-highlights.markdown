@@ -53,7 +53,7 @@ Another good year in this area. Here's what I spoke about this year:
 
 In case you don't know one of my hobbies is weightlifting. Names such as Clean, Clean & Jerk, Snatches and Deadlifts are common in my day to day and 2015 has been a super year for my strength goals. In particular I've reached **120kg** for my Squats and **140kg** for my deadlifts which are my all time goals. For a bit of perspective I currently weigh **69kg**.
 
-These numbers are **good** but they are not elite level. However what makes them impressive - for me anyway - is that four years ago I injured my lower back and was diagnosed with Level 1 spondylolisthesis. My doctor at the time told me I wouldn't be able to lift anymore and I was extremely down for quite a while. It wasn't until I switched doctors and dedicated 100% to having proper form that I was able to reach a whole new strength level. 
+These numbers are **good** but they are not elite level. However what makes them impressive - for me anyway - is that four years ago I injured my lower back and was diagnosed with Level 1 spondylolisthesis. My doctor at the time told me I wouldn't be able to lift anymore and I was extremely down for quite a while. It wasn't until I switched doctors and dedicated 100% to having proper form that I was able to reach a whole new strength level.
 
 These results make me extremely happy. In case you're into this sort of thing you can check a [short video of my best lifts here](https://www.youtube.com/watch?v=6OhYvZqPuTM).
 

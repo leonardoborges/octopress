@@ -48,7 +48,7 @@ Additionally I can't help myself and recommend that you read [Functional Program
 Between work and writing the book I'm happy I managed to speak this much:
 
 
-  - The Algebra of Library Design (no slides but more about it soon) - Sydney Clojure User Group, October 2014 - Sydney, Australia
+  - [The Algebra of Library Design](http://www.slideshare.net/borgesleonardo/the-algebra-of-library-design) - Sydney Clojure User Group, October 2014 - Sydney, Australia
   - [High Performance web apps in Om, React and ClojureScript](http://www.slideshare.net/borgesleonardo/high-performance-web-apps-in-om-react-and-clojurescript) - LambdaJam, May 2014 - Brisbane, Australia
   - [Taming asynchronous workflows with Functional Reactive Programming](http://www.slideshare.net/borgesleonardo/functional-reactive-programming-compositional-event-systems) - EuroClojure, April 2014 - Krakow, Poland 
   - [Taming asynchronous workflows with Functional Reactive Programming (portuguese)](http://www.slideshare.net/borgesleonardo/programao-functional-reativa-lidando-com-cdigo-assncrono) - QCon, March 2014 - São Paulo, Brazil
@@ -74,4 +74,3 @@ If this tells me anything it's that I need to blog more!
 
 
 **Happy new year! Here's to an amazing 2015!**
-
