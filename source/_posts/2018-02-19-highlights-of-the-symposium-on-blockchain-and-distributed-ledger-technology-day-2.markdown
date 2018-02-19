@@ -1,12 +1,12 @@
 ---
 layout: post
 title: "Highlights of the Symposium on Blockchain and Distributed Ledger Technology - Day 2"
-date: 2018-02-19 10:00
+date: 2018-02-19 20:30
 comments: true
 categories: [conferences, blockchain]
 ---
 
-If you haven't yet, make sure you read my [summary of Day 1](/2018/02/16/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/) first.
+If you haven't yet, make sure you read my [summary of Day 1](/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/) first.
 
 ## Morning Panel
 

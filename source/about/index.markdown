@@ -9,19 +9,20 @@ footer: true
 
 {% img left border /assets/images/about_photo.jpg 231 346 %}
 
+
 Hello!
 
-I'm Leonardo Borges, a Brazilian software engineer living in Sydney, Australia.
+I'm Leonardo Borges, a Brazilian software engineer and technical leader living in Sydney, Australia.
 
 I love [writing code](http://github.com/leonardoborges "My github account"), and have even contributed to a few [open-source projects](http://www.leonardoborges.com/writings/projects/ "Projects"). I also enjoy giving [talks](http://www.slideshare.net/borgesleonardo "My talks on SlideShare") on subjects I feel strongly about.
 
-Currently undertaking the challenges of consulting at [ThoughtWorks](http://www.thoughtworks.com), I also [blog](http://www.leonardoborges.com/writings/ "My Blog") about geeky stuff, [play the guitar](http://www.flickr.com/photos/leonardo_borges/4907179924/ "My guitar and I") and do something stupid like [Skydiving](http://www.youtube.com/watch?v=NZe1ELx4jY0 "Skydiving in Sydney"), [rafting](http://www.youtube.com/watch?v=RuD34olLLuc "Rafting in Rio, Brazil") or [rock climbing](http://www.facebook.com/photo.php?pid=1699&amp;l=a2a2e53c79&amp;id=1687860111 "Rock climbing in Rio, Brazil") whenever I can.
+Currently I serve as CTO at [MODRON](http://www.modron.com/) where we build dispute resolution technology. For fun, I also [blog](http://www.leonardoborges.com/writings/ "My Blog") about technical subjects, [play the guitar](http://www.flickr.com/photos/leonardo_borges/4907179924/ "My guitar and I"), [sing](https://www.bandmix.com.au/leonardoborges/) and ride [my motorbike](https://www.instagram.com/p/BdMV0mCDZzT/?taken-by=leonardoborges) whenever I can.
 
 Oh, have I mentioned I love [travelling](http://www.tripadvisor.com/MemberProfile-cpt-a_publictmap.1-a_uid.F36E8157798EAF76A8684BC6FDB95DBD "TripAdvisor Map")?
 
 :)
 
-P.S.: Were you looking for my [resume](http://leonardoborges.com/resume "Leonardo Borges' Resume")?
+P.S.: Were you looking for my [resume](http://leonardoborges.com/resume "Leonardo Borges' Resume")? - currently outdated
 
 
 Feel free to make comments and if you want to contact me directly, just drop me a line or IM me at leonardoborges.rj@gmail.com

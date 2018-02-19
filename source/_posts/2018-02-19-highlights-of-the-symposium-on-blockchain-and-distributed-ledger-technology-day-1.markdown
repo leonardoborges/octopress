@@ -1,12 +1,12 @@
 ---
 layout: post
 title: "Highlights of the Symposium on Blockchain and Distributed Ledger Technology - Day 1"
-date: 2018-02-19 10:00
+date: 2018-02-19 20:30
 comments: true
 categories: [conferences, blockchain]
 ---
 
-Earlier this week I had the chance to attend the [Symposium on Blockchain and Distributed Ledger Technology](http://blockchain.unsw.edu.au/symposium18/HTML/index.html) organised by UNSW. I wasn't aware that UNSW was so heavily involved in the community until this event and have since learned about their [interest group](http://blockchain.unsw.edu.au/) which has been going on for a while.
+Early last week I had the chance to attend the [Symposium on Blockchain and Distributed Ledger Technology](http://blockchain.unsw.edu.au/symposium18/HTML/index.html) organised by UNSW. I wasn't aware that UNSW was so heavily involved in the community until this event and have since learned about their [interest group](http://blockchain.unsw.edu.au/) which has been going on for a while.
 
 The talks had a healthy mix of research and industry case studies with subjects ranging from the technical challenges of current blockchain implementations to the legal implications of distributed ledger technology.
 
@@ -119,7 +119,7 @@ I particularly found ingenious the idea behind the following projects:
 
 ## Issues for law and the legal profession - Lyria Bennet Moses - UNSW 
 
-The last one for the day, this talk is the one I was looking forward to the most due to my work at [MODRON](http://www.modron.com/). It explores concerns and legal challenges with using blockchain technology.
+The last one for the day, this talk is the one I was looking forward to the most. It explores concerns and legal challenges with using blockchain technology. Although not related to blockchain, our work at [MODRON](http://www.modron.com/) offers many parallels with the themes discussed here.
 
 According to Lyria - and it's certainly true in non-blockchain tech circles as well such as AI and Machine Learning - people ask if blockchain and smart contracts will replace lawyers. 
 
@@ -144,4 +144,4 @@ All the above will also have implications to how lawyers are trained. I love tha
 
 Lyria's closing remarks raised the question of wether blockchain even is the thing which will solve these problems. It's too early to tell but it's encouraging to see the legal profession as a whole taking the opportunity to re-evaluate how things are done.
 
-What a day! So much to think about and so many great people to connect with. Look out for my [summary of day 2](/2018/02/16/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-2/)!
+What a day! So much to think about and so many great people to connect with. Look out for my [summary of day 2](/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-2/)!
