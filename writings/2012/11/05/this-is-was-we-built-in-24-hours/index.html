@@ -1,0 +1,270 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>This is what we built in 24 hours - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Last week our current client - ninemsn - ran the 3rd edition of their HackDay. It&#8217;s akin to Atlassian&#8217;s ShipIt days so if you&#8217;re &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">This Is What We Built in 24 Hours</h1>
+	<div class="entry-content"><p>Last week our current client - <a href="http://ninemsn.com.au/">ninemsn</a> - ran the 3rd edition of their HackDay.</p>
+
+<p>It&#8217;s akin to Atlassian&#8217;s <a href="http://www.atlassian.com/shipit-day">ShipIt</a> days so if you&#8217;re not familiar with the concept, you should check their page but here&#8217;s the gist:</p>
+
+<ul>
+<li><p>We&#8217;re given 24 hours to work on whatever we like as long as it&#8217;s related somehow to the business</p></li>
+<li><p>We&#8217;re also free to use any technology we want</p></li>
+</ul>
+
+
+<p>The team consisted of <a href="https://twitter.com/romainprieto">@romainprieto</a>, Pranav Raja, <a href="https://twitter.com/thepaddedcell">@thepaddedcell</a>, <a href="https://twitter.com/stewgleadow">@stewgleadow</a> and myself (<a href="https://twitter.com/leonardo_borges">@leonardo_borges</a>).</p>
+
+<h3>The idea: Cool story, bro!</h3>
+
+<p><a href="https://twitter.com/romainprieto">@romainprieto</a> came up with it:</p>
+
+<ul>
+<li>A mobile app that could scan QR codes on a printed <a href="http://www.atlassian.com/software/jira/overview/">JIRA</a> story card and provide features such as assigning a card to yourself, moving it between columns and adding comments to it.</li>
+</ul>
+
+
+<p>This is a common need. Most people will manage their stories in some sort of software such as JIRA. But it&#8217;s also common to have a physical story wall.</p>
+
+<p>The problem then is keeping them in sync. It&#8217;s all too common for people to move the cards on the well and forget all about JIRA.</p>
+
+<p>Well, not anymore. This is exactly what our HackDay project tackles.</p>
+
+<p>In 24 hours, we built two native mobile applications - Android and iPhone - that are able to scan QR Codes printed on the story cards and, through integrating with the JIRA REST API, provide all the necessary functionality needed for:</p>
+
+<ul>
+<li>Assigning a story to yourself - whoever is logged in to the app</li>
+<li>Moving the story between states - e.g.: In Analysis, Resolve Issue, Reopen Issue etc&#8230;</li>
+<li>Adding comments to a given story</li>
+</ul>
+
+
+<p>All code is <a href="https://github.com/ninemsn/cool-story">open source and on github</a>. <a href="https://github.com/ninemsn/cool-story">Check it out</a>! - and bear in mind this was written in 24 hours&#8230; ;)</p>
+
+<p>We didn&#8217;t stop there though. We actually finished early and had a couple of hours to spare so we shot a video - yes, a video!!! - about the app. I&#8217;m telling you, this is Hollywood quality:</p>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/jzhY4JHDowI" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Also, checkout some screenshots of the Android version:</p>
+
+<p>
+<div class="gallery">
+    <a rel="gallery1" href="/writings/assets/images/posts/cool-story-1.png" class="fancybox hoverZoomLink">
+        <img src="/writings/assets/images/posts/cool-story-1.png" width="120" height="213"/>
+    </a>
+    <a rel="gallery1" href="/writings/assets/images/posts/cool-story-2.png" class="fancybox hoverZoomLink">
+        <img src="/writings/assets/images/posts/cool-story-2.png" width="120" height="213"/>
+    </a>
+    <a rel="gallery1" href="/writings/assets/images/posts/cool-story-3.png" class="fancybox hoverZoomLink">
+        <img src="/writings/assets/images/posts/cool-story-3.png" width="120" height="213"/>
+    </a>
+    <a rel="gallery1" href="/writings/assets/images/posts/cool-story-4.png" class="fancybox hoverZoomLink">
+        <img src="/writings/assets/images/posts/cool-story-4.png" width="120" height="213"/>
+    </a>
+    <div class="clear"></div>
+</div>
+
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+    $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+Enjoy! :)
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-05T11:12:00+11:00" pubdate data-updated="true">Nov 5<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/android/'>android</a>, <a class='category' href='/writings/tags/ios/'>ios</a>, <a class='category' href='/writings/tags/mobile/'>mobile</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/11/05/this-is-was-we-built-in-24-hours/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/11/05/this-is-was-we-built-in-24-hours/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/11/05/this-is-was-we-built-in-24-hours/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/11/05/this-is-was-we-built-in-24-hours/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/11/05/this-is-was-we-built-in-24-hours/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/11/05/this-is-was-we-built-in-24-hours/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

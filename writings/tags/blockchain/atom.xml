@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: blockchain | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/blockchain/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Highlights of the Symposium on Blockchain and Distributed Ledger Technology - Day 2]]></title>
+    <link href="http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-2/"/>
+    <updated>2018-02-19T20:30:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-2</id>
+    <content type="html"><![CDATA[<p>If you haven't yet, make sure you read my <a href="/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/">summary of Day 1</a> first.</p>
+
+<h2>Morning Panel</h2>
+
+<p>Day 2 started with a morning panel with:</p>
+
+<ul>
+<li>Paul Fox from <a href="http://www.blockchainpacific.capital/team/">Blockchain.capital</a></li>
+<li>Leon Gerard Vandenberg from RightsFusion Pty Ltd &amp; <a href="http://www.solara.io/">Solara</a></li>
+<li>Oliver Harvey from <a href="http://asic.gov.au/about-asic/what-we-do/our-structure/asic-senior-executives/asic-senior-executives-biographies/">ASIC</a></li>
+<li>Ross Buckley from <a href="http://www.law.unsw.edu.au/profile/ross-buckley">UNSW Law</a></li>
+</ul>
+
+
+<p>The panelists took turns in giving their views around blockchain, investments and regulation, leading into a Q&amp;A at the end. I was running late to this session and believe I may have missed Ross' individual slot.</p>
+
+<h3>Paul's slot - I'm a VC and Bitcoin stole my job</h3>
+
+<p>Paul raises an interesting perspective on Angel investors. They don't invest to make money. To them it's a hobby. There are other, provably more profitable ways to make money.</p>
+
+<p>He also raises the fact that sure there are lots of ICOs but more and more of them seem to be missing their targets. Many reasons but one he mentioned was China's clampdown on cryptocurrencies.</p>
+
+<p>ICOs are so hot right now that there are companies dedicated to helping it happen with pre-packaged solutions for launching and marketing the token generation event: <a href="https://icobox.io/">https://icobox.io/</a> </p>
+
+<p>With so many ICOs it becomes increasingly difficult to discern good ideas from bad ones and then from plain scams. Nevertheless people are still innovating and are not deterred by these challenges. One example is <a href="https://www.trusttoken.com/">TrustToken</a>, which tokenises physical assets.</p>
+
+<h3>Leon's slot</h3>
+
+<p>Leon's particularly not happy with the current Australian Guidance towards ICOs. The current challenge is how to protect consumers, while still enabling companies and entrepreneurs trying to do a legit ICO - I'm assuming Leon is referring here to the plethora of scam ICOs out there.</p>
+
+<p>To Leon - and many in the audience - an ICO is just another tool with very desirable properties: it gives companies the means to connect with individual investors who believe in their cause without diluting equity. In addition, Leon &amp; his board had their share of bad experiences when trying to seek legal advice around ICOs and explaining their SOL Token</p>
+
+<p>There are many types of tokens/coins: equity tokens, cause coins, utility tokens... I knew about some of these but the concept of cause coins is new to me - say, SaveTheElephantsCoin.</p>
+
+<h3>Oliver's slot</h3>
+
+<p>Oliver was basically talking about capital raising. </p>
+
+<p>In particular he points out that the number of IPOs in the US is at an all time low whereas in Australia the trajectory is in the opposite direction. Unfortunately he didn't dive into the why of this change in scenery in the US.</p>
+
+<p>Personally I wanted to have asked if the decline in IPOs is due to company expansion by acquisition. Companies like Google, Facebook and Atlassian have acquired dozens of smaller successful companies who could have otherwise gone public - is there a correlation here?</p>
+
+<p>Another piece of data Oliver shared is that 25% of companies listed on the ASX have a market cap of up to $5M - he then goes to say that if a company is looking to raise about that much money crowdfunding platforms such as ICOs might just be the way to go.</p>
+
+<h2>Audience Q&amp;A</h2>
+
+<h3>Are ICOs making entrepreneurs soft? </h3>
+
+<p>The problem raised by this question is whether having too much money too soon - as is the case with lots of ICOs -  can be bad for founders.</p>
+
+<p>The panel's general opinion is that it can be a hindrance: it may lead to scaling up too soon and losing focus as one now thinks it can do many different things at the same time. VCs in general are sceptical of this.</p>
+
+<p>One way to mitigate this mentioned in the event is to have the funds locked up by smart contracts (potentially tied to milestones as opposed to simple time triggers). </p>
+
+<p>The bottom line is that ICOs are still evolving.</p>
+
+<h3>Why invest in ICOs vs traditional investments? Are we opening the floodgates for less knowledgeable, naive people to invest?</h3>
+
+<p>Should mom and dad be investing? Maybe not - there isn't enough information out there, not enough regulation. We're not there yet.</p>
+
+<p>That said, what ICOs - in particular the tokens people invest in - provide is unprecedented liquidity. Tokens aren't going away.</p>
+
+<p>In the midst of all this information exchange Naval Narvikant was mentioned as someone to watch. He's got a couple of articles and podcasts which have been recommended:</p>
+
+<ul>
+<li><a href="https://medium.com/@gifted_products/cryptocurrencies-with-tim-ferriss-nick-szabo-and-naval-ravikant-51a99d037e04">https://medium.com/@gifted_products/cryptocurrencies-with-tim-ferriss-nick-szabo-and-naval-ravikant-51a99d037e04</a></li>
+<li><a href="http://unchainedpodcast.co/naval-ravikant-on-how-crypto-is-squeezing-vcs-hindering-regulators-and-bringing-users-choice">http://unchainedpodcast.co/naval-ravikant-on-how-crypto-is-squeezing-vcs-hindering-regulators-and-bringing-users-choice</a></li>
+</ul>
+
+
+<h2>Software architecture and engineering for blockchain applications - Ingo Weber - Data61</h2>
+
+<p>This next talk was a lot more technical and was delivered by <a href="http://people.csiro.au/W/I/Ingo-Weber">Dr Ingo Weber</a> from Data61. I didn't take as many notes on this one as a version of the slides is <a href="https://www.slideshare.net/mobile/IngoWeber2/blockchains-and-smart-contracts-architecture-design-and-modeldriven-development">already available</a>.</p>
+
+<p>Dr Weber started with a demo of <a href="http://ethviewer.live/">ethviewer</a> - a way to visualise the ethereum blockchain in realtime and observe how transactions are received, processed and added to blocks. Just plain cool!</p>
+
+<p>The general message is that most blockchain applications have the blockchain as just another component in their architecture and the strengths and weaknesses of each component should be respected and planned for. e.g.: don't do big data processing on the blockchain</p>
+
+<p>In addition Ingo mentioned the <a href="http://redbellyblockchain.io/">Red Belly Blockchain</a>, an unforkable blockchain built down under.</p>
+
+<h2>Blockchain risks, Opportunities and Future scenarios - Mark Staples - Data61</h2>
+
+<p>The next speaker, <a href="http://people.csiro.au/S/M/Mark-Staples">Dr Mark Staples</a>, is also from Data61. </p>
+
+<p>Dr Staples explores a couple of reports published by Data61 about the future of Blockchain in Australia. These reports can be found <a href="http://www.data61.csiro.au/en/Our-Work/Safety-and-security/Secure-Systems-and-Platforms/Blockchain">here</a>.</p>
+
+<p>What's changed since these reports:</p>
+
+<ul>
+<li>Active interest and growing understanding by regulators</li>
+<li>Australia leading the <a href="https://www.iso.org/committee/6266604.html">ISO TC307</a> standard on Blockchain and DLT</li>
+<li>Widespread adoption and benefits yet to come</li>
+<li>Cryptocurrencies are a double-edged sword for Blockchain and DLT</li>
+<li>Technological innovation: Distributed Exchanges, Scalability, Privacy...</li>
+</ul>
+
+
+<h2>LoyaltyX - Philip Sheller</h2>
+
+<p>The premise for this talk is that loyalty programs are failing to deliver.</p>
+
+<p>Philip came from Qantas' Frequent Flyer store and knows a thing or two about loyalty programs. </p>
+
+<p>The basic idea around <a href="https://www.loyaltyx.co/">LoyaltyX</a> is that customers get rewarded in cryptocurrencies. This presents a couple of interesting benefits:</p>
+
+<ul>
+<li>They can use the crypto they earn to buy more things at the merchant</li>
+<li>Since it's crypto, they are not locked in and can take their rewards and spend them elsewhere</li>
+<li>But hey, it's still crypto so they may choose to hold and trade at a public exchange at a later time - maybe for a profit</li>
+</ul>
+
+
+<p>They ran a private pilot with UNSW merchants and students and the results are promising.</p>
+
+<h2>ROI with a stable cryptocurrency - Kevin Kirchman - WorldFree</h2>
+
+<p>Kevin presents on <a href="https://www.worldfree.com/">FreeMark</a>. It's an alternative to blockchain technology aimed at providing a stable coin backed by a basket of commodities. One fundamental difference is that in FreeMark you don't necessarily  know - or care - where your coin came from.</p>
+
+<p>There are lots of startups trying to solve the stable coin problem. I believe it's absolutely a problem that needs solving but it's hard to tell at the moment who will come out on top.</p>
+
+<h2>Creating and settling agricultural assets on a blockchain - Emma Weston</h2>
+
+<p>Emma talked about <a href="https://www.agridigital.io/">AgriDigital</a>, a startup whose goal is to enable trust and transparency for global agricultural supply chains. In a nutshell I believe AgriDigital can be described as realtime payments and digital escrow for settlement with farmers. </p>
+
+<p>The problem they are trying to solve is for farmers to get paid quicker - oftentimes the farmer who sits at the very start of the supply chain doesn't get paid within any reasonable amount of time. Sometimes they even loose track of their goods upstream - another reverence to the provenance issue.</p>
+
+<p>For this to work it seems Emma needs a stable coin - again, it's a hot topic - but for their pilot with RaboBank it was simply agreed that one of their tokens is worth 1 AUD so as to validate the technology.</p>
+
+<h2>Final panel - Payment Systems - Reserve Bank of Australia</h2>
+
+<p>This section was delivered under the <a href="https://en.wikipedia.org/wiki/Chatham_House_Rule">Chatham House Rules</a>. It basically means that no-one can tell you who said exactly what.</p>
+
+<p>+I really enjoyed the discussions here. One topic was the issuance of a digital version of the Aussie dollar (DAD) which would enable many types of sophisticated payment systems. While there isn't a conclusive indication of the future no Retail Reserve Bank sanctioned DAD was envisioned, but an AUD Bank branded 'Wholesale only" DAD may be possible. I am pleasantly surprised by the level of thinking on this topic from the Blockchain community and the RBA.</p>
+
+<h2>Summary</h2>
+
+<p>Even though cryptocurrencies and blockchain technologies aren't new - bitcoin was created in 2009 - you can see and feel that interest from technologists, the public and regulators has grown tremendously in recent years. </p>
+
+<p>Blockchain technology, implications and research still have a long way to go but 2018 has started on a really good note and I can't wait to see what the future holds.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Highlights of the Symposium on Blockchain and Distributed Ledger Technology - Day 1]]></title>
+    <link href="http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/"/>
+    <updated>2018-02-19T20:30:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1</id>
+    <content type="html"><![CDATA[<p>Early last week I had the chance to attend the <a href="http://blockchain.unsw.edu.au/symposium18/HTML/index.html">Symposium on Blockchain and Distributed Ledger Technology</a> organised by UNSW. I wasn't aware that UNSW was so heavily involved in the community until this event and have since learned about their <a href="http://blockchain.unsw.edu.au/">interest group</a> which has been going on for a while.</p>
+
+<p>The talks had a healthy mix of research and industry case studies with subjects ranging from the technical challenges of current blockchain implementations to the legal implications of distributed ledger technology.</p>
+
+<p>I'm not sure when and if slides will be published so I'll do my best to summarise the talks and share its highlights. Most likely this summary will reflect my own biases on the subjects which interest me the most.</p>
+
+<h1>Day 1</h1>
+
+<h2>An Introduction to Distributed Ledger Technology - Ron van der Meyden (UNSW)</h2>
+
+<p>Ron is the organiser of the interest group and this particular event. In this introduction he gave an overview of what a blockchian is and how it works. A great start for the day!</p>
+
+<h2>Ripple - Dilip Rao</h2>
+
+<p>Dilip is Ripple's Global Head for Infrastructure Innovation. Currently with about $94M in funding, Ripple is backed by some fairly big enterprises and banks as well as high profile customers such as Westpac, Santander, BBVA and dozens more.</p>
+
+<p>Ripple has made some interesting trade-offs:</p>
+
+<ul>
+<li>It accepts and embraces the fact that banks <strong>will not</strong> run on a public ledger. It simply won't happen
+
+<ul>
+<li>One of the reasons discussed is the fact that through a combination of various sources and pattern analysis one could figure out trading volumes between banks and enterprises and they are not onboard with that.</li>
+</ul>
+</li>
+<li>As such Ripple uses its own private ledger based on the <a href="https://interledger.org/">Interledger protocol</a>. Only on-boarded participants - banks - may interact with it. 
+
+<ul>
+<li>The product is called <a href="https://ripple.com/solutions/process-payments/">xCurrent</a>. It allows banks to settle cross-border in real time.</li>
+</ul>
+</li>
+<li>This highlights an interesting fact: <strong>banks don't need the Ripple cryptocurrency (XRP) to settle transactions</strong></li>
+</ul>
+
+
+<p>The Interledger protocol allows multiple ledgers to communicate. Currently it can communicate with the XRP(Ripple) ledger to provide fast payment channels. Due to this specialised nature, XRP now has the cheapest cost per transaction as well as being the fastest clocking in at 1500 transactions per second. <a href="https://ripple.com/insights/ripple-continues-to-bring-internet-of-value-to-life-new-features-increase-transaction-throughput-to-same-level-as-visa/">This article</a> has some more information about this.</p>
+
+<p>These are some impressive numbers - effectively they can match VISA's throughput - and has definitely brought up Ripple into my radar once again.</p>
+
+<p>Ripple also offers another product, <a href="https://ripple.com/solutions/source-liquidity/">xRapid</a>, aimed at enabling realtime payments and on-demand liquidity by using XRP. Dilip offered Cuallix as a case study for this product. <a href="https://ripple.com/insights/ripple-continues-to-bring-internet-of-value-to-life-new-features-increase-transaction-throughput-to-same-level-as-visa/">Cuallix is using xRapid to reduce the cost of sending cross-border payments from the US to Mexico</a>. </p>
+
+<p>P.S.: Just as I was writing this section I came across <a href="https://www.businessinsider.com.au/ripple-xrp-western-union-payments-testing-2018-2">another article</a> indicating Western Union is doing experiments with Ripple as well.</p>
+
+<h2>Blockchain deconstructed : contracts vs smart contracts - Fritz Henglein (University of Copenhagen)</h2>
+
+<p>This talk focused on the technical details of smart contracts as currently implemented in platforms such as Ethereum. In particular the fact that the contract rules and its execution are intertwined.</p>
+
+<p>Fritz began his talk with a summary slide on smart contracts which allowed him to expand on the above:</p>
+
+<p><img class="center" src="/assets/images/posts/crash-smart-contracts.jpg" width="250" height="333" title="Crash course on Smart Contracts terminology" ></p>
+
+<p>Due to this mixing of rules (contract checking) and execution (contract actions) in the source code - as in Ethereum smart contracts - there is no possibility of having multiple strategies which may be private and can be reused in different smart contracts.</p>
+
+<p>Fritz argues that contract actions - which he called strategies - should be stored separately to the contract rules. In doing so such strategies can be private and re-used in different contracts. He calls this model Managed Contracts which combine the contracts with join execution strategies:</p>
+
+<p><img class="center" src="/assets/images/posts/managed-contracts.png" width="250" height="333" title="Managed Contracts" ></p>
+
+<p>He then moves on to discuss the trade-offs and vulnerabilities of Ethereum smart contracts. I particular he raises these issues:</p>
+
+<ul>
+<li>Transaction order dependency
+
+<ul>
+<li>Messages may have different effect depending on the order in which they are received</li>
+</ul>
+</li>
+<li>Smart contracts may behave differently depending on the timestamp of a block
+
+<ul>
+<li>The timestamp of a block is controlled by miners. He raises that this exposes the contracts to clock manipulation attacks. Frankly I'm not sure if this attack can succeed if a single miner is the bad actor. I'd need to think through this but if someone has an example handy, that'd be great.</li>
+</ul>
+</li>
+<li>Exception handling and programming language subtleties:
+
+<ul>
+<li>Fragile gas management and limited stack </li>
+<li>Differences in language constructs such as send vs call</li>
+</ul>
+</li>
+<li>Reentrancy bugs</li>
+</ul>
+
+
+<p>Fritz's proposal to deal with this are Managed Contracts and he refers to a paper - which he co-authored - called Compositional Formal Contracts. The paper proposes the following properties:</p>
+
+<ul>
+<li>Separation of concerns</li>
+<li>Domain-oriented code</li>
+<li>Analysable</li>
+<li>Composable</li>
+</ul>
+
+
+<p>I couldn't find a paper with that exact title but did find two papers co-authored by him with a similar title. <a href="http://www.diku.dk/~simonsen/papers/j6.pdf">Here</a> and <a href="http://www.diku.dk/~simonsen/papers/c2.pdf">here</a>. If you know which one he was referring to, please let me know.  </p>
+
+<h2>Rightsfusion Pty Ltd - Solara.io - <a href="http://bit.ly/fuzo-weal">Leon Gerard Vandenberg</a> | <a href="https://www.dropbox.com/s/2mgqobppc3n4etl/UNSW%20Blockchain%20Symposium%20Briefing%202018-02-12.pdf">slides</a></h2>
+
+<p><a href="http://www.solara.io/">Solara</a> has an interesting premise.  In the energy space, consumers and traders have difficulty determining &amp; validating green, renewable energy from fossil fuel energy. Solara allows communities and prosumers (producer / consumers) to factionalize or leverage new ownership models and redistribute and/or monetise their energy &amp; their energy data.</p>
+
+<p>In addition, SOLARA Platform aims to provide a proveably green &amp; clean digital solar asset to a variety or energy data exchanges &amp; markets. The concept of a Tokenised 'Safe Haven Asset Class' based on a hybrid portfolio of Solara PAT tokens that  could be synthesised by quants to eventually provide a stable coin was contemplated by Leon. (refer to Solara White Paper for details on Project Asset Tokens - PAT tokens)</p>
+
+<p>Another interesting aspect is that Solara is looking to provide "fit for purpose hardware" Solara Hardware Modules to bridge the needs of both the metering and the blockchain worlds - think IoT eSIM cards which are also a secure blockchain keystore (wallet).</p>
+
+<p>Leon &amp; team is currently working towards an ICO (private pre-sale for their SOL Token is now on-going) and looking to build out more team members (including University Labs) and RightsFusion will engage in projects for Solar Communities and solar industry participants.</p>
+
+<p>Lastly, Leon mentioned <a href="https://www.polymath.network/">Polymath</a> in the context of ICO investments: Polymath (Canada) is working on a securities token or their ST standard. Because Solara's PAT Tokens are a type of Financial Product - PAT Tokens could embrace the Polymath ST standard to extend their eventual reach and a broader participation model.</p>
+
+<blockquote><p>Note: I also got some <a href="https://showcase.dropbox.com/s/RightsFusion-Pty-Ltd-Public-Documents-Public-Presentations-Events-5jLk5XfBukYVeUsZm0CAB">extra resources</a> about SOLARA straight from Leon.</p></blockquote>
+
+<h2>The power of possibilities - Niki Ariyasinghe - R3/Corda</h2>
+
+<p>Niki gives an overview of <a href="https://www.corda.net/">Corda</a>, an open-source blockchain project designed for building financial services infrastructure.</p>
+
+<p>The project seems to have come about from the need for banks to collaborate and understand what blockchain means for financial services.</p>
+
+<p>Corda displays a couple of intresting properties:</p>
+
+<ul>
+<li>It allows for transaction privacy</li>
+<li>It has a pluggable consensus mechanism allowing consensus algorithms to be chosen at transaction time and not at the blockchain level
+
+<ul>
+<li>I don't know enough about corda but this particular point makes me nervous :)</li>
+</ul>
+</li>
+</ul>
+
+
+<p>The highlight of this talk for me is <a href="http://www.mas.gov.sg/Singapore-Financial-Centre/Smart-Financial-Centre/Project-Ubin.aspx">Project Ubin</a>: a project by the Monetary Authority of Singapore to provide Central Bank backed Digital cash with the goal to use Distributed Ledger Technology (DLT) to clear and settle payments and securities.</p>
+
+<h2>Platform cooperatives - Browen Morgan from UNSW</h2>
+
+<p>As per Wikipedia: <em>"A platform cooperative, or platform co-op, is a cooperatively-owned, democratically-governed business that uses a protocol, website or mobile app to facilitate the sale of goods and services"</em></p>
+
+<p>I didn't take many notes during this talk but captured a few interesting links:</p>
+
+<ul>
+<li><a href="http://culedger.com/">CULedger</a>: A permissioned, private blockchain</li>
+<li><a href="https://www.loomio.org/">Loomio</a>: Collaborative decision-making software</li>
+<li><a href="https://www.provenance.org/">Provenance</a>: Building trust in goods and supply chain
+
+<ul>
+<li>It's worth noting that the issue of provenance has been mentioned quite a few times during the Symposium</li>
+</ul>
+</li>
+</ul>
+
+
+<p>I particularly found ingenious the idea behind the following projects:</p>
+
+<ul>
+<li><a href="https://arcade.city/">Arcade.city</a>: Think peer-to-peer Uber</li>
+<li><a href="https://swarm.city/">Swarm.city</a>: A decentralised commerce platform </li>
+</ul>
+
+
+<h2>Issues for law and the legal profession - Lyria Bennet Moses - UNSW </h2>
+
+<p>The last one for the day, this talk is the one I was looking forward to the most. It explores concerns and legal challenges with using blockchain technology. Although not related to blockchain, our work at <a href="http://www.modron.com/">MODRON</a> offers many parallels with the themes discussed here.</p>
+
+<p>According to Lyria - and it's certainly true in non-blockchain tech circles as well such as AI and Machine Learning - people ask if blockchain and smart contracts will replace lawyers. </p>
+
+<p>Her short answer is no. However certain roles might be replaced. It is already happening in domains such as exchange of documents. Basically she thinks that <em>"the things that junior lawyers do"</em> will be replaced by (blockchain)technology.</p>
+
+<p>In addition she offers certain applications where blockchain might be particularly well suited to disrupt such as Registries and Intellectual Property. In contrast, the problem of Information Sharing in law enforcement was mentioned as one needing a cultural solution, not a technological one.</p>
+
+<p>Additional challenges with smart contracts:</p>
+
+<ul>
+<li>Liability for delays and/or errors
+
+<ul>
+<li>e.g.: wrong transaction recorded, delays affecting price points...</li>
+</ul>
+</li>
+<li>Form of order in, say, land law</li>
+<li>Jurisdiction - in which jurisdiction are you?</li>
+<li>Data Protection:
+
+<ul>
+<li>The right to change data</li>
+<li>The right to be forgotten</li>
+<li>EU law seems to require these properties</li>
+</ul>
+</li>
+<li>Regulation
+
+<ul>
+<li>Similar issues to when digital signatures started being used for contracts</li>
+</ul>
+</li>
+</ul>
+
+
+<p>All the above will also have implications to how lawyers are trained. I love that Lyria mentioned this as I've been casting what we do at <a href="http://www.modron.com/">MODRON</a> under a similar light: our human-centric approach looks to enhance what lawyers can do and over time this will invariably lead to new types of legal professionals.</p>
+
+<p>Lyria's closing remarks raised the question of wether blockchain even is the thing which will solve these problems. It's too early to tell but it's encouraging to see the legal profession as a whole taking the opportunity to re-evaluate how things are done.</p>
+
+<p>What a day! So much to think about and so many great people to connect with. Look out for my <a href="/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-2/">summary of day 2</a>!</p>
+]]></content>
+  </entry>
+  
+</feed>

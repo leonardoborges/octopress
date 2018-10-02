@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: atlassian | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/atlassian/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mission accomplished]]></title>
+    <link href="http://www.leonardoborges.com/writings/2016/05/27/mission-accomplished/"/>
+    <updated>2016-05-27T17:40:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2016/05/27/mission-accomplished</id>
+    <content type="html"><![CDATA[<p>A year and four months ago <a href="http://www.leonardoborges.com/writings/2014/12/27/staring-a-new-chapter/">I joined Atlassian</a> to pursue a very exciting opportunity: to deliver realtime collaborative editing to Confluence. I have talked about it last year at <a href="https://www.youtube.com/watch?v=3QR8meTrh5g&amp;index=16&amp;list=PLZdCLR02grLoBx0Y5ZrpdmLxc160PIwzQ">EuroClojure</a> and this year at <a href="http://qconsp.com/presentation/colabora%C3%A7%C3%A3o-em-tempo-real-com-clojure-e-clojurescript%E2%80%8B">QCon Brazil</a>. Even <a href="http://www.cognitect.com/">Cognitect</a> wrote <a href="http://blog.cognitect.com/blog/2015/7/21/atlassian-builds-realtime-collaboration-services-with-clojure">a few words about it</a>.</p>
+
+<p>In a nutshell this involved writing Clojure code all day to build an awesome service we call Synchrony. Synchrony is capable of realtime data synchronisation - not just collaborative editing - and as such its applications are many! This has been proven again and again internally during the Atlassian ShipIt hackatons, and externally via <a href="https://enso.me/">Enso.me</a>, which is powered by Synchrony.</p>
+
+<p>Throughout this journey I took on more responsibility and transitioned into the Development Team Lead role. This gave me the opportunity to help drive the product roadmap and vision within the company in addition to leading a very capable team. What an amazing learning experience it has been!</p>
+
+<h3>Today</h3>
+
+<p>Fast-forward to today and collaborative editing is finally being used by real customers as part of our early access program! It's been a great journey and we have achieved a huge milestone!</p>
+
+<p>For a more up to date look at Synchrony I highly recommend <a href="https://twitter.com/draftkraft">Haymo Meran</a>'s presentation at <a href="https://www.youtube.com/watch?v=EgCYd6ei7QI">this year's AtlasCamp</a>. Haymo is a friend and one of the original founders of Wikidocs, the company where the technology behind Synchrony was originally developed.</p>
+
+<p>I'm really proud of what we have accomplished and it's a great moment to look for a change, again :)</p>
+
+<h3>The future</h3>
+
+<p>Yes, I am leaving Atlassian - last day is June 17th. I'll be moving on to a new opportunity about which I'm really excited. But that is the subject of another blog post :)</p>
+]]></content>
+  </entry>
+  
+</feed>

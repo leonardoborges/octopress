@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: twitter | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/twitter/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Look ma, no hands: Tweeting with your voice]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/04/09/look-ma-no-hands-tweeting-with-your-voice/"/>
+    <updated>2011-04-09T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/04/09/look-ma-no-hands-tweeting-with-your-voice</id>
+    <content type="html"><![CDATA[<p>
+This is just another one of those boring weekends where I felt the need to hack on something.<br><br>If you follow Google Chrome's <a title="Chrome's blog" href="http://chrome.blogspot.com/" target="_blank">blog</a> you're probably aware of this little nifty feature they started to implement in their latest builds: <a href="http://chrome.blogspot.com/2011/03/talking-to-your-computer-with-html5.html" target="_blank">HTML5 voice recognition</a>.<br><br>And that's when it struck me: "Hey, what if I use that and tweet with my voice instead of typing?"<br><br>The result of this hacking session is <a href="http://loudparrot.heroku.com/">LoudParrot</a>, a sample Rails app that shows how to do just that. You <strong>will</strong> need a fairly recent build of Google Chrome -beta - which you can download <a href="http://www.google.com/intl/en/landing/chrome/beta/" target="_blank">here</a>.<br><br>You can get the source on <a href="https://github.com/leonardoborges/loud-parrot">GitHub</a>.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

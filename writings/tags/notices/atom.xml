@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Notices | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/notices/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[New provider]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/07/26/new-provider/"/>
+    <updated>2008-07-26T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/07/26/new-provider</id>
+    <content type="html"><![CDATA[<p>
+I decided to change my blog's hosting provider and this is the first post using the new service.<br><br>Please if you see any abnormal behaviour around here don't hesitate to contact me either at leonardoborges@leonardoborges.com or leonardoborges.rj@gmail.com<br><br>Thanks!
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

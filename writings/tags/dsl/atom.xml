@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: DSL | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/dsl/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[QCon 2008: Domain Specific Languages]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages/"/>
+    <updated>2008-03-10T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages</id>
+    <content type="html"><![CDATA[<p>
+Today was the first day of the conference and it started with a tutorial about DSL's with <a href="http://www.martinfowler.com">Martin Fowler</a>, <a href="http://www.nealford.com/">Neal Ford</a> and Rebecca Parsons. We also had as attendants <a href="http://ola-bini.blogspot.com/">Ola Bini</a>, core developer of JRuby, and others. My expectations were pretty high and the presentation didn't let me down. I'll try to put here toghether my impressions and some notes I took while I was there.<br><br>Marting Fowler started discussing what DSL's are and giving some examples that many of us use in our day to day Job. Like the XML configuration files in the Java world. It is a kind of DSL, it has it's own keywords and syntax in order to express some information that will be used , for instance, to configure an underlying framework.<br><br>The problem with XML is that it becomes hard to see the overall behavior behind it. It's not very fluent to understand the purpose of an XML file just by looking at it for the first time. There is too much "noise". Things that get into the way of the readability. - <a href="http://www.yaml.org/">YAML</a> files are an much more readable alternatives to XML.<br><br>The same happens with a standard framework api code.  Let's take for instance a sample API configuration code written in Java to tackle the domain of hotel reservations. A framework like this could have the following implementation:<br><br><code><br>HotelService hotelService = new HotelService();<br>PersonService personService = new HotelService();</code><br><br>Hotel hotel = hotelService.findById(1);<br>Person guest = personService.findById(10) ;<br><br>Reservation reservation = new Reservation() ;<br>reservation.setFrom("2008-03-10") ;<br>reservation.setTo("2008-03-14");<br>reservation.setGuests(new Person[]{guest});<br><br>hotelService.book(hotel, reservation);<br>Of course implementations of this simple example may vary but we can see here some of the readability problems. One approach we could use for that is to develop a Fluent Interface to wrap this API. This was one of the techniques explored during the tutorial and the actual fluent interface could now look somewhat similar with this:<br><br><code><br>new Hotel(1)<br>.book()<br>.forGuests({<br>person.find(10)<br>})<br>.rooms(1)<br>.from("2008-03-10")<br>.to("2008-03-10");<br></code><br><br>Much more readable, huh?  One of the main benefits of using DSL's they highlighted in the tutorial is the simplicity of code you can achieve. You can actually show this code to a business person and he can understand it.  This is a kind of <a href="http://www.martinfowler.com/bliki/InternalDslStyle.html">internal DSL</a>.<br><br>But there is still a bit of noise in this code. The the parenthesis which are not always desirable, and the use of double quotes for dates. But, this is Java code, and Java doesn't give too much room for you on the DSL subject. Here was when the speakers changed their focus a bit to Ruby. It's dynamic nature and metaprogramming techniques provides a powerful flexibility that allows for a looser syntax.<br><br>So in ruby the previous interface could look like this now:<br><br><code><br>Hotel.find(1) .book(1.room).forGuests {<br>Person.find(10)<br>}.from(march.10.2008).to(march.10.2008)<br></code><br><br>We got rid of the double quotes and the code looks more fluent, like a normal english sentence. I doubt a business guy woudn't understand what this code is doing. With this, we can get closer to the business guys, with a common vocabulary, and fill the gap between us.<br><br>This is just one of the ways we could have written this code and is not the actual example used in the tutorial.  The syntax also really depends on how readable you wanna make your code. I'll provide those later when they release the digital format of the presentation.<br><br>So one of the flows that the development of an internal DSL can get is to build a framework and define the DSL on top of it. But we should also keep in mind that DSL's shouldn't be general purpose programming languages. They should be created to tackle a specific kind of domain problem, so we would have a whole system made of small DSL's.<br><br>Another interesting subject that was touched is testing. How do you test DSL's?<br>The suggested approach, and that I think is quite reasonable, is to have separate tests for the underlying framework and another to test the DSL and its parser you can assure you have the expected behaviour of both parts.<br><br>This is really just a summary of my thoughts and of what happened there. I'm not going into too much details right now but if you found something too abstract - and it is! ;) - feel free to ask details. I'll be more than happy to help.<br><br>This is definetly an interesting subject and now I'll head to play more with all that. :)<br><br>PS; This is not the whole presentation, just the best of it from my stand point. Other subjects include External DSL's which can actually involve you coding Lexers, Parsers and Compilers. It's usually not worth the hassle. And it's too complicated anyway, that's why I left it out from this post.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

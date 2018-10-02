@@ -1,0 +1,574 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I&#8217;ve just watched a video from Google IO where Martin Fowler and Rebecca Parsons went through some of the aspects that involves the &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/06/22/google-io-thoughtworks-on-gae/">Google IO: Thoughtworks on GAE</a></h1>
+	<div class="entry-content">
+		<p>
+I&#8217;ve just watched a <a href="http://www.youtube.com/watch?v=-4fA_UciDaA">video</a> from <a href="http://code.google.com/events/io/">Google IO</a> where <a href="http://code.google.com/events/io/">Martin Fowler</a> and Rebecca Parsons went through some of the aspects that involves the development of an application for the cloud - focusing on the JVM.<br><br>In terms of the Google App Engine, you don&#8217;t have access to a relational database, thing I found out <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">when I first tried it</a>.  Instead you get a <a href="http://labs.google.com/papers/bigtable.html">Big Table</a>.<br><br>Martin put out a good analogy and you can just think of it as a nested hash map. It&#8217;s certainly a shift on how we think these days, but layers of abstraction like google&#8217;s DataStore and the Java Persistence API will help in the transition.<br><br>Another interesting bit about the presentation was on how concurrency works on GAE.<br><br>Essentially, in an standard Java application you have a single memory space where you have at least one running thread. You can create threads on the fly, which will share the same memory space, thus making it easy to share data.<br><br>On the app engine, things work differently. What you have are separate memory spaces with a single thread on each one. Any attempt to create a new thread will result in an exception. The solution for sharing information in this case? Use the nested hash map (big table).<br><br>Now, whereas you might not be worried about this since your application doesn&#8217;t span any threads, as well pointed by Martin Fowler, it&#8217;s the code you don&#8217;t see that you need to be careful with. Any Java application uses a number of 3rd party libraries that might span out threads of their own, which will result in your application blowing up.<br><br>That rang a bell. Again, back when <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">I was trying the app engine</a>, one of the configuration bits shared by <a href="http://olabini.com/blog/2009/04/jruby-on-rails-on-google-app-engine/">Ola Bini</a> looked like this:<br><pre>   config.webxml.jruby.min.runtimes = 1<br>   config.webxml.jruby.max.runtimes = 1<br>   config.webxml.jruby.init.serial = true</pre><br><br>I think the properties are pretty much self-explanatory but I didn&#8217;t quite understand the reason for setting it back then.<br><br>If you happen to have bigger values for the number of runtimes you want, you need to set the serial property to true, otherwise JRuby will span several threads to create the runtimes.<br><br>This is a really good example of things that might fail whether you&#8217;re migrating or developing a new app to deploy on the App Engine. Luckily for us, JRuby has a smart and neat way to handle this - the configuration I&#8217;ve just shown, but most of the libraries out there that might rely on threads are not prepared.<br><br>Martin and Rebecca&#8217;s opinion on this is that new releases of these same libraries will start to take it into account, since a bigger adoption of the Cloud seem to be on the way.<br><br>Make sure you watch the video. I certainly left a lot of interesting stuff out.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-22T00:00:00+10:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/java/'>Java</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/06/14/helping-the-jruby-effort-debugging-the-source/">Helping the JRuby Effort: Debugging the Source</a></h1>
+	<div class="entry-content">
+		Wanna help improve JRuby? Make sure you read <a href="http://blog.headius.com/2009/05/help-jruby-by-fixing-rubyspecs.html" target="_blank">this</a> post by Charles Nutter first. There he explains how to run Ruby specs with JRuby.
+
+
+
+Start with fixing Ruby specs is a great way to get acquainted with the code. And it&#8217;s also a important task in order to make sure JRuby is the most complete and compatible ruby implementation out there.
+
+
+
+But before you get your hands dirty, it will be a lot easier if you can actually debug JRuby&#8217;s source while fixing any specs - or bugs/features for that matter.
+
+
+
+Taking as an example one of the specs I fixed, this is how you run it - form within your jruby source directory:
+
+<pre lang="bash">$ bin/jruby spec/mspec/bin/mspec spec/ruby/language/class_spec.rb</pre>
+
+This is using jruby to execute the mspec binary against the class_spec.rb script. Now, if you want to debug this script instead of only running it, try this:
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bin/jruby -J-Xrunjdwp:transport<span class="o">=</span>dt_socket,server<span class="o">=</span>y,suspend<span class="o">=</span>y,address<span class="o">=</span>4000 -J-Xdebug spec/mspec/bin/mspec -T-X+C spec/ruby/language/class_spec.rb
+</span></code></pre></td></tr></table></div></figure>
+
+The extra arguments will start a debugging session on port 4000 and suspend the VM, which will be waiting for another debug process to attach. You can do that using any IDE of your choice but I&#8217;ll use Eclipse for this example.
+
+
+
+Go to the Run menu and select the &#8220;Debug Configurations&#8230;&#8221; item. You&#8217;ll see a screen similar to the one shown below:
+
+
+<p>
+<a href='/writings/assets/images/picture-2.png'><img src="/writings/assets/images/picture-2-300x240.png"></a>
+</p>
+
+
+
+
+As you can see, you need to create a new &#8220;Remote Java Application&#8221; configuration, setting the port to the same one you used to start the debugger session - 4000 in our case. Don&#8217;t forget to add JRuby&#8217;s source code in the Source tab on this same screen.
+
+
+
+Once you&#8217;re done, set a breakpoint anywhere in JRuby&#8217;s sources and run the newly created configuration.
+
+
+
+That&#8217;s it! Enjoy!
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-14T00:00:00+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/06/08/how-do-you-keep-yourself-focused/">How Do You Keep Yourself Focused?</a></h1>
+	<div class="entry-content">
+		<p>
+This is basically a compilation of a few tools/habits that I use to keep focused and at a high level of productivity when working alone. Works great for me and I hope there are useful tips for you as well.<br><br><dl> <dt><strong>Music</strong></dt> <dd>This is one of my favorites. When working alone I hate having noisy people around, which happens quite often if you work in an open office space like me. - It is great for pair programming but I find it inefficient otherwise. Thus, I came up with the term <strong>the Heavy Metal effect</strong>. Ok, just fit your favorite music genre there but the important thing is that it must act as a barrier to the outside world. It won&#8217;t work if you put something new and start babbling the lyrics!</dd> <dt><strong>Password Manager</strong></dt> <dd>In my day to day I have a number of web sites open like API documents, programming related groups, email&#8230; There are also the ones you open a few times a day like the company bug tracker, review board and etc. I find that having a password manager, in my case <a href="https://lastpass.com/" target="_blank">LastPass</a>, saves a lot of time. The big advantage of it over similar tools like 1Password is that it works on mac, linux or windows. It&#8217;s just a firefox plugin.</dd> <dt><strong>Multiple Workspaces</strong></dt> <dd>Probably the most obvious item on this list to developers but I&#8217;s never too much to reinforce it. Multiple workspaces are great. And they are available in whatever platform you happen to be locked in. In my case, I split my environment in at least 3 workspaces:<br>-<strong>Development</strong> - where I keep things like my IDE, Browser and Terminal<br>-<strong>Documentation</strong> - where I keep API documents, tutorials and related stuff<br>-<strong>Communication</strong> - where I have my email, both personal and business, twitter and etc. This allows me to easily set a time per day to do each of my stuff without having noise from things that aren&#8217;t important to what I&#8217;m focusing in that very moment. </dd> <dt><strong>App Launcher</strong></dt> <dd>A must! On Mac I use <a href="http://www.versiontracker.com/dyn/moreinfo/macosx/22549" target="_blank">QuickSilver</a> and on Linux, <a href="http://do.davebsd.com/release.shtml" target="_blank">Gnome Do</a>. I won&#8217;t say much here. If you don&#8217;t use some sort of application launcher, do yourself a favor, stop reading and install one. You have no idea of how comfortable and time saver they are.</dd> <dt><strong>Batch tasks</strong></dt> <dd>Maybe this wasn&#8217;t the best title but I couldn&#8217;t think of anything better.<br>As a result of having a communication workspace that I use a few times a day, I find stuff that I&#8217;m interested in but don&#8217;t have the time to dig at the moment. So I need a way to queue that and read later when I&#8217;m home. The tools of the trade in this case are <a href="http://www.twitter.com" target="_blank">Twitter</a> + <a href="http://blog.evernote.com/2009/04/14/evernote_twitter/" target="_blank">Evernote</a>.<br>Evernote is roughly a to-do manager. And since they released their Twitter integration it&#8217;s been dead easy to queue those things I talked about earlier. Just send a direct message to evernote and the item gets added instantly. </dd> </dl>Now, what about you? What works for you?
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-08T00:00:00+10:00" pubdate data-updated="true">Jun 8<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/productivity/'>Productivity</a>, <a class='category' href='/writings/tags/programming/'>Programming</a>, <a class='category' href='/writings/tags/tools/'>Tools</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/06/06/coding-dojo-1-the-fun-begins/">Coding Dojo #1 - the Fun Begins</a></h1>
+	<div class="entry-content">
+		<p>
+Yesterday I organized our first <a href="http://codingdojo.org" target="_blank">CodingDojo</a> here at the company and I&#8217;m glad to say it was a great success!<br>The problem chosen was the <a href="http://codekata.pragprog.com/2007/01/kata_two_karate.html" target="_blank">Karate Chop</a>, from Dave Thomas&#8217; <a href="http://codekata.pragprog.com/" target="_blank">Code Kata</a>.<br><br>As it was also my first time organizing a Dojo, we took some time to get things straight, explain everyone the rules and start coding. Nothing that would compromise the experience, though.<br><br>The rules were basically the ones of a <a href="http://codingdojo.org/cgi-bin/wiki.pl?back=RandoriKata" target="_blank">RandoriKata</a> and as a mechanism for switching pairs we chose the <a href="http://codingdojo.org/cgi-bin/wiki.pl?back=TimeBox" target="_blank">TimeBox</a> with a limit of 5 minutes.<br><br>We came up with 3 different solutions in about 1h 30min. The 1st one looking like crap! :)<br><br>Which was actually interesting because the general feeling before we started was that it would be boring, or too easy since &#8220;everyone&#8221; knows what a binary chop/search is.<br>Wrong!!! It all changes when you have a time limit and a bunch of people behind you doing funny noises! It&#8217;s a pressure different from your day to day job. A healthy one in my opinion.<br><br>Hearing the feedback afterwards was rewarding. Everyone seemed to have had a lot of fun and can&#8217;t wait for the next one.<br><br>I guess the most important lesson we got from it was to be quiet and not bother the current pair when we do not agree with their idea - not even if we do. This one is very important as it both shows respect and allows you to learn from how your colleagues think.<br><br>Next thursday we&#8217;ll keep going with this one and hopefully finish and pick up the next problem! :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-06T00:00:00+10:00" pubdate data-updated="true">Jun 6<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/codingdojo/'>CodingDojo</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/">Railswaycon: JRuby Internals by Ola Bini</a></h1>
+	<div class="entry-content">
+		<p>
+As always I expected a good talk from Ola and once more he delivered it. But this one was different. It might have been even boring to some ruby developers since we saw a fair amount of java code in this presentation. Ola gave us a tour through the main classes that make JRuby possible with a single purpose: so we can check out the code and hack ourselves. You can download his slides <a href="http://olabini.com/presentations/JRubyInternals.pdf" target="_blank">here</a>.<br><br>If you&#8217;ve been following both JRuby and Ola Bini for the past year or so, you&#8217;ve noticed the trend and evolution of this alternative - and so far the most complete one - implementation of the ruby language. Specially at conferences.<br><br>Last year at QCon London, Ola was also talking about JRuby. At Euruko &#8216;08, in Prague, <a href="http://blog.headius.com/" target="_blank">Charles Nutter</a> also talked about it. RailsConf in Berlin also had its share. What all these talks had in common is that they talked about JRuby from a user/developer point of view. They were selling the solution. Convincing people to use it and presenting successful use cases.<br><br>And as the trend goes on, JRuby is now faced as a true alternative - one that we, btw, believe here at the company as we&#8217;re <strong>actively using it</strong> - and it seems that now the call is for help. Help to make JRuby an even more complete and overall better ruby implementation. Charles&#8217; <a href="http://blog.headius.com/2009/05/help-jruby-by-fixing-rubyspecs.html">call for help</a> was a great step. As he states, it&#8217;s a good way to get your feet wet. I answered the call and am hacking JRuby myself, having already submitted a couple of patches. Perhaps this was the reason for which I enjoyed the talk the  most. I was already familiar with some of the structure and classes in JRuby.<br><br>There were 2 more talks about JRuby: <strong>The Pleasure and Pain of Migrating to jRuby</strong>, by <a href="http://twitter.com/stevenbristol" target="_blank">Steven Bristol</a> and <strong>Integrating Enterprise Java with JRuby and Rails</strong>, <a href="http://twitter.com/malagant" target="_blank">Michael Johann</a>. Unfortunately only the first one was a real case experience, where Steven walked through the problems he faced integrating JRuby with an existing java project. Interesting insights.<br><br>Michael Johann basically presented a short tutorial on how to integrate rails with EJB3 which, albeit interesting, failed to address issues faced on real life projects, like dependency management. Issues which we have already addressed in a very cool way here and I plan to share it soon. Still deciding how though&#8230;
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-29T00:00:00+10:00" pubdate data-updated="true">May 29<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>, <a class='category' href='/writings/tags/railswaycon/'>railswaycon</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/05/16/rails-readable-test-names-run-individual-tests-from-the-console/">Rails&#8217; Readable Test Names: Run Individual Tests From the Console</a></h1>
+	<div class="entry-content">
+		<p>
+As you probably know, since rails 2.1 you can write test methods in the following format:<br><br><pre lang="ruby"><br>test "hotel should return its permalink" do<br>  #your test code here<br>end<br></pre><br><br>Which is great, as the test name becomes much more clear. But you can&#8217;t simply run this test easily from the command line. You&#8217;d have to run something like:<br><br><pre lang="bash"><br>$ ruby your_test_file.rb -n test_hotel_should_return_its_permalink<br></pre><br><br>It annoys me. And it&#8217;s not practical either to make the test fail just so you can get the test&#8217;s real name.<br>I wanted to be able to just copy and paste the readable name in the console and have Test::Unit do the conversion and run it for me, like this:<br><br><pre lang="bash"><br>$ ruby your_test_file.rb -n "hotel should return its permalink"<br></pre><br><br>So I created <a href="http://github.com/leonardoborges/readable_test_names_runner/tree/master" target="_blank">readable_test_names_runner</a>. It&#8217;s a tiny rails plugin that adds this feature for you.<br><br>Enjoy.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-16T00:00:00+10:00" pubdate data-updated="true">May 16<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/05/05/rcov-jruby-and-rcov_plugin/">Rcov, JRuby and Rcov_plugin</a></h1>
+	<div class="entry-content">
+		<p>
+The <a href="http://github.com/commondream/rcov_plugin/tree/master" target="_blank">rcov_plugin</a> project is a rails plugin for <a href="http://eigenclass.org/hiki.rb?rcov" target="_blank">rcov</a> that adds some useful rake tasks to your application.  And since I&#8217;m currently working in a JRuby project it made sense to use this plugin.<br><br>The thing is, among other stuff, an rcov report from a JRuby project includes some files that shouldn&#8217;t be there at all, plus you also need to change the way you call rcov as such. Thus, I thought I&#8217;d contribute these changes to the plugin and my pull request was approved this morning - just install the latest version and you should be good to go.<br><br>It was useful for us here, hope it might be useful for you too.<br><br>Enjoy :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-05T00:00:00+10:00" pubdate data-updated="true">May 5<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/testing/'>Testing</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/04/22/git-cheat-shee/">Git Cheat Sheet</a></h1>
+	<div class="entry-content">
+		<p>
+For those who don&#8217;t know <a href="http://git-scm.com/" target="_blank">Git</a> is a version control system developed  by <a href="http://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank">Linus Torvalds</a>. It&#8217;s main difference from other tools like SVN and CVS is the fact that it&#8217;s distributed.<br><br>Recently I gave a workshop about Git here at the company where I walked through the most common cases I usually see when working in a team and thought about posting a summary of the commands used in the workshop.<br><br>It turns out that just this morning I found <a href="http://ktown.kde.org/~zrusin/git/git-cheat-sheet-medium.png">this - a.k.a the rest of my post</a>. It&#8217;s a really nice and concise Git Cheat Sheet that covers most of what I talked about  in the workshop. So I highly recommend you bookmark it. It will certainly be useful.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-22T00:00:00+10:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/git/'>git</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">JRuby on Rails and Google App Engine</a></h1>
+	<div class="entry-content">
+		<p>
+As many of you know the new language supported at <a href="http://code.google.com/appengine/" target="_blank">GAE</a> now is Java, as officially announced on their <a href="http://googleappengine.blogspot.com/2009/04/seriously-this-time-new-language-on-app.html" target="_blank">blog</a>. As a Ruby/Rails developer you might not be interested on it but here is a reason you should be: <a href="http://jruby.codehaus.org/" target="_blank">JRuby</a>.<br><br>It was only a matter of time until we saw some people deploying JRuby on Rails apps on GAE, like Ola Bini&#8217;s <a href="http://olabini.com/blog/2009/04/jruby-on-rails-on-google-app-engine/" target="_blank">mini blog app</a>. Guess that was the first one really, as he was beta testing the service in secret. Google App Engine imposes a few catches to any java application deployed there and any JRuby app wouldn&#8217;t be different. For instance, your Java API access is limited to <a href="http://code.google.com/appengine/docs/java/jrewhitelist.html" target="_blank">these classes - called JRE Class whitelist</a>.<br><br>As you can see on his blog, you don&#8217;t need active record and in fact shouldn&#8217;t even be loading that on your app.<br><br>I felt compelled to try it and the timing was perfect. I am currently developing a JRuby on Rails app at the company I work for and it was a perfect fit, since we are not using ActiveRecord. The reason is that we get the data we need from other sources, such as web services and even text files.<br><br>Ola Bini&#8217;s tips were crucial here. He provides a small script you can use to prepare the jars you&#8217;re sending to your app. Another important piece was the <a href="http://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Java" target="_blank">Google App Engine SDK for Java</a>. It ships with a server that emulates GAE&#8217;s behaviour locally so you&#8217;re less likely to have problems once you deploy it.<br><br>I did have a problem though with the number of files uploaded to my appspot. It&#8217;s currently limited to 1000 - a thousand - and a Rails app can easily exceed this limit. So before deploying, remove anything that is not crucial: activerecord - you should&#8217;ve done it already - , all tests directories - including the ones inside gems your app needs in order to work, fixtures and etc.<br><br>After that it was rewarding seeing a custom JRuby On Rails application working perfectly on GAE. And as much as I&#8217;d like to, I can&#8217;t really share the URL since it&#8217;s a private app but I encourage people to try it. I believe GAE will ultimately help the community improve JRuby even more.<br><br>And as a last tip, this time thanks to <a href="http://akitaonrails.com/" target="_blank">Fabio Akita</a>, is <a href="http://gist.github.com/91684" target="_blank">this snippet</a>. You should redirect your log so you can debug your app form GAE&#8217;s dashboard.<br><br>Have fun!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-10T00:00:00+10:00" pubdate data-updated="true">Apr 10<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/04/06/long-stand-up-meetings/">Long Stand Up Meetings</a></h1>
+	<div class="entry-content">
+		<p>
+It&#8217;s been more than a year since I started my new endeavor here in Spain, moving from Brazil and starting a whole new life - both personal and professional. Time for a little retrospective.<br><br>More precisely, a retrospective about the agile practices here at the company.<br><br>When I first started out back in January &#8216;08 the company thought they were agile. NOT! They did adopt some XP practices but just to give you an idea, I&#8217;m gonna focus on just one: stand-up meetings.<br><br>My first stand-up meeting was a shock! We were a team of 6 developers and 2 sys admins and the meeting lasted for 40 -yes, forty - minutes!<br><br>The reason? Several, but the most obvious one was that in their stand up meeting they were actually, well, sit. That was my first suggestion which some people were actually reluctant about. But we survived.<br><br>Since then we improved a lot our stand-up meetings being able to usually cut it down to 10 minutes. But we can get better.<br><br>Another problem we usually have is the &#8220;i-want-my-finger-in-everything&#8221; syndrome. I guess you&#8217;re all familiar with that. It&#8217;s the developer who wants to know everything in its minimum detail and interrupts everyone in the stand-up meeting to ask questions or make clarifications that could, both, be done afterwards. And that&#8217;s a problem we still have every now and then.<br><br>But we are much better now and to get here we basically successfully tried:<br><br>- Standing up ( duh?! - believe me, this was harder than you might think)<br><br>- Trying to bind people&#8217;s thoughts on what they&#8217;ve done the day before and what they are going to do that day. Anything else should be left for after the meeting - it&#8217;s probably not everyone else&#8217;s concern. Focus.<br><br>- Limiting the amount of time allowed for each developer - currently we have a generous 2 minute limit.<br><br>- Using a token -any object light enough to be hold while you&#8217;re talking. People are only allowed to talk when they get hold of it. This was a nice idea brought by my colleague <a href="http://www.ivercore.com/">Philip MacIver</a>.<br><br>But we still have issues. People still jump in somebody else&#8217;s turn and get the token basically as if just by getting it they can talk. And because of that we still suffer from the  &#8220;i-want-my-finger-in-everything&#8221; syndrome.<br><br>So after telling this little story about how stand-up meetings evolved here, I&#8217;d like to hear from you guys what do you do to keep your meetings short and to the point. I&#8217;m really willing to hear suggestions and success stories.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-06T00:00:00+10:00" pubdate data-updated="true">Apr 6<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/agile/'>Agile</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/writings/writings/page/7/" class="prev">Prev</a>
+    
+    
+        <a href="/writings/writings/page/9/" class="next">Next</a>
+    
+    <div class="center"><a href="/writings/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

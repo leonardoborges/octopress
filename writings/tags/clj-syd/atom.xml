@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: clj-syd | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/clj-syd/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Sean Corfield: Clojure and CFML sitting in a tree]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree/"/>
+    <updated>2012-08-23T00:03:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree</id>
+    <content type="html"><![CDATA[<p>Last night I attended the Adobe User Group here in Sydney. That might strike some of you as a big surprise
+given my relationship with Adobe is pretty much limited to fiddling with Photoshop/Lightroom to get my photos looking nice.</p>
+
+<p>However the reason for which I attended the meetup is that <a href="https://twitter.com/seancorfield">Sean Corfield</a> - a prolific member of the Clojure community - gave a presentation on how he introduced and migrated most of his backend code at <a href="http://worldsingles.com/ws2010/index.cfm">World Singles</a> from <a href="http://en.wikipedia.org/wiki/ColdFusion_Markup_Language">CFML</a> to <a href="http://clojure.org/">Clojure</a> - hence my interest.</p>
+
+<p>What follows is a mix of my own notes and what I could remember from the slides:</p>
+
+<h3>Going faster</h3>
+
+<p>The original platform was built in CFML between 2001 and 2008. It was essentially monolithic procedural code. It was rewritten in 2009 - when they introduced OO and a new version of CFML</p>
+
+<h3>Brief Stats</h3>
+
+<ul>
+<li>3 million members</li>
+<li>1 million emails sent every day</li>
+<li>2k concurrent users 24x7, on average</li>
+</ul>
+
+
+<h3>Clojure and WorldSingles</h3>
+
+<ul>
+<li>Tried .NET - ran into all sorts of trouble. Didn't work well in production.</li>
+<li>Tried Scala - Memory leaks in the built-in actor library were a deal breaker. The type system also wasn't a good cultural fit.</li>
+<li>Evaluated Clojure in 2010 - seemed like a good language to squeeze performance out of lower level components</li>
+<li>Clojure version released in production in 2011
+
+<ul>
+<li>Rewrote remaining Scala Code</li>
+<li>6.3k LOC - 1.5k Tests LOC</li>
+<li>equivalent to 4x the CFML LOC</li>
+<li>Clojure is essentially used in the model (as in MVC)</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Why add Clojure?</h3>
+
+<ul>
+<li>It's fast - compiles down to JVM bytecode (and it's faster than CFML)</li>
+<li>Immutability (automatic thread safety)
+
+<ul>
+<li>they found several thread safety bugs in the third party ColdFusion libraries being used</li>
+</ul>
+</li>
+<li>Built-in concurrency / parallelism support - <a href="http://clojuredocs.org/clojure_core/clojure.core/future">future</a>, <a href="http://clojuredocs.org/clojure_core/clojure.core/pmap">pmap</a>, <a href="http://clojuredocs.org/clojure_core/clojure.core/pvalues">pvalues</a> etc.</li>
+<li>Lazy sequences - being able to work with potentially ininite collections without bringing your server down.</li>
+<li>All high quality, production ready Java libraries easily accessible via <a href="http://clojure.org/java_interop">java interop</a>.</li>
+</ul>
+
+
+<h3>What do they use it for?</h3>
+
+<ul>
+<li>Email
+
+<ul>
+<li>html generation &amp; sending</li>
+<li>tracking &amp; log file analysis</li>
+</ul>
+</li>
+<li>Geolocation (rest/json)</li>
+<li>i18n</li>
+<li>Reporting (parallel queries) - he showed a bit of this code. Heavy use of <a href="http://clojuredocs.org/clojure_core/clojure.core/future">futures</a> + <a href="http://clojuredocs.org/clojure_core/clojure.core/deref">deref</a></li>
+<li>Search engine integration (json/xml)
+
+<ul>
+<li>This breaks down to two Clojure components:</li>
+<li>One feeds the search engine based on changes to the users profiles</li>
+<li>The other then runs against the search engine 24x7 trying to find new matches for users</li>
+</ul>
+</li>
+<li>(lightweight?) Persistence layer
+
+<ul>
+<li>no ORM - thin framework over sql instead</li>
+<li>Same interface for both Mysql &amp; MongoDB</li>
+<li>MongoDB being used after hitting performance issues in Mysql</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Clojure ecosystem/community</h3>
+
+<p>Having an active Community is crucial for language adoption and the clojure community got this right:</p>
+
+<ul>
+<li>Community
+
+<ul>
+<li>6700 developers on the <a href="https://groups.google.com/forum/?fromgroups#!forum/clojure">mailing list</a></li>
+<li>~300 developers on IRC 24x7</li>
+</ul>
+</li>
+<li>Active library development
+
+<ul>
+<li>#23 language on Github</li>
+<li>Over 7k projects on github</li>
+<li>Nearly 2k libs on <a href="https://clojars.org/">Clojars</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>The Future</h3>
+
+<ul>
+<li>Looking into <a href="https://github.com/nathanmarz/cascalog">Cascalog</a> for big data processing</li>
+<li>All new back-end/model code written in Clojure</li>
+<li>Views/Controllers will remain in CFML
+
+<ul>
+<li>This ties up with Sean's answer to 'What would you not use Clojure for?'</li>
+<li>He mentioned HTML rendering as the major reason. You can't hand <a href="https://github.com/weavejester/hiccup">hiccup</a> code to a designer.</li>
+<li>Similarly, while designers can work on <a href="https://github.com/cgrand/enlive">Enlive</a> templates, updating the dynamic bits in Clojure can be cumbersome.</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Summary</h3>
+
+<p>It was great to hear the many good things Sean had to say about Clojure. WorldSingles seem pretty happy with the decision of migration their heavy-lifting code to it and hopefully these slide notes will give you some insight into the sort of things Clojure is good at.</p>
+
+<p><del>Sean is likely to put his slides up somewhere so I'll link to it as soon as I have it.</del> <a href="http://corfield.org/articles/WorldSinglesWeb.pdf">Here they are.</a></p>
+
+<p>If you want to know more about Clojure and be involved in the community, you should come to the next <a href="http://www.meetup.com/clj-syd/">clj-syd meetup</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[clj-syd report #0]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0/"/>
+    <updated>2012-02-22T21:14:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0</id>
+    <content type="html"><![CDATA[<p>Last night we held the first ever meetup for the <a href="http://groups.google.com/group/clj-syd">Sydney Clojure User Group</a>!</p>
+
+<p>When I decided to start running the meetups I had no idea we'd end up with <strong>37</strong>
+people on the first night! What a great turn out!</p>
+
+<p>As for the content, here's what you missed:</p>
+
+<ul>
+<li><strong>Running Clojure apps on Heroku</strong> - Lincoln Stoll (<a href="https://twitter.com/#!/lstoll">@lstoll</a>)</li>
+</ul>
+
+
+<p>Linc works for Heroku but ended up not spending a whole lot of time talking about
+that - instead he showed us how  to build a simple web application using
+<a href="https://github.com/weavejester/compojure/wiki">Compojure</a>, a small Clojure web framework.</p>
+
+<p>He then evolved the example by implementing it using <a href="http://webnoir.org/">Noir</a> - yet another web
+framework that builds on top of <a href="https://github.com/weavejester/compojure/wiki">Compojure</a>, adding some helpful macros.</p>
+
+<p>To top it off, the UI was implemented in <a href="https://github.com/clojure/clojurescript">ClojureScript</a> - so that was all Clojure
+from end to end!</p>
+
+<ul>
+<li><strong>Paredit (in Eclipse) for the IDE junkie</strong> - Matt Quail (<a href="https://twitter.com/#!/spudbean">@spudbean</a>)</li>
+</ul>
+
+
+<p>If you're into lisps and use emacs - if not you <strong>should</strong> anyway - you learned to
+love <a href="http://www.emacswiki.org/emacs/ParEdit">paredit</a>.</p>
+
+<p>However, not everyone gets to write Clojure for a living and a lot of us end up in
+some sort of IDE. If you're in Java land, a popular choice is Eclipse and Matt showed
+us how you can get the paredit goodness right there using the Eclipse plugin <a href="http://code.google.com/p/counterclockwise/">counterclockwise</a>.</p>
+
+<ul>
+<li><strong><a href="http://offbytwo.com/presentations/building-better-repl.pdf">Building a better Clojure REPL</a></strong> - Cosmin Sterejean (<a href="https://twitter.com/#!/offbytwo">@offbytwo</a>)</li>
+</ul>
+
+
+<p>Frustrated with the Clojure REPL? Wish you had more useful shortcuts? Decent line
+editing? Saving that nice function you've been working on right from the REPL? Then
+make sure you check out both the <a href="http://offbytwo.com/presentations/building-better-repl.pdf">presentation</a> and <a href="https://github.com/cosmin/IClojure">IClojure</a>, Cosmin's
+project.</p>
+
+<p>Definetly worth a try.</p>
+
+<ul>
+<li><strong><a href="https://docs.google.com/open?id=0B-wuNsBziQXAZWZmMzdjMDQtYzM4Zi00NGNjLThhY2ItYTFhOTZkOTQ0OTBh">Where do I put my DependentStrategyTemplateAbstractFactory</a>?</strong> - Bayan Khalili</li>
+</ul>
+
+
+<p>Bayan was in one of our internal meetups. Some people raised the fact that we don't
+see a lot of the design patterns made popular by the <a href="http://amzn.to/wdq6Lr">GoF book</a> in languages such as Ruby, Python or Clojure
+and the overall opinion is that in those languages, some of the problems these
+patterns solve in, say, Java, simply don't exist.</p>
+
+<p>Bayan decided to dig up a few and show what's the alternative in Clojure. Interesting
+perspective.</p>
+
+<h2>Want more?</h2>
+
+<p>Join us on <a href="http://groups.google.com/group/clj-syd">Google Groups</a>, submit a talk proposal on the <a href="https://github.com/clj-syd/clj-syd/wiki">wiki</a> and RSVP to
+the <a href="http://www.meetup.com/clj-syd/">next meetup</a>!</p>
+
+<p>See you next time!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Backlog: Ola Bini on Clojure/conj]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/"/>
+    <updated>2012-01-22T22:01:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj</id>
+    <content type="html"><![CDATA[<p>As I promised in my <a href="http://bit.ly/clj-syd">previous post</a>, here are the highlights of what <a href="http://olabini.com/blog/">Ola Bini</a> had to say about <a href="http://clojure-conj.org/">Clojure/conj</a>.</p>
+
+<p>Clojure/conj is the largest gathering of clojure programmers, hackers and enthusiasts, with a single track of talks spanning three days.
+Ola selected his favorite talks and summarised each one of them.</p>
+
+<p>The actual slides for each one of the talks can be found on <a href="https://github.com/relevance/clojure-conj">github</a>.</p>
+
+<p>You can find Ola's slides <a href="http://db.tt/lTFsOKpZ">here</a>.</p>
+
+<h3>Fun Data Structures</h3>
+
+<p>This is certainly a very interesting topic. The highlight here is the approach Clojure takes to handling immutable data structures efficiently: persistent data structures through structural sharing - maybe a good short talk for the next meetup?</p>
+
+<p>However, even though efficient, there are cases where the space complexity of known algorithms gets compromised.
+More specifically, algorithms that rely on the ability of changing data structures in-place - such as the QuickSort - will suffer from this approach.</p>
+
+<p>I asked Ola about it and the short answer is that you should use a different algorithm that takes advantages of trees instead, since they often don't rely on in-place changing.</p>
+
+<p>The long answer is a book called <a href="http://amzn.to/zXbvtu">Purely Functional Data Structures</a> - another one added to my wish list.</p>
+
+<h3>Logic/constraint programming</h3>
+
+<p>This is a topic that's completely new to me and it sounds fascinating at first. It also ended up being the topic of the rest of the tech night, with Ola, Sarah and Jo - also ThoughtWorkers - giving us a Logic Programming 101 crash course using Prolog. Lots to read up on.</p>
+
+<p>In the Clojure world, logic programming can be achieved via <a href="https://github.com/clojure/core.logic">core.logic</a>.</p>
+
+<p>The book <a href="http://amzn.to/y6vhT5">The Reasoned Schemer</a> was also mentioned as a good read on the subject.</p>
+
+<h3>Cascalog (<a href="https://github.com/nathanmarz/cascalog">github repo</a>)</h3>
+
+<p>Haven't had the time to play with it yet but it seems extremely useful. It's a Clojure-based DSL for processing "Big Data" on top of Hadoop.</p>
+
+<p>There you have it. Come <a href="http://bit.ly/yLfPTr">join us</a> for our next meeting!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Announcing the Sydney Clojure User Group]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/01/20/announcing-the-sydney-clojure-user-group/"/>
+    <updated>2012-01-20T11:35:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/01/20/announcing-the-sydney-clojure-user-group</id>
+    <content type="html"><![CDATA[<p><strong>Update:</strong> We now have a <a href="http://www.meetup.com/clj-syd/">Meetup.com page</a>. Head over there to learn about our next meetups as well as to RSVP to them. We'll discontinue usage of the wiki for registering attendees, in favor of the new site. Everything else on this post however still holds.</p>
+
+<p><a href="http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/">If you've been following my blog</a>, you'll have noticed I started running internal Clojure meetups/hack nights at ThoughtWorks here in Sydney a while ago. While being closed, we've already had one international speaker - <a href="http://olabini.com/blog/">Ola Bini</a> - come and share his experience as an attendee at <a href="http://clojure-conj.org/">Clojure/conj</a>. I promise I'll blog about it soon.</p>
+
+<p>We're a small but active group, eager to learn and as a natural result we couldn't stay closed for any longer! :)</p>
+
+<p>That's why last Tuesday, the first time we had external guests, we decided to make the group public so anyone could join.</p>
+
+<p>It was great having people from outside ThoughtWorks sharing their real world experience with Clojure. One of them, Harry Binnendijk from <a href="http://www.whoto.com/">Whoto</a>, even gave a presentation about how and why they're using Clojure <em>[1]</em>.</p>
+
+<p>There was another talk, by yours truly, on <a href="http://www.slideshare.net/borgesleonardo/continuation-passing-style-and-macros-in-clojure-jan-2012">Continuation Passing Style and Macros in Clojure</a>. It was a great night.</p>
+
+<p>Interested? Read on.</p>
+
+<p>Our meetings will be held on the 3rd Tuesday of every month - at least to start with.</p>
+
+<p>To help organize things we have a <a href="http://groups.google.com/group/clj-syd">Google group</a> where we'll announce the next meetings, do the traditional "call for papers", share ideas on how to improve our group, job posts and anything related to Clojure/FP.</p>
+
+<p>We also have a <a href="https://github.com/clj-syd/clj-syd/wiki">wiki</a> where you can see when and where the meetings are happening, sign up to talk/attend etc...</p>
+
+<p>So if you've been thinking about learning Clojure but haven't had the chance yet, <a href="http://groups.google.com/group/clj-syd">come join us</a>. Joining a group like this in its beginning is a perfect learning opportunity.</p>
+
+<p>And if you're a Clojure hacker already, <a href="http://groups.google.com/group/clj-syd">we'd love to hear from you just as much</a>!</p>
+
+<p>We welcome all levels and encourage everyone to submit talks they're passionate about.</p>
+
+<p>I hope to see you in the next meet up. Feel free to shoot the group an email or to me directly at leonardoborges(dot)rj(at)gmail(dot)com</p>
+
+<p>And don't forget to add us to your calendar so you don't miss out - next meetup will be on Feb 21st at ThoughtWorks Sydney!</p>
+
+<p><a href="http://www.google.com/calendar/render?cid=https%3A%2F%2Fwww.google.com%2Fcalendar%2Ffeeds%2Fa4v3blgfnlqdc0h6im9okr80tc%2540group.calendar.google.com%2Fpublic%2Fbasic" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0" style="border:none;"></a></p>
+
+<p>[1] Link to the presentation will be available soon</p>
+]]></content>
+  </entry>
+  
+</feed>

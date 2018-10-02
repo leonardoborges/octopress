@@ -1,0 +1,443 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Refactoring for Readability - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Yesterday I&#8217;ve done something I should do more often: Revisit some code written a while ago for our current project and make it better.Let&# &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Refactoring for Readability</h1>
+	<div class="entry-content"><p>
+Yesterday I&#8217;ve done something I should do more often: Revisit some code written a while ago for our current project and make it better.<br><br>Let&#8217;s face it. We all write crappy code the 1st time. The difference is in what we do about it afterwards.<br>We might decide it&#8217;s good enough and keep moving, or we could (and should!) stop and refactor it!<br><br>The code I revisited worked as a refactoring exercise and it&#8217;s initial version is shown below:
+
+<figure class='code'><figcaption><span>Jphoto</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Jphoto</span>
+</span><span class='line'> <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'> <span class="c1">#a few other methods ...</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">def</span> <span class="nf">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">send_rss</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+</span><span class='line'>   <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;tmp/</span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">to_i</span><span class="si">}</span><span class="s2">_</span><span class="si">#{</span><span class="nb">rand</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>   <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>     <span class="n">f</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+</span><span class='line'>   <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">params</span> <span class="o">=</span> <span class="o">[</span><span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="s1">&#39;photo&#39;</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span>
+</span><span class='line'>      <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;hotel&#39;</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">),</span>
+</span><span class='line'>      <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span><span class="s1">&#39;PhotoUploadTest&#39;</span><span class="p">)</span><span class="o">]</span>
+</span><span class='line'>   <span class="n">extract_extra_params!</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">c</span> <span class="o">=</span> <span class="no">Curl</span><span class="o">::</span><span class="no">Easy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">service_uri_base</span><span class="si">}</span><span class="s2">/photoupld&quot;</span><span class="p">)</span>
+</span><span class='line'>   <span class="n">c</span><span class="o">.</span><span class="n">multipart_form_post</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>   <span class="n">c</span><span class="o">.</span><span class="n">http_post</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">response_code</span> <span class="o">!=</span> <span class="mi">200</span>
+</span><span class='line'>     <span class="n">error_msg</span> <span class="o">=</span> <span class="s2">&quot;File upload failed with code: </span><span class="si">#{</span><span class="n">c</span><span class="o">.</span><span class="n">response_code</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>     <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span> <span class="n">error_msg</span>
+</span><span class='line'>     <span class="k">raise</span> <span class="n">error_msg</span>
+</span><span class='line'>   <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="no">File</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">hotel</span> <span class="o">=</span> <span class="no">Hotel</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+</span><span class='line'>   <span class="n">hotel</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">destroy_all</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">original_upload_url</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">body_str</span><span class="p">)</span> <span class="p">,</span> <span class="n">options</span><span class="p">)</span> <span class="k">if</span> <span class="n">send_rss</span>
+</span><span class='line'> <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kp">private</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">def</span> <span class="nf">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">photo_url</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'> <span class="k">end</span>
+</span><span class='line'> <span class="k">def</span> <span class="nf">manage_images_link</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'> <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">def</span> <span class="nf">extract_extra_params!</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:status</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:status</span><span class="o">]</span>
+</span><span class='line'>   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;upload_source&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:upload_source</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:upload_source</span><span class="o">]</span>
+</span><span class='line'>   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;uploader_ip&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_ip</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_ip</span><span class="o">]</span>
+</span><span class='line'>   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;uploader_email&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span>
+</span><span class='line'> <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<br>Look at the post_photo method. It has problems in so many levels that it&#8217;s hard to start. <br>Methods should do &#8220;one thing&#8221; and that method obviously does much more than that, mixing different levels of abstraction.<br><br>But let&#8217;s start with the easy parts first, keeping in mind that I was aiming for readability.<br><br>Lines 7 to 10 seem to be there just to make the reader&#8217;s life harder. It&#8217;s creating a temporary file through some custom logic instead of using the tools provided by the language. Unnecessary and only pollutes our eyes. My first measure was to use ruby&#8217;s TempFile class for this. Better, but we still have a long way.<br><br>Right at line 12 it creates some sort of default parameters list, after which it extracts some extra options. I don&#8217;t know what that method does but it&#8217;s clearly using output arguments, which we should avoid at all costs, as they lead to confusion. This is a big smell as well, and another refactoring step added to my list.<br><br>On line 21 starts the code that handles what to do when we get a response_code other than 200 from our request. Apart from the fact that this code doesn&#8217;t feel right here, we just happen to know that in HTTP, 200 means success, but that might not be clear to someone looking at the code for the 1st time.<br><br>Then the code goes on to delete the temp file, clear the hotel&#8217;s cache and send the rss if the rss&#8217; flag is true.<br><br><strong>Let there be refactoring&#8230;.</strong><br><br>Geez, how many lines have I used to explain what the code does? Since I don&#8217;t wanna bore you to death, here is my refactored version of this method, trying to avoid as much as I can the problems I highlighted previously:<br><br><br><br>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Jphoto</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="no">SUCCESS</span> <span class="o">=</span> <span class="mi">200</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">#a few other methods ...</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">send_rss</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+</span><span class='line'>    <span class="n">response_body</span> <span class="o">=</span> <span class="n">make_post_request</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">hotel</span> <span class="o">=</span> <span class="no">Hotel</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">hotel</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">destroy_all</span>
+</span><span class='line'>    <span class="n">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">original_upload_url</span><span class="p">(</span><span class="n">response_body</span><span class="p">)</span> <span class="p">,</span> <span class="n">options</span><span class="p">)</span> <span class="k">if</span> <span class="n">send_rss</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+Ha! That reads much nicer, right? 
+Below you&#8217;ll find the rest of the class, properly refactored. Note how I also changed the order of the private methods so the class has a reading flow. 
+You can now read it top down, without scrolling through the file several times trying to find where the methods are defined.
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">make_post_request</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">temp_file</span> <span class="o">=</span> <span class="no">Tempfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;minisite_upload_&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">temp_file</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">c</span> <span class="o">=</span> <span class="no">Curl</span><span class="o">::</span><span class="no">Easy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">service_uri_base</span><span class="s1">&#39;]}/photoupld&quot;)</span>
+</span><span class='line'><span class="s1">    c.multipart_form_post = true</span>
+</span><span class='line'><span class="s1">    c.http_post(*build_params_list(temp_file.path, hotel_id, options))</span>
+</span><span class='line'><span class="s1">    temp_file.delete</span>
+</span><span class='line'><span class="s1">    raise_and_log_error(&quot;File upload failed with code: #{c.response_code}&quot;) if c.response_code != SUCCESS</span>
+</span><span class='line'><span class="s1">    c.body_str</span>
+</span><span class='line'><span class="s1">  end</span>
+</span><span class='line'><span class="s1">  def build_params_list(file_path, hotel_id, options)</span>
+</span><span class='line'><span class="s1">    params = [Curl::PostField.file(&#39;</span><span class="n">photo</span><span class="s1">&#39;, file_path), Curl::PostField.content(&#39;</span><span class="n">hotel</span><span class="s1">&#39;, hotel_id), Curl::PostField.content(&#39;</span><span class="n">source</span><span class="s1">&#39;,&#39;</span><span class="no">PhotoUploadTest</span><span class="s1">&#39;)]</span>
+</span><span class='line'><span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">status</span><span class="s1">&#39;, options[:status]) if options[:status]</span>
+</span><span class='line'><span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">upload_source</span><span class="s1">&#39;, options[:upload_source]) if options[:upload_source]</span>
+</span><span class='line'><span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">uploader_ip</span><span class="s1">&#39;, options[:uploader_ip]) if options[:uploader_ip]</span>
+</span><span class='line'><span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">uploader_email</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span>
+</span><span class='line'>    <span class="n">params</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">raise_and_log_error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+</span><span class='line'>    <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span> <span class="n">error_msg</span>
+</span><span class='line'>    <span class="k">raise</span> <span class="n">error_msg</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">original_upload_url</span><span class="p">(</span><span class="n">jphotos_response</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">photo_url</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">manage_images_link</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+I&#8217;ve only applied 2 basic principles to this code: That methods should do one thing and that they should avoid output arguments. But the result was a drastic improvement over the old code.
+<strong>A last step&#8230;</strong>
+There is still one thing I would like to change in the post_photo method. It takes a boolean as an argument. The first time you see a call to this method, there is no way you can tell what that flag is used for:
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">jphoto</span><span class="o">.</span><span class="n">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kp">false</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+To make it more clear we could refactor the method once more to look like this:
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">post_photo_and_send_rss</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+</span><span class='line'>    <span class="n">response_body</span> <span class="o">=</span> <span class="n">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">original_upload_url</span><span class="p">(</span><span class="n">response_body</span><span class="p">)</span> <span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+</span><span class='line'>    <span class="n">response_body</span> <span class="o">=</span> <span class="n">make_post_request</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">hotel</span> <span class="o">=</span> <span class="no">Hotel</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">hotel</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">destroy_all</span>
+</span><span class='line'>    <span class="n">response_body</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>	
+
+This way we avoid an extra parameter and save our reader - and possibly us - of the trouble to guess what that flag was for.<br><br><br>I am by no means saying this is the definitive refactored state of this code but instead sharing the steps I went through while refactoring it. As always, tips and comments are welcome! :) 
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-18T00:00:00+10:00" pubdate data-updated="true">Sep 18<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/refactoring/'>Refactoring</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

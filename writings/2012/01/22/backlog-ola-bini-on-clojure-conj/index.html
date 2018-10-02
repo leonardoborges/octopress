@@ -1,0 +1,232 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Backlog: Ola Bini on Clojure/conj - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="As I promised in my previous post, here are the highlights of what Ola Bini had to say about Clojure/conj. Clojure/conj is the largest gathering of &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Backlog: Ola Bini on Clojure/conj</h1>
+	<div class="entry-content"><p>As I promised in my <a href="http://bit.ly/clj-syd">previous post</a>, here are the highlights of what <a href="http://olabini.com/blog/">Ola Bini</a> had to say about <a href="http://clojure-conj.org/">Clojure/conj</a>.</p>
+
+<p>Clojure/conj is the largest gathering of clojure programmers, hackers and enthusiasts, with a single track of talks spanning three days.
+Ola selected his favorite talks and summarised each one of them.</p>
+
+<p>The actual slides for each one of the talks can be found on <a href="https://github.com/relevance/clojure-conj">github</a>.</p>
+
+<p>You can find Ola&#8217;s slides <a href="http://db.tt/lTFsOKpZ">here</a>.</p>
+
+<h3>Fun Data Structures</h3>
+
+<p>This is certainly a very interesting topic. The highlight here is the approach Clojure takes to handling immutable data structures efficiently: persistent data structures through structural sharing - maybe a good short talk for the next meetup?</p>
+
+<p>However, even though efficient, there are cases where the space complexity of known algorithms gets compromised.
+More specifically, algorithms that rely on the ability of changing data structures in-place - such as the QuickSort - will suffer from this approach.</p>
+
+<p>I asked Ola about it and the short answer is that you should use a different algorithm that takes advantages of trees instead, since they often don&#8217;t rely on in-place changing.</p>
+
+<p>The long answer is a book called <a href="http://amzn.to/zXbvtu">Purely Functional Data Structures</a> - another one added to my wish list.</p>
+
+<h3>Logic/constraint programming</h3>
+
+<p>This is a topic that&#8217;s completely new to me and it sounds fascinating at first. It also ended up being the topic of the rest of the tech night, with Ola, Sarah and Jo - also ThoughtWorkers - giving us a Logic Programming 101 crash course using Prolog. Lots to read up on.</p>
+
+<p>In the Clojure world, logic programming can be achieved via <a href="https://github.com/clojure/core.logic">core.logic</a>.</p>
+
+<p>The book <a href="http://amzn.to/y6vhT5">The Reasoned Schemer</a> was also mentioned as a good read on the subject.</p>
+
+<h3>Cascalog (<a href="https://github.com/nathanmarz/cascalog">github repo</a>)</h3>
+
+<p>Haven&#8217;t had the time to play with it yet but it seems extremely useful. It&#8217;s a Clojure-based DSL for processing &#8220;Big Data&#8221; on top of Hadoop.</p>
+
+<p>There you have it. Come <a href="http://bit.ly/yLfPTr">join us</a> for our next meeting!</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-22T22:01:00+11:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clj-syd/'>clj-syd</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

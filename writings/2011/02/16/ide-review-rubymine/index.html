@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>IDE Review: RubyMine - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Since I started working with Ruby about 4 years ago, I&#8217;ve used quite a few text editors and ide&#8217;s: RadRails, gedit + plugins, TextMate &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">IDE Review: RubyMine</h1>
+	<div class="entry-content"><p>
+Since I started working with Ruby about 4 years ago, I&#8217;ve used quite a few text editors and ide&#8217;s: <a href="http://www.aptana.com/products/radrails">RadRails</a>, <a href="http://projects.gnome.org/gedit/" target="_blank">gedit</a> + <a href="https://github.com/lexrupy/gmate" target="_blank">plugins</a>, <a href="http://macromates.com/" target="_blank">TextMate</a> and <a href="http://www.vim.org/" target="_blank">Vim</a>.<br><br>TextMate is the one I&#8217;ve used the most and it&#8217;s been ok for a long time. Until you realize you need half a dozen bundles to make it really useful for ruby development. Obviously the same goes for Vim and gedit.<br><br>Oh, and forget about refactoring. In these tools refactoring equals regex global replace. So if you need it, well, forget it.<br><br>That&#8217;s when I decided to give <strong><a href="http://www.jetbrains.com/ruby/" target="_blank">RubyMine</a></strong> a fair go. I&#8217;ve been using it heavily for a while now and I must say I love it!<br><br>What pissed me off about RadRails when I first tried it was the speed. It was too slow, something people take for granted when running java based IDE&#8217;s.<br><br>However this is not true for RubyMine. You DO take a hit on startup, nothing major, but once it&#8217;s done, it&#8217;s a breeze.<br><br>I&#8217;ve compiled a list of my favorite productivity shortcuts and features. Hope it&#8217;ll be useful to someone else.<br><br><strong>Productivity Shortcuts</strong><br><br><hr /><strong>Navigation</strong><br><br><em>Ctrl + Tab</em> - File Switcher<br><br><em>Cmd + Shift + T</em> - Switching between implementation and test works perfectly. Even in a pure ruby project<br><br><em>Cmd + Shift + F12</em> - Expand/restore editor<br><br><em>Alt + Shift + N</em> - Go to model/view/controller<br><br><em>Alt + F1</em> - Show current file in other views such as the project tree (scroll to file)<br><br><em>Cmd + Shift + N</em> - Open file<br><br><em>Cmd + Alt + Shift + N</em> - Open symbol - across files<br><br><em>Alt + F7</em> - Find usages - when on a method, variable, etc…<br><br><strong>Running/Debugging</strong><br><br><em>Ctrl + Shift + F10</em> - Run current [test] file. When inside a test method, run that single method.<br><br><em>Ctrl + Shift + F9</em> - Same as above, but in debug mode.<br><br><em>Shift + F10/Shift + F9</em> - Run/Debug last action executed<br><br><em>Alt + R</em> - Run rake task<br><br><strong>Refactoring</strong><br><br><em>Cmd + Alt + N</em> - Inline variable/ method<br><br><em>Cmd + Alt + M</em> - Extract method<br><br><em>Shift + F6</em> - Rename<br><br><em>F5</em> - Copy current file as&#8230;<br><br><strong>Editing</strong><br><br><em> Cmd + Y</em> - Delete line<br><br><em>Cmd + D</em> - Duplicate Line/Selection<br><br><em>Alt + Mouse</em> - Column selection<br><br><em>Cmd + Shift + (Up Arrow|Down Arrow)</em> - Moves de line or selected block of code up or down<br><br><strong>Features</strong><br><br><hr /><em>Code completion</em> - It&#8217;s fairly accurate and pretty fast. They&#8217;ve done some good yak shaving around this area.<br><br><em>Debugger</em> - The debugging interface is an absolute beauty. Saved me a lot of time where I&#8217;d have used puts statements or googled to re-learn how to use ruby-debug instead. Definitely worth checking out.<br><br><strong>The bad stuff</strong><br><br><hr /><em>It is not free</em> - unless you are a committer to an open-source project. But it&#8217;s not expensive either.<br><br><em>It is a bit slower</em> - but not that much. The performance hit is insignificant compared to the added value.<br><br><em>Regex file open, TextMate style</em> - What can I say? I do miss this.<br><br><em>Wrap highlighted text</em> - In TextMate, if you highlight a word and press &#8220;, [, {, ( or # it surrounds the word with the respective combination of quotes, brackets, etc&#8230; Another missed feature<br><br><strong>Wrapping up</strong><br>It&#8217;s probably soon to say it but so far RubyMine has been my missing Ruby IDE. And I&#8217;m very happy with it. :)
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-16T00:00:00+11:00" pubdate data-updated="true">Feb 16<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2011/02/16/ide-review-rubymine/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2011/02/16/ide-review-rubymine/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2011/02/16/ide-review-rubymine/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2011/02/16/ide-review-rubymine/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2011/02/16/ide-review-rubymine/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2011/02/16/ide-review-rubymine/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: functional-programming | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/functional-programming/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure Reactive Programming has been published]]></title>
+    <link href="http://www.leonardoborges.com/writings/2015/03/27/clojure-reactive-programming-has-been-published/"/>
+    <updated>2015-03-27T15:10:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2015/03/27/clojure-reactive-programming-has-been-published</id>
+    <content type="html"><![CDATA[<p>I'm extremely happy to let everyone know my book, <a href="https://www.packtpub.com/web-development/clojure-reactive-programming">Clojure Reactive Programming</a>, has finally been published!</p>
+
+<p>You can get it at the <a href="https://www.packtpub.com/web-development/clojure-reactive-programming">publisher's website</a> or on <a href="http://www.amazon.com/Clojure-Reactive-Programming-Leonardo-Borges/dp/1783986662/ref=sr_1_1?ie=UTF8&amp;qid=1427205216&amp;sr=8-1&amp;keywords=Clojure+Reactive+Programming">Amazon</a>. I had a great time writing it and I truly hope you find it useful!</p>
+
+<p>I've met a few authors here and there and I heard more than once that a book is never really finished. I now know what they mean.</p>
+
+<p>The book doesn't cover everything I wanted to write about due to time and space limitations. Having said that, now that the book is out I do plan to expand on a few things using this blog.</p>
+
+<p>Stay tuned!</p>
+
+<p>Thanks to everyone who gave me feedback on early drafts of the book! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[EuroClojure 2014 and announcing my book]]></title>
+    <link href="http://www.leonardoborges.com/writings/2014/07/20/euroclojure-2014-and-clojure-reactive-programming/"/>
+    <updated>2014-07-20T15:50:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2014/07/20/euroclojure-2014-and-clojure-reactive-programming</id>
+    <content type="html"><![CDATA[<p>A bit late for a EuroClojure 2014 post but I suppose "better late than never" applies here.</p>
+
+<p>The best part of every conference is the networking. Meeting new and interesting people is priceless and I did plenty of that - mostly over Polish beer and food. Polish beer isn't the greatest but if you must have it, better stick to Żywiec. It's widely available and was the one which didn't give me a headache :) - I've been told there are amazing microbreweries though I didn't get a chance to try any while in Krákow.</p>
+
+<p>The food on the other hand was excellent every single time. But I digress.</p>
+
+<p>There's no point in me describing the talks I watched as someone else has already done a
+much better job of it: it's all <a href="https://gist.github.com/philandstuff/299cda371c7e74b03f18">in this gist</a> by <a href="https://twitter.com/philandstuff">Philip Potter</a>.</p>
+
+<p>I gave a talk titled <em>Taming Asynchronous Workflows with Functional Reactive Programming</em>. You can check out the <a href="http://www.slideshare.net/borgesleonardo/functional-reactive-programming-compositional-event-systems">slides here</a>. The video will be available in  <a href="https://vimeo.com/100688924">this link</a> soon. I've received a lot of great feedback on it both at the event and afterwards through different channels. I'm really happy with how it turned out.</p>
+
+<p>In this talk I mentioned publicly for the first time* that I am working on a book called <strong>Clojure Reactive Programming</strong> to be published by <a href="http://www.packtpub.com/">PacktPub</a>. It seemed appropriate to announce it here as well.</p>
+
+<p>As of yet there's no set date but I'm spending most of my free time working on it. I'd say I have 55% of it done. Feel free to ping me directly if you'd like to know more. Alternatively you might want to follow the <a href="https://twitter.com/CljReactiveProg">twitter account I created for the book</a>.</p>
+
+<p>There's not much there yet but I'll try and post book updates somewhat regularly.</p>
+
+<p>See you around.</p>
+
+<p>* <em>Strictly not true as I've announced it before but this was the first time for a wider Clojure audience and the first time captured on camera so there's no denying now ;)</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Functional composition with Monads, Kleislis and Functors]]></title>
+    <link href="http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/"/>
+    <updated>2014-06-17T11:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors</id>
+    <content type="html"><![CDATA[<p>I've been learning Scala for my current client project and I find writing to be a great tool to test my understanding of any given topic. This means there might be a few Scala posts coming up soon as I keep learning interesting things.</p>
+
+<p>Today I'll be exploring a few different ways in which you can compose programs. I'll be using <a href="https://github.com/scalaz/scalaz">Scalaz</a> in this post.</p>
+
+<p>The examples that follow all deal with Vehicles - more specifically makes and parts:</p>
+
+<p>```scala
+  import scalaz.<em>, Scalaz.</em>
+  import scalaz.Kleisli._</p>
+
+<p>  case class Make(id: Int, name: String)
+  case class Part(id: Int, name: String)
+```</p>
+
+<p>Next we have a couple of functions which interact with these case classes:</p>
+
+<p>```scala
+  val make: (Int) => Make = (_) => Make(1, "Suzuki")</p>
+
+<p>  val parts: Make => List[Part] = {</p>
+
+<pre><code>case Make(1, _) =&gt; List(Part(1, "Gear Box"), Part(2, "Clutch cable"))
+</code></pre>
+
+<p>  }
+```</p>
+
+<p>So we have a function from <code>Int</code> to <code>Make</code> and then a function from <code>Make</code> to <code>List[Part]</code>. From set theory we know this implies we must have a function from <code>Int</code> to <code>List[Part]</code>. This is nothing more than simple function composition:</p>
+
+<p>```scala
+  val f = parts compose make
+  f(1)
+  // List[Part] = List(Part(1,Gear Box), Part(2,Clutch cable))</p>
+
+<p> // alternatively you can use 'andThen' which works like compose, but with the arguments flipped:
+ val g = make andThen parts
+ g(1)
+ // List[Part] = List(Part(1,Gear Box), Part(2,Clutch cable))
+```</p>
+
+<p>Pretty boring stuff.</p>
+
+<p>A more realistic example accounts for failure in our functions. One way we can encode this is using the <code>Option</code> data type:</p>
+
+<p>```scala
+val make  = (x: Int) => (x == 1).option(Make(1, "Suzuki"))</p>
+
+<p>val parts = (x: Make) =>
+  (x.id == 1).option(NonEmptyList(Part(1, "Gear Box"), Part(2, "Clutch cable")))
+```</p>
+
+<p>Now we have a function <code>make: Int =&gt; Option[Make]</code> and a function <code>parts: Make =&gt; Option[NonEmptyList[Part]]</code>. Based on our first example we should have a way to create a function from <code>Int</code> to <code>Option[NonEmptyList[Part]]</code>. This isn't immediately obvious however.</p>
+
+<p>While <code>make</code> does return a <code>Make</code>, it is wrapped inside an <code>Option</code> so we need to account for a possible failure. This leads to our first attempt:</p>
+
+<p>```scala
+  val f: Option[Make] => Option[NonEmptyList[Part]] = {</p>
+
+<pre><code>case Some(m) =&gt; parts(m)
+case _ =&gt; None
+</code></pre>
+
+<p>  }
+  val g = f compose make
+  g(1) // Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))<br/>
+```</p>
+
+<p>While this works, we had to manually create the plumbing between the two functions.  You can imagine that with different return and input types, this plubming would have to be rewritten over and over.</p>
+
+<p>All the function <code>f</code> above is doing is serving as an <em>adapter</em> for <code>parts</code>. It turns out there is a couple of ways in which this pattern can be generalised.</p>
+
+<h2>Monadic bind</h2>
+
+<p><code>Option</code> is a <a href="http://www.leonardoborges.com/writings/2012/12/08/monads-in-small-bites-part-iv-monads/">monad</a> so we can define <em>f</em> using a for comprehension:</p>
+
+<p>```scala
+  val f = (x: Int) => for {</p>
+
+<pre><code>m &lt;- make(x)
+p &lt;- parts(m)
+</code></pre>
+
+<p>  } yield p
+  f(1) // Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))
+```</p>
+
+<p>Which is simply syntactic sugar for:</p>
+
+<p>```scala
+val g = make(_:Int) flatMap (m =></p>
+
+<pre><code>parts(m).map(p =&gt; p))
+</code></pre>
+
+<p>g(1)
+// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))</p>
+
+<p>// you can also use the symbolic alias for 'bind', which makes it a lot nicer
+val h = make(_:Int) >>= parts
+h(1)
+// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))
+```</p>
+
+<p>The reason this is better is that <code>make</code> and <code>parts</code> could operate under a different monad but the client code would not need to change. In the example below, we're operating under the <code>List</code> monad:</p>
+
+<p>```scala
+val words: (String) => List[String] = <em>.split("""\s""").toList
+val chars: String => List[Char] = </em>.toList</p>
+
+<p>val f = (phrase: String) => for {
+  m &lt;- words(phrase)
+  p &lt;- chars(m)
+} yield p</p>
+
+<p>f("Motorcycles are fun to ride!")
+// List(M, o, t, o, r, c, y, c, l, e, s, a, r, e, f, u, n, t, o, r, i, d, e, !)</p>
+
+<p>// or even:
+val g = words(_:String) flatMap (w =></p>
+
+<pre><code>chars(w).map(c =&gt; c))
+</code></pre>
+
+<p>g("Motorcycles are fun to ride!")
+// List(M, o, t, o, r, c, y, c, l, e, s, a, r, e, f, u, n, t, o, r, i, d, e, !)
+```</p>
+
+<p>We used the exact same <em>for</em> comprehension syntax to compose these operations. This works because both <code>Option</code> and <code>List</code> are monads.</p>
+
+<p>Notwithstanding, this still feels like unnecessary plumbing. All we are doing with the <em>for</em> comprehenstion / <code>flatMap</code> is extracting the values from their respective monads to simply put them back in. It would be nice if we could simply do something like <code>make compose parts</code> as we did in our first example.</p>
+
+<h2>Kleisli Arrows</h2>
+
+<p>A <a href="http://www.haskell.org/haskellwiki/Arrow_tutorial#Kleisli_Arrows">Kleisli arrow</a> is simply a <em>wrapper</em> for a function of type <code>A =&gt; F[B]</code>. This is the same type of the second argument to the monadic <em>bind</em> as <a href="https://github.com/scalaz/scalaz/blob/scalaz-seven/core/src/main/scala/scalaz/Bind.scala#L16">defined</a> in Scalaz:</p>
+
+<p><code>scala
+bind[A, B](fa: F[A])(f: A =&gt; F[B]): F[B]
+</code></p>
+
+<p>By creating a Kleisli arrow from a function, we are given a function that knows how to extract the value from a Monad <code>F</code> and feed it into the underlying function, much like bind does, but without actually having to do any binding yourself.</p>
+
+<p>To use a concrete example, let's create a kleisli arrow from our <code>parts</code> function:</p>
+
+<p><code>scala
+kleisli(parts)
+// scalaz.Kleisli[Option,Make,scalaz.NonEmptyList[Part]]
+</code></p>
+
+<p>You can read this type as being a function which knows how to get a value of type <code>Make</code> from the <code>Option</code> monad and will ultimately return an <code>Option[NonEmptyList[Part]]</code>. Now you might be asking, why would we want to wrap our functions in a kleisli arrow?</p>
+
+<p>By doing so, you have access to a number of useful functions defined in the Kleisli trait, one of which is <code>&lt;==&lt;</code> (aliased as <code>composeK</code>):</p>
+
+<p>```scala
+  val f = kleisli(parts) &lt;==&lt; make
+  // same as   kleisli(parts) composeK make</p>
+
+<p>  f(1) // Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))
+```</p>
+
+<p>This gives us the same result as the version using the <em>for</em> comprehension but with less work and with code that looks similar to simple function composition.</p>
+
+<h2>Not there yet</h2>
+
+<p>One thing that was bugging me is the return type for <code>parts</code> above:</p>
+
+<p><code>scala
+Make =&gt; Option[NonEmptyList[Part]]
+</code></p>
+
+<p>Sure this works but since lists already represent non-deterministic results, one can make the point that the Option type there is reduntant since, for this example, we can treat both <code>None</code> and the empty List as the <em>absence of result</em>. Let's update the code:</p>
+
+<p>```scala
+val make  = (x: Int) => (x == 1).option(Make(1, "Suzuki"))</p>
+
+<p>val parts: Make => List[Part] = {
+  case Make(1, _) => List(Part(1, "Gear Box"), Part(2, "Clutch cable"))
+  case _ => Nil
+}
+```</p>
+
+<p>It seems we're in worse shape now! As before, <code>parts</code>'s input type doesn't line up with <code>make</code>'s return type. Not only that, they aren't even in the same monad anymore!</p>
+
+<p>This clearly breaks our previous approach using a kleisli arrow to perform the composition. On the other hand it makes room for another approach: <a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Functor</a> <em>lifting</em>.</p>
+
+<h2>Lifting</h2>
+
+<p>In Scala - and category theory - monads are <a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">functors</a>. As such both <code>Option</code> and <code>List</code> have access to a set of useful functor combinators. The one we're interested in is called <a href="https://github.com/scalaz/scalaz/blob/scalaz-seven/core/src/main/scala/scalaz/Functor.scala#L31">lift</a>.</p>
+
+<p>Say you have a function <code>A =&gt; B</code> and you have a functor <code>F[A]</code>. Lifting is the name of the operation that transforms the function  <code>A =&gt; B</code> into a function of type <code>F[A] =&gt; F[B]</code>.</p>
+
+<p>This sounds useful. Here are our function types again:</p>
+
+<p><code>scala
+make: Int =&gt; Option[Make]
+parts: Make =&gt; List[Part]
+</code></p>
+
+<p>We can't get a function <code>Int =&gt; List[Part]</code> because <code>make</code> returns an <code>Option[Make]</code> meaning it can fail. We need to propagate this possibility in the composition. We can however <em>lift</em> <code>parts</code> into the <code>Option</code> monad, effectively changing its type from <code>Make =&gt; List[Part]</code> to <code>Option[Make] =&gt; Option[List[Part]]</code>:</p>
+
+<p><code>scala
+val f = Functor[Option].lift(parts) compose make
+f(1)
+// Some(List(Part(1,Gear Box), Part(2,Clutch cable)))
+</code>
+<code>f</code> now has the type <code>Int =&gt; Option[List[Part]]</code> and we have once again successfully composed both functions without writing any plumbing code ourselves.</p>
+
+<p><a href="https://twitter.com/markhibberd">Mark</a> pointed out to me that <code>lift</code> is pretty much the same as <code>map</code> but with the arguments reversed. So the example above can be more succintly expressed as:</p>
+
+<p><code>scala
+val g = make(_:Int).map(parts)
+g(1)
+// Some(List(Part(1,Gear Box), Part(2,Clutch cable)))
+</code></p>
+
+<h2>Summary</h2>
+
+<p>If you are only now getting to this whole Functor/Monad/Kleisli <em>thing</em> this was probably quite heavy to get through. The point I am trying to make here is that learning at least <em>some</em> of the abstractions provided by Scalaz is certainly worthwhile. They encode common patterns which we would otherwise keep re-writing a lot of the time.</p>
+
+<p>Special Thanks to <a href="https://twitter.com/markhibberd">Mark Hibberd</a> who kindly reviewed an early draft of this post.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CUFP/ICFP 2013]]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/"/>
+    <updated>2013-09-25T13:17:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013</id>
+    <content type="html"><![CDATA[<p>I'm sitting in the Lobby of the Hilton in Boston and since my flight back to Australia isn't for a few hours I thought I'd write my experience report while everything is still fresh in my mind.</p>
+
+<p><img class="left" src="/assets/images/posts/cufp2013-badge.jpg" width="318" height="400"></p>
+
+<p><a href="http://cufp.org/">CUFP - Commercial Users of Functional Programming -</a> is a Workshop-like conference targeting the practically-minded functional programming community.</p>
+
+<p>As it's stated on their website, <em>"The CUFP workshop is a place where people can see how others are using functional programming to solve real world problems […]"</em>.</p>
+
+<p>One of the things that make the event special is that it runs together with <a href="http://icfpconference.org/icfp2013/">ICFP - International Conference on Functional Programming</a> - which is an event on the far opposite side of the spectrum with language designers, professors, compiler implementors getting together and thinking about the future of their languages and fields. The diversity of the event is astonishing.</p>
+
+<p>CUFP itself runs for three days and is divided into a traditional conference format day with several talks and two tutorial days.</p>
+
+<p>I was there for all three days and on the last one I delivered my own tutorial about writing macros in Clojure - more on that later.</p>
+
+<p>As far as the talks of day 1 go, someone already did a great job of summarising them. I highly recommend <a href="http://www.syslog.cl.cam.ac.uk/2013/09/22/liveblogging-cufp-2013/">you go read it</a>.</p>
+
+<h3>Day 2</h3>
+
+<p>In total there were 9 tutorials being offered - two of which made up a two-day Haskell tutorial. That's the one I decided to attend.</p>
+
+<p>In the instructions, the instructors mentioned that we could use an online Haskell IDE to follow the course should we choose not to install the Haskell platform on our laptops.</p>
+
+<p>I decided to give it a go. The tool is called FP Haskell Center and has been developed by the awesome guys at <a href="https://www.fpcomplete.com">FP Complete</a>.</p>
+
+<p>It's important to note this is an online IDE - but the editor isn't the only thing being offered though. The Haskell Centre offers a complete deployment solution as well - though I didn't have the chance to play with it.</p>
+
+<p>Back to the tutorial, I used the FP Haskell Centre for day one and it worked great as far as online IDEs go. Compilation and inspecting types do suffer from the round trip over the web and by the end of the day I was feeling a little frustrated with all the waiting. The tool is great and if they offered an offline version, I'm sure the experience would have been improved tenfold.</p>
+
+<p>Day one was taught by <a href="http://www.well-typed.com/people/andres">Andres Löh</a> from <a href="http://www.well-typed.com/">Well-Typed</a>, a Haskell consultancy.</p>
+
+<p>It was full of exercises in the various basics of Haskell such as expressions, functions, IO, pattern matching and even Monads. I had a lot of fun working through them and it reinforced my opinion about Haskell being as practical a language as any other - but with several advantages.</p>
+
+<h3>Day 3</h3>
+
+<p>Given my frustration with FP Haskell Center being a bit slow I decided to install the Haskell platform on my new laptop and configure emacs with haskell-mode. I was <em>much</em> happier with this setup. haskell-mode has a lot of nifty features that were extremely useful during the tutorial.</p>
+
+<p>The second day of the Haskell tutorial gave way to <a href="http://community.haskell.org/~simonmar/">Simon Marlow</a>, a software engineer from Facebook UK and author of  <a href="http://community.haskell.org/~simonmar/pcph/">Parallel and Concurrent Programming in Haskell</a> - also available freely <a href="http://chimera.labs.oreilly.com/books/1230000000929/index.html">online</a>.</p>
+
+<p>Not surprisingly, his half of the tutorial was about Concurrency. We started with several exercises on IO involving more Monadic functions that we hadn't learned the previous day. We then moved on to study the basic Haskell concurrency constructs and primitives. All very interesting stuff.</p>
+
+<p>If you have the chance to attend a tutorial by these guys, do yourself a favour and go for it.</p>
+
+<h3>Day 3 - 2pm onwards</h3>
+
+<p>Unfortunately I missed the second half of the second day as I, too, had to deliver my own tutorial/workshop.</p>
+
+<p>Titled <em>"Bending Clojure to your will: Macros and Domain Specific Languages"</em>, the tutorial had participants work their way through several difference exercises aimed at teaching the various nuances of writing macros.</p>
+
+<p>The tutorial has failing tests for all exercises so it's dead easy to know when you have arrived at a solution - all participants seemed to have had a great time learning this stuff and I even saw a couple of positive tweets about it - I'm really happy with how everything went.</p>
+
+<p>The best tweet though was the one saying that someone from the Haskell tutorial decided to switch to mine half-way through. So I see that as a win :) <a href="https://twitter.com/prasincs/status/382585215694413824">Here's said tweet</a>.</p>
+
+<p>I've <a href="https://github.com/leonardoborges/clojure-macros-workshop">pushed the exercises to github</a> should you want to try them by yourself. <a href="http://www.slideshare.net/borgesleonardo/clojure-macros-workshop-lambdajam-2013-cufp-2013">Slides are also available</a> though they will likely not make sense out of context.</p>
+
+<p>Enjoy! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Purely functional data structures in Clojure: Red-Black Trees]]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/"/>
+    <updated>2013-07-15T21:42:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees</id>
+    <content type="html"><![CDATA[<blockquote><p>This post is part of a series about Chris Okasaki's <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a>. You can see all posts in the series by visiting the <a href="http://www.leonardoborges.com/writings/tags/functional-data-structures/">functional-data-structures</a> category in this blog.</p></blockquote>
+
+<hr />
+
+<p>Recently I had some free time to come back to <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a> and implement a new data structure: <a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree">Red-black trees</a>.</p>
+
+<h3>Red-black trees</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree">Red-black trees</a> are a type of <a href="http://en.wikipedia.org/wiki/Self-balancing_binary_search_tree">self-balancing binary search tree</a>. Back when I first learned the balancing algorithm used in operations such as insert and delete, I remember it being a particularly tricky one.</p>
+
+<p>Traditionally, red-black trees are implemented destructively - meaning insertions and deletions happen in place. So in imperative languages like C or Java there is a lot of node pointer manipulation floating around, making this algorithm error prone.</p>
+
+<p>This post, as its title implies, will deal with the functional implementation which, besides simpler, is also persistent.</p>
+
+<h4>Invariants</h4>
+
+<p>A big disadvantage of binary search trees is that they operate poorly on sorted data with O(N) worst case, pretty much becoming nothing more than a linked list.</p>
+
+<p>This is where Red-black trees come in: when inserting/removing new nodes, the tree balances itself thus guaranteeing search times of O(logN). It does so by satisfying two invariants:</p>
+
+<ul>
+<li>No red nodes can have red children</li>
+<li>Every path from the root to an empty node contains the same number of black nodes</li>
+</ul>
+
+
+<p>The image below - taken from the book itself - concisely summarises the 4 cases involved in these invariants, starting at the top and then moving counter-clockwise.</p>
+
+<p><img class="center" src="/assets/images/posts/red-black-tree.jpg" width="250" height="333" title="Red-black trees invariants" ></p>
+
+<p>With this in mind I set out to write the <em>balance</em> function in Clojure.</p>
+
+<h3>The code</h3>
+
+<p>In the functional version of a Red-black tree all pointer manipulation required in its destructive counterpart simply disappears, rendering the algorithm a lot simpler.</p>
+
+<p>Nevertheless, we're left with some complexity in the <em>balance</em> function around testing a node's colour as well as its children's and grandchildren's.</p>
+
+<p>My first attempt at writing it started like this:</p>
+
+<p>```clojure
+(defn mk-tree [color left value right]
+  {:color color :left left :value value :right right})</p>
+
+<p>(defn balance [tree]</p>
+
+<pre><code>;; case 1
+(let [{z :value d :right} tree
+      {x-color :color x :value a :left} (-&gt; tree :left)
+      {y-color :color y :value b :left c :right} (-&gt; tree :left :right)
+      d (:right tree)]
+  (if (and (= x-color :red) (= y-color :red))
+    (mk-tree :red
+                (mk-tree :black a x b)
+                y
+                (mk-tree :black c z d))
+    tree)
+    ...))
+</code></pre>
+
+<p>```</p>
+
+<p>I was extremely unhappy with this. A lot of boilerplate around bindings and tests. And this is only the first case.</p>
+
+<p>But if you read Okasaki's implementation of the algorithm in ML - or Haskell -  you'll quickly realise how concise and elegant it is. The main reason for that is pattern matching, something we don't have built-in in Clojure.</p>
+
+<p>However, Clojure is a Lisp and has a powerful macros system at its disposal. That has given us <a href="https://github.com/clojure/core.match">core.match</a>, a pattern matching library for Clojure.</p>
+
+<h4>core.match</h4>
+
+<p>Using core.match, I rewrote my <em>balance</em> function:</p>
+
+<p>```clojure
+(defn balance [tree]
+  (match [tree]</p>
+
+<pre><code>     [(:or {:left {:color :red
+                   :left {:color :red :left a :value x :right b}
+                   :value y :right c}
+            :value z :right d}
+
+           {:left {:color :red                    
+                   :left  a :value x
+                   :right {:color :red :value y :left b :right c}}
+            :value z :right d}
+
+           {:left a :value x
+            :right {:color :red
+                    :left {:color :red
+                           :left b :value y :right c}
+                    :value z :right d}}
+
+           {:left a :value x
+            :right {:color :red
+                    :left b :value y
+                    :right {:color :red
+                            :left c :value z :right d}}})]
+     (mk-tree :red
+                 (mk-tree :black a x b)
+                 y
+                 (mk-tree :black c z d))
+
+     :else tree))
+</code></pre>
+
+<p>```</p>
+
+<p>If you look closely at the patterns being matched, you'll see they cater for all 4 cases and allow for both matching and binding in the same expressions. With only a little over double the size of a single case using the previous function, we now have a fully functioning <em>balance</em> implementation. This is better, but I wanted more.</p>
+
+<p>What I really wanted to be able to write is this:</p>
+
+<p>```clojure
+(defn balance [tree]</p>
+
+<pre><code>(match [tree]
+       [(:or (Black. (Red. (Red. a x b) y c) z d)
+             (Black. (Red. a x (Red. b y c)) z d)
+             (Black. a x (Red. (Red. b y c) z d))
+             (Black. a x (Red. b y (Red. c z d))))] (Red. (Black. a x b)
+                                                          y
+                                                          (Black. c z d))
+             :else tree))
+</code></pre>
+
+<p>```</p>
+
+<p>Unfortunately core.match doesn't support records/protocols yet. However, while reading core.match's source code, I found a test that implemented the balance algorithm using a different way of representing a tree.</p>
+
+<p>You see, I went with the map approach because I like how you can ask for the specific keys that represent the parts of the tree, such as <em>:color</em>, <em>:left</em>, <em>:value</em> and <em>:right</em>. But if you're happy with using positional elements in a vector to represent your tree, our <em>balance</em> function in Clojure becomes this:</p>
+
+<p>```clojure
+(defn balance [tree]
+  (match [tree]</p>
+
+<pre><code>     [(:or [:black [:red [:red a x b] y c] z d]
+           [:black [:red a x [:red b y c]] z d]
+           [:black a x [:red [:red b y c] z d]]
+           [:black a x [:red b y [:red c z d]]])] [:red [:black a x b]
+                                                        y
+                                                        [:black c z d]]
+           :else tree))
+</code></pre>
+
+<p>```</p>
+
+<p>Which is <em>amazingly</em> similar to the protocols/records version above.</p>
+
+<p>I guess one of the lessons here is that by carefully choosing the data structure to represent your problem, your implementation can become substantially simpler.</p>
+
+<p>As usual, <a href="https://github.com/leonardoborges/purely-functional-data-structures">all code is on github</a>, with the Red-black tree specific section in <a href="https://github.com/leonardoborges/purely-functional-data-structures/blob/master/src/purely_functional_data_structures/ch3.clj#L384">this direct link</a>. The project also includes tests.</p>
+
+<p>Until next time.</p>
+]]></content>
+  </entry>
+  
+</feed>

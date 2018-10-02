@@ -1,0 +1,543 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Update: Go ahead and read this post in its entirety - including the comments. Then, read my other post where I expand the subject a little more. &# &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/03/17/final-classes-are-evil/">Final Classes Are Evil</a></h1>
+	<div class="entry-content">
+		<p>
+<strong>Update:</strong> Go ahead and read this post in its entirety - including the comments. Then, read my other <a href="http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/">post where I expand the subject a little more</a>. <br><br>&#8211;<br><br>Every now and then I still do some Java coding. And I actually like it. I spent several years of my career developing primarily in Java and am very keen about the language.<br><br>I&#8217;ve been a fierce defender of it these days, specially with the wave of popularity of other languages such as Ruby and Groovy. But I must say that for the 1st time - actually the 2nd - I got pissed off at Java.<br><br>The reason? Final classes!<br><br>How arrogant of someone to say: &#8220;And from now on you shall not subclass my classes!&#8221;<br><br>Er&#8230;. Why?!?! I&#8217;m yet to find a good reason in favor of it. But I can share 2 that made me be completely against it. - I never actually liked it but it just didn&#8217;t bother me that much in the past.<br><br>The first one happened while I was adding PostgreSQL XML support to <a href="http://hibernate.org/">Hibernate</a>. The basic idea is that the XML data type should behave mostly as a string, with the exception of the saving and loading operations.<br><br>The thing is, the String data type in Hibernate is declared final. So you cannot share behavior unless you copy and paste it. How smart.<br><br>And the second is in the testing area. We all love testing. And we all love mocking external dependencies so we can test our code in isolation and fast. Well, I hope your code doesn&#8217;t depend on the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/net/URL.html">URL</a> class then.<br><br>It is declared final so you just can&#8217;t mock it. Mocking frameworks like <a href="http://www.easymock.org/">easyMock</a> use subclassing to create your dependencies mock objects and obviously it doesn&#8217;t work here.<br><br>Yeah yeah, of course you can refactor your code so it depends on an interface/class that wraps your URL class and then you can switch implementations. But just how stupid is that? Programming to interfaces makes sense, but not everywhere. Specially not when you&#8217;re using a low level class like this one.<br><br>So please, software developers, architects and the like, design your systems for extensibility and stop being presumptuous.<br><br>P.S.: There is a testing framework called <a href="https://jmockit.dev.java.net/">jMockit</a> which uses instrumentation (Java 5+) to redefine methods in runtime so you can mock final classes. It works, but should we really be playing that much with the java class loader just so we can &#8220;easily&#8221; test our code?
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-17T00:00:00+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/architecture/'>Architecture</a>, <a class='category' href='/writings/tags/java/'>Java</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/03/09/qcon-london-09/">QCon London &#8216;09</a></h1>
+	<div class="entry-content">
+		<p>
+Tomorrow I&#8217;ll be once more heading London for this year&#8217;s <a title="QCon London 2009" href="http://qconlondon.com/">QCon</a>.<br><br>As usual, the schedule looks amazing and I&#8217;ll try to keep you all posted about what&#8217;s going on there.<br><br>Oh and if any of you guys is going and wanna meet up for a geek talk and a couple of beers, just send me a message.<br><br>Cheers! :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-09T00:00:00+11:00" pubdate data-updated="true">Mar 9<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2009/02/01/eclipse-tip-debugging-non-wtp-projects/">Eclipse Tip: Debugging Non WTP Projects</a></h1>
+	<div class="entry-content">
+		<p>
+This is a very useful tip I shared a while ago at the office and turned out to be extremely useful.<br><br>If you work with java and use eclipse as an IDE you know that eclipse has something called WTP, which stands for Web Tools Platform. It&#8217;s a set of tools and API&#8217;s to aid in the development of web and JEE projects.<br><br>That means that if you have a WTP project in your workspace, you can deploy, run and debug it straight from the IDE. But what happens if your project is not of a WTP nature?<br><br>Back at the office we have a coupe of really old Java project. WTP didn&#8217;t exist back then but we do use Eclipse as our IDE of choice.<br><br>So, how do we debug a deployed project that we don&#8217;t actually deploy from the IDE? As long as you have the source, it is quite simple:
+		
+		<a href="/writings/2009/02/01/eclipse-tip-debugging-non-wtp-projects/" class="more-link">Read on &rarr;</a>
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-01T00:00:00+11:00" pubdate data-updated="true">Feb 1<span>st</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/java/'>Java</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/12/29/somewhere-in-between/">Somewhere in Between&#8230;</a></h1>
+	<div class="entry-content">
+		<p>
+So here I am! Alive and kicking!!!<br><br>Just got back from vacation. Brazil was awesome and so was xmas in Norway! Lots of food in both places! Need a diet! :p Warming up for new year&#8217;s now.<br><br>But the reason for this post is the last comment on my <a href="http://www.leonardoborges.com/writings/2007/12/21/rails-20-scaffold/#comments">Rails 2.0 scaffold post</a>, quoted here:<br><br>Hi Leonardo,<br><blockquote><em>I am extremely grateful for your info altruism. I thought maybe I could show my gratitude with a small donation but I donâ€™t see anywhere on your site to do so.<br>Youâ€™ve saved me hours and possibly what little sanity that I claim to have left. Is there a place to do so on your site that Iâ€™m missing? If not just tell me where and Iâ€™ll send my gesture to any cause that you wish. Thanks very much again, some day I hope to be able to be of service to a needy newbie as you have been to me. Happy New Years!!</em></blockquote><br><br>I was surprised that someone wanted to make a donation and, since I never thought about it, I wasn&#8217;t prepared. <br><br>I was talking with the author of the comment, Eric Goodman, and I suggested he could donate to a noble cause. He ageed and just sent me the confirmation that a donation was made to <a href="http://www.cancer.org">The American Cancer Society</a>. <br><br>So here I leave my thank you to Eric and encourage other people that read my blog to do the same in case they feel compelled to contribute in some way. Other societies around the world are gonna be very grateful.<br><br>Happy new years!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-29T00:00:00+11:00" pubdate data-updated="true">Dec 29<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/world/'>World</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/12/03/apologizing-in-advance-p/">Apologizing in Advance! :P</a></h1>
+	<div class="entry-content">
+		<p>
+<strong>UPDATE</strong>: By next friday I meant this friday, december 5th. Tks Pillip! :P<br><br>This will be a really quiet month on my blog.<br><br>The reason? Next friday I&#8217;m going to Brazil for vacation and right after, in the end of december, I&#8217;m going to extend my trip a bit and spend xmas in Norway.<br><br>Just hope to come back alive from Brazil! My friends are promising a real blast!!!!! :D<br><br>C u all soon!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-03T00:00:00+11:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/world/'>World</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/11/20/rails-performance-scripts-profiler-benchmarker/">Rails Performance Scripts: Profiler and Benchmarker</a></h1>
+	<div class="entry-content">
+		<p>
+There are several ways you can measure your rails application&#8217;s performance. The techniques range from filling your code with &#8220;puts&#8221; statements - :p - to fancy ones like <a href="http://www.newrelic.com/">NewRelic</a> - which is quite nice, I must say.<br><br>But what many people don&#8217;t know is that rails ships with a handful of scripts to help you out. One of which is called <strong>profiler</strong>, located under your application&#8217;s <strong>scripts/performance</strong> directory.<br><br>By default it uses the standard ruby profiler but if you want more speed - and additional reporting options - , consider installing the <a href="http://ruby-prof.rubyforge.org/">ruby-prof</a> gem.<br><br>So if you execute it without params, you&#8217;ll get a clue of how it works:<br><br><pre lang="bash"><br>$ script/performance/profiler<br>Usage: ./script/performance/profiler 'Person.expensive_method(10)' [times] [flat|graph|graph_html]<br></pre><br><br>Pretty self explanatory, right?<br><br>As a sample code, I have in my rails app a dumb model with a really dumb method I wanna profile:<br><br>
+
+<div class="code">
+  <pre><code class="language-ruby">
+  class Article
+    def self.find_all_with_delay
+      sleep 10
+      self.find(:all)
+    end
+  end
+  </code></pre>
+</div>
+<br><br>Clearly this method doesn&#8217;t perform well and is a bottle neck in our super application! But let&#8217;s see what rails&#8217; profiler tells us:<br><br><pre lang="bash" line="1"><br>$ script/performance/profiler 'Article.find_all_with_delay' 1 graph > text_graph.perf<br>Loading Rails...<br>Using the ruby-prof extension.<br>Thread ID: 109440<br>Total Time: 10.147995<br><br>  %total   %self     total      self      wait     child            calls   Name<br>--------------------------------------------------------------------------------<br> 100.00%   0.00%     10.15      0.00      0.00     10.15                1     Global#[No method] (/Users/leo/projects/test/vendor/rails/railties/lib/commands/performance/profiler.rb:24}  /Users/leo/projects/test/vendor/rails/railties/lib/commands/performance/profiler.rb:24<br>                     10.15      0.00      0.00     10.15              1/1     Object#profile_me<br>--------------------------------------------------------------------------------<br>                     10.15      0.00      0.00     10.15              1/1     Global#[No method]<br> 100.00%   0.00%     10.15      0.00      0.00     10.15                1     Object#profile_me ((eval):1}  (eval):1<br>                      0.00      0.00      0.00      0.00              1/1     Class#const_missing<br>                     10.15      0.00      0.00     10.15              1/1     <Class::Article(id: integer, name: string, content: string, created_at: datetime, updated_at: datetime)>#find_all_with_delay<br>--------------------------------------------------------------------------------<br>                     10.15      0.00      0.00     10.15              1/1     Object#profile_me<br>  99.97%   0.00%     10.15      0.00      0.00     10.15                1     <Class::Article(id: integer, name: string, content: string, created_at: datetime, updated_at: datetime)>#find_all_with_delay (/Users/leo/projects/test/app/models/article.rb:2}  /Users/leo/projects/test/app/models/article.rb:2<br>                      0.15      0.00      0.00      0.15              1/1     <Class::ActiveRecord::Base>#find<br>                     10.00     10.00      0.00      0.00              1/1     Kernel#sleep<br>--------------------------------------------------------------------------------<br>                     10.00     10.00      0.00      0.00              1/1     <Class::Article(id: integer, name: string, content: string, created_at: datetime, updated_at: datetime)>#find_all_with_delay<br>  98.54%  98.54%     10.00     10.00      0.00      0.00                1     Kernel#sleep (ruby_runtime:0}  ruby_runtime:0<br>--------------------------------------------------------------------------------<br>...<br></pre><br><br>As you can see, the group around line 13 is where most of the time is spent, going through our stupid call to Kernel#sleep and detailing every and each call from the very beginning. The report is much larger, so I recommend you give it a try. It&#8217;s really useful.<br><br>Now, displeased with my method&#8217;s performance, I wrote a new one that I think performs much better:<br><br><pre lang="ruby"><br>  def self.find_all_with_less_delay<br>    sleep 5<br>    self.find(:all)<br>  end<br></pre><br><br>Nice huh? :) But how can we be sure it performs better? It turns out that under <strong>scripts/performance</strong> there is another useful script: <strong>benchmarker</strong><br><br>Again, running it without arguments reveals it&#8217;s usage:<br><br><pre lang="bash"><br>$ script/performance/benchmarker <br>Usage: ./script/performance/benchmarker [times] 'Person.expensive_way' 'Person.another_expensive_way' ...<br></pre><br><br>So, ready to see which one of my methods performs better? Let&#8217;s check:<br><br><pre lang="bash"><br>$ script/performance/benchmarker 1 'Article.find_all_with_delay' 'Article.find_all_with_less_delay'<br>            user     system      total        real<br>#1      0.020000   0.000000   0.020000 ( 10.016033)<br>#2      0.010000   0.000000   0.010000 (  5.015390)<br></pre><br><br>Pretty neat way to benchmark your methods huh?<br>Profiler and benchmarker are a powerful combination that have been helping me a lot in the projects I&#8217;m working on.<br><br>Hope you like it! See u soon! ;)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-20T00:00:00+11:00" pubdate data-updated="true">Nov 20<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/performance/'>Performance</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/">Merb Turns 1.0, and Started Driving Me Crazy</a></h1>
+	<div class="entry-content">
+		<p>
+As you may already know, <a href="http://www.merbivore.com/">Merb</a> turned 1.0 a while ago and I decided to resume my studies to learn the framework.<br><br>So I just built a new app with a few resources and fired the migration scripts:<br><pre lang="bash"><br>$ rake db:automigrate<br></pre><br><br>And this is what I got:<br><pre lang="bash"><br>Loading init file from /Users/leo/projects/merb/my-first-app/config/init.rb<br>Loading /Users/leo/projects/merb/my-first-app/config/environments/development.rb<br> ~ Connecting to database...<br>/opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `initialize': wrong number of arguments (8 for 1) (ArgumentError)<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `new'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `normalize_uri'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/abstract_adapter.rb:44:in `initialize'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:159:in `initialize'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core.rb:157:in `new'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core.rb:157:in `setup'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb/orms/data_mapper/connection.rb:44:in `setup_connections'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb/orms/data_mapper/connection.rb:27:in `connect'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb_datamapper.rb:17:in `run'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/bootloader.rb:99:in `run'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/server.rb:172:in `bootup'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/server.rb:42:in `start'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core.rb:169:in `start'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/bin/merb:11<br>	from /opt/local/bin/merb:19:in `load'<br>	from /opt/local/bin/merb:19<br></pre><br><br>Lovely, isn&#8217;t it?  <br>After a fair amount of googling around it turns out that there seems to be a problem with the URI parser <a href="http://www.merbivore.com/">Merb</a> uses underneath, called <a href="http://addressable.rubyforge.org/">Addressable</a>.<br><br>As of the installation of Merb 1.0, the installed version of this library was 2.0.0.<br>The solution? Install a older Addressable version:<br><br><pre lang="bash"><br>$ sudo gem uninstall addressable<br><br>You have requested to uninstall the gem:<br>	addressable-2.0.0<br>dm-core-0.9.6 depends on [addressable (>= 1.0.4)]<br>data_objects-0.9.6 depends on [addressable (>= 1.0.3)]<br>If you remove this gems, one or more dependencies will not be met.<br>Continue with Uninstall? [Yn]  Y<br>Successfully uninstalled addressable-2.0.0<br><br>$ sudo gem install addressable -v 1.0.4<br>Successfully installed addressable-1.0.4<br>1 gem installed<br>Installing ri documentation for addressable-1.0.4...<br>Installing RDoc documentation for addressable-1.0.4...<br></pre><br><br>I haven&#8217;t figured out the reason for this issue, so please do share if you know. I&#8217;ll be glad to update the post. :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-18T00:00:00+11:00" pubdate data-updated="true">Nov 18<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/merb/'>Merb</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/10/28/understanding-ruby-threads/">Understanding Ruby Threads</a></h1>
+	<div class="entry-content">
+		<p>
+This post is just to clarify some confusion I&#8217;ve noticed reading some posts around the web. There is some misunderstanding of the differences between Ruby 1.8 and Ruby 1.9 regarding threads. And the difference between them and JRuby.<br><br>So I decided to write this small summary:<br><br><strong>Ruby 1.8</strong> - Supports only <a href="http://en.wikipedia.org/wiki/Green_threads">Green Threads</a><br><br>This means that the ruby interpreter has its own scheduler. No matter how many threads you create in your ruby program, there will be only one native thread on your OS. Therefore, your program cannot take advantage of multiple core environments.<br><br><strong>Ruby 1.9</strong> - Supports native threads (GIL)<br><br>Ruby 1.9 adopted <a href="http://www.atdot.net/yarv/">YARV</a> as the new VM implementation, which supports native threads. This means that now your ruby programs can take advantage of multiple core environments, but no truly parallel execution is achieved.<br><br>The catch is GIL - Global Interpreter Lock - and it means that each ruby thread runs on its own native thread, but only one of them can be executed at a time.<br><br><strong>JRuby</strong> - Ruby 1.8 compatible<br><br>I think this is the easy part. JRuby runs on the Java VM, which supports native threads and parallel execution.<br><br>On this environment, ruby threads are java threads.<br><br><strong>The future</strong><br><br>There doesn&#8217;t seem to be any decision about what&#8217;s gonna happen on the next versions of Ruby. At least to the extent of my research. But this is today&#8217;s snapshot of Ruby threads and I hope it&#8217;ll be useful to some folks.<br><br>c u around
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-28T00:00:00+11:00" pubdate data-updated="true">Oct 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/10/08/dont-use-rexml-i-mean-it/">Don&#8217;t Use REXML. I Mean It.</a></h1>
+	<div class="entry-content">
+		<p>
+<a href="http://www.germane-software.com/software/rexml/">REXML</a> is the standard XML processing library for Ruby. It&#8217;s on Ruby&#8217;s core and is terribly <strong>slow</strong>.<br><br>Yeah, I know it&#8217;s pretty simple to use, got a nice interface and, again, it&#8217;s just there. And it is a good library, for most things. But if you, as me, came to a point that processing XML is taking 50% of the time to render a rails action, it&#8217;s time to change.<br><br>My tip? Use <a href="http://libxml.rubyforge.org/">libxml</a> instead. The numbers on their home page speak for themselves. Try it yourself, you won&#8217;t be disappointed. And I&#8217;m really happy with the performance increase on our app.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-08T00:00:00+11:00" pubdate data-updated="true">Oct 8<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/09/26/were-hiring/">We&#8217;re Hiring</a></h1>
+	<div class="entry-content">
+		<p>
+Here at <a href="http://miraiespana.com/">Mirai</a> we&#8217;re looking for passionate software engineers.<br><br>And if it&#8217;s not clear, by passionate I mean people who actually enjoy their job, aren&#8217;t afraid of trying new things, likes to research/study, is up to date to what&#8217;s happening around them and is a true team player.<br><br>Interested? Hold on, click <a href="http://jobs.hotelsearch.com/">here</a> to find out more about the offer, as well as instructions on how to apply.<br><br>Doubts?  Send them to jobs@hotelsearch.com<br><br>ps. If you&#8217;ve been following my blog, you probably have already got a feeling of the sort of stuff that we do here&#8230;
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-09-26T00:00:00+10:00" pubdate data-updated="true">Sep 26<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/offers/'>Offers</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/writings/writings/page/8/" class="prev">Prev</a>
+    
+    
+        <a href="/writings/writings/page/10/" class="next">Next</a>
+    
+    <div class="center"><a href="/writings/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

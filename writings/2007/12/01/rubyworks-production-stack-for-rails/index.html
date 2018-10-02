@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>RubyWorks: Production Stack for Rails - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Well, we all know how hard, or at least cumbersome, it can be to set up a production environment to deploy your applications. Besides all the &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">RubyWorks: Production Stack for Rails</h1>
+	<div class="entry-content"><p>
+Well, we all know how hard, or at least cumbersome, it can be to set up a production environment to deploy your applications. Besides all the hardware stuff like storages, links, routers you are still left with a huge amount of software configuration to handle. This often includes configuring things like clusters, load balancing and services monitoring - Including notification of interested parts in case of any failure. Pieces of software you have to tie up and make them work together.<br><br>But hey, ruby lovers, you may have a better way to get this going! Released by <a href="http://www.thoughtworks.com/" title="TW's web site">ThoughtWorks</a>, <a href="http://studios.thoughtworks.com/rubyworks" title="RubyWorks">RubyWorks</a> is, as quoted from their website, a production application stack for <a href="http://www.rubyonrails.org/" title="Ruby On Rails">Ruby On Rails</a> applications. I decided to give it a try and I really enjoyed it.<br><br>First of all I didn&#8217;t want to mess with my actual configuration so I installed a new vm with <a href="http://www.virtualbox.org/" title="Virtual Box">Virtual Box</a>. It has Ubuntu 7.10 on it, with 256MB of memory.<br><br>After installing RubyWorks - instructions on their website -, you get a new skeleton rails app up and running, being served by 4 <a href="http://mongrel.rubyforge.org/" title="Mongrel">mongrels</a> that defaults to production environment! Impressed? There is more. A <a href="http://haproxy.1wt.eu/" title="HAProxy">HAProxy</a> is also set up in front of your mongrel servers acting as a load balancer.<br><br>Well, you probably want to monitor all that stuff huh? A <a href="http://www.tildeslash.com/monit/" title="Monit">monit</a> web interface is waiting for your call on port 2812! It monitors all your mongrel servers - four by default - and your HAProxy, allowing you to measure CPU and Memory usage, among other things.<br><br>The coolest thing here is that all these softwares you would have to setup by hand are already working together, ready for production! Well, is it?<br><br>Going a little deeper, I deployed a database backed application to test this stack&#8217;s performance.<br><br>I used <a href="http://www.joedog.org/JoeDog/Siege" title="Siege">Siege</a> to stress the app and I am very happy with the results! I compared it with a single mongrel running on production env and no proxy at all.<br><br>It is worth mentioning that having 4 mongrels running took my vm to 77% of memory usage, while a single mongrel took it to 38%.<br><br><!--more--><br><br>The test was made simulating 200 concurrent users on a simple listing page, lasting 1 minute. And the results are:<br>[code]<br>RubyWorks - 77% memory usage<br>&#8212;&#8212;&#8212;&#8212;&#8211;<br>Transactions: 1511 hits<br>Availability: 100.00 %<br>Elapsed time: 60.45 secs<br>Data transferred: 3.32 MB<br>Response time: 4.65 secs<br>Transaction rate: 25.00 trans/sec<br>Throughput: 0.05 MB/sec<br>Concurrency: 116.33<br>Successful transactions: 1513<br>Failed transactions: 0<br>Longest transaction: 15.85<br>Shortest transaction: 0.01<br>[/code]<br>[code]<br>Mongrel - production environment - 38% memory usage<br>&#8212;&#8212;&#8212;&#8211;<br>Transactions: 1460 hits<br>Availability: 100.00 %<br>Elapsed time: 67.96 secs<br>Data transferred: 3.20 MB<br>Response time: 7.33 secs<br>Transaction rate: 21.48 trans/sec<br>Throughput: 0.05 MB/sec<br>Concurrency: 157.57<br>Successful transactions: 1460<br>Failed transactions: 0<br>Longest transaction: 17.78<br>Shortest transaction: 0.01<br>[/code]<br><br>Wow!<br><br>That is a big difference! In less time, with less resources - remember the 77% against 38%? - the out-of-the-box RubyWorks setup was able to handle more requests at a time, and with a lower response time! Even in a machine with very low resources (256MB)!<br><br>This result actually was expected but it was awesome to show that this stack is powerful without touching it and is a very good starting point to tailor your environment, without having to worry about configuring all this stuff. Just focus on fine tuning it, if you need!<br><br>Oh, and by the way, I didn&#8217;t even put an apache in front of that, which is highly recommended for a prod environment!<br><br>See you on the next post!<br><br>UPDATE 12/1 - 4:25 PM : I fogot to mention that besides all this configuration, it installs ruby and its dependencies as well.
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-12-01T00:00:00+11:00" pubdate data-updated="true">Dec 1<span>st</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2007/12/01/rubyworks-production-stack-for-rails/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2007/12/01/rubyworks-production-stack-for-rails/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2007/12/01/rubyworks-production-stack-for-rails/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2007/12/01/rubyworks-production-stack-for-rails/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2007/12/01/rubyworks-production-stack-for-rails/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2007/12/01/rubyworks-production-stack-for-rails/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

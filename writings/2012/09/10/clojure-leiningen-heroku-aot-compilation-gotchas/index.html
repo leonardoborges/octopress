@@ -1,0 +1,376 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Clojure, leiningen 2 and Heroku: AOT compilation gotchas - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Recently I upgraded the clojure project I&#8217;m working on to Leiningen 2 in order to start using nrepl - since swank-clojure is now deprecated. &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Clojure, Leiningen 2 and Heroku: AOT Compilation Gotchas</h1>
+	<div class="entry-content"><p>Recently I upgraded the <a href="http://clojure.org/">clojure</a> project I&#8217;m working on to <a href="http://leiningen.org/">Leiningen 2</a> in order to start using <a href="https://github.com/clojure/tools.nrepl">nrepl</a> - since <a href="https://github.com/technomancy/swank-clojure">swank-clojure</a> is now <a href="http://technomancy.us/163">deprecated</a>. Little did I know this would lead me to a small debugging adventure.</p>
+
+<h3>Heroku</h3>
+
+<p>I use <a href="http://www.heroku.com/">Heroku</a> as my deployment platform and my project had been running on it for a few weeks without any
+issues. I also use Heroku&#8217;s PostgreSQL solution.</p>
+
+<p>However, by upgrading to Leiningen 2, my project started throwing some weird exceptions during deployment -  it couldn&#8217;t connect to my database any longer. Everything was fine on my local environment though.</p>
+
+<p>Upon inspecting the deployment logs on Heroku, I realized that the <a href="https://github.com/heroku/heroku-buildpack-clojure">Heroku Clojure Buildpack</a> tries to perform <a href="http://clojure.org/compilation">Ahead of Time (AOT) compilation</a> if it identifies the project is running Leiningen 2.x</p>
+
+<p>This means that after receiving a git push Heroku runs this command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>lein with-profile production compile :all
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At first this might seem harmless. But step back for a second and think about what this means for code that depends on environment variables.</p>
+
+<h3>Case in point: Lobos</h3>
+
+<p><a href="https://github.com/budu/lobos">Lobos</a> is a clojure library for manipulating database schemas akin <a href="http://api.rubyonrails.org/classes/ActiveRecord/Migration.html">ActiveRecord migrations</a> in Ruby land.</p>
+
+<p>The <a href="https://github.com/budu/lobos#real-world-example">real-world</a> example on their github page recommends this code snippet for configuring a database connection:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">ns</span> <span class="nv">lobos</span><span class="o">.</span><span class="nv">config</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">:use</span> <span class="nv">lobos</span><span class="o">.</span><span class="nv">connectivity</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">db</span>
+</span><span class='line'>  <span class="p">{</span><span class="nv">:classname</span> <span class="s">&quot;org.postgresql.Driver&quot;</span>
+</span><span class='line'>   <span class="nv">:subprotocol</span> <span class="s">&quot;postgresql&quot;</span>
+</span><span class='line'>   <span class="nv">:user</span> <span class="s">&quot;test&quot;</span>
+</span><span class='line'>   <span class="nv">:password</span> <span class="s">&quot;test123&quot;</span>
+</span><span class='line'>   <span class="nv">:subname</span> <span class="s">&quot;//localhost:5432/test&quot;</span><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">open-global</span> <span class="nv">db</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More often than not this isn&#8217;t ideal. You&#8217;ll probably want to customise your database configuration based on environment variables. Something along these lines:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">ns</span> <span class="nv">lobos</span><span class="o">.</span><span class="nv">config</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">:use</span> <span class="nv">lobos</span><span class="o">.</span><span class="nv">connectivity</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">db</span>
+</span><span class='line'>     <span class="p">{</span><span class="nv">:classname</span> <span class="s">&quot;org.postgresql.Driver&quot;</span>
+</span><span class='line'>      <span class="nv">:subprotocol</span> <span class="s">&quot;postgresql&quot;</span>
+</span><span class='line'>      <span class="nv">:user</span> <span class="p">(</span><span class="nf">System/getenv</span> <span class="s">&quot;DB_USER&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nv">:password</span> <span class="p">(</span><span class="nf">System/getenv</span> <span class="s">&quot;DB_PASSWORD&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nv">:subname</span> <span class="p">(</span><span class="nf">System/getenv</span> <span class="s">&quot;DATABASE_URL&quot;</span><span class="p">)})</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">open-global</span> <span class="nv">db</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And you&#8217;re good to go - until Heroku decides to AOT compile your code.</p>
+
+<h3>Compilation</h3>
+
+<p>The Clojure compilation process caught me by surprise. As stated by <a href="https://twitter.com/richhickey">Rich Hickey</a> on <a href="http://clojure-log.n01se.net/date/2008-11-12.html#16:07">this IRC log entry</a>, &#8220;a side effect of compiling Clojure code is loading the namespaces in order to make macros and functions they use available&#8221;.</p>
+
+<p>This means that during compilation, any top level function calls - such as <code>(open-global db)</code> from above - will get executed. The same applies to macros that expand to top-level function calls.</p>
+
+<p>If said function call has no side effects, you&#8217;re probably ok.</p>
+
+<p>The trouble with <em>open-global</em> though is that it effectively attempts a connection to the database!</p>
+
+<p><strong>BAM!</strong></p>
+
+<p>On Heroku the environment variables you rely on - such as <em>DATABASE_URL</em> - aren&#8217;t available on compile time meaning a connection will be attempted to an empty url. <em>All sorts of badness</em>.</p>
+
+<p>After having understood why the compilation process was effectively executing top level function calls, I then wrapped that call to <em>open-global</em> in a function declaration:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">init</span> <span class="p">[]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">open-global</span> <span class="p">(</span><span class="nf">db</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will prevent eager evaulation during compilation since all <code>defn</code> does is bind the given function body to a <em>var</em>.</p>
+
+<p>Then, in the code that needs migrations to happen - such as in my <a href="https://github.com/marick/Midje">midje</a> tests setup - I initialize the database like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">background</span>
+</span><span class='line'> <span class="p">(</span><span class="nf">before</span> <span class="nv">:contents</span> <span class="p">(</span><span class="nf">lobos</span><span class="o">.</span><span class="nv">config/init</span><span class="p">))</span>
+</span><span class='line'> <span class="p">(</span><span class="nf">before</span> <span class="nv">:facts</span> <span class="p">(</span><span class="nf">migrate</span><span class="p">)</span>
+</span><span class='line'>         <span class="nv">:after</span> <span class="p">(</span><span class="nf">rollback</span> <span class="nv">:all</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I spent some time in the #clojure IRC channel on freenode and it is accepted that top level function calls should be avoided anyway - especially if you&#8217;re dealing with side effects.</p>
+
+<p>I also applied the same principle to other initialization code I have such as the configuration for <a href="http://sqlkorma.com/">Korma</a>.</p>
+
+<h3>Happy ending?</h3>
+
+<p>Not quite. After having spent quite some time to get to this point, this was the new error that was stealing my sleep:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Caused by: java.lang.NullPointerException
+</span><span class='line'>    at java.util.concurrent.ConcurrentHashMap.hash<span class="o">(</span>ConcurrentHashMap.java:332<span class="o">)</span>
+</span><span class='line'>    at java.util.concurrent.ConcurrentHashMap.get<span class="o">(</span>ConcurrentHashMap.java:987<span class="o">)</span>
+</span><span class='line'>    at clojure.lang.Namespace.find<span class="o">(</span>Namespace.java:188<span class="o">)</span>
+</span><span class='line'>    at clojure.core<span class="nv">$find_ns</span>.invoke<span class="o">(</span>core.clj:3659<span class="o">)</span>
+</span><span class='line'>    at clojure.core<span class="nv">$the_ns</span>.invoke<span class="o">(</span>core.clj:3691<span class="o">)</span>
+</span><span class='line'>    at clojure.core<span class="nv">$ns_name</span>.invoke<span class="o">(</span>core.clj:3698<span class="o">)</span>
+</span><span class='line'>    at my_app.env__init.load<span class="o">(</span>Unknown Source<span class="o">)</span>
+</span><span class='line'>    at my_app.env__init.&lt;clinit&gt;<span class="o">(</span>Unknown Source<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This isn&#8217;t an unknown error. It basically means you&#8217;re trying to find a namespace that doesn&#8217;t exist. Or does it?</p>
+
+<p>Once again this only happened if the code got compiled Ahead Of Time. Puzzling.</p>
+
+<p>A couple of debugging hours later and I tracked it down to be a problem with <a href="https://github.com/malcolmsparks/clj-logging-config">clj-logging-config</a> - a logging configuration utility for clojure. This is the offending code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">ns</span> <span class="nv">my-app</span><span class="o">.</span><span class="nv">env</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">:use</span>
+</span><span class='line'>    <span class="nv">clojure</span><span class="o">.</span><span class="nv">tools</span><span class="o">.</span><span class="nv">logging</span>
+</span><span class='line'>    <span class="nv">clj-logging-config</span><span class="o">.</span><span class="nv">log4j</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">set-logger!</span><span class="p">)</span> <span class="c1">;; this call causes the exception</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>set-logger!</code> is a macro that makes use of the <strong>*ns*</strong> var. <strong>*ns*</strong> contains the current namespace and, due to what I&#8217;m assuming to be special semantics regarding this particular var, it shouldn&#8217;t be <a href="http://clojuredocs.org/clojure_core/clojure.core/unquote"><em>unquoted</em></a> within a macro - which is why it was failing in AOT mode.</p>
+
+<p>I <a href="https://github.com/malcolmsparks/clj-logging-config/issues/15">opened an issue</a> in the clj-logging-config github page. I eventually forked the project and fixed the issue in <a href="https://github.com/malcolmsparks/clj-logging-config/pull/16">this pull request</a>. That was then <a href="https://github.com/malcolmsparks/clj-logging-config/commit/ec8a08535daad01eb9f23e92771b623b5902c8c9">merged last Friday</a>.</p>
+
+<p>My code now works perfectly - regardless of AOT compilation.</p>
+
+<h3>Final thoughts</h3>
+
+<p>This was a nice little journey and I&#8217;m actually glad I went through it. I have a much better understanding of Clojure&#8217;s compilation process, worked out some quirks on Heroku and even got my first Clojure related open-source contribution accepted. Life is good.</p>
+
+<p>Hopefully this will save other people a lot of time and effort debugging similar issues.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-10T10:41:00+10:00" pubdate data-updated="true">Sep 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/09/10/clojure-leiningen-heroku-aot-compilation-gotchas/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/09/10/clojure-leiningen-heroku-aot-compilation-gotchas/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/09/10/clojure-leiningen-heroku-aot-compilation-gotchas/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/09/10/clojure-leiningen-heroku-aot-compilation-gotchas/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/09/10/clojure-leiningen-heroku-aot-compilation-gotchas/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/09/10/clojure-leiningen-heroku-aot-compilation-gotchas/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

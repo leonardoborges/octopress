@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Spring 2.5: Dependency Injection that doesn't hurt - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Dependency injection - DIÂ - Â is a great thing. Really. The hability to tweak implementations without touching your code is awesome and the DI &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Spring 2.5: Dependency Injection That Doesn't Hurt</h1>
+	<div class="entry-content"><p>
+<a href="http://martinfowler.com/articles/injection.html">Dependency injection</a> - <a href="http://martinfowler.com/articles/injection.html">DI</a>Â - Â is a great thing. Really. The hability to tweak implementations without touching your code is awesome and the DI frameworks, like spring, saves you a lot of coding. No more service locators stuff.<br><br>But, and there is always a but, you&#8217;re left with a bunch of XML configuration. And I hate it. Not that XML files are bad&#8230; the thing is that everything nowadays has its own set of XML configurarion files. And <a href="http://www.springframework.org">Spring</a> is not different.<br><br><!--more--><br><br>Let&#8217;s take a look at a simple example on how dependency injection is handled in Spring.<br><br>Imagine you have a domain object called Invoice that, among other things, is somewhat defined like this:<br>[java]<br>public class Invoice {<br>//normal attributes and getters/setters<br><br>public void sendByEmailTo(String address) {<br>//code to send invoice by e-mail<br>}<br>}<br>[/java]<br><br>You have a method to send a certain Invoice through e-mail, probably to some customer. This method would basically do some processing, maybe formatting strings, and then, ideally, delegate the send e-mail task to someone else. Probably a infrastructure service or something similar, that I will call EmailService. This object knows how to do the low level stuff like connecting to the SMTP server and so on. So we need this object, we <em>depend</em> on it.Â  To express this dependency, the Invoice code would change to this:<br><br>[java]<br>public class Invoice {<br>//normal attributes and getters/setters<br>private EmailService emailService;<br>public void setEmailService(EmailService service) {<br>emailService = service;<br>}<br><br>public void sendByEmailTo(String address) {<br>//code to send invoice by e-mail<br>}<br>}<br>[/java]<br><br>This way the Invoice class is prepared to be injected with its only dependency using Spring. Now, what you would have to do is to declaratively express this dependency to the Spring container, so it can settle things for you. This is done through its XML configuration file, often called <em>applicationContext</em>. Below is the snippet of the file relevant to this example:<br><br>[xml]<br><br><bean id="invoice" class="com.leonardoborges.Invoice"><br><property name="emailService">Â  <ref bean="emailService"></ref></property><br></bean><br><br><bean id="emailService" class="com.leonardoborges.EmailService"></bean><br><br>[/xml]And that&#8217;s it. Upon initialization Spring will use this XML file to discover that the Invoice object depends on the EMailService object and inject it using the setter method we created before.<br><br>The problem is: If we have 50 domain objects that depends on 10 service objects that depends on anything else, we would end up in a XML forrest with at least 60 bean definitions.<br>Of course you can break this creating smaller XML files, but they are stillÂ XML files with bean definitions. Well, with Spring 2.5 we have a better option: We can use annotations!<br>In this new release, Spring use its own set of annotations to resolve object dependencies without XML. Let&#8217;s see how this thing works.<br><br>Our previous Invoice object would change to this:<br>[java]<br>public class Invoice {<br>//normal attributes and getters/setters<br>@AutoWired<br>@Qualifier(&#8220;myEmailService&#8221;)<br>private EmailService emailService;<br>public void setEmailService(EmailService service) {<br>emailService = service;<br>}<br><br>public void sendByEmailTo(String address) {<br>//code to send invoice by e-mail<br>}<br>}<br>[/java]<br><br>Let&#8217;s explain this change. The <a href="http://static.springframework.org/spring/docs/2.5.x/api/org/springframework/beans/factory/annotation/Autowired.html">@AutoWired</a> annotation tells spring that it should automatically wire dependencies based on its type, in our case, EmailService. But we take it a step further and choose which object to inject based not only on its type, but based on its name, with the <a href="http://static.springframework.org/spring/docs/2.5.x/api/org/springframework/beans/factory/annotation/Qualifier.html">@Qualifier</a> annotation.<br><br>Â Hmm&#8230; you may be asking now - But where did we say theÂ objectÂ name is myEmailService?<br><br>Â Okay, the other leg of the magic is on the <a href="http://static.springframework.org/spring/docs/2.5.x/api/org/springframework/stereotype/Component.html">@Component</a> annotation:<br><br>[java]<br>@Component(&#8220;myEmailService&#8221;)<br>public class EmailService {<br>//methods<br>}<br>[/java]<br><br>With this annotation, you register a new component available for injection within the Spring container. This way, you don&#8217;t need to put neither the Invoice objects, nor its dependencies in the xml files. Pretty, huh?<br><br>But one question remains: How the hell spring knows about this annotated classes?<br>This is the one-million question and the answer is simple. You <em>do</em> need an XML file, but just to tell spring where to look for annotated classes, this way:<br><br>[xml]<br><annotation-config></annotation-config><br><component-scan base-package="br.com"></component-scan><br>[/xml]<br><br>The first clause sets the container to support annotation based configuration. The second one, component-scan, defines the base package where Spring should look for anotated classes within your project. That&#8217;s how it will be able to discover who needs who and who is a eligible component for injection.<br><br>You are really left with a small, tiny, piece of XML. Much more clean, elegant and much less XML to type.
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-12-07T00:00:00+11:00" pubdate data-updated="true">Dec 7<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/architecture/'>Architecture</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/spring/'>Spring</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2007/12/07/spring-25-dependency-injection-that-doesnt-hurt/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2007/12/07/spring-25-dependency-injection-that-doesnt-hurt/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2007/12/07/spring-25-dependency-injection-that-doesnt-hurt/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2007/12/07/spring-25-dependency-injection-that-doesnt-hurt/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2007/12/07/spring-25-dependency-injection-that-doesnt-hurt/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2007/12/07/spring-25-dependency-injection-that-doesnt-hurt/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

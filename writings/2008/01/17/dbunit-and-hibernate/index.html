@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>DBUnit and Hibernate - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I never paid too much attention on testing database stuff. While working with java, the closest I got to something workable was using the test case &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">DBUnit and Hibernate</h1>
+	<div class="entry-content"><p>
+I never paid too much attention on testing database stuff. While working with java, the closest I got to something <em>workable </em>was using the test case abstractions provided by the Spring framework. It ensures that each test method runs in its own transaction that is rolled back after the test&#8217;s execution.<br><br>Fair enough. I used the <a href="http://junit.sourceforge.net/javadoc/junit/framework/TestCase.html#setUp()">setUp()</a> method on my <a href="http://junit.sourceforge.net/javadoc/junit/framework/TestCase.html">TestCase</a> to configure some records so I could work with them, removing all of them in the <a href="http://junit.sourceforge.net/javadoc/junit/framework/TestCase.html#tearDown()">tearDown()</a> method. It was quite simple and worked.<br><br>But I always felt something strange with this solution. First of all, I had to add another framework just for that. - Actually I was using spring for dependency injection, but if I wasn&#8217;t, it wouldn&#8217;t be a nice option. And another thing that bothered me, is that you cannot guarantee that your database is in a known state.<br><br>After I started to work with Ruby - and Rails - I discovered the <a href="http://manuals.rubyonrails.com/read/chapter/26">testing fixtures</a>. It is a really nice way to set up your testing data without having to worry about your database state. - If you don&#8217;t know what I&#8217;m talking about, follow the above link first.<br><br>Then I received a message from a co-worker saying he was having some trouble in using <a href="http://www.dbunit.org/">DBUnit</a> with Hibernate, and asked for some help. I&#8217;ve heard of DBUnit before but never tried it myself. It was a very good opportunity to take a better look into it.<br><br>The basic idea after all is very similar to that of the Rails Fixtures: You have some sort of external file - XML in this case - where you set up the testing data. So the framework takes care of erasing the database, inserting your test data and returning it to its original state.<br><br>So far so good, DBUnit&#8217;s default Classes works with <a href="http://www.dbunit.org/apidocs/org/dbunit/JdbcBasedDBTestCase.html">JDBC,</a> <a href="http://www.dbunit.org/apidocs/org/dbunit/DataSourceBasedDBTestCase.html">DataSources</a> and <a href="http://www.dbunit.org/apidocs/org/dbunit/JndiBasedDBTestCase.html">JNDIDatasources</a>, but not with Hibernate.  The effort to put them working together is minimal and is documented in their web site.<br><br>I decided to share how this can be done with hibernate and in the end, you would have a test case similar to this one:<br><br><!--more--><br><br>[java]<br>public class DBUnitTest extends TestCase {<br>private Session s;<br>private FileInputStream is;<br>private IDatabaseConnection conn;<br>private IDataSet dataSet;<br><br>public DBUnitTest() {<br>try {<br>s = HibernateUtil.getSession();<br>is = new FileInputStream(&#8220;task-sample-data.xml&#8221;);<br>conn = new DatabaseConnection(s.connection());<br>dataSet = new FlatXmlDataSet(is);<br>} catch (Exception e) {<br>e.printStackTrace();<br>}<br>}<br><br>@Override<br>protected void setUp() throws Exception {<br>super.setUp();<br>try {<br>DatabaseOperation.INSERT.execute(conn, dataSet);<br>} catch (Exception e) {<br>e.printStackTrace();<br>}<br><br>}<br><br>public void testTrue() {<br>List<task> tasks = s.createQuery(&#8220;from Task&#8221;).list();<br>for (Task task : tasks) {<br>System.out.println(task.getId());<br>System.out.println(task.getDetails());<br>}<br>assertTrue(true);<br>}</task><br><br>@Override<br>protected void tearDown() throws Exception {<br>super.tearDown();<br>try {<br>DatabaseOperation.DELETE_ALL.execute(conn, dataSet);<br>} catch (Exception e) {<br>e.printStackTrace();<br>}<br>}<br>}<br>[/java]<br><br>Note that you don&#8217;t need to extend any DBUnit class. You extend only Junit&#8217;s plain old TestCase. In its constructor I set up everything I need: The session factory (through the HibernateUtil), and use it to get a session&#8217;s connection, needed for DBUnit.<br><br>This example is quite simple and I decided to keep it like this to show everything working together. But you would more likely make this class abstract with an abstract method, say getDataSet() so your subclasses wouldn&#8217;t have to worry with DBUnit at all.
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-17T00:00:00+11:00" pubdate data-updated="true">Jan 17<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/testing/'>Testing</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

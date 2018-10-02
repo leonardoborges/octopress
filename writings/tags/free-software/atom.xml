@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Free Software | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/free-software/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Software livre]]></title>
+    <link href="http://www.leonardoborges.com/writings/2007/10/21/software-livre/"/>
+    <updated>2007-10-21T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2007/10/21/software-livre</id>
+    <content type="html"><![CDATA[<p>
+Aqui no trabalho atualmente temos uma grande barreira com relaÃ§Ã£o ao software livre. Pensei em escrever aqui alguma coisa sobre as barreiras que as empresas colocam quando o assunto Ã© esse porÃ©m o <a target="_blank" href="http://bemnalata.blogspot.com/" title="Blog Cleuton Sampaio">Cleuton</a> jÃ¡ fez <a href="http://bemnalata.blogspot.com/2007/10/resistncia-das-empresas-ao-uso-de.html" title="ResistÃªncia ao uso de softwares livres">isso</a>, e ficou muito bom.<br><br>Vale a visita!
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

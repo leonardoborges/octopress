@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JRuby on Rails and Google App Engine - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="As many of you know the new language supported at GAE now is Java, as officially announced on their blog. As a Ruby/Rails developer you might not be &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">JRuby on Rails and Google App Engine</h1>
+	<div class="entry-content"><p>
+As many of you know the new language supported at <a href="http://code.google.com/appengine/" target="_blank">GAE</a> now is Java, as officially announced on their <a href="http://googleappengine.blogspot.com/2009/04/seriously-this-time-new-language-on-app.html" target="_blank">blog</a>. As a Ruby/Rails developer you might not be interested on it but here is a reason you should be: <a href="http://jruby.codehaus.org/" target="_blank">JRuby</a>.<br><br>It was only a matter of time until we saw some people deploying JRuby on Rails apps on GAE, like Ola Bini&#8217;s <a href="http://olabini.com/blog/2009/04/jruby-on-rails-on-google-app-engine/" target="_blank">mini blog app</a>. Guess that was the first one really, as he was beta testing the service in secret. Google App Engine imposes a few catches to any java application deployed there and any JRuby app wouldn&#8217;t be different. For instance, your Java API access is limited to <a href="http://code.google.com/appengine/docs/java/jrewhitelist.html" target="_blank">these classes - called JRE Class whitelist</a>.<br><br>As you can see on his blog, you don&#8217;t need active record and in fact shouldn&#8217;t even be loading that on your app.<br><br>I felt compelled to try it and the timing was perfect. I am currently developing a JRuby on Rails app at the company I work for and it was a perfect fit, since we are not using ActiveRecord. The reason is that we get the data we need from other sources, such as web services and even text files.<br><br>Ola Bini&#8217;s tips were crucial here. He provides a small script you can use to prepare the jars you&#8217;re sending to your app. Another important piece was the <a href="http://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Java" target="_blank">Google App Engine SDK for Java</a>. It ships with a server that emulates GAE&#8217;s behaviour locally so you&#8217;re less likely to have problems once you deploy it.<br><br>I did have a problem though with the number of files uploaded to my appspot. It&#8217;s currently limited to 1000 - a thousand - and a Rails app can easily exceed this limit. So before deploying, remove anything that is not crucial: activerecord - you should&#8217;ve done it already - , all tests directories - including the ones inside gems your app needs in order to work, fixtures and etc.<br><br>After that it was rewarding seeing a custom JRuby On Rails application working perfectly on GAE. And as much as I&#8217;d like to, I can&#8217;t really share the URL since it&#8217;s a private app but I encourage people to try it. I believe GAE will ultimately help the community improve JRuby even more.<br><br>And as a last tip, this time thanks to <a href="http://akitaonrails.com/" target="_blank">Fabio Akita</a>, is <a href="http://gist.github.com/91684" target="_blank">this snippet</a>. You should redirect your log so you can debug your app form GAE&#8217;s dashboard.<br><br>Have fun!
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-10T00:00:00+10:00" pubdate data-updated="true">Apr 10<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Railswaycon: JRuby Internals by Ola Bini - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="As always I expected a good talk from Ola and once more he delivered it. But this one was different. It might have been even boring to some ruby &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Railswaycon: JRuby Internals by Ola Bini</h1>
+	<div class="entry-content"><p>
+As always I expected a good talk from Ola and once more he delivered it. But this one was different. It might have been even boring to some ruby developers since we saw a fair amount of java code in this presentation. Ola gave us a tour through the main classes that make JRuby possible with a single purpose: so we can check out the code and hack ourselves. You can download his slides <a href="http://olabini.com/presentations/JRubyInternals.pdf" target="_blank">here</a>.<br><br>If you&#8217;ve been following both JRuby and Ola Bini for the past year or so, you&#8217;ve noticed the trend and evolution of this alternative - and so far the most complete one - implementation of the ruby language. Specially at conferences.<br><br>Last year at QCon London, Ola was also talking about JRuby. At Euruko &#8216;08, in Prague, <a href="http://blog.headius.com/" target="_blank">Charles Nutter</a> also talked about it. RailsConf in Berlin also had its share. What all these talks had in common is that they talked about JRuby from a user/developer point of view. They were selling the solution. Convincing people to use it and presenting successful use cases.<br><br>And as the trend goes on, JRuby is now faced as a true alternative - one that we, btw, believe here at the company as we&#8217;re <strong>actively using it</strong> - and it seems that now the call is for help. Help to make JRuby an even more complete and overall better ruby implementation. Charles&#8217; <a href="http://blog.headius.com/2009/05/help-jruby-by-fixing-rubyspecs.html">call for help</a> was a great step. As he states, it&#8217;s a good way to get your feet wet. I answered the call and am hacking JRuby myself, having already submitted a couple of patches. Perhaps this was the reason for which I enjoyed the talk the  most. I was already familiar with some of the structure and classes in JRuby.<br><br>There were 2 more talks about JRuby: <strong>The Pleasure and Pain of Migrating to jRuby</strong>, by <a href="http://twitter.com/stevenbristol" target="_blank">Steven Bristol</a> and <strong>Integrating Enterprise Java with JRuby and Rails</strong>, <a href="http://twitter.com/malagant" target="_blank">Michael Johann</a>. Unfortunately only the first one was a real case experience, where Steven walked through the problems he faced integrating JRuby with an existing java project. Interesting insights.<br><br>Michael Johann basically presented a short tutorial on how to integrate rails with EJB3 which, albeit interesting, failed to address issues faced on real life projects, like dependency management. Issues which we have already addressed in a very cool way here and I plan to share it soon. Still deciding how though&#8230;
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-29T00:00:00+10:00" pubdate data-updated="true">May 29<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>, <a class='category' href='/writings/tags/railswaycon/'>railswaycon</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

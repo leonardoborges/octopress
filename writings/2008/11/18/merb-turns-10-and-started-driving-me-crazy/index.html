@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Merb turns 1.0, and started driving me crazy - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="As you may already know, Merb turned 1.0 a while ago and I decided to resume my studies to learn the framework.So I just built a new app with a few &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Merb Turns 1.0, and Started Driving Me Crazy</h1>
+	<div class="entry-content"><p>
+As you may already know, <a href="http://www.merbivore.com/">Merb</a> turned 1.0 a while ago and I decided to resume my studies to learn the framework.<br><br>So I just built a new app with a few resources and fired the migration scripts:<br><pre lang="bash"><br>$ rake db:automigrate<br></pre><br><br>And this is what I got:<br><pre lang="bash"><br>Loading init file from /Users/leo/projects/merb/my-first-app/config/init.rb<br>Loading /Users/leo/projects/merb/my-first-app/config/environments/development.rb<br> ~ Connecting to database...<br>/opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `initialize': wrong number of arguments (8 for 1) (ArgumentError)<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `new'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `normalize_uri'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/abstract_adapter.rb:44:in `initialize'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:159:in `initialize'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core.rb:157:in `new'<br>	from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core.rb:157:in `setup'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb/orms/data_mapper/connection.rb:44:in `setup_connections'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb/orms/data_mapper/connection.rb:27:in `connect'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb_datamapper.rb:17:in `run'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/bootloader.rb:99:in `run'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/server.rb:172:in `bootup'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/server.rb:42:in `start'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core.rb:169:in `start'<br>	from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/bin/merb:11<br>	from /opt/local/bin/merb:19:in `load'<br>	from /opt/local/bin/merb:19<br></pre><br><br>Lovely, isn&#8217;t it?  <br>After a fair amount of googling around it turns out that there seems to be a problem with the URI parser <a href="http://www.merbivore.com/">Merb</a> uses underneath, called <a href="http://addressable.rubyforge.org/">Addressable</a>.<br><br>As of the installation of Merb 1.0, the installed version of this library was 2.0.0.<br>The solution? Install a older Addressable version:<br><br><pre lang="bash"><br>$ sudo gem uninstall addressable<br><br>You have requested to uninstall the gem:<br>	addressable-2.0.0<br>dm-core-0.9.6 depends on [addressable (>= 1.0.4)]<br>data_objects-0.9.6 depends on [addressable (>= 1.0.3)]<br>If you remove this gems, one or more dependencies will not be met.<br>Continue with Uninstall? [Yn]  Y<br>Successfully uninstalled addressable-2.0.0<br><br>$ sudo gem install addressable -v 1.0.4<br>Successfully installed addressable-1.0.4<br>1 gem installed<br>Installing ri documentation for addressable-1.0.4...<br>Installing RDoc documentation for addressable-1.0.4...<br></pre><br><br>I haven&#8217;t figured out the reason for this issue, so please do share if you know. I&#8217;ll be glad to update the post. :)
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-18T00:00:00+11:00" pubdate data-updated="true">Nov 18<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/merb/'>Merb</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

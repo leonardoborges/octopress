@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Procs, lambdas, blocks?! What's the difference? - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Do you know? I didn&#8217;t. And started to get annoyed by using these terms interchangeably and not really knowing the difference.There are a few. &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Procs, Lambdas, Blocks?! What's the Difference?</h1>
+	<div class="entry-content"><p>
+Do you know? <br>I didn&#8217;t. And started to get annoyed by using these terms interchangeably and not really knowing the difference.<br><br>There are a few. And they are subtle. I don&#8217;t think most of us would ever have problems with it but it&#8217;s the kind of information you&#8217;ll be glad to know when having those weird behaviors in your code on a Friday at 6:01 pm, just before pushing to production. :)<br><br>I guess blocks are the most widely used term in the ruby community and there is little mistake on when to use it:<br><pre lang="ruby">[1,2,3].each do |x|<br>  puts x*2<br>end</pre><br>The code between <strong>do</strong> and <strong>end</strong> is a <strong><em>block</em></strong>.<br><br>What&#8217;s important to keep in mind is that Procs behave like blocks whereas lambdas behave like methods. To understand what that means, I highlighted a couple of examples:<br><br><strong>- The return keyword</strong><br><br>I mentioned Procs behave just like blocks and as such, the return keyword abide to the same rules. This means, for instance, that the latest puts statement on the following code snippet, will never run:<br><pre lang="ruby">def my_proc(x)<br>  p = Proc.new { puts x*2; return }<br>  p.call<br>  puts "After calling proc" #This never gets called<br>end<br>my_proc(10)<br>>>20</pre><br>For blocks - and procs-, return means &#8220;return from the calling method&#8221;, my_proc in this case. That&#8217;s why you don&#8217;t get to see the output of the puts statement.<br><br>On the other hand, in the lambda&#8217;s example, we get the opposite behavior:<br><pre lang="ruby">def my_lambda(x)<br>  p = lambda { puts x*2; return }<br>  p.call<br>  puts "After calling proc" #This time, we reach this point<br>end<br>my_lambda(10)<br>>>20<br>>>After calling proc</pre><br>Here, return says &#8220;return from the enclosing iterator&#8221;, which, in this case, just returns from the block and continnues the execution of the my_lambda method.<br><br><strong>- Argument assignment</strong><br><br>On to this second difference, procs and lambdas get more interesting when you can call them with arguments. And that&#8217;s when another subtle difference between them comes in.<br><br>I&#8217;ll start again with a proc:<br><br><pre lang="ruby"><br>  p = Proc.new { |x,y| puts x, y}<br>  p.call<br>  >>nil<br>  >>nil <br><br>  p.call(1)<br>  >>1<br>  >>nil<br><br>  p.call(1,2)<br>  >>1<br>  >>2<br><br>  p.call(1,2,3)<br>  >>1<br>  >>2<br><br>  p.call([1,2])<br>  >>1<br>  >>2<br></pre><br><br>See how procs are flexible? They basically won&#8217;t complain if you do not provide parameters, provide extra parameters or even send an array as an argument where, as seen in the code above, it unpacks the array and assign its values to the correct variables.<br><br>As you&#8217;re probably guessing, lambdas behave like methods and are much less flexible:<br><br><pre lang="ruby"><br>  l = lambda { |x,y| puts x, y}<br>  l.call<br>  >>ArgumentError: wrong number of arguments (0 for 2)<br><br>  l.call(1)<br>  >>ArgumentError: wrong number of arguments (1 for 2)<br><br>  l.call(1,2)<br>  >>1<br>  >>2<br><br>  l.call(1,2,3)<br>  >>ArgumentError: wrong number of arguments (3 for 2)<br><br>  l.call([1,2])<br>  >>ArgumentError: wrong number of arguments (1 for 2)<br></pre><br><br><br><p/><p/><br><strong>Ruby 1.9 tip</strong><br>Despite its name, Kernel.proc returns a lambda in Ruby 1.8. This has been fixed in Ruby 1.9. You actually get a Proc back.<br><br>- Reference<br><a href="http://www.amazon.com/gp/product/0596516177?ie=UTF8&tag=leonaborge-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0596516177">The Ruby Programming Language</a><img src="http://www.assoc-amazon.com/e/ir?t=leonaborge-20&l=as2&o=1&a=0596516177" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> - A must have for any Ruby developer.<br> <br><script type="text/javascript" src="http://www.assoc-amazon.com/s/link-enhancer?tag=leonaborge-20&o=1"><br></script><br><noscript><br>    <img src="http://www.assoc-amazon.com/s/noscript?tag=leonaborge-20" alt="" /><br></noscript><br><br>
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-22T00:00:00+10:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

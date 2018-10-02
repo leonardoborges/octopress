@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tools | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/tools/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How do you keep yourself focused?]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/06/08/how-do-you-keep-yourself-focused/"/>
+    <updated>2009-06-08T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/06/08/how-do-you-keep-yourself-focused</id>
+    <content type="html"><![CDATA[<p>
+This is basically a compilation of a few tools/habits that I use to keep focused and at a high level of productivity when working alone. Works great for me and I hope there are useful tips for you as well.<br><br><dl> <dt><strong>Music</strong></dt> <dd>This is one of my favorites. When working alone I hate having noisy people around, which happens quite often if you work in an open office space like me. - It is great for pair programming but I find it inefficient otherwise. Thus, I came up with the term <strong>the Heavy Metal effect</strong>. Ok, just fit your favorite music genre there but the important thing is that it must act as a barrier to the outside world. It won't work if you put something new and start babbling the lyrics!</dd> <dt><strong>Password Manager</strong></dt> <dd>In my day to day I have a number of web sites open like API documents, programming related groups, email... There are also the ones you open a few times a day like the company bug tracker, review board and etc. I find that having a password manager, in my case <a href="https://lastpass.com/" target="_blank">LastPass</a>, saves a lot of time. The big advantage of it over similar tools like 1Password is that it works on mac, linux or windows. It's just a firefox plugin.</dd> <dt><strong>Multiple Workspaces</strong></dt> <dd>Probably the most obvious item on this list to developers but I's never too much to reinforce it. Multiple workspaces are great. And they are available in whatever platform you happen to be locked in. In my case, I split my environment in at least 3 workspaces:<br>-<strong>Development</strong> - where I keep things like my IDE, Browser and Terminal<br>-<strong>Documentation</strong> - where I keep API documents, tutorials and related stuff<br>-<strong>Communication</strong> - where I have my email, both personal and business, twitter and etc. This allows me to easily set a time per day to do each of my stuff without having noise from things that aren't important to what I'm focusing in that very moment. </dd> <dt><strong>App Launcher</strong></dt> <dd>A must! On Mac I use <a href="http://www.versiontracker.com/dyn/moreinfo/macosx/22549" target="_blank">QuickSilver</a> and on Linux, <a href="http://do.davebsd.com/release.shtml" target="_blank">Gnome Do</a>. I won't say much here. If you don't use some sort of application launcher, do yourself a favor, stop reading and install one. You have no idea of how comfortable and time saver they are.</dd> <dt><strong>Batch tasks</strong></dt> <dd>Maybe this wasn't the best title but I couldn't think of anything better.<br>As a result of having a communication workspace that I use a few times a day, I find stuff that I'm interested in but don't have the time to dig at the moment. So I need a way to queue that and read later when I'm home. The tools of the trade in this case are <a href="http://www.twitter.com" target="_blank">Twitter</a> + <a href="http://blog.evernote.com/2009/04/14/evernote_twitter/" target="_blank">Evernote</a>.<br>Evernote is roughly a to-do manager. And since they released their Twitter integration it's been dead easy to queue those things I talked about earlier. Just send a direct message to evernote and the item gets added instantly. </dd> </dl>Now, what about you? What works for you?
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

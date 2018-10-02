@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: haskell | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/haskell/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CUFP/ICFP 2013]]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/"/>
+    <updated>2013-09-25T13:17:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013</id>
+    <content type="html"><![CDATA[<p>I'm sitting in the Lobby of the Hilton in Boston and since my flight back to Australia isn't for a few hours I thought I'd write my experience report while everything is still fresh in my mind.</p>
+
+<p><img class="left" src="/assets/images/posts/cufp2013-badge.jpg" width="318" height="400"></p>
+
+<p><a href="http://cufp.org/">CUFP - Commercial Users of Functional Programming -</a> is a Workshop-like conference targeting the practically-minded functional programming community.</p>
+
+<p>As it's stated on their website, <em>"The CUFP workshop is a place where people can see how others are using functional programming to solve real world problems […]"</em>.</p>
+
+<p>One of the things that make the event special is that it runs together with <a href="http://icfpconference.org/icfp2013/">ICFP - International Conference on Functional Programming</a> - which is an event on the far opposite side of the spectrum with language designers, professors, compiler implementors getting together and thinking about the future of their languages and fields. The diversity of the event is astonishing.</p>
+
+<p>CUFP itself runs for three days and is divided into a traditional conference format day with several talks and two tutorial days.</p>
+
+<p>I was there for all three days and on the last one I delivered my own tutorial about writing macros in Clojure - more on that later.</p>
+
+<p>As far as the talks of day 1 go, someone already did a great job of summarising them. I highly recommend <a href="http://www.syslog.cl.cam.ac.uk/2013/09/22/liveblogging-cufp-2013/">you go read it</a>.</p>
+
+<h3>Day 2</h3>
+
+<p>In total there were 9 tutorials being offered - two of which made up a two-day Haskell tutorial. That's the one I decided to attend.</p>
+
+<p>In the instructions, the instructors mentioned that we could use an online Haskell IDE to follow the course should we choose not to install the Haskell platform on our laptops.</p>
+
+<p>I decided to give it a go. The tool is called FP Haskell Center and has been developed by the awesome guys at <a href="https://www.fpcomplete.com">FP Complete</a>.</p>
+
+<p>It's important to note this is an online IDE - but the editor isn't the only thing being offered though. The Haskell Centre offers a complete deployment solution as well - though I didn't have the chance to play with it.</p>
+
+<p>Back to the tutorial, I used the FP Haskell Centre for day one and it worked great as far as online IDEs go. Compilation and inspecting types do suffer from the round trip over the web and by the end of the day I was feeling a little frustrated with all the waiting. The tool is great and if they offered an offline version, I'm sure the experience would have been improved tenfold.</p>
+
+<p>Day one was taught by <a href="http://www.well-typed.com/people/andres">Andres Löh</a> from <a href="http://www.well-typed.com/">Well-Typed</a>, a Haskell consultancy.</p>
+
+<p>It was full of exercises in the various basics of Haskell such as expressions, functions, IO, pattern matching and even Monads. I had a lot of fun working through them and it reinforced my opinion about Haskell being as practical a language as any other - but with several advantages.</p>
+
+<h3>Day 3</h3>
+
+<p>Given my frustration with FP Haskell Center being a bit slow I decided to install the Haskell platform on my new laptop and configure emacs with haskell-mode. I was <em>much</em> happier with this setup. haskell-mode has a lot of nifty features that were extremely useful during the tutorial.</p>
+
+<p>The second day of the Haskell tutorial gave way to <a href="http://community.haskell.org/~simonmar/">Simon Marlow</a>, a software engineer from Facebook UK and author of  <a href="http://community.haskell.org/~simonmar/pcph/">Parallel and Concurrent Programming in Haskell</a> - also available freely <a href="http://chimera.labs.oreilly.com/books/1230000000929/index.html">online</a>.</p>
+
+<p>Not surprisingly, his half of the tutorial was about Concurrency. We started with several exercises on IO involving more Monadic functions that we hadn't learned the previous day. We then moved on to study the basic Haskell concurrency constructs and primitives. All very interesting stuff.</p>
+
+<p>If you have the chance to attend a tutorial by these guys, do yourself a favour and go for it.</p>
+
+<h3>Day 3 - 2pm onwards</h3>
+
+<p>Unfortunately I missed the second half of the second day as I, too, had to deliver my own tutorial/workshop.</p>
+
+<p>Titled <em>"Bending Clojure to your will: Macros and Domain Specific Languages"</em>, the tutorial had participants work their way through several difference exercises aimed at teaching the various nuances of writing macros.</p>
+
+<p>The tutorial has failing tests for all exercises so it's dead easy to know when you have arrived at a solution - all participants seemed to have had a great time learning this stuff and I even saw a couple of positive tweets about it - I'm really happy with how everything went.</p>
+
+<p>The best tweet though was the one saying that someone from the Haskell tutorial decided to switch to mine half-way through. So I see that as a win :) <a href="https://twitter.com/prasincs/status/382585215694413824">Here's said tweet</a>.</p>
+
+<p>I've <a href="https://github.com/leonardoborges/clojure-macros-workshop">pushed the exercises to github</a> should you want to try them by yourself. <a href="http://www.slideshare.net/borgesleonardo/clojure-macros-workshop-lambdajam-2013-cufp-2013">Slides are also available</a> though they will likely not make sense out of context.</p>
+
+<p>Enjoy! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure and 'Why calculating is better than scheming']]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/03/25/clojure-and-why-calculating-is-better-than-scheming/"/>
+    <updated>2013-03-25T11:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/03/25/clojure-and-why-calculating-is-better-than-scheming</id>
+    <content type="html"><![CDATA[<p>Last week while attending <a href="http://clojurewest.org">Clojure/West</a> in Portland I came across a paper called <a href="http://www.cs.kent.ac.uk/people/staff/dat/miranda/wadler87.pdf">Why calculating is better than scheming</a>. In a nutshell, this paper is a critique to <a href="http://en.wikipedia.org/wiki/Hal_Abelson">Abelson</a> and <a href="http://en.wikipedia.org/wiki/Gerald_Jay_Sussman">Sussman</a>'s classic textbook <a href="http://mitpress.mit.edu/sicp/">SICP - Structure and Interpretation of Computer Programs</a>,
+used by MIT for many years to teach their introductory programming course.</p>
+
+<p>If you haven't read <a href="http://mitpress.mit.edu/sicp/">SICP</a>, you should. It's an amazing book. It uses <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>, a dialect of Lisp, as the vehicle to present fundamental programming concepts.</p>
+
+<p><a href="http://homepages.inf.ed.ac.uk/wadler/">Philip Wadler</a> - the author of this particular paper - contrasts teaching in <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a> to teaching using <a href="http://en.wikipedia.org/wiki/Kent_Recursive_Calculator">KRC</a> and <a href="http://en.wikipedia.org/wiki/Miranda_(programming_language)">Miranda</a>, pointing out
+four major features he considers important and lacking in <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>. They are:</p>
+
+<ul>
+<li>Pattern matching</li>
+<li>A syntax close to traditional mathematical notation</li>
+<li>A static type discipline and user-defined types</li>
+<li>Lazy Evaluation</li>
+</ul>
+
+
+<blockquote><p>Note:  <a href="http://en.wikipedia.org/wiki/Kent_Recursive_Calculator">KRC</a> influenced <a href="http://en.wikipedia.org/wiki/Miranda_(programming_language)">Miranda</a> which in turn influenced <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>.  Their syntax is similiar, so where Wadler used Miranda code snippets in the paper, I'll be using Haskell in this post.</p></blockquote>
+
+<p>As an aside, although the paper talks specifically of <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a>, the term Lisp is used quite loosely and could lead the not-so-careful reader to be misled regarding a whole family of languages. Lisps have come a long way and modern dialects - of which I'll be focusing on <a href="http://clojure.org/">Clojure</a> - address many of the concerns raised by <a href="http://homepages.inf.ed.ac.uk/wadler/">Wadler</a>.</p>
+
+<p>Let us begin.</p>
+
+<h3>Pattern Matching</h3>
+
+<p>Here Clojure, and most - all? - Lisps, are out of luck.</p>
+
+<p>The example used in the paper is that of summing all integers in a list. First in Haskell:</p>
+
+<p><code>haskell
+sum []   = 0
+sum x:xs = x + sum xs
+</code></p>
+
+<p>Now in Clojure:</p>
+
+<p>```clojure
+(defn sum [coll]</p>
+
+<pre><code>(if (empty? coll)
+    0
+    (+ (first coll) (sum (rest coll)))))
+</code></pre>
+
+<p>```</p>
+
+<p>The question here is this: Which snippet is easier to read/reason about? the Haskell code!</p>
+
+<p>I must confess that I, too, miss pattern matching sometimes. However we can still improve our Clojure version to read nicer on the eyes by using <a href="http://www.haskell.org/haskellwiki/Haskell">destructuring</a>:</p>
+
+<p>```clojure
+(defn sum [[first &amp; rest :as coll]]</p>
+
+<pre><code>(if (empty? coll)
+    0
+    (+ first (sum rest))))
+</code></pre>
+
+<p>```
+And that's pretty much it. Without proper pattern matching, we can't get much better than that.</p>
+
+<p>In addition to the Haskell snippet being easier to read, it's also easier to prove correct by structural induction, as demonstrated in Wadler's paper.</p>
+
+<blockquote><p>Note: <a href="https://github.com/clojure/core.match">core.match</a> adds support to pattern matching in Clojure. At the time of this writing, it's considered "alpha quality"</p></blockquote>
+
+<h3>Data structures</h3>
+
+<p>The paper continues to discuss exercise 2-27 from the <a href="http://mitpress.mit.edu/sicp/">SICP</a>, where the reader has to write code to represent a binary mobile, which consists of a left and right branch with each branch being a rod of certain length, from which hangs either a weight or another binary mobile.</p>
+
+<p>Translating the Scheme example to Clojure, such a structure is represented using lists, like so:</p>
+
+<p>```clojure
+(defn make-mobile [left right]</p>
+
+<pre><code>(list left right))
+</code></pre>
+
+<p>(defn make-branch [length structure]</p>
+
+<pre><code>(list length structure))
+</code></pre>
+
+<p>```</p>
+
+<p>Wadler then contrasts this with the equivalent Miranda code, translated below to Haskell, taking advantage of <a href="http://www.haskell.org/haskellwiki/Algebraic_data_type">algebraic data types</a>:</p>
+
+<p><code>haskell
+data Structure = Weight Int | Mobile Branch Branch
+data Branch = Branch Int Structure
+</code>
+The first claim is that the Haskell/Miranda data type declaration makes it clearer what the data structure looks like, which is fair.</p>
+
+<p>Also, the compiler can catch errors early on.</p>
+
+<p>However, when writing idiomatic Clojure code, here's how I'd actually create this structure:</p>
+
+<p>```clojure
+(defn make-mobile [left right]</p>
+
+<pre><code>{:left left :right right})
+</code></pre>
+
+<p>(defn make-branch [length structure]</p>
+
+<pre><code>{:length length :structure structure})
+</code></pre>
+
+<p>```</p>
+
+<p>Granted, it's still not as clear and the compiler can't validate the shape of our data structure.</p>
+
+<p>This is however cleaner than the previous version and drives home the point that Clojure isn't limited to lists, having literals for other data types such as the hash maps used in this example.</p>
+
+<p>The second part of this claim is that through custom data types and pattern mathing, extracting values from those structures becomes simpler:</p>
+
+<p>```haskell
+totalWeight (Weight w) = w
+totalWeight (Mobile l r) = totalWeightBranch l + totalWeightBranch r</p>
+
+<p>totalWeightBranch(Branch d s) = totalWeight s
+```</p>
+
+<p>Once again Clojure can improve things by taking advantage of its builtin data structures and destructuring:</p>
+
+<p>```clojure
+(defn total-weight [{:keys [left right] :as structure}]</p>
+
+<pre><code>(if (number? structure)
+    structure
+    (+ (total-weight-branch left)
+       (total-weight-branch right))))
+</code></pre>
+
+<p>(defn total-weight-branch [{structure :structure}]</p>
+
+<pre><code>(total-weight structure))          
+</code></pre>
+
+<p>```</p>
+
+<p>For a language with no pattern matching nor algebraic data types, this snippet is clear, concise and elegant - and a real improvement
+over the Scheme version discussed in the paper - which was essentially handicapped by the use of lists to simulate 'structs'.</p>
+
+<p>As far as Clojure goes, this claim ends here: the next point in the paper, about changing from using <code>list</code> to using <code>cons</code>, is rendered moot since
+we're using hash maps to represent our mobiles.</p>
+
+<h3>Lisp lists are not self-escaping</h3>
+
+<p>Creating lists in Clojure goes like this:</p>
+
+<p>```clojure
+(list (list 1 2) nil) ;; ((1 2) nil)</p>
+
+<p>'((1 2) nil) ;; ((1 2) nil)
+```</p>
+
+<p>Both statements above are equivalent, with the second one being clearly more concise.</p>
+
+<p>The claim here is that the fact that you need to either use the <code>list</code> function or quote the form is cumbersome and can be confusing to beginners.</p>
+
+<p>Clojure solves this by providing literals to another data structure - vectors:</p>
+
+<p><code>clojure
+[[1 2] nil]
+</code></p>
+
+<p>Simple and concise - in fact, in idiomatic Clojure code, you'll rarely see quoted lists where a vector will do.</p>
+
+<p>This is possible because both lists and vectors conform to a higher level abstraction called a <a href="http://clojure.org/sequences#Sequences-The%20Seq%20library-Seq%20in,%20Seq%20out">Seq</a>, in terms of which most list
+operations are defined.</p>
+
+<p>This eliminates the two following points mentioned in the paper as it allows a beginner to defer his/her understanding of quoted forms
+to more advanced lessons/usages.</p>
+
+<h3>Programs that Manipulate Programs - the interpreter example</h3>
+
+<p>Here Wadler shows a simple grammar for an interpreter in both Miranda and Scheme.</p>
+
+<p>He claims that since Haskell/Miranda have free data types, representing such grammar becomes simpler:</p>
+
+<p>```haskell
+data Term = Var [Char]</p>
+
+<pre><code>        | Lambda Var Term
+        | Apply Term Term
+        | Closure Env Var Term
+</code></pre>
+
+<p>type Env = [(Var, Term)]
+type Var = [Char]
+```</p>
+
+<p>This is true in that one can easily scan the snippet above and deduce quickly what <code>Term</code> looks like.</p>
+
+<p>Then, by using pattern matching, <code>eval</code> could be implemented like so:</p>
+
+<p>```haskell
+eval e (Var v) = lookup e v
+eval e (Lambda v t) = Closure e v t
+eval e (Apply t0 t1) = apply (eval e t0) (eval e t1)</p>
+
+<p>...
+```</p>
+
+<p>I do believe this makes Haskell an excellent choice for writing interpreters and compilers.</p>
+
+<p>However, the flip side is that entering such terms in Haskell is cumbersome. Consider the term below:</p>
+
+<blockquote><p>(λx.(x x)) (λx.(x x))</p></blockquote>
+
+<p>This is how to represent this term using the grammar defined above:</p>
+
+<p>```haskell
+(apply (Lambda "x" (apply (Var "x") (Var "x")))</p>
+
+<pre><code>   (Lambda "x" (apply (Var "x") (Var "x"))))
+</code></pre>
+
+<p>```</p>
+
+<p>The strength in Lisp lies elsewhere. Since we have quoted forms, entering a similar term is a lot less verbose and closer to its intended representation:</p>
+
+<p><code>clojure
+'((lambda [x] (x x)) (lambda [x] (x x)))
+</code></p>
+
+<p>This is, of course, at the expense of making <code>eval</code> a more complicated function:</p>
+
+<p>```clojure
+(defn eval [e t]
+  (cond (variable? t)</p>
+
+<pre><code>    (lookup e (variable-name t))
+    (lambda? t)
+    (make-closure e (lambda-var t) (lambda-body t))
+    (apply? t)
+    (apply (eval e (apply-operator t))
+           (eval e (apply-operand t)))))
+</code></pre>
+
+<p>...
+```</p>
+
+<p>The paper leaves out an important advantage of Lisps though:</p>
+
+<p>Because we can write code for our made up language directly in its (almost)abstract syntax tree form, Lisps are the ideal choice when writing <a href="http://martinfowler.com/bliki/InternalDslStyle.html">Internal Domain Specific Languages</a>.</p>
+
+<h3>Lazy Evaluation</h3>
+
+<h4>Lists</h4>
+
+<p>Haskell and Miranda are lazy languages and that yields a lot of power. This claim is more specific to the use of lazy lists - or sequences, streams - and starts off with a snippet that calculates the sum of squares of all odd numbers from 1 up to 100:</p>
+
+<p><code>haskell
+sum [ i*i | i &lt;- [1..100], odd i ]
+</code></p>
+
+<p>What follows in the paper is a not-so-clear snippet of equivalent functionality using Scheme streams.</p>
+
+<p>Clojure features lazy sequences and list comprehensions, making the above Haskell example trivial to write:</p>
+
+<p><code>clojure
+(sum (for [i (range 100) :when (odd? i)] (* i i)))
+</code></p>
+
+<p>If you're following at home with the original paper you'll see this is more readable and elegant than the equivalent Scheme example.</p>
+
+<p>Another - also idiomatic - way to write the same expression is by using a combination of map/filter:</p>
+
+<p><code>clojure
+(sum (map #(* % %) (filter odd? (range 100))))
+</code></p>
+
+<p>Deciding which one is clearer is left as an exercise to the reader.</p>
+
+<h4>Special forms and lazy evaluation</h4>
+
+<p>In this section, Wadler brings another example from SICP where the reader wishes to implement his/her own <code>if</code> form.</p>
+
+<p>As we know, in order to implement our own version of <code>if</code>, we need to use macros. That is because in Lisps arguments to functions are eagerly evaluated.</p>
+
+<p>One might implement it like this:</p>
+
+<p><code>``clojure
+(defmacro my-if [pred then else]
+ </code>(cond ~pred ~then</p>
+
+<pre><code>    :else ~else))
+</code></pre>
+
+<p>```</p>
+
+<p>In Lazy languages, such as Haskell and Miranda, this problem doesn't occur allowing such functions to be defined without the need for special and/or quoted forms:</p>
+
+<p><code>haskell
+myIf True  t e = t
+myIf False t e = e
+</code></p>
+
+<p>However this completely dismisses the power of macros which allow you to extend the language in ways no other language allows - as is extensively demonstrated in books such as <a href="http://amzn.to/14mrrbk">On Lisp</a> and <a href="http://amzn.to/WKpMZA">Let Over Lambda</a>.</p>
+
+<p>As <a href="http://en.wikipedia.org/wiki/Guy_L._Steele,_Jr.">Guy Steele</a> once put it:  <em>"[…] If you give someone Lisp, he has any language he pleases"</em></p>
+
+<h3>Conclusion</h3>
+
+<p>Hopefully this post doesn't come off as trying to invalidate Wadler's paper - that is not my intention.</p>
+
+<p>While I do think a few of the points discussed are only applicable to the domain in which his paper was written - teaching - they are still valid and worth understanding.</p>
+
+<p>I do however expect to have given you a different perspective on it, showing the strengths of modern Lisps such as Clojure and how it approaches these issues - such as by using its rich set of data structures, literals and techniques such as destructuring.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Monads in small bites - Part IV - Monads]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/12/08/monads-in-small-bites-part-iv-monads/"/>
+    <updated>2012-12-08T17:36:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/12/08/monads-in-small-bites-part-iv-monads</id>
+    <content type="html"><![CDATA[<p>This is Part IV of my Monads tutorial. Make sure you read the previous parts:</p>
+
+<ul>
+<li><p><a href="/2012/11/30/monads-in-small-bites-part-i-functors/">Part I   - Functors</a></p></li>
+<li><p><a href="/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II  - Applicative Functors</a></p></li>
+<li><p><a href="/2012/12/05/monads-in-small-bites-part-iii-monoids/">Part III - Monoids</a></p></li>
+<li><p>Part IV  - Monads (this post)</p></li>
+</ul>
+
+
+<h3>A quick recap</h3>
+
+<p>In <a href="/2012/11/30/monads-in-small-bites-part-i-functors/">Part I</a> we learned about <em>Functors</em>, which are things that can be mapped over using a normal function - <code>fmap</code> is used for that.</p>
+
+<p><a href="/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II</a> tought us that when our Functors themselves contain functions and we want them applied to the values contained in other Functors, <em>Applicatives</em> come to the rescue - and bring theirs friends <code>pure</code> and <code>&lt;*&gt;</code>.</p>
+
+<p><a href="/2012/12/05/monads-in-small-bites-part-iii-monoids/">Part III</a> introduced Monoids which model a special type of relationship involving binary functions and their identity values.</p>
+
+<p>Now it's time for what I hope is the post you have all been waiting for :)</p>
+
+<h3>Monads</h3>
+
+<h4>A word on context</h4>
+
+<p>So far I've said things such as <em>wrapping</em> stuff in Functors, <em>unwrapping</em> functions from Applicatives and putting results into minimal Functors. All this really means is that [Applicative]Functors - and Monads - have associated contexts that model some sort of computation.</p>
+
+<p>For lists, for example, this means they represent computations that can have several results - non-determinism.</p>
+
+<p>These computations can have much greater implications though - they can represent failure (or not!), do IO and even launch nuclear missiles. The point is: when we combine Functors/Applicatives/Monads, we carry their context with us to the end - they are essentially <em>sequenced</em> together.</p>
+
+<p>This will become clearer with an example. For once I won't start with lists - w00t! - so get ready for it!</p>
+
+<h3>The Maybe Monad</h3>
+
+<p>The Maybe monad models computations that can fail. Let's have a look at an example.</p>
+
+<p>Say you have an e-commerce system. When placing an order, a few things need to get done:</p>
+
+<ul>
+<li>gather information about the order;</li>
+<li>calculate shipping rates;</li>
+<li>apply discount codes, if any, and;</li>
+<li>finally place the order.</li>
+</ul>
+
+
+<p>The code below shows the supporting functions that will be orchestrated in order to achieve this:</p>
+
+<p>```clojure
+(defn calculate-shipping-rate [address]</p>
+
+<pre><code>(if (= (:country address) "Australia")
+    10.0
+    nil))
+</code></pre>
+
+<p>(defn apply-shipping-costs [order shipping-rate]</p>
+
+<pre><code>(assoc order :total (+ (:total order) shipping-rate)))
+</code></pre>
+
+<p>(defn lookup-discount-code [code]</p>
+
+<pre><code>(if (= code "XMAS2012")
+    5.0
+    nil))
+</code></pre>
+
+<p>(defn apply-discount-code [order discount]</p>
+
+<pre><code>(assoc order :total (- (:total order) discount)))
+</code></pre>
+
+<p>(defn place [order]</p>
+
+<pre><code>(prn (str "Off you go! Order total: $" (:total order))))
+</code></pre>
+
+<p>```</p>
+
+<p>Note that based on the code above, we can <em>only</em> ship to Australia and there is <em>only one</em> active discount code. Keep this in mind - you'll see why later on.</p>
+
+<p>Now let's place an order for some Jalapeño sauce:</p>
+
+<p>```clojure
+(def order {</p>
+
+<pre><code>:items [{:name "Jalapeño sauce" :price 20.0}]
+:address {:country "Australia"}
+:discount-code "XMAS2012"
+:total 20.0
+</code></pre>
+
+<p>})</p>
+
+<p>(def shipping-rate (calculate-shipping-rate (:address order)))
+(def discount (lookup-discount-code (:discount-code order)))</p>
+
+<p>(-> order</p>
+
+<pre><code>(apply-shipping-costs shipping-rate)
+(apply-discount-code discount)
+(place))
+</code></pre>
+
+<p>;; "Off you go! Order total: $25.0"
+```</p>
+
+<p>Great! Soon I'll be receiving some hot sauce to go with my burritos!</p>
+
+<p>But wait, what if I had mistakenly set my address to somewhere other than Australia? How would this code behave?</p>
+
+<p>```clojure
+(def another-order {</p>
+
+<pre><code>:items [{:name "Jalapeño sauce" :price 20.0}]
+:address {:country "Brazil"}
+:discount-code "HACKERZ"
+:total 20.0
+</code></pre>
+
+<p>})</p>
+
+<p>(def shipping-rate (calculate-shipping-rate (:address another-order)))
+(def discount (lookup-discount-code (:discount-code another-order)))</p>
+
+<p>(-> another-order</p>
+
+<pre><code>(apply-shipping-costs shipping-rate)
+(apply-discount-code discount)
+(place))
+</code></pre>
+
+<p>;; NullPointerException   [trace missing]
+```</p>
+
+<p><strong>Oops</strong>! Your e-commerce system just crashed! Not cool. But hey, this is easy to fix, right? We could just change our <em>apply-shipping-costs</em> function to something like this:</p>
+
+<p>```clojure
+(defn apply-shipping-costs [order shipping-rate]</p>
+
+<pre><code>(if shipping-rate
+    (assoc order :total (+ (:total order) shipping-rate))
+    order))
+</code></pre>
+
+<p>;;Remember we only support one discount code so the same problem could happen again
+;;We need to change the apply-discount-code function as well</p>
+
+<p>(defn apply-discount-code [order discount]</p>
+
+<pre><code>(if discount
+    (assoc order :total (- (:total order) discount))
+    order))
+</code></pre>
+
+<p>```</p>
+
+<p>Now let's see what happens:</p>
+
+<p>```clojure
+(def shipping-rate (calculate-shipping-rate (:address another-order)))
+(def discount (lookup-discount-code (:discount-code another-order)))</p>
+
+<p>(-> another-order</p>
+
+<pre><code>(apply-shipping-costs shipping-rate)
+(apply-discount-code discount)
+(place))
+</code></pre>
+
+<p>;; "Off you go! Order total: $15.0"
+```</p>
+
+<p>Well, it doesn't <em>crash</em> but we can't ship to Brazil anyway! So the code is <em>still</em> incorrect! What we really want is a way to halt the whole computation - placing an order - if any of those steps fail.</p>
+
+<p>Of course we could fix it with a couple more <em>if</em> forms before trying to call the <em>place</em> function but you see where this is going.</p>
+
+<p>Essentially our nice little functions became burdened with <em>context</em>: each of them is now aware that they can fail and need to cater for it.</p>
+
+<h3>Enter the Monad</h3>
+
+<p>I'll jump straight to how the code could look like if we had monads - it won't work now because we haven't actually implemented the monad yet, but this should whet your appetite.</p>
+
+<p>Also, assume we reversed the changes from before - the functions don't have the <em>if</em> forms checking its arguments any longer, just like in the original version. Here's the code:</p>
+
+<p>```clojure
+(domonad maybe-monad</p>
+
+<pre><code>[order order
+ shipping-rate (calculate-shipping-rate (:address order))
+ discount (lookup-discount-code (:discount-code order))]
+ (-&gt; order
+    (apply-shipping-costs shipping-rate)
+    (apply-discount-code discount)
+    (place)))
+</code></pre>
+
+<p>;;"Off you go! Order total: $25.0"</p>
+
+<p>(domonad maybe-monad</p>
+
+<pre><code>[order another-order
+ shipping-rate (calculate-shipping-rate (:address order))
+ discount (lookup-discount-code (:discount-code order))]
+ (-&gt; order
+    (apply-shipping-costs shipping-rate)
+    (apply-discount-code discount)
+    (place)))
+</code></pre>
+
+<p>;; nil
+<code>``
+</code>domonad` receives the monad you want to operate on, a vector of bindings and an expression that's the final result of the whole thing.</p>
+
+<p>Is your mind blown yet? :) Somehow the whole operation fails and yields <code>nil</code> in the second call to <em>domonad</em> above - without any <em>if</em> forms and without crashing! To see why that is, I'll now explain the monad type class from Haskell.</p>
+
+<h3>The Monad Type Class</h3>
+
+<p>Here's the Haskell definition of the Monad type class (I left the <code>fail</code> function out so we can focus on the core of it):</p>
+
+<p>```haskell
+class Monad m where</p>
+
+<pre><code>return :: a -&gt; m a  
+
+(&gt;&gt;=) :: m a -&gt; (a -&gt; m b) -&gt; m b  
+
+(&gt;&gt;) :: m a -&gt; m b -&gt; m b  
+x &gt;&gt; y = x &gt;&gt;= \_ -&gt; y
+</code></pre>
+
+<p>```</p>
+
+<p>Let's distill those bad ass type signatures:</p>
+
+<blockquote><p><strong>return</strong> - much like <code>pure</code> from <a href="/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Applicative Functors</a>, <code>return</code> is responsible for wrapping a value of type <code>a</code> into a minimum context Monad that yields a value of type <code>a</code> - referred to as a <em>monadic value</em>.</p>
+
+<p><strong>(>>=)</strong> - often called <code>bind</code> - is a function of two arguments. The first is a <em>monadic value</em> of type <code>a</code> and the second is a function that receives a value of type <code>a</code> and returns a monadic value of type <code>m b</code> which is also the overall result of the function.</p>
+
+<p>In other words: <code>bind</code> <em>runs</em> the monad <code>m a</code>, feeding the yielded <code>a</code> value into the function it received as an argument - any context carried by that monad will be taken into account.</p>
+
+<p><strong>(>>)</strong> - often called <code>then</code> - This function receives two monads, <code>m a</code> and <code>m b</code>, and returns a monad of type <code>m b</code>. It is generally used when you're interested in the side effects - the context - carried out by the monad <code>m a</code> but doesn't care about the value <code>a</code> it yields.  It's rarely implemented in specific monads because the type class provides a default implementation:</p>
+
+<p>It applies <code>bind</code> to the monad <code>x</code> and a function that ignores its argument (<code>\_ -&gt; y</code>) - which by convention is represented by an <em>underscore</em> - and simply yields the monad <code>y</code>: that's the final result of the computation.</p></blockquote>
+
+<p>I won't be implementing <code>then</code> in Clojure though - I'll focus on <code>return</code> and <code>bind</code>, since <code>then</code> is essentially a helper function you could write yourself.</p>
+
+<h4>The Maybe Monad - Clojure edition</h4>
+
+<p>With definitions out of the way, let's implement the Clojure version of the Maybe monad.</p>
+
+<p>```clojure
+(def maybe-monad {</p>
+
+<pre><code>:return (fn [v] v)
+:bind (fn [mv f] 
+        (if mv
+            (f mv)
+            nil))})
+</code></pre>
+
+<p>```</p>
+
+<p>Yup. That's <em>it</em>.</p>
+
+<p>For the maybe monad, all its context needs to represent is a single value or the absence of value. We do this inside <code>bind</code> by checking if the monadic value <code>mv</code> is <code>nil</code>. If it isn't, we apply <code>f</code> to it, which will yield another monadic value. If, on the other hand, <code>mv</code> IS <code>nil</code>, we just return <code>nil</code>, bypassing the function application entirely.</p>
+
+<p><code>return</code>, as we saw, wraps a value into a minimal monad. In this case this is the value itself, so we just return it untouched.</p>
+
+<p>This is how one may go about using it:</p>
+
+<p>```clojure
+(-> another-order</p>
+
+<pre><code>((:bind maybe-monad)
+ (fn [order]
+   (-&gt; (calculate-shipping-rate (:address order))
+       ((:bind maybe-monad)
+        (fn [shipping-rate]
+          (-&gt; (lookup-discount-code (:discount-code order))
+              ((:bind maybe-monad)
+               (fn [discount]
+                 ((:return maybe-monad)
+                  (-&gt; order 
+                    (apply-shipping-costs shipping-rate) (
+                    apply-discount-code discount) 
+                    (place))))))))))))
+</code></pre>
+
+<p>;; nil
+```</p>
+
+<p><em>WOW!</em> That is awful! And I won't blame you for not wanting to read through this aberration. But trust me, it does the job.</p>
+
+<p>However, you're probably thinking: that looks <em>nothing</em> like the nice little <code>domonad</code> notation we saw earlier!</p>
+
+<p>Well, you're right. That's because <code>domonad</code> is a <a href="http://clojure.org/macros">macro</a> - it gives us some syntactic sugar that expands into the real code shown above. In order to be able to use the <code>domonad</code> notation, paste the following into your REPL:</p>
+
+<p>```clojure
+(defn monad-steps</p>
+
+<pre><code>([monad steps expr]
+    (if (seq steps)
+        (let [fst (first steps)
+              snd (second steps)]
+              `((:bind ~monad) 
+                (fn [~(symbol fst)]
+                    (-&gt;  ~snd ~(monad-steps monad (subvec steps 2) expr)))))
+        expr)))
+</code></pre>
+
+<p>(defmacro domonad [monad steps expr]</p>
+
+<pre><code>(let [args (map first (partition 2 steps))
+      forms (map second (partition 2 steps))
+      new-steps (subvec (vec (interleave (cons nil args) forms)) 2)]
+      `(let [m# ~monad]  
+        (-&gt; ~(second steps)
+            ~(monad-steps monad new-steps 
+                `((:bind ~monad) (fn [~(symbol (last args))] ((:return ~monad) ~expr))))))))
+</code></pre>
+
+<p>```</p>
+
+<p>All set! Now you should be able to run the examples that use <code>domonad</code> without any hiccups. Give it a shot:</p>
+
+<p>```clojure
+(domonad maybe-monad</p>
+
+<pre><code>[order another-order
+ shipping-rate (calculate-shipping-rate (:address order))
+ discount (lookup-discount-code (:discount-code order))]
+ (-&gt; order
+    (apply-shipping-costs shipping-rate)
+    (apply-discount-code discount)
+    (place)))
+</code></pre>
+
+<p>;; nil
+```</p>
+
+<blockquote><p><strong>Note:</strong> macros can be daunting at times so don't worry too much about its implementation. It's way more important to me that you understand the end result than it is to be able to implement the macro yourself - but by all means dissect this implementation if you feel inclined to do so :)</p></blockquote>
+
+<p>Now that's way better. The <em>maybe</em> monad abstracted away the logic behind computations that can fail so you don't have to worry about it in your functions  - you can just focus on writing them.</p>
+
+<p>In the end I also believe it aids readability once you get used to it.</p>
+
+<h3>Don't break the law</h3>
+
+<p>Monads have laws of their own too! Let's have a look at them.</p>
+
+<h4>Right unit</h4>
+
+<blockquote><p>Binding a monadic value <code>m</code> to <code>return</code> should be equal to <code>m</code> itself</p></blockquote>
+
+<p>In Haskell speak:</p>
+
+<p><code>haskell
+m &gt;&gt;= return =  m
+</code></p>
+
+<p>The proof in Clojure:</p>
+
+<p>```clojure
+(def m 10)
+(def >>= (:bind maybe-monad))
+(def return (:return maybe-monad))</p>
+
+<p>;; given the above, this...
+(>>= m return) ;; 10</p>
+
+<p>;;is the same as
+m ;; 10
+```</p>
+
+<h4>Left unit</h4>
+
+<blockquote><p>Applying <code>return</code> to <code>x</code> and then applying <code>&gt;&gt;=</code> to the resulting value and <code>f</code>should be the same as applying <code>f</code> directly to <code>x</code></p></blockquote>
+
+<p>In Haskell speak:</p>
+
+<p><code>haskell
+return x &gt;&gt;= f =  f x
+</code></p>
+
+<p>The proof in Clojure:</p>
+
+<p>```clojure
+(def x 10)
+(def >>= (:bind maybe-monad))
+(def return (:return maybe-monad))
+(def f (fn [v] (* v 2)))</p>
+
+<p>;; given the above, this...
+(-> (return x) (>>= f)) ;; 20</p>
+
+<p>;;is the same as
+(f x) ;; 20
+```</p>
+
+<h4>Associativity</h4>
+
+<blockquote><p>Binding <code>m</code> to <code>f</code> and then applying <code>&gt;&gt;=</code> to the result and <code>g</code> should be the same as applying <code>&gt;&gt;=</code> to <code>m</code> and a function of argument <code>x</code> that first applies <code>f</code> to <code>x</code> and then binds it to <code>g</code>.</p></blockquote>
+
+<p>Phew...another mouthful, huh? Code should make it clearer. As usual, Haskell comes first:</p>
+
+<p><code>haskell
+(m &gt;&gt;= f) &gt;&gt;= g  =  m &gt;&gt;= (\x -&gt; f x &gt;&gt;= g)
+</code>
+And now let's prove it in Clojure:</p>
+
+<p>```clojure
+(def >>= (:bind maybe-monad))
+(def return (:return maybe-monad))</p>
+
+<p>(def m 10)
+(def f (fn [v] (* v 2)))
+(def g (fn [v] (+ v 10)))</p>
+
+<p>;; given the above, this...
+(-> (>>= m f) (>>= g)) ;; 30</p>
+
+<p>;;is the same as
+(>>= m</p>
+
+<pre><code> (fn [x]
+    (&gt;&gt;= (f x) g))) ;; 30
+</code></pre>
+
+<p>```</p>
+
+<p>Alright, we're getting to the end now! Hold on just a little longer!</p>
+
+<h3>One last thing - The List Monad</h3>
+
+<p>Yeah, I'm sure you saw this coming. Lists are monads too! I'll make this quick and show its implementation and usage in Clojure - bear with me one last time.</p>
+
+<p>```clojure
+(def list-monad {</p>
+
+<pre><code>:return (fn [v] [v])
+:bind (fn [mv f] 
+    (if (seq mv)
+        (apply concat (map f mv))
+        []))
+})
+</code></pre>
+
+<p>;;let's play with it</p>
+
+<p>(domonad list-monad</p>
+
+<pre><code>[a [1 2]
+ b [a, (- a)]]
+ (* 3 b))
+</code></pre>
+
+<p>;; (3 -3 6 -6)</p>
+
+<p>(domonad list-monad</p>
+
+<pre><code>[a [1 2]
+ b []]
+ (* 3 b))
+</code></pre>
+
+<p>;; () - an empty list.
+```</p>
+
+<p>This should look familiar if you've used <a href="http://clojuredocs.org/clojure_core/clojure.core/for">list comprehensions</a> in Clojure or other languages such as Python:</p>
+
+<p>```clojure
+(for [a [1 2]</p>
+
+<pre><code> b [a, (- a)]]
+ (* 3 b))
+</code></pre>
+
+<p>;; (3 -3 6 -6)
+```</p>
+
+<p>See? You've been using monads all along and didn't even know it! How awesome is that?</p>
+
+<p>Also note that we didn't need to re-implement <code>domonad</code> for the list monad. It's a generic macro that will work with any monads you throw at it!</p>
+
+<p>It's interesting to see how the list and the maybe monads differ. This time, <code>return</code> puts the value <code>v</code> inside a list and returns it because for lists, a minimum monad is a list with a single element.</p>
+
+<p><code>bind</code> is a bit more interesting. It first checks to see if <code>mv</code> is empty, in which case it returns an empty list, causing the whole computation to stop. If, however, <code>mv</code> is NOT empty, it maps <code>f</code> over every element in <code>mv</code>.</p>
+
+<p>The resulting list is potentially a list of lists, since functions fed to monads - such as <code>f</code> in this case - have to return monadic values. That's why we then apply <code>concat</code> to the resulting list, effectively flattening it.</p>
+
+<h3>Final words</h3>
+
+<p>Hopefully you now have a much better understanding of Monads and should start seeing in your code use cases and/or opportunities for the monads shown here.</p>
+
+<p>You'll notice that this Clojure implementation of monads used only normal functions - that was by design since I wanted this implementation to be as close as possible to Clojure's <a href="https://github.com/clojure/algo.monads">core.algo.monads</a> library. You should have a look at it.</p>
+
+<p>Also, bear in mind that this tutorial is by no means exhaustive - there's <strong>a lot</strong> more about monads that I could possibly cover in a blog - it was hard enough ending it here! But if you want to study more about them, I'd recommend starting with these resources:</p>
+
+<ul>
+<li><p><a href="http://learnyouahaskell.com/">Learn You a Haskell for Great Good</a> - this book is an excellent intro to Haskell and it was the approach found there that made me grok monads - highly recommended and freely available online.</p></li>
+<li><p><a href="http://en.wikibooks.org/wiki/Haskell/Understanding_monads">The Monads Section on the Haskell wikibook</a> - another free online resource</p></li>
+</ul>
+
+
+<p>That's it from me. I hope you enjoyed the read and if you made it until here, a big <em>thank you</em>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Monads in small bites - Part III - Monoids]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/"/>
+    <updated>2012-12-05T09:25:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids</id>
+    <content type="html"><![CDATA[<p>This is Part III of my Monads tutorial. Make sure you read the previous parts:</p>
+
+<ul>
+<li><p><a href="/2012/11/30/monads-in-small-bites-part-i-functors/">Part I   - Functors</a></p></li>
+<li><p><a href="/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II  - Applicative Functors</a></p></li>
+<li><p>Part III - Monoids (this post)</p></li>
+<li><p><a href="/2012/12/08/monads-in-small-bites-part-iv-monads/">Part IV  - Monads</a></p></li>
+</ul>
+
+
+<h3>Monoids</h3>
+
+<p>Simply put, Monoids describe types containing a <a href="http://en.wikipedia.org/wiki/Binary_function">binary function</a> and an identity value.</p>
+
+<p>When applied to the identity value and a random value <code>x</code>, said function leaves its argument <code>x</code> <em>untouched</em>, returning it as a result.</p>
+
+<p>This short description should be enough to get the conversation started.</p>
+
+<p>Here's how Haskell defines a Monoid:</p>
+
+<p>```haskell
+class Monoid m where</p>
+
+<pre><code>mempty :: m
+mappend :: m -&gt; m -&gt; m
+mconcat :: [m] -&gt; m
+mconcat ms = foldr mappend mempty ms
+</code></pre>
+
+<p>```</p>
+
+<p>This type introduces three new functions so let's walk through each one of them:</p>
+
+<blockquote><p><strong>mempty</strong> - I started with a lie since <code>mempty</code> isn't actually a function. You can think of it as a constant of the same type of the Monoid <code>m</code>. It is this monoid's identity value.</p>
+
+<p><strong>mappend</strong> - A poorly named function, <code>mappend</code> is the binary function I mentioned earlier. It receives two arguments of type <code>m</code> and returns a value of type <code>m</code></p>
+
+<p><strong>mconcat</strong> - It receives a list of Monoids <code>m</code> and reduces them to a single Monoid of type <code>m</code>. What's interesting about this snippet is that the Monoid type class provides a default implementation for <code>mconcat</code>: it simply calls <em><a href="http://www.haskell.org/haskellwiki/Foldr_Foldl_Foldl" title="">foldr</a></em> with the binary function <code>mappend</code>, a starting value of <code>mempty</code> and the list of Monoid values <code>ms</code></p></blockquote>
+
+<p>Enough Haskell! Let's have a look at a few examples.</p>
+
+<p>Did you know that, in Clojure,  the functions <code>*</code> and <code>+</code> are monoids? Yup. But don't take my word for it. Let me prove it to you:</p>
+
+<p>```clojure
+(def  mempty (+)) ;; 0
+(def  mappend +)
+(defn mconcat [ms]</p>
+
+<pre><code>(reduce mappend mempty ms))
+</code></pre>
+
+<p>(mappend 3 4) ;; 7</p>
+
+<p>(mconcat [2 3 4]) ;; 9
+```</p>
+
+<p>Whoa!  What happened here? Am I just making this stuff up?</p>
+
+<p>Not really. I only defined the same haskell names to their Clojure counterparts for clarity. Totally overkill. The code above is the same as:</p>
+
+<p>```clojure
+(+) ;; 0</p>
+
+<p>(+ 3 4) ;; 7</p>
+
+<p>(reduce + [2 3 4]) ;; 9
+```</p>
+
+<p>Did you notice that on the second call to <code>reduce</code> we did not provide an initial value? That's because <code>reduce</code> will attempt to get its initial accumulator by calling the reducing function without arguments - hence <code>mempty == (+)</code>.</p>
+
+<p>So that means we don't even need an <code>mconcat</code> function since in Clojure,  <code>reduce</code> works with monoids as well!</p>
+
+<blockquote><p><strong>Update</strong>: this isn't entirely true. When I wrote this post I had in mind the version of <code>reduce</code> provided by the Clojure (1.5+) reducers library. The <a href="https://github.com/clojure/clojure/blob/master/src/clj/clojure/core/reducers.clj#L71">source code</a> shows how that is the case.</p>
+
+<p>The implementation of <code>reduce</code> in <code>clojure.core</code> however uses the first element of the collection being reduced over as its seed.</p></blockquote>
+
+<p>But how the hell do you create a monoid in Clojure then? I'm glad you asked. Let's create our own <em>plus-monoid</em>!</p>
+
+<h4>Your first monoid</h4>
+
+<p>In <a href="/2012/11/30/monads-in-small-bites-part-i-functors/">Part I</a> I implemented Functors using <a href="http://clojure.org/protocols">protocols</a> and <a href="http://clojuredocs.org/clojure_core/clojure.core/defrecord">records</a>. In <a href="/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II</a> I showed how Applicative Functors could be implemented using <a href="http://clojure.org/multimethods">multimethods</a>.</p>
+
+<p>This time around I won't be using any of these. I'll implement Monoids using pure functions:</p>
+
+<p>```clojure
+(defn plus-monoid</p>
+
+<pre><code>([]
+    0)
+([a b]
+    (+ a b)))
+</code></pre>
+
+<p>(plus-monoid) ;; 0 - same as mempty</p>
+
+<p>(plus-monoid 3 4) ;; 7 - same as mappend</p>
+
+<p>(reduce plus-monoid [2 3 4]) ;; 9 - when working with monoids, reduce is the same as mconcat
+```</p>
+
+<p>We start by defining a function with multiple arities. The first body receives no arguments, so we just return the identity value for summation, which is <em>0 (zero)</em>. The second body receives two arguments so we can just add them up. Multiplication can be implemented in a similar fashion but obviously with the identity value of <em>one</em>.</p>
+
+<p>Easy, huh?</p>
+
+<p>Oh, by the way, lists are Monoids too! Who'd have thought?</p>
+
+<p>Here's its Clojure implementation:</p>
+
+<p>```clojure
+(defn list-monoid</p>
+
+<pre><code>([]
+    '())
+([a b]
+    (concat a b)))
+</code></pre>
+
+<p>(list-monoid) ;; () - remember, same as mempty</p>
+
+<p>(list-monoid [1 2 3] [4 5 6]) ;; (1 2 3 4 5 6) - remember, same as mappend</p>
+
+<p>(reduce list-monoid [[1 2 3] [4 5 6] [7 8 9]]) ;; (1 2 3 4 5 6 7 8 9) - mconcat in action
+```</p>
+
+<p>Same rules apply but for lists <code>mappend</code> is achieved by using <code>concat</code> inside our monoid function.</p>
+
+<p>Also, since our binary function concatenates two lists together it makes sense that <code>mempty</code> is <code>()</code> (the empty list). Remember <code>mempty</code> is supposed to be an identity value so if we stitch <code>()</code> and <code>[1 2 3]</code> together, we're left with <code>[1 2 3]</code> which is exactly what we'd expect.</p>
+
+<blockquote><p>You can see now why I said <code>mappend</code> was poorly named. While it makes sense when you think about lists, <code>mappend</code> doesn't do any appending in our <em>plus-monoid</em> and in fact most monoids don't append anything. Just keep this in mind if you see any haskell code using it: <code>mappend</code> is just a binary function.</p></blockquote>
+
+<h3>Don't break the law</h3>
+
+<p>You saw this coming, huh? Monoids also come with a couple of laws. You know the drill. Let's prove they both hold.</p>
+
+<h4>Identity</h4>
+
+<blockquote><p>Applying <code>mappend</code> to <code>mempty</code> and a monoid <code>x</code> should be the same as the original <code>x</code> monoid.</p></blockquote>
+
+<p>In Haskell:</p>
+
+<p><code>haskell
+mappend mempty x = x
+mappend x mempty = x
+</code></p>
+
+<p>And the proof in Clojure:</p>
+
+<p>```clojure
+;; first, the plus-monoid
+(def mempty (plus-monoid))</p>
+
+<p>(def x 10)</p>
+
+<p>;; This...
+(plus-monoid mempty x) ;; 10</p>
+
+<p>;; ...is the same as:
+(plus-monoid x mempty) ;; 10</p>
+
+<p>;;now, the list-monoid</p>
+
+<p>(def mempty (list-monoid))
+(def x [1 2 3])</p>
+
+<p>;; This...
+(list-monoid mempty x) ;; (1 2 3)</p>
+
+<p>;; ...is the same as:
+(list-monoid x mempty) ;; (1 2 3)
+```</p>
+
+<h4>Associativity</h4>
+
+<blockquote><p>Applying <code>mappend</code> to a monoid <code>x</code> and the result of applying <code>mappend</code> to the monoids <code>y</code> and <code>z</code> should be the same as first applying <code>mappend</code> to the monoids <code>x</code> and <code>y</code> and then applying <code>mappend</code> to the resulting monoid and the monoid <code>z</code></p></blockquote>
+
+<p>In Haskell:</p>
+
+<p><code>haskell
+mappend x (mappend y z) = mappend (mappend x y) z
+</code></p>
+
+<p>And the proof in Clojure - remember that calling the monoid function with two arguments is equivalent to <code>mappend</code> in haskell:</p>
+
+<p>```clojure
+;; first, the plus-monoid</p>
+
+<p>(def x 10)
+(def y 25)
+(def z 40)</p>
+
+<p>;; This...
+(plus-monoid x (plus-monoid y z)) ;; 75</p>
+
+<p>;; ...is the same as:
+(plus-monoid (plus-monoid x y) z) ;; 75</p>
+
+<p>;;now, the list-monoid</p>
+
+<p>(def x [40])
+(def y [10 25])
+(def z [50])</p>
+
+<p>;; This...
+(list-monoid x (list-monoid y z)) ;; (40 10 25 50)</p>
+
+<p>;; ...is the same as:
+(list-monoid (list-monoid x y) z) ;; (40 10 25 50)
+```</p>
+
+<h3>Almost there...</h3>
+
+<p>This puts an end to Part III. It's time to head to the pub.</p>
+
+<p>When you're back look for the final post in these series - <a href="/2012/12/08/monads-in-small-bites-part-iv-monads/">Part IV</a> - where we will conclude our journey by finally introducing Monads!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Monads in small bites - Part II - Applicative Functors]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/"/>
+    <updated>2012-12-02T21:43:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors</id>
+    <content type="html"><![CDATA[<p>This is Part II of my Monads tutorial. Make sure you read the previous parts:</p>
+
+<ul>
+<li><p><a href="/2012/11/30/monads-in-small-bites-part-i-functors/">Part I   - Functors</a></p></li>
+<li><p>Part II  - Applicative Functors (this post)</p></li>
+<li><p><a href="/2012/12/05/monads-in-small-bites-part-iii-monoids/">Part III - Monoids</a></p></li>
+<li><p><a href="/2012/12/08/monads-in-small-bites-part-iv-monads/">Part IV  - Monads</a></p></li>
+</ul>
+
+
+<h3>Applicative Functors</h3>
+
+<p>In <a href="/2012/11/30/monads-in-small-bites-part-i-functors/">Part I</a> I talked a little about Haskell type signatures and introduced Functors, which provide a way to map standard functions over values which are <em>wrapped</em> inside a Functor - we used <code>fmap</code> for that. You might want to <a href="/2012/11/30/monads-in-small-bites-part-i-functors/">skim through it</a> again as a refresher.</p>
+
+<p>Now suppose you have Functors that <em>wrap</em> functions and that you want to apply those <em>wrapped</em> functions to other Functors, maybe even composing new functions on the way!</p>
+
+<p>What then?</p>
+
+<p>Well you're in luck! Applicative Functors do just that! They're <strong>Functors on steroids</strong>.</p>
+
+<p>Here's how Haskell defines the Applicative data type:</p>
+
+<p>```haskell
+class (Functor f) => Applicative f where</p>
+
+<pre><code>pure :: a -&gt; f a
+(&lt;*&gt;) :: f (a -&gt; b) -&gt; f a -&gt; f b
+</code></pre>
+
+<p>```</p>
+
+<p>Based on our previous knowledge of Haskell's type signatures, we can infer from this definition that in order for it to be an Applicative Functor, <code>f</code> <em>must</em> already be a Functor.</p>
+
+<p>Let's break this down and have a closer look at the two new functions this type introduces:</p>
+
+<blockquote><p><strong>pure</strong> is a function that takes a value <code>a</code> and <em>wraps</em> it into a minimal Functor <code>f</code>.</p>
+
+<p><strong>&lt;*></strong> is a function that takes two arguments: the first is a Functor <code>f</code> that wraps a function of type <code>a -&gt; b</code>. The second argument is a Functor <code>f</code> that wraps a value - which could be a function! - of type <code>a</code>. The final result is a Functor <code>f</code> that wraps some value of type <code>b</code> - which was obtained by somehow applying the function <code>(a -&gt; b)</code> to the Functor <code>f a</code>.</p></blockquote>
+
+<p><code>pure</code> has a straightforward explanation whereas <code>&lt;*&gt;</code> is a bit more involved.</p>
+
+<p>To clear things up, I'll show the type signatures again but this time as if they only worked with the List Functor that we've been working on:</p>
+
+<p><code>haskell
+pure :: a -&gt; [a]
+(&lt;*&gt;) :: [(a -&gt; b)] -&gt; [a] -&gt; [b]
+</code></p>
+
+<p>Let's revisit those definitions:</p>
+
+<blockquote><p><strong>pure</strong> is a function that takes a value <code>a</code> and <em>puts</em> it into an empty list, returning the resulting single element list.</p>
+
+<p><strong>&lt;*></strong> is a function that takes two arguments: the first is a list containing one or more functions of type <code>a -&gt; b</code>. The second argument is a list of one or more values - or functions! - of type <code>a</code>. The final result is a list of one or more values of type <code>b</code> - which was obtained by somehow applying the function <code>(a -&gt; b)</code> to the Functor <code>f a</code>.</p></blockquote>
+
+<p>Enough definitions though! Let's extend our List Functor and make it an Applicative as well.</p>
+
+<p>While we'll still be using the List Functor we implemented in <a href="/2012/11/30/monads-in-small-bites-part-i-functors/">Part I</a>, this time I'll implement its Applicative version using <a href="http://clojure.org/multimethods">multimethods</a> for a change.  Here's the code:</p>
+
+<p>```clojure
+;; it dispatches on the record type since we could have implementations of pure for List, Maybe, Either etc...
+(defmulti pure (fn [f <em>] f))
+(defmethod pure List [</em> v]</p>
+
+<pre><code>"Wraps value v in a list"
+(List. [v]))
+</code></pre>
+
+<p>;; it dispatches on the class of the Functor instance passed in the 1st argument
+(defmulti &lt;<em>> (fn [fs _] (class fs)))
+(defmethod &lt;</em>> List [fs xs]</p>
+
+<pre><code>"Unwraps the functions in fs, applies them to the Functors in xs, wrapping the result at the end"
+(List. (for [f (:wrapped fs)
+             x (:wrapped xs)]
+            (f x))))
+</code></pre>
+
+<p>```</p>
+
+<p>By focusing on the List as an Applicative Functor we can more easily understand what these functions do. From the code above, <code>pure</code>'s job is a simple one: all it does is <em>wrap</em> it's argument <code>v</code> into a minimal List functor which in our case means a Functor wrapping a one element list.</p>
+
+<p><code>&lt;*&gt;</code> on the other hand is responsible for somehow unwrapping the functions brought in by the Applicatives in <code>fs</code> and applying them to the [Applicative] Functors in <code>xs</code>. It does that by using <a href="http://clojuredocs.org/clojure_core/clojure.core/for">list comprehensions</a> and <em>wraps</em> the result into a new List Functor.</p>
+
+<p>Study this code carefully. It <em>can</em> be tricky.</p>
+
+<blockquote><p><strong>Note</strong>: When I first encountered <strong>&lt;*></strong> I had no idea what this function was called. I asked the twittersphere and it seems it's called <code>apply</code>. In the process of figuring this out I was enlightened <a href="https://twitter.com/leonardo_borges/status/267777875367841792">by this conversation</a>. It turns out <code>&lt;*&gt;</code> has several names. Can you guess which one is my favorite? :)</p></blockquote>
+
+<p>With the Applicative functions defined for our List, let's take it for a spin:</p>
+
+<p>```clojure
+(def fs (List. [#(* 2 %) #(+ 10 %)]))
+(def xs (List. [1 2 3]))</p>
+
+<p>(&lt;*> fs xs) ;; List{:wrapped (2 4 6 11 12 13)}</p>
+
+<p>(def g (pure List #(<em> 50 %)))
+(&lt;</em>> g xs) ;; List{:wrapped (50 100 150)}
+```</p>
+
+<p>There should have been no surprises here. Read the code again and make sure it's all fresh before moving along.</p>
+
+<h3>Don't break the law</h3>
+
+<p>Just as Functors, Applicative Functors also need to obey some laws:</p>
+
+<h4>Identity</h4>
+
+<blockquote><p>Feeding a function <code>f</code> to <code>pure</code> and applying the resulting Applicative to the Functor <code>v</code> should be the same as directly mapping <code>f</code> over the Functor <code>v</code></p></blockquote>
+
+<p>In Haskell speak:</p>
+
+<p><code>haskell
+pure f &lt;*&gt; v = fmap f v
+</code></p>
+
+<p>And this is the proof, in Clojure:</p>
+
+<p>```clojure
+(def f #(+ 2 %))
+(def v (List. [10]))</p>
+
+<p>;; given the above, this...
+(&lt;*> (pure List f) v) ;; List{:wrapped (12)}</p>
+
+<p>;; ...is the same as:
+(fmap v f) ;; List{:wrapped (12)}</p>
+
+<p>```</p>
+
+<h4>Composition</h4>
+
+<blockquote><p>The result of <em>applying</em> an Applicative Functor that yields the <strong>function composition</strong> operator to the Applicative <code>u</code>, then apply the resulting Functor to <code>v</code> and finally applying that result to the final Applicative <code>w</code> should be the same as <em>applying</em> <code>v</code> to <code>w</code> and then <em>applying</em> <code>u</code> to the resulting <em>Applicative</em>.</p></blockquote>
+
+<p>That was a mouthful! Let's see how Haskell tells this story:</p>
+
+<p>In Haskell:</p>
+
+<p><code>haskell
+pure (.) &lt;*&gt; u &lt;*&gt; v &lt;*&gt; w = u &lt;*&gt; (v &lt;*&gt; w)
+</code></p>
+
+<p>I needed to cheat a bit in Clojure to prove this law since functions are not <a href="http://www.haskell.org/haskellwiki/Currying">curried by default like they are in Haskell</a>. But this code should still clearly show how this law holds:</p>
+
+<p>```clojure
+(def u (List. [#(* 2 %)]))
+(def v (List. [#(+ 10 %)]))
+(def w (List. [1 2 3]))</p>
+
+<p>;; Given the above, this...
+(-> (pure List (fn [x] (partial comp x)))
+  (&lt;<em>> u)
+  (&lt;</em>> v)
+  (&lt;*> w)) ;; List{:wrapped (22 24 26)}</p>
+
+<p>;; ...is the same as:
+(&lt;<em>> u (&lt;</em>> v w)) ;; List{:wrapped (22 24 26)}
+```</p>
+
+<h4>Homomorphism</h4>
+
+<blockquote><p>The result of applying the <code>pure</code> value of <code>f</code> to the <code>pure</code> value of <code>x</code> should be the same as applying <code>f</code> directly to <code>x</code> and then feeding that into <code>pure</code>.</p></blockquote>
+
+<p>In Haskell:</p>
+
+<p><code>haskell
+pure f &lt;*&gt; pure x = pure (f x)
+</code></p>
+
+<p>And in Clojure:</p>
+
+<p>```clojure
+(def f #(* 2 %))
+(def x 10)</p>
+
+<p>;; given the above, this...
+(-> (pure List f)
+  (&lt;*> (pure List x))) ;; List{:wrapped (20)}</p>
+
+<p>;; ...is the same as:
+(pure List (f x)) ;; List{:wrapped (20)}
+```</p>
+
+<h4>Interchange</h4>
+
+<blockquote><p>The result of applying an Applicative Functor <code>u</code> to the <code>pure</code> value of <code>y</code> should be the same as taking the Applicative obtained by calling <code>pure</code> with a function that applies its argument to <code>y</code> and then applying that to <code>u</code></p></blockquote>
+
+<p>In Haskell:</p>
+
+<p><code>haskell
+u &lt;*&gt; pure y = pure ($ y) &lt;*&gt; u
+</code></p>
+
+<p>This type signature presents new syntax so before proving the law in Clojure, I want to explain what <code>($ y)</code> means.</p>
+
+<p>In Haskell, <code>$</code> is the function application operator. So if we give <code>y</code> a value of <em>10</em>, I can show you that in this law <code>$</code> essentially translates to a single argument function that applies its argument to <em>10</em>:</p>
+
+<p>```haskell
+let double a = a * 2 -- helper function. it doubles its argument</p>
+
+<p>-- given the above, this...
+(($ 10) double) -- 20</p>
+
+<p>-- ...is the same as:
+let dollarTen = (\a -> (a 10))  -- this is Haskell's lambda syntax. It's equivalent to ($ 10)
+((dollarTen) double) -- 20
+```</p>
+
+<p>Now, to the proof in Clojure:</p>
+
+<p>```clojure
+(def u (pure List #(+ 10 %)))
+(def y 50)</p>
+
+<p>;; given the above, this...
+(&lt;*> u (pure List y)) ;; List{:wrapped (60)}</p>
+
+<p>;; ...is the same as:
+(def dollar-y #(% y)) ;; it's called dollar-y to show the correlation with the explanation above
+(&lt;*> (pure List dollar-y) u) ;; List{:wrapped (60)}
+```</p>
+
+<p>This brings us to the end or Part II. Two down and two to go.</p>
+
+<p>I hope you're still with me but go home now.</p>
+
+<p>Or better yet go to the gym lift some weights and think about these Functors on steroids. When you're back, look out for <a href="/2012/12/05/monads-in-small-bites-part-iii-monoids/">Part III</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

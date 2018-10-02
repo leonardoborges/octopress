@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/git/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A Few Useful Git Commands]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/05/29/a-few-useful-git-commands/"/>
+    <updated>2011-05-29T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/05/29/a-few-useful-git-commands</id>
+    <content type="html"><![CDATA[<p>I've been working fulltime with <a href="http://git-scm.com/">Git</a> for a while now and I've noticed a pattern of commands that emerge every so often, but not often enough that would make me remember them.</p>
+
+<p>That's why I decided to post them here so I know where to look in the future. And of course they can turn out to be useful to someone else too.</p>
+
+<p>So without further ado, here they are:</p>
+
+<p>``` bash</p>
+
+<h1>undo last commit</h1>
+
+<p>git reset HEAD^</p>
+
+<h1>show files in a given commit</h1>
+
+<p>git show --pretty="format:" --name-only rev_number</p>
+
+<h1>remove untracked files and directories</h1>
+
+<p>git clean -f -d</p>
+
+<h1>track remote branch</h1>
+
+<p>git branch --track branch_name origin/master</p>
+
+<h1>given you created a new local branch 'branch_name'</h1>
+
+<h1>pushes 'branch_name' to 'origin/branch_name', creating the remote branch for you</h1>
+
+<p>git push origin branch_name</p>
+
+<h1>delete remote branch</h1>
+
+<p>git push origin :remote_branch_name
+```</p>
+
+<p>I'll keep this list up to date and add more useful stuff as need arises. Enjoy.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git cheat sheet]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/04/22/git-cheat-shee/"/>
+    <updated>2009-04-22T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/04/22/git-cheat-shee</id>
+    <content type="html"><![CDATA[<p>
+For those who don't know <a href="http://git-scm.com/" target="_blank">Git</a> is a version control system developed  by <a href="http://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank">Linus Torvalds</a>. It's main difference from other tools like SVN and CVS is the fact that it's distributed.<br><br>Recently I gave a workshop about Git here at the company where I walked through the most common cases I usually see when working in a team and thought about posting a summary of the commands used in the workshop.<br><br>It turns out that just this morning I found <a href="http://ktown.kde.org/~zrusin/git/git-cheat-sheet-medium.png">this - a.k.a the rest of my post</a>. It's a really nice and concise Git Cheat Sheet that covers most of what I talked about  in the workshop. So I highly recommend you bookmark it. It will certainly be useful.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

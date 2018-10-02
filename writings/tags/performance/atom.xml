@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Performance | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/performance/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rails performance scripts: profiler and benchmarker]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/11/20/rails-performance-scripts-profiler-benchmarker/"/>
+    <updated>2008-11-20T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/11/20/rails-performance-scripts-profiler-benchmarker</id>
+    <content type="html"><![CDATA[<p>
+There are several ways you can measure your rails application's performance. The techniques range from filling your code with "puts" statements - :p - to fancy ones like <a href="http://www.newrelic.com/">NewRelic</a> - which is quite nice, I must say.<br><br>But what many people don't know is that rails ships with a handful of scripts to help you out. One of which is called <strong>profiler</strong>, located under your application's <strong>scripts/performance</strong> directory.<br><br>By default it uses the standard ruby profiler but if you want more speed - and additional reporting options - , consider installing the <a href="http://ruby-prof.rubyforge.org/">ruby-prof</a> gem.<br><br>So if you execute it without params, you'll get a clue of how it works:<br><br><pre lang="bash"><br>$ script/performance/profiler<br>Usage: ./script/performance/profiler 'Person.expensive_method(10)' [times] [flat|graph|graph_html]<br></pre><br><br>Pretty self explanatory, right?<br><br>As a sample code, I have in my rails app a dumb model with a really dumb method I wanna profile:<br><br>
+
+<div class="code">
+  <pre><code class="language-ruby">
+  class Article
+    def self.find_all_with_delay
+      sleep 10
+      self.find(:all)
+    end
+  end
+  </code></pre>
+</div>
+<br><br>Clearly this method doesn't perform well and is a bottle neck in our super application! But let's see what rails' profiler tells us:<br><br><pre lang="bash" line="1"><br>$ script/performance/profiler 'Article.find_all_with_delay' 1 graph > text_graph.perf<br>Loading Rails...<br>Using the ruby-prof extension.<br>Thread ID: 109440<br>Total Time: 10.147995<br><br>  %total   %self     total      self      wait     child            calls   Name<br>--------------------------------------------------------------------------------<br> 100.00%   0.00%     10.15      0.00      0.00     10.15                1     Global#[No method] (/Users/leo/projects/test/vendor/rails/railties/lib/commands/performance/profiler.rb:24}  /Users/leo/projects/test/vendor/rails/railties/lib/commands/performance/profiler.rb:24<br>                     10.15      0.00      0.00     10.15              1/1     Object#profile_me<br>--------------------------------------------------------------------------------<br>                     10.15      0.00      0.00     10.15              1/1     Global#[No method]<br> 100.00%   0.00%     10.15      0.00      0.00     10.15                1     Object#profile_me ((eval):1}  (eval):1<br>                      0.00      0.00      0.00      0.00              1/1     Class#const_missing<br>                     10.15      0.00      0.00     10.15              1/1     <Class::Article(id: integer, name: string, content: string, created_at: datetime, updated_at: datetime)>#find_all_with_delay<br>--------------------------------------------------------------------------------<br>                     10.15      0.00      0.00     10.15              1/1     Object#profile_me<br>  99.97%   0.00%     10.15      0.00      0.00     10.15                1     <Class::Article(id: integer, name: string, content: string, created_at: datetime, updated_at: datetime)>#find_all_with_delay (/Users/leo/projects/test/app/models/article.rb:2}  /Users/leo/projects/test/app/models/article.rb:2<br>                      0.15      0.00      0.00      0.15              1/1     <Class::ActiveRecord::Base>#find<br>                     10.00     10.00      0.00      0.00              1/1     Kernel#sleep<br>--------------------------------------------------------------------------------<br>                     10.00     10.00      0.00      0.00              1/1     <Class::Article(id: integer, name: string, content: string, created_at: datetime, updated_at: datetime)>#find_all_with_delay<br>  98.54%  98.54%     10.00     10.00      0.00      0.00                1     Kernel#sleep (ruby_runtime:0}  ruby_runtime:0<br>--------------------------------------------------------------------------------<br>...<br></pre><br><br>As you can see, the group around line 13 is where most of the time is spent, going through our stupid call to Kernel#sleep and detailing every and each call from the very beginning. The report is much larger, so I recommend you give it a try. It's really useful.<br><br>Now, displeased with my method's performance, I wrote a new one that I think performs much better:<br><br><pre lang="ruby"><br>  def self.find_all_with_less_delay<br>    sleep 5<br>    self.find(:all)<br>  end<br></pre><br><br>Nice huh? :) But how can we be sure it performs better? It turns out that under <strong>scripts/performance</strong> there is another useful script: <strong>benchmarker</strong><br><br>Again, running it without arguments reveals it's usage:<br><br><pre lang="bash"><br>$ script/performance/benchmarker <br>Usage: ./script/performance/benchmarker [times] 'Person.expensive_way' 'Person.another_expensive_way' ...<br></pre><br><br>So, ready to see which one of my methods performs better? Let's check:<br><br><pre lang="bash"><br>$ script/performance/benchmarker 1 'Article.find_all_with_delay' 'Article.find_all_with_less_delay'<br>            user     system      total        real<br>#1      0.020000   0.000000   0.020000 ( 10.016033)<br>#2      0.010000   0.000000   0.010000 (  5.015390)<br></pre><br><br>Pretty neat way to benchmark your methods huh?<br>Profiler and benchmarker are a powerful combination that have been helping me a lot in the projects I'm working on.<br><br>Hope you like it! See u soon! ;)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

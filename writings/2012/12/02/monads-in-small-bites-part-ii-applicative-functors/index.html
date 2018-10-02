@@ -1,0 +1,497 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Monads in small bites - Part II - Applicative Functors - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="This is Part II of my Monads tutorial. Make sure you read the previous parts: Part I - Functors
+Part II - Applicative Functors (this post)
+Part III &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Monads in Small Bites - Part II - Applicative Functors</h1>
+	<div class="entry-content"><p>This is Part II of my Monads tutorial. Make sure you read the previous parts:</p>
+
+<ul>
+<li><p><a href="/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Part I   - Functors</a></p></li>
+<li><p>Part II  - Applicative Functors (this post)</p></li>
+<li><p><a href="/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/">Part III - Monoids</a></p></li>
+<li><p><a href="/writings/2012/12/08/monads-in-small-bites-part-iv-monads/">Part IV  - Monads</a></p></li>
+</ul>
+
+
+<h3>Applicative Functors</h3>
+
+<p>In <a href="/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Part I</a> I talked a little about Haskell type signatures and introduced Functors, which provide a way to map standard functions over values which are <em>wrapped</em> inside a Functor - we used <code>fmap</code> for that. You might want to <a href="/writings/2012/11/30/monads-in-small-bites-part-i-functors/">skim through it</a> again as a refresher.</p>
+
+<p>Now suppose you have Functors that <em>wrap</em> functions and that you want to apply those <em>wrapped</em> functions to other Functors, maybe even composing new functions on the way!</p>
+
+<p>What then?</p>
+
+<p>Well you&#8217;re in luck! Applicative Functors do just that! They&#8217;re <strong>Functors on steroids</strong>.</p>
+
+<p>Here&#8217;s how Haskell defines the Applicative data type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">class</span> <span class="p">(</span><span class="kt">Functor</span> <span class="n">f</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">Applicative</span> <span class="n">f</span> <span class="kr">where</span>
+</span><span class='line'>    <span class="n">pure</span> <span class="ow">::</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">a</span>
+</span><span class='line'>    <span class="p">(</span><span class="o">&lt;*&gt;</span><span class="p">)</span> <span class="ow">::</span> <span class="n">f</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Based on our previous knowledge of Haskell&#8217;s type signatures, we can infer from this definition that in order for it to be an Applicative Functor, <code>f</code> <em>must</em> already be a Functor.</p>
+
+<p>Let&#8217;s break this down and have a closer look at the two new functions this type introduces:</p>
+
+<blockquote><p><strong>pure</strong> is a function that takes a value <code>a</code> and <em>wraps</em> it into a minimal Functor <code>f</code>.</p>
+
+<p><strong>&lt;*></strong> is a function that takes two arguments: the first is a Functor <code>f</code> that wraps a function of type <code>a -&gt; b</code>. The second argument is a Functor <code>f</code> that wraps a value - which could be a function! - of type <code>a</code>. The final result is a Functor <code>f</code> that wraps some value of type <code>b</code> - which was obtained by somehow applying the function <code>(a -&gt; b)</code> to the Functor <code>f a</code>.</p></blockquote>
+
+<p><code>pure</code> has a straightforward explanation whereas <code>&lt;*&gt;</code> is a bit more involved.</p>
+
+<p>To clear things up, I&#8217;ll show the type signatures again but this time as if they only worked with the List Functor that we&#8217;ve been working on:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">pure</span> <span class="ow">::</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+</span><span class='line'><span class="p">(</span><span class="o">&lt;*&gt;</span><span class="p">)</span> <span class="ow">::</span> <span class="p">[(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s revisit those definitions:</p>
+
+<blockquote><p><strong>pure</strong> is a function that takes a value <code>a</code> and <em>puts</em> it into an empty list, returning the resulting single element list.</p>
+
+<p><strong>&lt;*></strong> is a function that takes two arguments: the first is a list containing one or more functions of type <code>a -&gt; b</code>. The second argument is a list of one or more values - or functions! - of type <code>a</code>. The final result is a list of one or more values of type <code>b</code> - which was obtained by somehow applying the function <code>(a -&gt; b)</code> to the Functor <code>f a</code>.</p></blockquote>
+
+<p>Enough definitions though! Let&#8217;s extend our List Functor and make it an Applicative as well.</p>
+
+<p>While we&#8217;ll still be using the List Functor we implemented in <a href="/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Part I</a>, this time I&#8217;ll implement its Applicative version using <a href="http://clojure.org/multimethods">multimethods</a> for a change.  Here&#8217;s the code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="c1">;; it dispatches on the record type since we could have implementations of pure for List, Maybe, Either etc...</span>
+</span><span class='line'><span class="p">(</span><span class="k">defmulti </span><span class="nv">pure</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span> <span class="nv">_</span><span class="p">]</span> <span class="nv">f</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="k">defmethod </span><span class="nv">pure</span> <span class="nv">List</span> <span class="p">[</span><span class="nv">_</span> <span class="nv">v</span><span class="p">]</span>
+</span><span class='line'>    <span class="s">&quot;Wraps value v in a list&quot;</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="nv">v</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; it dispatches on the class of the Functor instance passed in the 1st argument</span>
+</span><span class='line'><span class="p">(</span><span class="k">defmulti </span><span class="nv">&lt;*&gt;</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">fs</span> <span class="nv">_</span><span class="p">]</span> <span class="p">(</span><span class="nb">class </span><span class="nv">fs</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="k">defmethod </span><span class="nv">&lt;*&gt;</span> <span class="nv">List</span> <span class="p">[</span><span class="nv">fs</span> <span class="nv">xs</span><span class="p">]</span>
+</span><span class='line'>    <span class="s">&quot;Unwraps the functions in fs, applies them to the Functors in xs, wrapping the result at the end&quot;</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">(</span><span class="k">for </span><span class="p">[</span><span class="nv">f</span> <span class="p">(</span><span class="nf">:wrapped</span> <span class="nv">fs</span><span class="p">)</span>
+</span><span class='line'>                 <span class="nv">x</span> <span class="p">(</span><span class="nf">:wrapped</span> <span class="nv">xs</span><span class="p">)]</span>
+</span><span class='line'>                <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By focusing on the List as an Applicative Functor we can more easily understand what these functions do. From the code above, <code>pure</code>&#8217;s job is a simple one: all it does is <em>wrap</em> it&#8217;s argument <code>v</code> into a minimal List functor which in our case means a Functor wrapping a one element list.</p>
+
+<p><code>&lt;*&gt;</code> on the other hand is responsible for somehow unwrapping the functions brought in by the Applicatives in <code>fs</code> and applying them to the [Applicative] Functors in <code>xs</code>. It does that by using <a href="http://clojuredocs.org/clojure_core/clojure.core/for">list comprehensions</a> and <em>wraps</em> the result into a new List Functor.</p>
+
+<p>Study this code carefully. It <em>can</em> be tricky.</p>
+
+<blockquote><p><strong>Note</strong>: When I first encountered <strong>&lt;*></strong> I had no idea what this function was called. I asked the twittersphere and it seems it&#8217;s called <code>apply</code>. In the process of figuring this out I was enlightened <a href="https://twitter.com/leonardo_borges/status/267777875367841792">by this conversation</a>. It turns out <code>&lt;*&gt;</code> has several names. Can you guess which one is my favorite? :)</p></blockquote>
+
+<p>With the Applicative functions defined for our List, let&#8217;s take it for a spin:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">fs</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">)</span> <span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">10</span> <span class="nv">%</span><span class="p">)]))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">xs</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">fs</span> <span class="nv">xs</span><span class="p">)</span> <span class="c1">;; List{:wrapped (2 4 6 11 12 13)}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">g</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">50</span> <span class="nv">%</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">g</span> <span class="nv">xs</span><span class="p">)</span> <span class="c1">;; List{:wrapped (50 100 150)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There should have been no surprises here. Read the code again and make sure it&#8217;s all fresh before moving along.</p>
+
+<h3>Don&#8217;t break the law</h3>
+
+<p>Just as Functors, Applicative Functors also need to obey some laws:</p>
+
+<h4>Identity</h4>
+
+<blockquote><p>Feeding a function <code>f</code> to <code>pure</code> and applying the resulting Applicative to the Functor <code>v</code> should be the same as directly mapping <code>f</code> over the Functor <code>v</code></p></blockquote>
+
+<p>In Haskell speak:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">pure</span> <span class="n">f</span> <span class="o">&lt;*&gt;</span> <span class="n">v</span> <span class="ow">=</span> <span class="n">fmap</span> <span class="n">f</span> <span class="n">v</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this is the proof, in Clojure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">f</span> <span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">v</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="mi">10</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; given the above, this...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">f</span><span class="p">)</span> <span class="nv">v</span><span class="p">)</span> <span class="c1">;; List{:wrapped (12)}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nf">fmap</span> <span class="nv">v</span> <span class="nv">f</span><span class="p">)</span> <span class="c1">;; List{:wrapped (12)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Composition</h4>
+
+<blockquote><p>The result of <em>applying</em> an Applicative Functor that yields the <strong>function composition</strong> operator to the Applicative <code>u</code>, then apply the resulting Functor to <code>v</code> and finally applying that result to the final Applicative <code>w</code> should be the same as <em>applying</em> <code>v</code> to <code>w</code> and then <em>applying</em> <code>u</code> to the resulting <em>Applicative</em>.</p></blockquote>
+
+<p>That was a mouthful! Let&#8217;s see how Haskell tells this story:</p>
+
+<p>In Haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">pure</span> <span class="p">(</span><span class="o">.</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">u</span> <span class="o">&lt;*&gt;</span> <span class="n">v</span> <span class="o">&lt;*&gt;</span> <span class="n">w</span> <span class="ow">=</span> <span class="n">u</span> <span class="o">&lt;*&gt;</span> <span class="p">(</span><span class="n">v</span> <span class="o">&lt;*&gt;</span> <span class="n">w</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I needed to cheat a bit in Clojure to prove this law since functions are not <a href="http://www.haskell.org/haskellwiki/Currying">curried by default like they are in Haskell</a>. But this code should still clearly show how this law holds:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">u</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">)]))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">v</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">10</span> <span class="nv">%</span><span class="p">)]))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">w</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; Given the above, this...</span>
+</span><span class='line'><span class="p">(</span><span class="nb">-&gt; </span><span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">comp</span> <span class="nv">x</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">u</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">v</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">w</span><span class="p">))</span> <span class="c1">;; List{:wrapped (22 24 26)}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">u</span> <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">v</span> <span class="nv">w</span><span class="p">))</span> <span class="c1">;; List{:wrapped (22 24 26)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Homomorphism</h4>
+
+<blockquote><p>The result of applying the <code>pure</code> value of <code>f</code> to the <code>pure</code> value of <code>x</code> should be the same as applying <code>f</code> directly to <code>x</code> and then feeding that into <code>pure</code>.</p></blockquote>
+
+<p>In Haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">pure</span> <span class="n">f</span> <span class="o">&lt;*&gt;</span> <span class="n">pure</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">pure</span> <span class="p">(</span><span class="n">f</span> <span class="n">x</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And in Clojure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">f</span> <span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; given the above, this...</span>
+</span><span class='line'><span class="p">(</span><span class="nb">-&gt; </span><span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">f</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">x</span><span class="p">)))</span> <span class="c1">;; List{:wrapped (20)}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">))</span> <span class="c1">;; List{:wrapped (20)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Interchange</h4>
+
+<blockquote><p>The result of applying an Applicative Functor <code>u</code> to the <code>pure</code> value of <code>y</code> should be the same as taking the Applicative obtained by calling <code>pure</code> with a function that applies its argument to <code>y</code> and then applying that to <code>u</code></p></blockquote>
+
+<p>In Haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">u</span> <span class="o">&lt;*&gt;</span> <span class="n">pure</span> <span class="n">y</span> <span class="ow">=</span> <span class="n">pure</span> <span class="p">(</span><span class="o">$</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">u</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This type signature presents new syntax so before proving the law in Clojure, I want to explain what <code>($ y)</code> means.</p>
+
+<p>In Haskell, <code>$</code> is the function application operator. So if we give <code>y</code> a value of <em>10</em>, I can show you that in this law <code>$</code> essentially translates to a single argument function that applies its argument to <em>10</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">let</span> <span class="n">double</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">a</span> <span class="o">*</span> <span class="mi">2</span> <span class="c1">-- helper function. it doubles its argument</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- given the above, this...</span>
+</span><span class='line'><span class="p">((</span><span class="o">$</span> <span class="mi">10</span><span class="p">)</span> <span class="n">double</span><span class="p">)</span> <span class="c1">-- 20</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- ...is the same as:</span>
+</span><span class='line'><span class="kr">let</span> <span class="n">dollarTen</span> <span class="ow">=</span> <span class="p">(</span><span class="nf">\</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1">-- this is Haskell&#39;s lambda syntax. It&#39;s equivalent to ($ 10)</span>
+</span><span class='line'><span class="p">((</span><span class="n">dollarTen</span><span class="p">)</span> <span class="n">double</span><span class="p">)</span> <span class="c1">-- 20</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, to the proof in Clojure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">u</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">10</span> <span class="nv">%</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">y</span> <span class="mi">50</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; given the above, this...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">u</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">y</span><span class="p">))</span> <span class="c1">;; List{:wrapped (60)}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">dollar-y</span> <span class="o">#</span><span class="p">(</span><span class="nv">%</span> <span class="nv">y</span><span class="p">))</span> <span class="c1">;; it&#39;s called dollar-y to show the correlation with the explanation above</span>
+</span><span class='line'><span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">dollar-y</span><span class="p">)</span> <span class="nv">u</span><span class="p">)</span> <span class="c1">;; List{:wrapped (60)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This brings us to the end or Part II. Two down and two to go.</p>
+
+<p>I hope you&#8217;re still with me but go home now.</p>
+
+<p>Or better yet go to the gym lift some weights and think about these Functors on steroids. When you&#8217;re back, look out for <a href="/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/">Part III</a>.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-02T21:43:00+11:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>, <a class='category' href='/writings/tags/haskell/'>haskell</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Highlights of the Symposium on Blockchain and Distributed Ledger Technology - Day 1 - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Early last week I had the chance to attend the Symposium on Blockchain and Distributed Ledger Technology organised by UNSW. I wasn&#8217;t aware that &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Highlights of the Symposium on Blockchain and Distributed Ledger Technology - Day 1</h1>
+	<div class="entry-content"><p>Early last week I had the chance to attend the <a href="http://blockchain.unsw.edu.au/symposium18/HTML/index.html">Symposium on Blockchain and Distributed Ledger Technology</a> organised by UNSW. I wasn&#8217;t aware that UNSW was so heavily involved in the community until this event and have since learned about their <a href="http://blockchain.unsw.edu.au/">interest group</a> which has been going on for a while.</p>
+
+<p>The talks had a healthy mix of research and industry case studies with subjects ranging from the technical challenges of current blockchain implementations to the legal implications of distributed ledger technology.</p>
+
+<p>I&#8217;m not sure when and if slides will be published so I&#8217;ll do my best to summarise the talks and share its highlights. Most likely this summary will reflect my own biases on the subjects which interest me the most.</p>
+
+<h1>Day 1</h1>
+
+<h2>An Introduction to Distributed Ledger Technology - Ron van der Meyden (UNSW)</h2>
+
+<p>Ron is the organiser of the interest group and this particular event. In this introduction he gave an overview of what a blockchian is and how it works. A great start for the day!</p>
+
+<h2>Ripple - Dilip Rao</h2>
+
+<p>Dilip is Ripple&#8217;s Global Head for Infrastructure Innovation. Currently with about $94M in funding, Ripple is backed by some fairly big enterprises and banks as well as high profile customers such as Westpac, Santander, BBVA and dozens more.</p>
+
+<p>Ripple has made some interesting trade-offs:</p>
+
+<ul>
+<li>It accepts and embraces the fact that banks <strong>will not</strong> run on a public ledger. It simply won&#8217;t happen
+
+<ul>
+<li>One of the reasons discussed is the fact that through a combination of various sources and pattern analysis one could figure out trading volumes between banks and enterprises and they are not onboard with that.</li>
+</ul>
+</li>
+<li>As such Ripple uses its own private ledger based on the <a href="https://interledger.org/">Interledger protocol</a>. Only on-boarded participants - banks - may interact with it. 
+
+<ul>
+<li>The product is called <a href="https://ripple.com/solutions/process-payments/">xCurrent</a>. It allows banks to settle cross-border in real time.</li>
+</ul>
+</li>
+<li>This highlights an interesting fact: <strong>banks don&#8217;t need the Ripple cryptocurrency (XRP) to settle transactions</strong></li>
+</ul>
+
+
+<p>The Interledger protocol allows multiple ledgers to communicate. Currently it can communicate with the XRP(Ripple) ledger to provide fast payment channels. Due to this specialised nature, XRP now has the cheapest cost per transaction as well as being the fastest clocking in at 1500 transactions per second. <a href="https://ripple.com/insights/ripple-continues-to-bring-internet-of-value-to-life-new-features-increase-transaction-throughput-to-same-level-as-visa/">This article</a> has some more information about this.</p>
+
+<p>These are some impressive numbers - effectively they can match VISA&#8217;s throughput - and has definitely brought up Ripple into my radar once again.</p>
+
+<p>Ripple also offers another product, <a href="https://ripple.com/solutions/source-liquidity/">xRapid</a>, aimed at enabling realtime payments and on-demand liquidity by using XRP. Dilip offered Cuallix as a case study for this product. <a href="https://ripple.com/insights/ripple-continues-to-bring-internet-of-value-to-life-new-features-increase-transaction-throughput-to-same-level-as-visa/">Cuallix is using xRapid to reduce the cost of sending cross-border payments from the US to Mexico</a>. </p>
+
+<p>P.S.: Just as I was writing this section I came across <a href="https://www.businessinsider.com.au/ripple-xrp-western-union-payments-testing-2018-2">another article</a> indicating Western Union is doing experiments with Ripple as well.</p>
+
+<h2>Blockchain deconstructed : contracts vs smart contracts - Fritz Henglein (University of Copenhagen)</h2>
+
+<p>This talk focused on the technical details of smart contracts as currently implemented in platforms such as Ethereum. In particular the fact that the contract rules and its execution are intertwined.</p>
+
+<p>Fritz began his talk with a summary slide on smart contracts which allowed him to expand on the above:</p>
+
+<p><img class="center" src="/writings/assets/images/posts/crash-smart-contracts.jpg" width="250" height="333" title="Crash course on Smart Contracts terminology" ></p>
+
+<p>Due to this mixing of rules (contract checking) and execution (contract actions) in the source code - as in Ethereum smart contracts - there is no possibility of having multiple strategies which may be private and can be reused in different smart contracts.</p>
+
+<p>Fritz argues that contract actions - which he called strategies - should be stored separately to the contract rules. In doing so such strategies can be private and re-used in different contracts. He calls this model Managed Contracts which combine the contracts with join execution strategies:</p>
+
+<p><img class="center" src="/writings/assets/images/posts/managed-contracts.png" width="250" height="333" title="Managed Contracts" ></p>
+
+<p>He then moves on to discuss the trade-offs and vulnerabilities of Ethereum smart contracts. I particular he raises these issues:</p>
+
+<ul>
+<li>Transaction order dependency
+
+<ul>
+<li>Messages may have different effect depending on the order in which they are received</li>
+</ul>
+</li>
+<li>Smart contracts may behave differently depending on the timestamp of a block
+
+<ul>
+<li>The timestamp of a block is controlled by miners. He raises that this exposes the contracts to clock manipulation attacks. Frankly I&#8217;m not sure if this attack can succeed if a single miner is the bad actor. I&#8217;d need to think through this but if someone has an example handy, that&#8217;d be great.</li>
+</ul>
+</li>
+<li>Exception handling and programming language subtleties:
+
+<ul>
+<li>Fragile gas management and limited stack </li>
+<li>Differences in language constructs such as send vs call</li>
+</ul>
+</li>
+<li>Reentrancy bugs</li>
+</ul>
+
+
+<p>Fritz&#8217;s proposal to deal with this are Managed Contracts and he refers to a paper - which he co-authored - called Compositional Formal Contracts. The paper proposes the following properties:</p>
+
+<ul>
+<li>Separation of concerns</li>
+<li>Domain-oriented code</li>
+<li>Analysable</li>
+<li>Composable</li>
+</ul>
+
+
+<p>I couldn&#8217;t find a paper with that exact title but did find two papers co-authored by him with a similar title. <a href="http://www.diku.dk/~simonsen/papers/j6.pdf">Here</a> and <a href="http://www.diku.dk/~simonsen/papers/c2.pdf">here</a>. If you know which one he was referring to, please let me know.  </p>
+
+<h2>Rightsfusion Pty Ltd - Solara.io - <a href="http://bit.ly/fuzo-weal">Leon Gerard Vandenberg</a> | <a href="https://www.dropbox.com/s/2mgqobppc3n4etl/UNSW%20Blockchain%20Symposium%20Briefing%202018-02-12.pdf">slides</a></h2>
+
+<p><a href="http://www.solara.io/">Solara</a> has an interesting premise.  In the energy space, consumers and traders have difficulty determining &amp; validating green, renewable energy from fossil fuel energy. Solara allows communities and prosumers (producer / consumers) to factionalize or leverage new ownership models and redistribute and/or monetise their energy &amp; their energy data.</p>
+
+<p>In addition, SOLARA Platform aims to provide a proveably green &amp; clean digital solar asset to a variety or energy data exchanges &amp; markets. The concept of a Tokenised &#8216;Safe Haven Asset Class&#8217; based on a hybrid portfolio of Solara PAT tokens that  could be synthesised by quants to eventually provide a stable coin was contemplated by Leon. (refer to Solara White Paper for details on Project Asset Tokens - PAT tokens)</p>
+
+<p>Another interesting aspect is that Solara is looking to provide &#8220;fit for purpose hardware&#8221; Solara Hardware Modules to bridge the needs of both the metering and the blockchain worlds - think IoT eSIM cards which are also a secure blockchain keystore (wallet).</p>
+
+<p>Leon &amp; team is currently working towards an ICO (private pre-sale for their SOL Token is now on-going) and looking to build out more team members (including University Labs) and RightsFusion will engage in projects for Solar Communities and solar industry participants.</p>
+
+<p>Lastly, Leon mentioned <a href="https://www.polymath.network/">Polymath</a> in the context of ICO investments: Polymath (Canada) is working on a securities token or their ST standard. Because Solara&#8217;s PAT Tokens are a type of Financial Product - PAT Tokens could embrace the Polymath ST standard to extend their eventual reach and a broader participation model.</p>
+
+<blockquote><p>Note: I also got some <a href="https://showcase.dropbox.com/s/RightsFusion-Pty-Ltd-Public-Documents-Public-Presentations-Events-5jLk5XfBukYVeUsZm0CAB">extra resources</a> about SOLARA straight from Leon.</p></blockquote>
+
+<h2>The power of possibilities - Niki Ariyasinghe - R3/Corda</h2>
+
+<p>Niki gives an overview of <a href="https://www.corda.net/">Corda</a>, an open-source blockchain project designed for building financial services infrastructure.</p>
+
+<p>The project seems to have come about from the need for banks to collaborate and understand what blockchain means for financial services.</p>
+
+<p>Corda displays a couple of intresting properties:</p>
+
+<ul>
+<li>It allows for transaction privacy</li>
+<li>It has a pluggable consensus mechanism allowing consensus algorithms to be chosen at transaction time and not at the blockchain level
+
+<ul>
+<li>I don&#8217;t know enough about corda but this particular point makes me nervous :)</li>
+</ul>
+</li>
+</ul>
+
+
+<p>The highlight of this talk for me is <a href="http://www.mas.gov.sg/Singapore-Financial-Centre/Smart-Financial-Centre/Project-Ubin.aspx">Project Ubin</a>: a project by the Monetary Authority of Singapore to provide Central Bank backed Digital cash with the goal to use Distributed Ledger Technology (DLT) to clear and settle payments and securities.</p>
+
+<h2>Platform cooperatives - Browen Morgan from UNSW</h2>
+
+<p>As per Wikipedia: <em>&#8220;A platform cooperative, or platform co-op, is a cooperatively-owned, democratically-governed business that uses a protocol, website or mobile app to facilitate the sale of goods and services&#8221;</em></p>
+
+<p>I didn&#8217;t take many notes during this talk but captured a few interesting links:</p>
+
+<ul>
+<li><a href="http://culedger.com/">CULedger</a>: A permissioned, private blockchain</li>
+<li><a href="https://www.loomio.org/">Loomio</a>: Collaborative decision-making software</li>
+<li><a href="https://www.provenance.org/">Provenance</a>: Building trust in goods and supply chain
+
+<ul>
+<li>It&#8217;s worth noting that the issue of provenance has been mentioned quite a few times during the Symposium</li>
+</ul>
+</li>
+</ul>
+
+
+<p>I particularly found ingenious the idea behind the following projects:</p>
+
+<ul>
+<li><a href="https://arcade.city/">Arcade.city</a>: Think peer-to-peer Uber</li>
+<li><a href="https://swarm.city/">Swarm.city</a>: A decentralised commerce platform </li>
+</ul>
+
+
+<h2>Issues for law and the legal profession - Lyria Bennet Moses - UNSW </h2>
+
+<p>The last one for the day, this talk is the one I was looking forward to the most. It explores concerns and legal challenges with using blockchain technology. Although not related to blockchain, our work at <a href="http://www.modron.com/">MODRON</a> offers many parallels with the themes discussed here.</p>
+
+<p>According to Lyria - and it&#8217;s certainly true in non-blockchain tech circles as well such as AI and Machine Learning - people ask if blockchain and smart contracts will replace lawyers. </p>
+
+<p>Her short answer is no. However certain roles might be replaced. It is already happening in domains such as exchange of documents. Basically she thinks that <em>&#8220;the things that junior lawyers do&#8221;</em> will be replaced by (blockchain)technology.</p>
+
+<p>In addition she offers certain applications where blockchain might be particularly well suited to disrupt such as Registries and Intellectual Property. In contrast, the problem of Information Sharing in law enforcement was mentioned as one needing a cultural solution, not a technological one.</p>
+
+<p>Additional challenges with smart contracts:</p>
+
+<ul>
+<li>Liability for delays and/or errors
+
+<ul>
+<li>e.g.: wrong transaction recorded, delays affecting price points&#8230;</li>
+</ul>
+</li>
+<li>Form of order in, say, land law</li>
+<li>Jurisdiction - in which jurisdiction are you?</li>
+<li>Data Protection:
+
+<ul>
+<li>The right to change data</li>
+<li>The right to be forgotten</li>
+<li>EU law seems to require these properties</li>
+</ul>
+</li>
+<li>Regulation
+
+<ul>
+<li>Similar issues to when digital signatures started being used for contracts</li>
+</ul>
+</li>
+</ul>
+
+
+<p>All the above will also have implications to how lawyers are trained. I love that Lyria mentioned this as I&#8217;ve been casting what we do at <a href="http://www.modron.com/">MODRON</a> under a similar light: our human-centric approach looks to enhance what lawyers can do and over time this will invariably lead to new types of legal professionals.</p>
+
+<p>Lyria&#8217;s closing remarks raised the question of wether blockchain even is the thing which will solve these problems. It&#8217;s too early to tell but it&#8217;s encouraging to see the legal profession as a whole taking the opportunity to re-evaluate how things are done.</p>
+
+<p>What a day! So much to think about and so many great people to connect with. Look out for my <a href="/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-2/">summary of day 2</a>!</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2018-02-19T20:30:00+11:00" pubdate data-updated="true">Feb 19<span>th</span>, 2018</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/blockchain/'>blockchain</a>, <a class='category' href='/writings/tags/conferences/'>conferences</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2018/02/19/highlights-of-the-symposium-on-blockchain-and-distributed-ledger-technology-day-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

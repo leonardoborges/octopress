@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Security | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/security/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rails: Vulnerability on REXML]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/08/24/rails-vulnerability-on-rexml/"/>
+    <updated>2008-08-24T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/08/24/rails-vulnerability-on-rexml</id>
+    <content type="html"><![CDATA[<p>
+REXML, the XML library uses by many ruby apps, including rails, has a vulnerability that requires an immediate patch on whatever rails version you're using.<br><br>Details and instructions on the official rails weblog, <a href="http://weblog.rubyonrails.org/2008/8/23/dos-vulnerabilities-in-rexml">here</a>.<br><br>But basically, this is what you need to do:<br><br><pre lang="bash"><br>gem install rexml-expansion-fix<br></pre><br><br>Then, require rexml-expansion-fix in your rails's app environment.rb file.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

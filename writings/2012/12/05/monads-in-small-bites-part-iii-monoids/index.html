@@ -1,0 +1,495 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Monads in small bites - Part III - Monoids - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="This is Part III of my Monads tutorial. Make sure you read the previous parts: Part I - Functors
+Part II - Applicative Functors
+Part III - Monoids ( &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Monads in Small Bites - Part III - Monoids</h1>
+	<div class="entry-content"><p>This is Part III of my Monads tutorial. Make sure you read the previous parts:</p>
+
+<ul>
+<li><p><a href="/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Part I   - Functors</a></p></li>
+<li><p><a href="/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II  - Applicative Functors</a></p></li>
+<li><p>Part III - Monoids (this post)</p></li>
+<li><p><a href="/writings/2012/12/08/monads-in-small-bites-part-iv-monads/">Part IV  - Monads</a></p></li>
+</ul>
+
+
+<h3>Monoids</h3>
+
+<p>Simply put, Monoids describe types containing a <a href="http://en.wikipedia.org/wiki/Binary_function">binary function</a> and an identity value.</p>
+
+<p>When applied to the identity value and a random value <code>x</code>, said function leaves its argument <code>x</code> <em>untouched</em>, returning it as a result.</p>
+
+<p>This short description should be enough to get the conversation started.</p>
+
+<p>Here&#8217;s how Haskell defines a Monoid:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">class</span> <span class="kt">Monoid</span> <span class="n">m</span> <span class="kr">where</span>
+</span><span class='line'>    <span class="n">mempty</span> <span class="ow">::</span> <span class="n">m</span>
+</span><span class='line'>    <span class="n">mappend</span> <span class="ow">::</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">m</span>
+</span><span class='line'>    <span class="n">mconcat</span> <span class="ow">::</span> <span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span>
+</span><span class='line'>    <span class="n">mconcat</span> <span class="n">ms</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="n">mappend</span> <span class="n">mempty</span> <span class="n">ms</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This type introduces three new functions so let&#8217;s walk through each one of them:</p>
+
+<blockquote><p><strong>mempty</strong> - I started with a lie since <code>mempty</code> isn&#8217;t actually a function. You can think of it as a constant of the same type of the Monoid <code>m</code>. It is this monoid&#8217;s identity value.</p>
+
+<p><strong>mappend</strong> - A poorly named function, <code>mappend</code> is the binary function I mentioned earlier. It receives two arguments of type <code>m</code> and returns a value of type <code>m</code></p>
+
+<p><strong>mconcat</strong> - It receives a list of Monoids <code>m</code> and reduces them to a single Monoid of type <code>m</code>. What&#8217;s interesting about this snippet is that the Monoid type class provides a default implementation for <code>mconcat</code>: it simply calls <em><a href="http://www.haskell.org/haskellwiki/Foldr_Foldl_Foldl" title="">foldr</a></em> with the binary function <code>mappend</code>, a starting value of <code>mempty</code> and the list of Monoid values <code>ms</code></p></blockquote>
+
+<p>Enough Haskell! Let&#8217;s have a look at a few examples.</p>
+
+<p>Did you know that, in Clojure,  the functions <code>*</code> and <code>+</code> are monoids? Yup. But don&#8217;t take my word for it. Let me prove it to you:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span> <span class="nv">mempty</span> <span class="p">(</span><span class="nf">+</span><span class="p">))</span> <span class="c1">;; 0</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span> <span class="nv">mappend</span> <span class="nv">+</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">mconcat</span> <span class="p">[</span><span class="nv">ms</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">reduce </span><span class="nv">mappend</span> <span class="nv">mempty</span> <span class="nv">ms</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">mappend</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; 7</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">mconcat</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span> <span class="c1">;; 9</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whoa!  What happened here? Am I just making this stuff up?</p>
+
+<p>Not really. I only defined the same haskell names to their Clojure counterparts for clarity. Totally overkill. The code above is the same as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">+</span><span class="p">)</span> <span class="c1">;; 0</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">+ </span><span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; 7</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">reduce </span><span class="nv">+</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span> <span class="c1">;; 9</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Did you notice that on the second call to <code>reduce</code> we did not provide an initial value? That&#8217;s because <code>reduce</code> will attempt to get its initial accumulator by calling the reducing function without arguments - hence <code>mempty == (+)</code>.</p>
+
+<p>So that means we don&#8217;t even need an <code>mconcat</code> function since in Clojure,  <code>reduce</code> works with monoids as well!</p>
+
+<blockquote><p><strong>Update</strong>: this isn&#8217;t entirely true. When I wrote this post I had in mind the version of <code>reduce</code> provided by the Clojure (1.5+) reducers library. The <a href="https://github.com/clojure/clojure/blob/master/src/clj/clojure/core/reducers.clj#L71">source code</a> shows how that is the case.</p>
+
+<p>The implementation of <code>reduce</code> in <code>clojure.core</code> however uses the first element of the collection being reduced over as its seed.</p></blockquote>
+
+<p>But how the hell do you create a monoid in Clojure then? I&#8217;m glad you asked. Let&#8217;s create our own <em>plus-monoid</em>!</p>
+
+<h4>Your first monoid</h4>
+
+<p>In <a href="/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Part I</a> I implemented Functors using <a href="http://clojure.org/protocols">protocols</a> and <a href="http://clojuredocs.org/clojure_core/clojure.core/defrecord">records</a>. In <a href="/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II</a> I showed how Applicative Functors could be implemented using <a href="http://clojure.org/multimethods">multimethods</a>.</p>
+
+<p>This time around I won&#8217;t be using any of these. I&#8217;ll implement Monoids using pure functions:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">plus-monoid</span>
+</span><span class='line'>    <span class="p">([]</span>
+</span><span class='line'>        <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">([</span><span class="nv">a</span> <span class="nv">b</span><span class="p">]</span>
+</span><span class='line'>        <span class="p">(</span><span class="nb">+ </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">plus-monoid</span><span class="p">)</span> <span class="c1">;; 0 - same as mempty</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">plus-monoid</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; 7 - same as mappend</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">reduce </span><span class="nv">plus-monoid</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span> <span class="c1">;; 9 - when working with monoids, reduce is the same as mconcat</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We start by defining a function with multiple arities. The first body receives no arguments, so we just return the identity value for summation, which is <em>0 (zero)</em>. The second body receives two arguments so we can just add them up. Multiplication can be implemented in a similar fashion but obviously with the identity value of <em>one</em>.</p>
+
+<p>Easy, huh?</p>
+
+<p>Oh, by the way, lists are Monoids too! Who&#8217;d have thought?</p>
+
+<p>Here&#8217;s its Clojure implementation:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">list-monoid</span>
+</span><span class='line'>    <span class="p">([]</span>
+</span><span class='line'>        <span class="o">&#39;</span><span class="p">())</span>
+</span><span class='line'>    <span class="p">([</span><span class="nv">a</span> <span class="nv">b</span><span class="p">]</span>
+</span><span class='line'>        <span class="p">(</span><span class="nb">concat </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">list-monoid</span><span class="p">)</span> <span class="c1">;; () - remember, same as mempty</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">list-monoid</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">])</span> <span class="c1">;; (1 2 3 4 5 6) - remember, same as mappend</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">reduce </span><span class="nv">list-monoid</span> <span class="p">[[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">]</span> <span class="p">[</span><span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span><span class="p">]])</span> <span class="c1">;; (1 2 3 4 5 6 7 8 9) - mconcat in action</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Same rules apply but for lists <code>mappend</code> is achieved by using <code>concat</code> inside our monoid function.</p>
+
+<p>Also, since our binary function concatenates two lists together it makes sense that <code>mempty</code> is <code>()</code> (the empty list). Remember <code>mempty</code> is supposed to be an identity value so if we stitch <code>()</code> and <code>[1 2 3]</code> together, we&#8217;re left with <code>[1 2 3]</code> which is exactly what we&#8217;d expect.</p>
+
+<blockquote><p>You can see now why I said <code>mappend</code> was poorly named. While it makes sense when you think about lists, <code>mappend</code> doesn&#8217;t do any appending in our <em>plus-monoid</em> and in fact most monoids don&#8217;t append anything. Just keep this in mind if you see any haskell code using it: <code>mappend</code> is just a binary function.</p></blockquote>
+
+<h3>Don&#8217;t break the law</h3>
+
+<p>You saw this coming, huh? Monoids also come with a couple of laws. You know the drill. Let&#8217;s prove they both hold.</p>
+
+<h4>Identity</h4>
+
+<blockquote><p>Applying <code>mappend</code> to <code>mempty</code> and a monoid <code>x</code> should be the same as the original <code>x</code> monoid.</p></blockquote>
+
+<p>In Haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">mappend</span> <span class="n">mempty</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span>
+</span><span class='line'><span class="nf">mappend</span> <span class="n">x</span> <span class="n">mempty</span> <span class="ow">=</span> <span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>And the proof in Clojure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="c1">;; first, the plus-monoid</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">mempty</span> <span class="p">(</span><span class="nf">plus-monoid</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; This...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">plus-monoid</span> <span class="nv">mempty</span> <span class="nv">x</span><span class="p">)</span> <span class="c1">;; 10</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nf">plus-monoid</span> <span class="nv">x</span> <span class="nv">mempty</span><span class="p">)</span> <span class="c1">;; 10</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;;now, the list-monoid</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">mempty</span> <span class="p">(</span><span class="nf">list-monoid</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; This...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">list-monoid</span> <span class="nv">mempty</span> <span class="nv">x</span><span class="p">)</span> <span class="c1">;; (1 2 3)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nf">list-monoid</span> <span class="nv">x</span> <span class="nv">mempty</span><span class="p">)</span> <span class="c1">;; (1 2 3)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Associativity</h4>
+
+<blockquote><p>Applying <code>mappend</code> to a monoid <code>x</code> and the result of applying <code>mappend</code> to the monoids <code>y</code> and <code>z</code> should be the same as first applying <code>mappend</code> to the monoids <code>x</code> and <code>y</code> and then applying <code>mappend</code> to the resulting monoid and the monoid <code>z</code></p></blockquote>
+
+<p>In Haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">mappend</span> <span class="n">x</span> <span class="p">(</span><span class="n">mappend</span> <span class="n">y</span> <span class="n">z</span><span class="p">)</span> <span class="ow">=</span> <span class="n">mappend</span> <span class="p">(</span><span class="n">mappend</span> <span class="n">x</span> <span class="n">y</span><span class="p">)</span> <span class="n">z</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the proof in Clojure - remember that calling the monoid function with two arguments is equivalent to <code>mappend</code> in haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="c1">;; first, the plus-monoid</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">y</span> <span class="mi">25</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">z</span> <span class="mi">40</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; This...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">plus-monoid</span> <span class="nv">x</span> <span class="p">(</span><span class="nf">plus-monoid</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">))</span> <span class="c1">;; 75</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nf">plus-monoid</span> <span class="p">(</span><span class="nf">plus-monoid</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="nv">z</span><span class="p">)</span> <span class="c1">;; 75</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;;now, the list-monoid</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="p">[</span><span class="mi">40</span><span class="p">])</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">y</span> <span class="p">[</span><span class="mi">10</span> <span class="mi">25</span><span class="p">])</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">z</span> <span class="p">[</span><span class="mi">50</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; This...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">list-monoid</span> <span class="nv">x</span> <span class="p">(</span><span class="nf">list-monoid</span> <span class="nv">y</span> <span class="nv">z</span><span class="p">))</span> <span class="c1">;; (40 10 25 50)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; ...is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nf">list-monoid</span> <span class="p">(</span><span class="nf">list-monoid</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="nv">z</span><span class="p">)</span> <span class="c1">;; (40 10 25 50)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Almost there&#8230;</h3>
+
+<p>This puts an end to Part III. It&#8217;s time to head to the pub.</p>
+
+<p>When you&#8217;re back look for the final post in these series - <a href="/writings/2012/12/08/monads-in-small-bites-part-iv-monads/">Part IV</a> - where we will conclude our journey by finally introducing Monads!</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-05T09:25:00+11:00" pubdate data-updated="true">Dec 5<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>, <a class='category' href='/writings/tags/haskell/'>haskell</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

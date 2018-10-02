@@ -1,0 +1,534 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I&#8217;m back in Madrid again after the RailsConf and I think it&#8217;s time to say something about it. :)First off, the infrastructure provided &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/09/09/railsconf-europe-2008-impressions-and-highlights/">RailsConf Europe 2008: Impressions and Highlights</a></h1>
+	<div class="entry-content">
+		<p>
+I&#8217;m back in Madrid again after the RailsConf and I think it&#8217;s time to say something about it. :)<br><br>First off, the infrastructure provided by the conference was really great. The rooms, WiFi connection, food&#8230;Â  Really well organized.<br><br>Now to the sessions, highlights:<br><br><strong>Tutorials (Tuesday)</strong><br>- <a href="http://nealford.com/downloads/Ford-Farley_Meta_programming_ruby-tutorial.pdf">Meta-programming Ruby for fun and profit</a> (Neal Ford, Patrick Farley)<br>The old and good techniques that made Ruby so powerful. Here Neal and Patrick walked us through the main tricks to meta programming like open classes - and conditionally open them - , dynamically define methods, sending messages to objects and how Ruby can help test your Java code in a much easier way.<br><br>I&#8217;ve put the link to the slides but honestly I don&#8217;t think they&#8217;re too much useful without the talking.<br><br><strong>Sessions (Wednessday)</strong><br>- EC2, MapReduce and Distributed processing (<a href="http://railspikes.com">Jonathan Dahl</a>)<br>Jonathan explained the theory behind <a href="http://en.wikipedia.org/wiki/Mapreduce">MapReduce</a> using very simple ruby examples, providing the basics on how to distribute and paralelize tasks accross multiple machines.<br><br>He also introduced <a href="http://hadoop.apache.org/core/">Hadoop</a>, a platform built in Java that &#8220;lets one easily write and run     applications that process vast amounts of data&#8221;. What I liked the most was the simplicity he explained this subject. As of today, his presentation is not available online. Stay tuned as I&#8217;m gonna update this post with the links, as soon as they&#8217;re available.<br><br><strong>Sessions (Thursday)</strong><br>- <a href="http://nealford.com/downloads/conferences/canonical/Neal_Ford-Debugging_and_Testing_the_Web_Tier.zip">Debugging &amp; Testing the Web Tier</a> (<a href="http://nealford.com">Neal Ford</a>)<br>If you&#8217;ve been concerned about testing your app&#8217;s web tier lately, this presentation would probably not show you anything new. Neal talks about the need to debug and test javascript behaviour accross multiple browsers, using tools like <a href="http://getfirebug.com/">Firebug</a>, <a href="http://www.jsunit.net/">JSUnit</a> and <a href="http://selenium.openqa.org/">Selenium</a>. If you have no idea about what these tools are, please stop now and go evaluate them!<br><br>We are pretty concerned about testing on my actual job, but selenium tests can be a pain sometimes - a.k.a extremely slow. And what ends up happening is that they are forgotten. Developers only run the test suite if it&#8217;s not painful and it&#8217;s lightning fast. Here&#8217;s is where the highlight for this session comes: <a href="http://www.thefrontside.net/crosscheck">CrossCheck</a>.<br><br>The idea is to be able to test your javascript code accross multiple browsers without the need to launch them. In fact, you don&#8217;t even need a browser installed. The negative point is that it&#8217;s kinda fallen behind because now you can only test older versions of browsers. But since the project is getting a lot of traction, I&#8217;m pretty sure this will be solved soon.<br><br><strong>Conclusion</strong><br><br>My overall impression of the other sessions I attended is that some speakers just didn&#8217;t have time to properly prepare themselves, what made me think this years&#8217;s RailsConf wasn&#8217;t all that I expected.<br><br>But I also met interesting people and after all one of the key points in a conference is networking. :)<br><br>Definitely worth it though. And that&#8217;s why I took the time to provide this highlights.<br><br>c u soon
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-09-09T00:00:00+10:00" pubdate data-updated="true">Sep 9<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/railsconf2008/'>RailsConf2008</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/08/30/railsconf-europe-2008-heading-to-berlin/">RailsConf Europe 2008: Heading to Berlin!</a></h1>
+	<div class="entry-content">
+		<p>
+The title says it already.<br><br>On monday I&#8217;ll be going to Berlin to attend this yearÂ´s <a href="http://en.oreilly.com/railseurope2008/public/content/home">RailsConf</a>.<br><br>This will be my first one and of course my expectations are pretty high!<br><br>As usual, after the conference I&#8217;ll try and give a summary of what happened there, providing as much content as I can.<br><br>Anyone else&#8217;s going??? :)<br><br>C u there!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-30T00:00:00+10:00" pubdate data-updated="true">Aug 30<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/08/28/mac-os-x-getting-mysql-and-rails-to-work/">Mac OS X: Getting MySQL and Rails to Work</a></h1>
+	<div class="entry-content">
+		<p>
+So I couldn&#8217;t resist and bought myself a MacBook Pro! It&#8217;s my first week with my new toy and I&#8217;m really enjoying it.<br><br>But I need to do something useful with it so I started to prepare it to be my new development platform, starting with Ruby/Rails + MySQL: Here is where the fun begins!<br><br>After I installed both Rails and MySQL, I fired up a terminal an typed:<br><pre lang="bash">sudo gem install mysql</pre><br>&#8230;and here is what u get<br><pre lang="bash">ERROR: Failed to build gem native extension.</pre><br>If you google this error you will find a couple solutions and this is the one that worked for me:<br><pre lang="bash">ARCHFLAGS="-Os -arch x86_64 -fno-common"<br>sudo gem install mysql -- --with-mysql-dir=/usr/local/mysql<br>--with-mysql-config=/usr/local/mysql/bin/mysql_config</pre><br>Now, confident enough, I created a sample rails app and tried to create the development database:<br><pre lang="bash">leo$ rake db:create (in /Users/leo/projects/test)<br>dyld: lazy symbol binding failed: Symbol not found: _mysql_init</pre><br>Doesn&#8217;t look happy yet huh? This took me a while to figure out but it turned out to be fairly simple.<br>I have no idea why but after I installed the gem I had the file mysql.bundle in two different places:<br><pre lang="bash">/Library/Ruby/Gems/1.8/gems/mysql-2.7/lib/mysql.bundle<br>/Library/Ruby/Gems/1.8/gems/mysql-2.7/mysql.bundle</pre><br>The solution was to remove the first copy of the file. Now everything is working fine at this end!<br>I really hope this is useful to someone!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-28T00:00:00+10:00" pubdate data-updated="true">Aug 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/mac/'>Mac</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/08/24/rails-vulnerability-on-rexml/">Rails: Vulnerability on REXML</a></h1>
+	<div class="entry-content">
+		<p>
+REXML, the XML library uses by many ruby apps, including rails, has a vulnerability that requires an immediate patch on whatever rails version you&#8217;re using.<br><br>Details and instructions on the official rails weblog, <a href="http://weblog.rubyonrails.org/2008/8/23/dos-vulnerabilities-in-rexml">here</a>.<br><br>But basically, this is what you need to do:<br><br><pre lang="bash"><br>gem install rexml-expansion-fix<br></pre><br><br>Then, require rexml-expansion-fix in your rails&#8217;s app environment.rb file.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-24T00:00:00+10:00" pubdate data-updated="true">Aug 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>, <a class='category' href='/writings/tags/security/'>Security</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/08/15/yes-we-do-eat/">Yes We Do Eat.</a></h1>
+	<div class="entry-content">
+		<p>
+Besides the fact that I am a software developer, I do eat. I even enjoy doing so. Specially when I&#8217;m traveling.<br>That&#8217;s why i decided to put up a new weblog only for this kind of stuff - it&#8217;s called <a href="http://travel.leonardoborges.com">Travel tips - food & stuff</a>. Basically for friends and whoever else might be interested.<br><br>There I plan to share some nice restaurants I&#8217;ve been to. At least to start with.<br><br>Hope u like it!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-15T00:00:00+10:00" pubdate data-updated="true">Aug 15<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/world/'>World</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/08/07/why-i-like-ruby-1-alias_method/">Why I Like Ruby #1: Alias_method</a></h1>
+	<div class="entry-content">
+		<p>
+So you found yourself in the need to override a method but still count on it&#8217;s old behaviour?<br><br>No problem! Override it with your new code, call <strong>super</strong> and&#8230;. Uh oh!! Suddenly this turned into a problem&#8230; Let me give some more context.<br><br>I was testing <a href="http://ferret.davebalmain.com/trac/wiki">Ferret</a> (and the <a href="http://projects.jkraemer.net/acts_as_ferret/">acts_as_ferret</a> plugin) in a project to provide full text search capabilities to our models. One of the things the plugin does is to add a new method to ActiveRecord, called <em>find_with_ferret</em>. That way, every model can use it. Great!<br><br>So I thought that would make sense for me to remove all <a href="http://en.wikipedia.org/wiki/Diacritics">diatrictics</a> from the input text before letting ferret do its job. You know, like removing <a href="http://en.wikipedia.org/wiki/Umlaut_%28diacritic%29">umlauts</a> and all that.<br><br>I could do that by overriding this method with code to remove the undesired chars and then call its older version to finally do the search - something like calling super, but not quite. And I didn&#8217;t want my models to inherit from anything else than ActiveRecord::Base. That wouldn&#8217;t make any sense.<br><br><a href="http://www.ruby-doc.org/core/classes/Module.html#M000395">alias_method</a> to the rescue!<br><br>You know that to redefine a method in an existing class you can open it up and rewrite it. But since you don&#8217;t wanna loose the behaviour provided by the original method, this is how you can achieve this:<br><br><pre lang="ruby" line="1"><br>module ActiveRecord<br>  class Base<br>    alias_method :find_with_ferret_original, :find_with_ferret<br><br>    def find_with_ferret(q, options = {}, find_options = {})<br>      remove_diatrictics!(q)<br>      find_with_ferret_original(q, options, find_options)<br>    end<br>  end<br>end<br></pre><br><br>And you&#8217;re good to go. On line 3 you&#8217;re just giving the original method an alias, making a copy of it.<br><br>Then you redefine it the way you like and on line 6 you call the old version to make sure u still got the same behaviour.  <br>Now all my models can benefit of this change without requiring them to call another method nor inherit from another class.<br><br>Cool, huh? :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-07T00:00:00+10:00" pubdate data-updated="true">Aug 7<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/ruby/'>Ruby</a>, <a class='category' href='/writings/tags/why-i-like-ruby/'>Why I Like Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/08/04/the-biggest-rails-event-in-latin-america/">The Biggest Rails Event in Latin America</a></h1>
+	<div class="entry-content">
+		<p>
+Behold latin american railers!<br><br>This year we will have the <a href="http://www.locaweb.com.br/railssummit/">Rails Summit Latin America</a> on October, 15th and 16th, in SÃ£o Paulo, Brazil.<br><br>It&#8217;s by far the biggest Rails event we&#8217;ve ever had, including many of the speakers that were present at <a href="http://en.oreilly.com/rails2008/public/content/home">RailsConf</a>.<br><br><a href="http://akitaonrails.com/">FÃ¡bio Akita</a> is also one of the speakers and provides more details on his <a href="http://akitaonrails.com/2008/8/1/largada-para-o-maior-evento-de-rails-da-am-rica-latina">blog</a>.<br><br>If you&#8217;re a assumed rails geek don&#8217;t miss the opportunity to hear from the big names and to know a beautiful country like Brazil.<br><br>Oh, btw, if you&#8217;re brazilian, like me, you have no excuse to miss this party!<br><br>Enjoy!!!<br><br><p><br><a href="http://www.locaweb.com.br/railssummit"><br><img src="http://www.akitaonrails.com/assets/2008/8/1/468x60.gif" alt="Rails Summit Latin America" title="Rails Summit Latin America" border="0" width="468" height="60"/></a>
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-04T00:00:00+10:00" pubdate data-updated="true">Aug 4<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/07/26/new-provider/">New Provider</a></h1>
+	<div class="entry-content">
+		<p>
+I decided to change my blog&#8217;s hosting provider and this is the first post using the new service.<br><br>Please if you see any abnormal behaviour around here don&#8217;t hesitate to contact me either at leonardoborges@leonardoborges.com or leonardoborges.rj@gmail.com<br><br>Thanks!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-26T00:00:00+10:00" pubdate data-updated="true">Jul 26<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/notices/'>Notices</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/07/07/mock-objects/">Mock Objects</a></h1>
+	<div class="entry-content">
+		<p>
+When testing it&#8217;s pretty common to see the need for mocking a certain object, say, a Data Access Ojbect. This way you don&#8217;t need to depend on a database and you can focus on the actual logic implemented by the method being tested.<br><br>For that you have several alternatives like creating the Mock class by hand or - and this is the more common - use one of the various mocking libraries out there.<br><br>They all look the same but the past couple of days I&#8217;ve come accross to a new - at least for me - mocking library for Java. It&#8217;s called <a href="http://code.google.com/p/mockito/">Mockito</a>. As the creators state, technically, Mockito is a fork of <a href="http://www.easymock.org/">EasyMock</a>.<br><br>I have used EasyMock already but I do think Mockito has its advantages. I find it clear and a bit less verbose to write.<br><br>From one of the stubbing examples on their website:<br><pre lang="java"><br>//You can mock concrete classes, not only interfaces<br>LinkedList mockedList = mock(LinkedList.class);<br><br>//stubbing - before execution<br>stub(mockedList.get(0)).toReturn("first");<br><br>//following prints "first"<br>System.out.println(mockedList.get(0));<br><br>//following prints "null" because get(999) was not stubbed<br>System.out.println(mockedList.get(999));<br></pre><br>Looking forward to using it in production! ;)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-07T00:00:00+10:00" pubdate data-updated="true">Jul 7<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/testing/'>Testing</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/06/07/presentation-spring-framework/">Presentation: Spring Framework</a></h1>
+	<div class="entry-content">
+		<p>
+Last friday I&#8217;ve done a small presentation about Dependency Injection and how it can improve the testing environment of a project. You can find it in the <a href="http://leonardoborges.com/writings/presentations">presentations</a> page.<br><br>Hope you like it.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-07T00:00:00+10:00" pubdate data-updated="true">Jun 7<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/presentations/'>Presentations</a>, <a class='category' href='/writings/tags/presentatios/'>Presentatios</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/writings/writings/page/9/" class="prev">Prev</a>
+    
+    
+        <a href="/writings/writings/page/11/" class="next">Next</a>
+    
+    <div class="center"><a href="/writings/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

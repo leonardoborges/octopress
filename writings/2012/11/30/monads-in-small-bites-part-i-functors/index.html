@@ -1,0 +1,455 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Monads in small bites - Part I - Functors - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Today I join the already bloated group of people who wrote monad tutorials. It&#8217;s a bit of a ritual, really. Different than most tutorials &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Monads in Small Bites - Part I - Functors</h1>
+	<div class="entry-content"><p>Today I join the already bloated group of people who wrote monad tutorials. It&#8217;s a bit of a ritual, really.</p>
+
+<p>Different than most tutorials though I aim to take a different approach. The good news is that I won&#8217;t be comparing monads to burritos :)</p>
+
+<p>People say one needs to have his/her own epiphany in order to understand Monads and reading explanations from others is of little help. My goal is to disprove that.</p>
+
+<p>To that end, this tutorial will be split in four parts:</p>
+
+<ul>
+<li><p>Part I   - Functors (this post)</p></li>
+<li><p><a href="/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II  - Applicative Functors</a></p></li>
+<li><p><a href="/writings/2012/12/05/monads-in-small-bites-part-iii-monoids/">Part III - Monoids</a></p></li>
+<li><p><a href="/writings/2012/12/08/monads-in-small-bites-part-iv-monads/">Part IV  - Monads</a></p></li>
+</ul>
+
+
+<p>You might want to bookmark this page - once the other parts are up, I&#8217;ll update the list above with the links to them.</p>
+
+<h3>Before we start</h3>
+
+<p>I know what you&#8217;re thinking: Do I really need to know Applicative Functors just to grasp Monads?</p>
+
+<p>Well, no. However, I found that gradually building your knowledge from Parts I, II and III will allow you to fully grasp monads without the need for burritos or elephants.</p>
+
+<p>You should also be familiar with a functional programming language. Any language should be fine but you&#8217;ll get the most out of this tutorial if you&#8217;re familiar with Haskell and/or Clojure.</p>
+
+<p>If you&#8217;re not familiar with Clojure, fear not - Clojure is a small language and the code snippets should still make sense if you put your mind to it - they&#8217;re all short and sweet. I also encourage you to re-implement the examples in your language of choice to gain a deeper understanding on the subject.</p>
+
+<p>Ready then? Let&#8217;s dive in.</p>
+
+<h2>Just enough Haskell</h2>
+
+<p>This is not a Haskell tutorial but trust me when I tell you that learning just enough about its type signatures will make all the difference in the world in understanding the concepts I&#8217;m about to present.</p>
+
+<p>Although I&#8217;ll be using a little bit of Haskell syntax, I&#8217;ll also provide implementations in Clojure. They are in order so you should be able to paste all code sample in the REPL and follow along if you wish.</p>
+
+<h3>Type signatures</h3>
+
+<p>I&#8217;ll make this quick. Say you have a function called <code>mk-vec</code> that creates a 2D vector with <code>x</code> and <code>y</code> coordinates. Such function could easily be coded in Clojure like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">mk-vec</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">{</span><span class="nv">:x</span> <span class="nv">x</span> <span class="nv">:y</span> <span class="nv">y</span><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; using it</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">my-vec</span> <span class="p">(</span><span class="nf">mk-vec</span> <span class="mi">10</span> <span class="mi">15</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">:x</span> <span class="nv">my-vec</span><span class="p">)</span> <span class="c1">;; 10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, this function takes two arguments - x and y - and returns a map - or hash if you come from Ruby - that wraps those values in it, providing an easy way to retrieve them.</p>
+
+<p>Now if this function had been implemented in haskell this would be its type signature - read the comments:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Map</span> <span class="k">as</span> <span class="n">Map</span> <span class="c1">-- just giving Data.Map an alias</span>
+</span><span class='line'><span class="nf">mkVec</span> <span class="ow">::</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">Map</span><span class="o">.</span><span class="kt">Map</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span> <span class="n">a</span> <span class="c1">-- this is the type signature</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">mkVec</span> <span class="n">x</span> <span class="n">y</span> <span class="ow">=</span> <span class="kt">Map</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)]</span> <span class="c1">-- this is the implementation. You can ignore this part.</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- using it</span>
+</span><span class='line'><span class="nf">myVec</span> <span class="ow">=</span> <span class="n">mkVec</span> <span class="mi">10</span> <span class="mi">15</span>
+</span><span class='line'><span class="kt">Map</span><span class="o">.</span><span class="n">lookup</span> <span class="s">&quot;x&quot;</span> <span class="n">myVec</span> <span class="c1">-- Just 10 </span>
+</span><span class='line'><span class="c1">--</span>
+</span><span class='line'><span class="c1">-- ignore the actual value that is returned. Read it as 10 for now.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whatever comes after the <code>::</code> is part of the function type signature. Read it like this:</p>
+
+<blockquote><p>This is a function that receives two arguments of type <code>a</code> - which means any type - and returns a Map of key/value pairs where the key is of type <code>[Char]</code> - technically a list of <code>Char</code> values but for all effects and purposes just read it as <code>String</code> - and the value is of type <code>a</code> - the same type as its arguments.</p></blockquote>
+
+<p>It might help to see the type signature in this light:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">mkVec</span> <span class="ow">::</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span><span class="o">.</span><span class="kt">Map</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span> <span class="n">a</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It highlights the return value in parenthesis.</p>
+
+<p>Now let&#8217;s have a look at a built in function, <code>*</code>. As you know, it performs multiplication and this is its type signature:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="ow">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="ow">=&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Can you guess now what it means? I&#8217;m sure you can. There&#8217;s one small difference though: this function has a type constraint - it&#8217;s that <strong>Num a => &#8230;</strong> part of the signature. Read it like this:</p>
+
+<blockquote><p>This is a function that receives two arguments of type <code>a</code> and returns a value of the same type, as long as the type of <code>a</code> is an instance of <code>Num</code></p></blockquote>
+
+<p>And that&#8217;s it for now. Read it again to make sure it&#8217;s fresh in your mind and then continue.</p>
+
+<p>As we encounter more type signatures, I&#8217;ll walk you through each one of them - but if you got it up until now, you&#8217;ll easily grasp the other type signatures.</p>
+
+<h3>Functors</h3>
+
+<p>In a nutshell Functors are things that can be mapped over.</p>
+
+<p>Haskell defines Functors like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">class</span> <span class="kt">Functor</span> <span class="n">f</span> <span class="kr">where</span>
+</span><span class='line'>  <span class="n">fmap</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s dissect that type signature:</p>
+
+<blockquote><p><strong>fmap</strong> is a function that receives two arguments: the first is a function that receives an argument of type <code>a</code> and returns a value of type <code>b</code> and the second is a Functor that contains a value of type <code>a</code> - represented by <code>f a</code>. The result of calling <code>fmap</code> is a Functor of same type - <code>f</code> - containing a value of type <strong>b</strong>, which is the result of applying the function to <strong>a</strong>.</p></blockquote>
+
+<p>Too much? Let&#8217;s have a look at an example: the <strong>List</strong> Functor.</p>
+
+<p>If we rewrite the <code>fmap</code> type signature as if it only worked on lists, this is what we&#8217;d come up with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'>  <span class="n">fmap</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This new type signature allows us to rewrite that last definition:</p>
+
+<blockquote><p><strong>fmap</strong> is a function that receives two arguments: the first is a function that receives an argument of type <code>a</code> and returns a value of type <code>b</code> and the second is a List of zero or more values of type <strong>a</strong>. The result of calling <code>fmap</code> is a List of zero or more values of type <strong>b</strong>, each of which is the result of applying the function to each <code>a</code> element.</p></blockquote>
+
+<p>Does this sound familiar to you? It should, because this is essentially what the <code>map</code> function available in most functional-<em>ish</em> languages does! It takes a function and a list, applies the function to every element in the list while putting the results into a new list, finally returning it.</p>
+
+<p>In fact, the <code>fmap</code> implementation of the List Functor from Haskell is implemented in terms of <code>map</code>.</p>
+
+<p>Let&#8217;s see how that could be done in Clojure. I&#8217;ll use <a href="http://clojure.org/protocols">protocols</a> and <a href="http://clojure.org/datatypes">records</a> but they are not strictly required for this.</p>
+
+<p>Here&#8217;s our Functor protocol:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">defprotocol</span> <span class="nv">Functor</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">fmap</span> <span class="p">[</span><span class="nv">functor</span> <span class="nv">f</span><span class="p">]</span> <span class="s">&quot;Maps fn over the functor f&quot;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And now our List Functor:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">defrecord</span> <span class="nv">List</span> <span class="p">[</span><span class="nv">wrapped</span><span class="p">]</span>
+</span><span class='line'>    <span class="nv">Functor</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">fmap</span> <span class="p">[</span><span class="nv">functor</span> <span class="nv">f</span><span class="p">]</span>
+</span><span class='line'>        <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">(</span><span class="nb">map </span><span class="nv">f</span> <span class="p">(</span><span class="nf">:wrapped</span> <span class="nv">functor</span><span class="p">)))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the snippet above all we&#8217;re saying is that the List record must satisfy the Functor protocol, which makes sense. <code>fmap</code> then is responsible for <em>unwrapping</em> the value contained in the list functor and <em>mapping</em> <code>f</code> over it.</p>
+
+<p>Give it a go!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">my-list-functor</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]))</span> <span class="c1">;; List{:wrapped (1 2 3)}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">fmap</span> <span class="nv">my-list-functor</span> <span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">))</span> <span class="c1">;; List{:wrapped (2 4 6)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can now <code>map</code> arbitrary functions over the values <code>wrapped</code> in a Functor! Awesome!</p>
+
+<blockquote><p><strong>Note</strong>: In our Clojure version of the List Functor, it is implemented as a Record that wraps a primitive Clojure list/vector - <code>[]</code>. As I mentioned this is not necessary but I chose to do it here to explicitly show the relationship with the Haskell types.</p></blockquote>
+
+<h3>Don&#8217;t break the law</h3>
+
+<p>Now that we got a feel for what Functors are, it&#8217;s worth noting that they must obey a few laws to be considered full-fledged Functors.</p>
+
+<h4>Identity</h4>
+
+<blockquote><p>Mapping an identity function over a Functor is the same as applying identity to the Functor itself</p></blockquote>
+
+<p>This is how Haskell puts this law:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">fmap</span> <span class="n">id</span> <span class="n">functor</span> <span class="ow">=</span> <span class="n">id</span> <span class="n">functor</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Translating that to Clojure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="c1">;;This...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">fmap</span> <span class="nv">my-list-functor</span> <span class="nv">identity</span><span class="p">)</span> <span class="c1">;; List{:wrapped (1 2 3)}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;;is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nb">identity </span><span class="nv">my-list-functor</span><span class="p">)</span> <span class="c1">;; List{:wrapped [1 2 3]}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Composition</h4>
+
+<blockquote><p>If you compose the functions <code>f</code> and <code>g</code> and map the resulting function over the Functor, that is the same as first mapping <code>g</code> over the Functor and <code>then</code> mapping <code>f</code> over the resulting Functor.</p></blockquote>
+
+<p>From the description you can see that this law involves <a href="http://en.wikipedia.org/wiki/Function_composition">function composition</a>. In Clojure, that&#8217;s achieved with the <a href="http://clojuredocs.org/clojure_core/clojure.core/comp">comp</a> function.</p>
+
+<p>Again, let&#8217;s see how this law is defined in Haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">fmap</span> <span class="p">(</span><span class="n">f</span> <span class="o">.</span> <span class="n">g</span><span class="p">)</span> <span class="n">functor</span> <span class="ow">=</span> <span class="n">fmap</span> <span class="n">f</span> <span class="p">(</span><span class="n">fmap</span> <span class="n">g</span> <span class="n">functor</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p><strong>Note</strong>: The <code>.</code> operator denotes function composition in Haskell</p></blockquote>
+
+<p>And the proof in Clojure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">f</span> <span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">10</span> <span class="nv">%</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">g</span> <span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; given the above, this...</span>
+</span><span class='line'><span class="p">(</span><span class="nf">fmap</span> <span class="nv">my-list-functor</span> <span class="p">(</span><span class="nb">comp </span> <span class="nv">f</span> <span class="nv">g</span><span class="p">))</span> <span class="c1">;; List{:wrapped (12 14 16)}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; is the same as:</span>
+</span><span class='line'><span class="p">(</span><span class="nb">-&gt; </span><span class="nv">my-list-functor</span> <span class="p">(</span><span class="nf">fmap</span> <span class="nv">g</span><span class="p">)</span> <span class="p">(</span><span class="nf">fmap</span> <span class="nv">f</span><span class="p">))</span> <span class="c1">;; List{:wrapped (12 14 16)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p><strong>Note</strong>: make sure you&#8217;re familiar with <a href="http://clojuredocs.org/clojure_core/clojure.core/-%3E">Clojure&#8217;s threading macro: <strong>-></strong> </a>. I&#8217;ll be using it in most code snippets.</p></blockquote>
+
+<p>Nice! All laws hold so we can sleep peacefully in the knowledge that our Functor works as expected.</p>
+
+<p>Now go get a drink and stay tuned for <a href="/writings/2012/12/02/monads-in-small-bites-part-ii-applicative-functors/">Part II</a>, where I&#8217;ll introduce <em>Applicative Functors</em>.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-30T01:06:00+11:00" pubdate data-updated="true">Nov 30<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>, <a class='category' href='/writings/tags/haskell/'>haskell</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

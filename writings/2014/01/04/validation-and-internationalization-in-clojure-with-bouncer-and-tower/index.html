@@ -1,0 +1,443 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Validation and Internationalization in Clojure with bouncer &amp; tower - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I released bouncer in April last year and since then it has had a small but steady growth in usage. So much so that I received some community &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Validation and Internationalization in Clojure With Bouncer &amp; Tower</h1>
+	<div class="entry-content"><p>I released <a href="https://github.com/leonardoborges/bouncer">bouncer</a> in April last year and since then it has had a small but steady growth in usage.</p>
+
+<p>So much so that I received some community feedback in the form of emails and pull requests which is simply <em>great</em>!</p>
+
+<p>The latest and most substantial pull request, submitted by <a href="https://github.com/dm3">Vadim Platonov</a>, added the ability to customise validation messages in anyway you like, as you can see in the section <a href="https://github.com/leonardoborges/bouncer#internationalization-and-customised-error-messages">Internationalization and customised error messages</a> of the <a href="https://github.com/leonardoborges/bouncer/blob/master/README.md">README</a>.</p>
+
+<p>However the documentation only gives a simple example and while I believe it should show users how this opens up several different usage patterns, I thought I&#8217;d expand that in this post and integrate <a href="https://github.com/leonardoborges/bouncer">bouncer</a> with the excellent Internationalization library <a href="https://github.com/ptaoussanis/tower">tower</a> to show how validation and I18n could work together in this configuration.</p>
+
+<blockquote><p>If you&#8217;ve never used bouncer before, I&#8217;d recommend you have a quick look at the <a href="https://github.com/leonardoborges/bouncer#basic-validations">Basic Validations</a> section of the <a href="https://github.com/leonardoborges/bouncer/blob/master/README.md">README</a> before continuing.</p></blockquote>
+
+<h2>Setup</h2>
+
+<p>The first thing you&#8217;ll need to do is create a new leiningen project and add both <a href="https://github.com/leonardoborges/bouncer">bouncer</a> and <a href="https://github.com/ptaoussanis/tower">tower</a> as dependencies in your <code>project.clj</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">[</span><span class="nv">bouncer</span> <span class="s">&quot;0.3.1-beta1&quot;</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="nv">com</span><span class="o">.</span><span class="nv">taoensso/tower</span> <span class="s">&quot;2.0.1&quot;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, in your <code>core</code> namespace - or wherever, really - require both libs and set up a dictionary to be used in the examples:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">ns</span> <span class="nv">bouncer+tower</span><span class="o">.</span><span class="nv">core</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">:require</span> <span class="p">[</span><span class="nv">taoensso</span><span class="o">.</span><span class="nv">tower</span> <span class="nv">:as</span> <span class="nv">tower</span>
+</span><span class='line'>             <span class="nv">:refer</span> <span class="p">(</span><span class="nf">with-locale</span> <span class="nv">with-tscope</span> <span class="nv">t</span> <span class="nv">*locale*</span><span class="p">)]</span>
+</span><span class='line'>            <span class="p">[</span><span class="nv">bouncer</span><span class="o">.</span><span class="nv">core</span> <span class="nv">:refer</span> <span class="p">[</span><span class="nv">validate</span><span class="p">]]</span>
+</span><span class='line'>            <span class="p">[</span><span class="nv">bouncer</span><span class="o">.</span><span class="nv">validators</span> <span class="nv">:as</span> <span class="nv">v</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">my-tconfig</span>
+</span><span class='line'>  <span class="p">{</span><span class="nv">:dev-mode?</span> <span class="nv">true</span>
+</span><span class='line'>   <span class="nv">:fallback-locale</span> <span class="nv">:en</span>
+</span><span class='line'>   <span class="nv">:dictionary</span>
+</span><span class='line'>   <span class="p">{</span><span class="nv">:en</span>
+</span><span class='line'>    <span class="p">{</span><span class="nv">:person</span>  <span class="p">{</span><span class="nv">:name</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;A person must have a name&quot;</span><span class="p">}</span>
+</span><span class='line'>               <span class="nv">:age</span>  <span class="p">{</span><span class="nv">:number</span>   <span class="s">&quot;A person&#39;s age must be a number. You provided &#39;%s&#39;&quot;</span><span class="p">}</span>
+</span><span class='line'>               <span class="nv">:address</span> <span class="p">{</span><span class="nv">:postcode</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;Missing postcode in address&quot;</span><span class="p">}}}</span>
+</span><span class='line'>     <span class="nv">:missing</span>  <span class="s">&quot;&lt;Missing translation: [%1$s %2$s %3$s]&gt;&quot;</span><span class="p">}</span>
+</span><span class='line'>    <span class="nv">:pt-BR</span>
+</span><span class='line'>    <span class="p">{</span><span class="nv">:person</span>  <span class="p">{</span><span class="nv">:name</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;Atributo Nome para Pessoa é obrigatório.&quot;</span><span class="p">}</span>
+</span><span class='line'>               <span class="nv">:age</span>  <span class="p">{</span><span class="nv">:number</span>   <span class="s">&quot;Atributo Idade para Pessoa deve ser um número. Valor recebido foi &#39;%s&#39;&quot;</span><span class="p">}</span>
+</span><span class='line'>               <span class="nv">:address</span> <span class="p">{</span><span class="nv">:postcode</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;Endereço deve ter um código postal&quot;</span><span class="p">}}}</span>
+</span><span class='line'>     <span class="nv">:missing</span>  <span class="s">&quot;&lt;Tradução ausente: [%1$s %2$s %3$s]&gt;&quot;</span><span class="p">}}})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, we need someting to validate so go ahead and create a map representing a person:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">person</span> <span class="p">{</span><span class="nv">:age</span> <span class="s">&quot;NaN&quot;</span><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Customising bouncer</h2>
+
+<p>Since <code>0.3.1-beta1</code>, <a href="https://github.com/leonardoborges/bouncer">bouncer</a>&#8217;s <code>validate</code> function receives an optional first argument called <em>message-fn</em>. As the name implies, it is a function from <em>error metadata</em> to, most likely, a string. This is our opportunity to use tower&#8217;s features to translate our error messages.</p>
+
+<p>In order to accomplish that, we&#8217;ll be using this message function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">message-fn</span>
+</span><span class='line'>  <span class="s">&quot;Receives a locale, tscope and a map containing error metadata.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">  Uses this information to return a I18n&#39;ed string&quot;</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">locale</span> <span class="nv">tscope</span> <span class="p">{</span><span class="nv">:keys</span> <span class="p">[</span><span class="nv">path</span> <span class="nv">value</span><span class="p">]</span>
+</span><span class='line'>                  <span class="p">{</span><span class="nv">validator</span> <span class="nv">:validator</span><span class="p">}</span> <span class="nv">:metadata</span><span class="p">}]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">tr-key</span> <span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">(</span><span class="nf">flatten</span> <span class="p">[</span><span class="nv">path</span> <span class="nv">validator</span><span class="p">])</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nb">map </span><span class="nv">name</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">clojure</span><span class="o">.</span><span class="nv">string/join</span> <span class="s">&quot;/&quot;</span><span class="p">)</span>
+</span><span class='line'>                    <span class="nv">keyword</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">with-tscope</span> <span class="nv">tscope</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">t</span> <span class="nv">locale</span> <span class="nv">my-tconfig</span> <span class="nv">tr-key</span> <span class="nv">value</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In order to understand the function above, let&#8217;s validate the person map using <code>identity</code> so we can inspect the error metadata that will be the third argument to this function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">validate</span> <span class="nv">identity</span>
+</span><span class='line'>          <span class="nv">person</span>
+</span><span class='line'>          <span class="nv">:name</span> <span class="nv">v/required</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; [{:name</span>
+</span><span class='line'><span class="c1">;;   ({:path [:name],</span>
+</span><span class='line'><span class="c1">;;     :value nil,</span>
+</span><span class='line'><span class="c1">;;     :args nil,</span>
+</span><span class='line'><span class="c1">;;     :metadata</span>
+</span><span class='line'><span class="c1">;;     {:optional false,</span>
+</span><span class='line'><span class="c1">;;      :default-message-format &quot;%s must be present&quot;,</span>
+</span><span class='line'><span class="c1">;;      :validator :bouncer.validators/required},</span>
+</span><span class='line'><span class="c1">;;     :message nil})}</span>
+</span><span class='line'><span class="c1">;;  {:age &quot;NaN&quot;,</span>
+</span><span class='line'><span class="c1">;;   :bouncer.core/errors</span>
+</span><span class='line'><span class="c1">;;   {:name</span>
+</span><span class='line'><span class="c1">;;    ({:path [:name],</span>
+</span><span class='line'><span class="c1">;;      :value nil,</span>
+</span><span class='line'><span class="c1">;;      :args nil,</span>
+</span><span class='line'><span class="c1">;;      :metadata</span>
+</span><span class='line'><span class="c1">;;      {:optional false,</span>
+</span><span class='line'><span class="c1">;;       :default-message-format &quot;%s must be present&quot;,</span>
+</span><span class='line'><span class="c1">;;       :validator :bouncer.validators/required},</span>
+</span><span class='line'><span class="c1">;;      :message nil})}}]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As we&#8217;re only validating the name in this case, that&#8217;s all we get in the return value of <code>validate</code>. However you can see how we have all sorts of useful information now - hopefully this makes the <code>message-fn</code> code above easier to understand.</p>
+
+<h2>Take it for a spin</h2>
+
+<p>We&#8217;re now ready for a couple of examples, using two different locales. Let&#8217;s get on with it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">validate</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">message-fn</span> <span class="nv">:en</span> <span class="nv">:person</span><span class="p">)</span>
+</span><span class='line'>          <span class="nv">person</span>
+</span><span class='line'>          <span class="nv">:name</span> <span class="nv">v/required</span>
+</span><span class='line'>          <span class="nv">:age</span>  <span class="nv">v/number</span>
+</span><span class='line'>          <span class="p">[</span><span class="nv">:address</span> <span class="nv">:postcode</span><span class="p">]</span> <span class="nv">v/required</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; [{:address {:postcode (&quot;Missing postcode in address&quot;)},</span>
+</span><span class='line'><span class="c1">;;   :age (&quot;A person&#39;s age must be a number. You provided &#39;NaN&#39;&quot;),</span>
+</span><span class='line'><span class="c1">;;   :name (&quot;A person must have a name&quot;)}</span>
+</span><span class='line'><span class="c1">;;  {:age &quot;NaN&quot;,</span>
+</span><span class='line'><span class="c1">;;   :bouncer.core/errors</span>
+</span><span class='line'><span class="c1">;;   {:address {:postcode (&quot;Missing postcode in address&quot;)},</span>
+</span><span class='line'><span class="c1">;;    :age (&quot;A person&#39;s age must be a number. You provided &#39;NaN&#39;&quot;),</span>
+</span><span class='line'><span class="c1">;;    :name (&quot;A person must have a name&quot;)}}]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let&#8217;s get some messages in portuguese, shall we?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">validate</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">message-fn</span> <span class="nv">:pt-BR</span> <span class="nv">:person</span><span class="p">)</span>
+</span><span class='line'>          <span class="nv">person</span>
+</span><span class='line'>          <span class="nv">:name</span> <span class="nv">v/required</span>
+</span><span class='line'>          <span class="nv">:age</span>  <span class="nv">v/number</span>
+</span><span class='line'>          <span class="p">[</span><span class="nv">:address</span> <span class="nv">:postcode</span><span class="p">]</span> <span class="nv">v/required</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; [{:address {:postcode (&quot;Endereço deve ter um código postal&quot;)},</span>
+</span><span class='line'><span class="c1">;;   :age</span>
+</span><span class='line'><span class="c1">;;   (&quot;Atributo Idade para Pessoa deve ser um número. Valor recebido foi &#39;NaN&#39;&quot;),</span>
+</span><span class='line'><span class="c1">;;   :name (&quot;Atributo Nome para Pessoa é obrigatório.&quot;)}</span>
+</span><span class='line'><span class="c1">;;  {:age &quot;NaN&quot;,</span>
+</span><span class='line'><span class="c1">;;   :bouncer.core/errors</span>
+</span><span class='line'><span class="c1">;;   {:address {:postcode (&quot;Endereço deve ter um código postal&quot;)},</span>
+</span><span class='line'><span class="c1">;;    :age</span>
+</span><span class='line'><span class="c1">;;    (&quot;Atributo Idade para Pessoa deve ser um número. Valor recebido foi &#39;NaN&#39;&quot;),</span>
+</span><span class='line'><span class="c1">;;    :name (&quot;Atributo Nome para Pessoa é obrigatório.&quot;)}}]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In case you&#8217;re too lazy to do this all from scratch, I created a github repo containing this example ready for you to play with. <a href="https://github.com/leonardoborges/bouncer-tower">Go get it</a>.</p>
+
+<h2>Conclusion</h2>
+
+<p>Hopefully this gives you a little taste of what you can do with the latest version of <a href="https://github.com/leonardoborges/bouncer">bouncer</a>. Remember this is but one of many ways you could integrate the library so get creative :)</p>
+
+<p>Once again, thanks to <a href="https://github.com/dm3">Vadim Platonov</a> for submitting this pull request.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-04T19:00:00+11:00" pubdate data-updated="true">Jan 4<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2014/01/04/validation-and-internationalization-in-clojure-with-bouncer-and-tower/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2014/01/04/validation-and-internationalization-in-clojure-with-bouncer-and-tower/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2014/01/04/validation-and-internationalization-in-clojure-with-bouncer-and-tower/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2014/01/04/validation-and-internationalization-in-clojure-with-bouncer-and-tower/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2014/01/04/validation-and-internationalization-in-clojure-with-bouncer-and-tower/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2014/01/04/validation-and-internationalization-in-clojure-with-bouncer-and-tower/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

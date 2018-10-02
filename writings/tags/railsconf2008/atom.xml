@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: RailsConf2008 | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/railsconf2008/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RailsConf Europe 2008: impressions and highlights]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/09/09/railsconf-europe-2008-impressions-and-highlights/"/>
+    <updated>2008-09-09T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/09/09/railsconf-europe-2008-impressions-and-highlights</id>
+    <content type="html"><![CDATA[<p>
+I'm back in Madrid again after the RailsConf and I think it's time to say something about it. :)<br><br>First off, the infrastructure provided by the conference was really great. The rooms, WiFi connection, food...Â  Really well organized.<br><br>Now to the sessions, highlights:<br><br><strong>Tutorials (Tuesday)</strong><br>- <a href="http://nealford.com/downloads/Ford-Farley_Meta_programming_ruby-tutorial.pdf">Meta-programming Ruby for fun and profit</a> (Neal Ford, Patrick Farley)<br>The old and good techniques that made Ruby so powerful. Here Neal and Patrick walked us through the main tricks to meta programming like open classes - and conditionally open them - , dynamically define methods, sending messages to objects and how Ruby can help test your Java code in a much easier way.<br><br>I've put the link to the slides but honestly I don't think they're too much useful without the talking.<br><br><strong>Sessions (Wednessday)</strong><br>- EC2, MapReduce and Distributed processing (<a href="http://railspikes.com">Jonathan Dahl</a>)<br>Jonathan explained the theory behind <a href="http://en.wikipedia.org/wiki/Mapreduce">MapReduce</a> using very simple ruby examples, providing the basics on how to distribute and paralelize tasks accross multiple machines.<br><br>He also introduced <a href="http://hadoop.apache.org/core/">Hadoop</a>, a platform built in Java that "lets one easily write and run     applications that process vast amounts of data". What I liked the most was the simplicity he explained this subject. As of today, his presentation is not available online. Stay tuned as I'm gonna update this post with the links, as soon as they're available.<br><br><strong>Sessions (Thursday)</strong><br>- <a href="http://nealford.com/downloads/conferences/canonical/Neal_Ford-Debugging_and_Testing_the_Web_Tier.zip">Debugging &amp; Testing the Web Tier</a> (<a href="http://nealford.com">Neal Ford</a>)<br>If you've been concerned about testing your app's web tier lately, this presentation would probably not show you anything new. Neal talks about the need to debug and test javascript behaviour accross multiple browsers, using tools like <a href="http://getfirebug.com/">Firebug</a>, <a href="http://www.jsunit.net/">JSUnit</a> and <a href="http://selenium.openqa.org/">Selenium</a>. If you have no idea about what these tools are, please stop now and go evaluate them!<br><br>We are pretty concerned about testing on my actual job, but selenium tests can be a pain sometimes - a.k.a extremely slow. And what ends up happening is that they are forgotten. Developers only run the test suite if it's not painful and it's lightning fast. Here's is where the highlight for this session comes: <a href="http://www.thefrontside.net/crosscheck">CrossCheck</a>.<br><br>The idea is to be able to test your javascript code accross multiple browsers without the need to launch them. In fact, you don't even need a browser installed. The negative point is that it's kinda fallen behind because now you can only test older versions of browsers. But since the project is getting a lot of traction, I'm pretty sure this will be solved soon.<br><br><strong>Conclusion</strong><br><br>My overall impression of the other sessions I attended is that some speakers just didn't have time to properly prepare themselves, what made me think this years's RailsConf wasn't all that I expected.<br><br>But I also met interesting people and after all one of the key points in a conference is networking. :)<br><br>Definitely worth it though. And that's why I took the time to provide this highlights.<br><br>c u soon
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

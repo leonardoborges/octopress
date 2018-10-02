@@ -1,0 +1,1004 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I solved a few of the problems on Project Euler in the past, both in Java and Ruby, and thought it would be useful to redo them in Clojure, thus &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2012/02/05/project-euler-problem-4-in-clojure/">Project Euler: Problem 4 in Clojure</a></h1>
+	<div class="entry-content">
+		<p>I solved a few of the problems on <a href="http://projecteuler.net/">Project Euler</a> in the past, both in Java and Ruby, and thought it would be useful to redo them in Clojure, thus improving my skills on the language&#8217;s core functions and libraries. Today I&#8217;ll share <a href="http://projecteuler.net/problem=4">problem 4</a>.</p>
+
+<p>Go ahead and read it but here&#8217;s the meat of it:</p>
+
+<p><em>&#8220;Find the largest palindrome made from the product of two 3-digit numbers.&#8221;</em></p>
+
+<p>From this statement we can tell two things: (1) we&#8217;ll need a function that can tell whether a number is a <a href="http://en.wikipedia.org/wiki/Palindrome">palindrome</a> or not and (2) that the largest palindrome is given by the product of two numbers between 100 and 999, inclusive.</p>
+
+<p>Let&#8217;s tackle number one first:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">palindrome?</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="nv">n</span> <span class="nv">str</span> <span class="nv">reverse</span> <span class="p">(</span><span class="nb">apply </span><span class="nv">str</span><span class="p">))</span>
+</span><span class='line'>     <span class="p">(</span><span class="nb">str </span><span class="nv">n</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With our utility function in hand, one possible solution might be as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">largest-palindrome</span> <span class="p">[]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">apply </span><span class="nv">max</span> <span class="p">(</span><span class="nb">filter </span><span class="o">#</span><span class="p">(</span><span class="nv">palindrome?</span> <span class="nv">%</span><span class="p">)</span>
+</span><span class='line'>                     <span class="p">(</span><span class="k">for </span><span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nb">range </span><span class="mi">100</span> <span class="p">(</span><span class="nb">inc </span><span class="mi">999</span><span class="p">))</span>
+</span><span class='line'>                           <span class="nv">y</span> <span class="p">(</span><span class="nb">range </span><span class="mi">100</span> <span class="p">(</span><span class="nb">inc </span><span class="mi">999</span><span class="p">))]</span>
+</span><span class='line'>                       <span class="p">(</span><span class="nb">* </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)))))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">time</span>
+</span><span class='line'> <span class="p">(</span><span class="nf">largest-palindrome</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;;&quot;Elapsed time: 1405.358 msecs</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While this works, I wasn&#8217;t happy with a couple of things in this solution. First, I thought I could do without using <em>filter</em>. Second, we have unnecessary multiplications going on, leading to poor performance - it takes ~1.4secs to finish.</p>
+
+<p>You see, when we begin multiplying the numbers, we&#8217;ll see multiplications such as <em>100 * 100, 100 * 101, 100 * 102 &#8230;</em> and then again, after the first loop is exhausted, <em>102 * 100, 102 * 101, 102 * 102 &#8230;</em></p>
+
+<p>That led me to take a closer look at <a href="http://clojuredocs.org/clojure_core/clojure.core/for">for</a>, Clojure&#8217;s list comprehension macro. It&#8217;s a very powerful construct, providing 3 useful modifiers: <em>let</em>, <em>while</em> and <em>when</em>.</p>
+
+<p>With that in mind, I refactored my first solution to look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">largest-palindrome-1</span> <span class="p">[]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">apply </span><span class="nv">max</span> <span class="p">(</span><span class="k">for </span><span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nb">range </span><span class="mi">100</span> <span class="mi">1000</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">y</span> <span class="p">(</span><span class="nb">range </span><span class="mi">100</span> <span class="mi">1000</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">:while</span> <span class="p">(</span><span class="nb">&gt;= </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+</span><span class='line'>                   <span class="nv">:let</span> <span class="p">[</span><span class="nv">z</span> <span class="p">(</span><span class="nb">* </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)]</span>
+</span><span class='line'>                   <span class="nv">:when</span> <span class="p">(</span><span class="nf">palindrome?</span> <span class="nv">z</span><span class="p">)]</span>
+</span><span class='line'>               <span class="nv">z</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">time</span>
+</span><span class='line'> <span class="p">(</span><span class="nf">largest-palindrome-1</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;;&quot;Elapsed time: 689.262 msecs&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here, the <em>while</em> modifier makes sure we aren&#8217;t wasting any time with unnecessary multiplications. The <em>when</em> modifier lets us get rid of the outer <em>filter</em> call.  And as you can see, the solution is about twice as fast as its first version.</p>
+
+<p>On top of that, it&#8217;s still pretty concise. Not bad.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-05T13:29:00+11:00" pubdate data-updated="true">Feb 5<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/algorithms/'>algorithms</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/project-euler/'>project-euler</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2012/01/22/backlog-ola-bini-on-clojure-conj/">Backlog: Ola Bini on Clojure/conj</a></h1>
+	<div class="entry-content">
+		<p>As I promised in my <a href="http://bit.ly/clj-syd">previous post</a>, here are the highlights of what <a href="http://olabini.com/blog/">Ola Bini</a> had to say about <a href="http://clojure-conj.org/">Clojure/conj</a>.</p>
+
+<p>Clojure/conj is the largest gathering of clojure programmers, hackers and enthusiasts, with a single track of talks spanning three days.
+Ola selected his favorite talks and summarised each one of them.</p>
+
+<p>The actual slides for each one of the talks can be found on <a href="https://github.com/relevance/clojure-conj">github</a>.</p>
+
+<p>You can find Ola&#8217;s slides <a href="http://db.tt/lTFsOKpZ">here</a>.</p>
+
+<h3>Fun Data Structures</h3>
+
+<p>This is certainly a very interesting topic. The highlight here is the approach Clojure takes to handling immutable data structures efficiently: persistent data structures through structural sharing - maybe a good short talk for the next meetup?</p>
+
+<p>However, even though efficient, there are cases where the space complexity of known algorithms gets compromised.
+More specifically, algorithms that rely on the ability of changing data structures in-place - such as the QuickSort - will suffer from this approach.</p>
+
+<p>I asked Ola about it and the short answer is that you should use a different algorithm that takes advantages of trees instead, since they often don&#8217;t rely on in-place changing.</p>
+
+<p>The long answer is a book called <a href="http://amzn.to/zXbvtu">Purely Functional Data Structures</a> - another one added to my wish list.</p>
+
+<h3>Logic/constraint programming</h3>
+
+<p>This is a topic that&#8217;s completely new to me and it sounds fascinating at first. It also ended up being the topic of the rest of the tech night, with Ola, Sarah and Jo - also ThoughtWorkers - giving us a Logic Programming 101 crash course using Prolog. Lots to read up on.</p>
+
+<p>In the Clojure world, logic programming can be achieved via <a href="https://github.com/clojure/core.logic">core.logic</a>.</p>
+
+<p>The book <a href="http://amzn.to/y6vhT5">The Reasoned Schemer</a> was also mentioned as a good read on the subject.</p>
+
+<h3>Cascalog (<a href="https://github.com/nathanmarz/cascalog">github repo</a>)</h3>
+
+<p>Haven&#8217;t had the time to play with it yet but it seems extremely useful. It&#8217;s a Clojure-based DSL for processing &#8220;Big Data&#8221; on top of Hadoop.</p>
+
+<p>There you have it. Come <a href="http://bit.ly/yLfPTr">join us</a> for our next meeting!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-22T22:01:00+11:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clj-syd/'>clj-syd</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2012/01/20/announcing-the-sydney-clojure-user-group/">Announcing the Sydney Clojure User Group</a></h1>
+	<div class="entry-content">
+		<p><strong>Update:</strong> We now have a <a href="http://www.meetup.com/clj-syd/">Meetup.com page</a>. Head over there to learn about our next meetups as well as to RSVP to them. We&#8217;ll discontinue usage of the wiki for registering attendees, in favor of the new site. Everything else on this post however still holds.</p>
+
+<p><a href="http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/">If you&#8217;ve been following my blog</a>, you&#8217;ll have noticed I started running internal Clojure meetups/hack nights at ThoughtWorks here in Sydney a while ago. While being closed, we&#8217;ve already had one international speaker - <a href="http://olabini.com/blog/">Ola Bini</a> - come and share his experience as an attendee at <a href="http://clojure-conj.org/">Clojure/conj</a>. I promise I&#8217;ll blog about it soon.</p>
+
+<p>We&#8217;re a small but active group, eager to learn and as a natural result we couldn&#8217;t stay closed for any longer! :)</p>
+
+<p>That&#8217;s why last Tuesday, the first time we had external guests, we decided to make the group public so anyone could join.</p>
+
+<p>It was great having people from outside ThoughtWorks sharing their real world experience with Clojure. One of them, Harry Binnendijk from <a href="http://www.whoto.com/">Whoto</a>, even gave a presentation about how and why they&#8217;re using Clojure <em>[1]</em>.</p>
+
+<p>There was another talk, by yours truly, on <a href="http://www.slideshare.net/borgesleonardo/continuation-passing-style-and-macros-in-clojure-jan-2012">Continuation Passing Style and Macros in Clojure</a>. It was a great night.</p>
+
+<p>Interested? Read on.</p>
+
+<p>Our meetings will be held on the 3rd Tuesday of every month - at least to start with.</p>
+
+<p>To help organize things we have a <a href="http://groups.google.com/group/clj-syd">Google group</a> where we&#8217;ll announce the next meetings, do the traditional &#8220;call for papers&#8221;, share ideas on how to improve our group, job posts and anything related to Clojure/FP.</p>
+
+<p>We also have a <a href="https://github.com/clj-syd/clj-syd/wiki">wiki</a> where you can see when and where the meetings are happening, sign up to talk/attend etc&#8230;</p>
+
+<p>So if you&#8217;ve been thinking about learning Clojure but haven&#8217;t had the chance yet, <a href="http://groups.google.com/group/clj-syd">come join us</a>. Joining a group like this in its beginning is a perfect learning opportunity.</p>
+
+<p>And if you&#8217;re a Clojure hacker already, <a href="http://groups.google.com/group/clj-syd">we&#8217;d love to hear from you just as much</a>!</p>
+
+<p>We welcome all levels and encourage everyone to submit talks they&#8217;re passionate about.</p>
+
+<p>I hope to see you in the next meet up. Feel free to shoot the group an email or to me directly at leonardoborges(dot)rj(at)gmail(dot)com</p>
+
+<p>And don&#8217;t forget to add us to your calendar so you don&#8217;t miss out - next meetup will be on Feb 21st at ThoughtWorks Sydney!</p>
+
+<p><a href="http://www.google.com/calendar/render?cid=https%3A%2F%2Fwww.google.com%2Fcalendar%2Ffeeds%2Fa4v3blgfnlqdc0h6im9okr80tc%2540group.calendar.google.com%2Fpublic%2Fbasic" target="_blank"><img src="http://www.google.com/calendar/images/ext/gc_button1.gif" alt="0" border="0" style="border:none;"></a></p>
+
+<p>[1] Link to the presentation will be available soon</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-20T11:35:00+11:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clj-syd/'>clj-syd</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2012/01/01/so-long-2011-year-highlights/">So Long 2011: Year Highlights</a></h1>
+	<div class="entry-content">
+		<p>It&#8217;s that time of the year to look back at what you&#8217;ve done and either be happy about it or&#8230; well not. :)</p>
+
+<p>To me anyway 2011 was a great year but I won&#8217;t bore you with the details so I&#8217;ll just jump straight into a couple of highlights!</p>
+
+<p>The biggest one of course was the project we developed to help the <a href="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/">Queensland flood victims back in January</a> - which brings me to the next topic:</p>
+
+<h3>Speaking</h3>
+
+<p>Said project gave me the chance to speak at a few events, sharing this and other great stories:</p>
+
+<ul>
+<li>Ruby On Rails Oceania User Group - Sydney - February (<a href="http://www.slideshare.net/borgesleonardo/clouds-against-the-floods">slides</a> | <a href="http://www.youtube.com/watch?v=DYDD9XiW3Gg&amp;feature=player_embedded">video</a>)</li>
+<li>CloudCamp - Sydney - July (<a href="http://www.slideshare.net/borgesleonardo/clouds-against-the-floods">slides</a>)</li>
+<li>XConf (1) Australia - Melbourne - August</li>
+<li><a href="http://www.leonardoborges.com/writings/2011/11/10/rubyconf-brazil-2011/">RubyConf Brazil - Sao Paulo - November</a> (<a href="http://www.slideshare.net/borgesleonardo/clouds-against-the-floods-rubyconfbr2011">slides</a> | <a href="http://www.eventials.com/rubyconfbr/recorded/M2UzZTJkMzY2MzdiNTg2NTUxNWM1MzI3NWY1YjRhMzYjIzM4Mg_3D_3D">video</a>)</li>
+</ul>
+
+
+<p>(1) - XConf is an internal technical conference here at ThoughtWorks</p>
+
+<h3>Content</h3>
+
+<p>Here in the blog, these are a few of the most popular articles for 2011:</p>
+
+<ul>
+<li><a href="http://www.leonardoborges.com/writings/2008/08/07/why-i-like-ruby-1-alias_method/">Why I Like Ruby #1: Alias_method</a> - This one still surprises me. It&#8217;s been at the top for a while</li>
+<li><a href="http://www.leonardoborges.com/writings/2011/02/16/ide-review-rubymine/">IDE Review: RubyMine</a></li>
+<li><a href="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/">Clouds against the Floods</a></li>
+<li><a href="http://www.leonardoborges.com/writings/2011/04/25/one-year-of-thoughtworks-a-retrospective/">One Year of ThoughtWorks: A Retrospective</a></li>
+</ul>
+
+
+<h3>Languages</h3>
+
+<p>I decided to learn Clojure and started an internal user group at ThoughtWorks Sydney - you can read a brief report on our first meetup <a href="http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/">here</a>.</p>
+
+<p>The group&#8217;s been a bit off lately since I was on leave in Brazil and then the whole holiday season happened but it&#8217;s definitely one of the things I want to make happen more often in the new year.</p>
+
+<p>Clojure is a great language and I expect it to keep gaining a lot of traction in 2012.</p>
+
+<h3>And I guess that&#8217;s it&#8230;</h3>
+
+<p>A lot more happened in the last 12 months but these are definitely my favourite parts.</p>
+
+<p>Happy new year everyone! I&#8217;m sure 2012 has a lot of new challenges and surprises for us :D</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-01T16:20:00+11:00" pubdate data-updated="true">Jan 1<span>st</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/misc/'>misc</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2011/12/07/help-keep-rottingnames-on-the-appstore/">Help Keep RottingNames on the Appstore</a></h1>
+	<div class="entry-content">
+		<p>A year ago I decided to try my hand on iPhone software development and created a very simple application to experience the whole lifecycle of putting a complete project on the Apple AppStore - <a href="http://www.leonardoborges.com/writings/2011/03/19/rottingnames-for-iphone-available-for-free/">I wrote about it a while back</a>.</p>
+
+<p>The result was <a href="http://itunes.apple.com/au/app/rottingnames/id413043377?mt=8">RottingNames</a>, a heavy metal band name generator.</p>
+
+<p>Since then, I haven&#8217;t developed anything else for the iPhone - mostly because my interest lies elsewhere now - but I did notice a small yet steady amount of downloads for this cool little app.</p>
+
+<p>You can download <a href="http://itunes.apple.com/au/app/rottingnames/id413043377?mt=8">RottingNames</a> for free from the App Store and I like keeping it that way.</p>
+
+<p>However, to be able to put an application on the AppStore, Apple charges an annual fee of A$99 - even if the application itself is free.</p>
+
+<p>I had decided not to renew my iOS Developer Program membership but it seems a pity to let RottingNames vanish like this. Es pecially knowing there are a few die-hard fans out there having a good laugh with it.</p>
+
+<p>Here&#8217;s the deal: I&#8217;m asking for A$99 in order to renew the membership.</p>
+
+<p>In return, RottingNames will stay on the AppStore for another year, for free.</p>
+
+<p>So hit the button below and stay metal! \m/</p>
+
+<p><a href='http://www.pledgie.com/campaigns/16403'><img alt='Click here to lend your support to: Help keep RottingNames on the AppStore and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/16403.png?skin_name=chrome' border='0' /></a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-07T00:00:00+11:00" pubdate data-updated="true">Dec 7<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/misc/'>misc</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2011/11/10/rubyconf-brazil-2011/">RubyConf Brazil 2011</a></h1>
+	<div class="entry-content">
+		<p><img src="/writings/assets/images/rubyconfBR2011-speakers.jpg"></p>
+
+<p>I was in São Paulo last week - the 3rd and 4th of November - for <a href="http://rubyconf.com.br">RubyConf Brazil</a>. For those who don&#8217;t know, RubyConf Brazil is the evolution of Rails Summit Latin America, where <a href="http://www.leonardoborges.com/writings/2009/10/18/my-slides-from-rails-summit-09/">I had the privilege to speak in 2009</a>.</p>
+
+<p>This year though, all bets were off. <a href="http://akitaonrails.com">Fabio Akita</a> and <a href="http://www.locaweb.com/">Locaweb</a> put together a great event, with over 700 attendees and about 30 speakers split in two streams and two awesome days.</p>
+
+<p>Once more I had the chance to speak at the event and different from previous years, all talks were recorded and streamed live! You can check mine - in portuguese - <a href="http://www.eventials.com/rubyconfbr/recorded/M2UzZTJkMzY2MzdiNTg2NTUxNWM1MzI3NWY1YjRhMzYjIzM4Mg_3D_3D">here</a> as well as my slides - in english - <a href="http://www.slideshare.net/borgesleonardo/clouds-against-the-floods-rubyconfbr2011">on slideshare</a>.</p>
+
+<p><img src="/writings/assets/images/leo-speaking-rubyconfBR2011.jpg"></p>
+
+<p>All other talks can be watched from the <a href="http://www.eventials.com/rubyconfbr">eventials&#8217; RubyConf Brazil page</a>. Locaweb has also published the official <a href="http://www.flickr.com/photos/locaweb/sets/72157628091808954/">Flickr album</a> of the event.</p>
+
+<p>It was great to meet up with great friends again as well as to meet amazing new people such as the guys from ThoughtWorks Brazil. I promise I&#8217;ll make the detour next time! :)</p>
+
+<p>I hope to see you all again soon!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-10T00:00:00+11:00" pubdate data-updated="true">Nov 10<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/rubyconf2011/'>rubyconf2011</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2011/10/12/report-clojure-meetup-1/">Report: Clojure Meetup #1</a></h1>
+	<div class="entry-content">
+		<p>Last Tuesday we held ThoughtWorks&#8217; Australia first Clojure meetup here in Sydney. It was a lot of fun so I thought I&#8217;d share a few words about it.</p>
+
+<p>The format was rather simple. First, we had a brief introduction to the language syntax by breaking down a couple of snippets and understanding how each bit worked. For instance, this is one of those snippets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="c1">;;word count</span>
+</span><span class='line'><span class="p">(</span><span class="nb">reduce </span><span class="o">#</span><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">%1</span> <span class="nv">%2</span><span class="p">)</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">assoc </span><span class="nv">%1</span> <span class="nv">%2</span> <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nf">%1</span> <span class="nv">%2</span><span class="p">)))</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">assoc </span><span class="nv">%1</span> <span class="nv">%2</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'><span class="p">{}</span>
+</span><span class='line'><span class="p">(</span><span class="nf">clojure</span><span class="o">.</span><span class="nv">string/split</span> <span class="s">&quot;Clojure 101 - this is is gonna be be great great great&quot;</span> <span class="o">#</span><span class="s">&quot;\s&quot;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>The cool thing here is that a simple example like this can show quite a few things about Clojure&#8217;s syntax:</p>
+
+<ul>
+  <li><a href="http://en.wikipedia.org/wiki/Polish_notation">Polish notation</a> - this is really the first thing you need to get used to</li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/fn">Anonymous functions</a></li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/hash-map">The hash map literal and how to use it as a function</a></li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/re-pattern">Regular expressions</a></li>
+</ul>
+
+<p>After this brief discussion about Clojure&#8217;s API, we split up in pairs to solve a simple <a
+    href="http://projecteuler.net/problem=1">problem</a> from <a href="http://projecteuler.net/">Project Euler</a>:</p>
+
+<p><i>Add all the natural numbers below one thousand that are multiples of 3 or 5.</i></p>
+
+<p>It&#8217;s the easiest on the site so it allowed us to focus entirely on the language. My first thought was to implement it in an imperative way,
+but that wouldn&#8217;t really teach me anything new so Kurman - the colleague I was pairing with - and I came up with this solution, which I really like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">reduce </span><span class="o">#</span><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">rem </span><span class="nv">%2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">rem </span><span class="nv">%2</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">)</span>
+</span><span class='line'>           <span class="nv">%1</span><span class="p">)</span>
+</span><span class='line'>      <span class="mi">0</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">take </span><span class="mi">1000</span> <span class="p">(</span><span class="nb">iterate </span><span class="nv">inc</span> <span class="mi">0</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>A simple, concise solution that demanded a functional approach. It allowed us to explore Clojure&#8217;s APIs and concepts such as lazyness through the use of an
+  <a href="http://en.wikibooks.org/wiki/Clojure_Programming/Examples/Cookbook#Infinite_Sequences">infinite sequence</a>. Fun :)</p>
+
+<p>I created a <a href="https://github.com/leonardoborges/twoz-clojure-meetup">github repository</a> to host this and upcoming solutions from our group. Feel free to browse around.</p>
+
+<p>Can&#8217;t wait for our next meetup, when we&#8217;ll hack on <a href="http://overtone.github.com/">Overtone</a>!</p>
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-12T00:00:00+11:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/thoughtworks/'>ThoughtWorks</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2011/07/30/hiring-good-people-is-really-simple/">Hiring Good People Is Really Simple</a></h1>
+	<div class="entry-content">
+		<p>
+  It really is. There&#8217;s no magic involved. 
+</p>
+<p>
+  Again and again I come across articles from people complaining about the current interview practices. They complain it doesn&#8217;t give you enough depth into the candidate&#8217;s ability, personality etc. That it measures the wrong qualities. Or that it just doesn&#8217;t work and bad people keep coming through the pipeline.
+</p>
+<p>
+  Well, instead of complaining how about you change it? I&#8217;m talking about hiring software engineers here so the first rule you should keep in mind is that you need to get them to write code.
+</p>
+<p>
+  Let me spell that out for you: <strong>get them to write code</strong>. 
+</p>
+<p>
+  It&#8217;s as simple as that. If your hiring process doesn&#8217;t include this step, just give up and go do something else.
+</p>
+<h3>What kind of company are you hiring for?</h3>
+<p>
+  This is important because it will let you know how to structure your interview process and where to place the &#8220;write some code&#8221; step. For instance, some companies such as <a href="http://www.google.com/about/">Google</a>, <a href="http://www.facebook.com/facebook">Facebook</a> and <a href="http://www.thoughtworks.com">ThoughtWorks</a> can&#8217;t afford bringing in every candidate for on-site interviews. Not with that influx of applications anyway. Such companies put some sort of coding challenge as their first barrier to entry, before you&#8217;re ever invited into their offices. So keep that in mind.
+</p>
+
+<h3>What should I get them to code?</h3>
+<p>
+  I&#8217;m glad you asked! But I&#8217;m afraid the answer is it depends.
+<p/>
+<p>
+  Different companies - which in many cases means different projects, business models, cultures and what not - hire inherently different people. You need different skills.
+</p>
+<p>
+  Here is where I think <a href="http://www.thoughtworks.com">ThoughtWorks</a> gets things right most of the time. The coding challenge the candidate is given is, to a smaller extent, the exact kind of code he&#8217;s most likely to be writing once he joins. By no means does it mean he&#8217;s expected to write the same projects over and over. Far from it. It just gives us a fair go on their abilities in a close-to-real setting.
+</p>
+  
+<p>
+ <a href="http://www.google.com/about/">Google</a>, on the other hand, will give a programming challenge over the phone. Pardon the pun but &#8216;google&#8217; it and you&#8217;ll see it often involves puzzles which leads me to assume they solve puzzles everyday - don&#8217;t get me wrong, they helped solve many computing challenges of our time that I&#8217;m thankful for but they have a multitude of projects that need different skill sets and as such I&#8217;m not sure it&#8217;s the best process but, hey, they seem to have the best engineers in the world so it sure works wonders for them.
+</p>
+
+<p>
+  The bottom line is that this coding challenge should be geared towards finding what your company values, and what it considers to be good code. If puzzles work for you, do that. If you value well tested code, state so in the challenge and evaluate if you&#8217;re presented with a well written test suite. If you want someone who can learn anything fast, ask them to develop a simple app in a language they don&#8217;t know. You catch my drift.
+</p>
+
+<h3>What then?</h3>
+<p>
+  The coding challenge is all well and good and it&#8217;s an extremely useful tool. However what happens next seems to vary a lot from company to company so I&#8217;ll share here, from personal experience, what I think really works: <strong>have candidates code whatever project you&#8217;re hiring them for</strong>.
+</p>
+<p>
+  Back when <a href="http://www.leonardoborges.com/writings/2008/04/08/time-to-reveal/">I moved from Brazil to Spain in 2008</a>, this is exactly how I got hired.<br/>
+  I was interviewed over the phone by one of the company&#8217;s owner friends. He&#8217;s a genius. He had worked at this same company before but moved on to <a href="http://www.google.com/about/">Google</a> later on. That was my first barrier. Once past that, the company simply invited me, with all expenses paid, to spend a week in their offices, working on a real project together with my soon to be co-workers.
+</p>
+<p>
+  This was by far the most thorough interview process I&#8217;d ever been through. They actually got to see how I work. How I deal with other people. How I approach real problems. And on the other hand, I also had a great chance to evaluate what I was getting myself into.<br/> 
+  After that week was up, the company&#8217;s CEO gathered the feedback from all my peers and to my delight made me an offer.
+</p>
+<p>
+  I still think this is the only way you can be sure to be hiring the right people. Is it time consuming? Yes. Is it expensive? Maybe. You can save a lot of money by only paying the wrong person to work for a week, than actually hiring them and having to pay for at least a month&#8217;s worth of work from them. Bad work at that!<br>
+  I suppose such a process wouldn&#8217;t work for some companies, mainly <a href="http://www.google.com/about/">Google</a> and <a href="http://www.facebook.com/facebook">Facebook</a> given that even after the first few barriers there are still a lot of applicants left but then again most companies out there aren&#8217;t like them.
+</p>
+
+<p>But make no mistake - finding the right person <strong>is hard</strong> and it <strong>takes time</strong>. Knowing if someone is that right person, on the other hand, <strong>is simple</strong>, if you&#8217;re committed to it.</p>
+
+<h3>Conclusion</h3>
+<p>
+  Obviously this isn&#8217;t the only way to hire good software engineers. But I do believe it&#8217;s the only one that is fair to both the company and the candidate and will definitely decrease, if not eliminate, your false positives. 
+</p>
+<p>
+  Oh, and I apologize if I sound pedantic but getting them to write code, by whatever means, <strong>isn&#8217;t optional</strong>.
+</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-30T00:00:00+10:00" pubdate data-updated="true">Jul 30<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/misc/'>misc</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/">A Tale of Concurrency: Partitioning Data Between Processes</a></h1>
+	<div class="entry-content">
+		<p>So I had just finished writing this feature. I was confident it&#8217;d work - after all I had a good level of tests around it.
+It sounded like yet another successful deployment.</p>
+
+<p>One week in and something starts breaking. It was hard to track down but at the end I realised it was caused by having concurrent processes running in parallel.</p>
+
+<p>That&#8217;s what happened in a recent production release at our current client. It was a very interesting problem to track
+down and solve and I&#8217;ll do my best to explain and walk you through it here.</p>
+
+<h2>What we were trying to achieve</h2>
+
+<p> I&#8217;ll try not to go into many details here as to how the feature works but here is the gist of it:</p>
+
+<p> A user from the staff can select from a range of criteria to create a &#8220;List&#8221; that is used to match users against the database.
+ These criteria are serialized to the database in this list object to allow for further processing.</p>
+
+<p> When required, the staff can choose to mail the users resulting from that list. To get the set of users, the system
+ de-serializes the criteria contained in the list, builds a SQL query and runs it against the database.</p>
+
+<h2>Constraints</h2>
+
+<p>These lists are contained in something called a &#8220;Push&#8221;. That&#8217;s just a concept that identifies that a set of lists and
+emails belong to a specific theme, say, &#8216;Kitty lovers&#8217;.</p>
+
+<p>It&#8217;s a powerful concept though because its single most important rule is that a user should <strong>never</strong> receive more than one email within the same &#8220;Push&#8221;.</p>
+
+<p>For example, take a look at the image below, which represents a Push in progress. Let <strong>U</strong> be the universe of all users in the database. <strong>L</strong> are users returned by a List within a given Push. <strong>R</strong> is the set of users that have already received an email from that Push.</p>
+
+<p><img src="/writings/assets/images/sets.png"></p>
+
+<p>Based on the rules I explained above, the green area then represents users we can still send emails to.</p>
+
+<h2>Content testing</h2>
+
+<p>With all the basic concepts in place, let&#8217;s pretend we are actually creating a Push for the &#8216;Kitty Lovers&#8217;. I am organizing
+a kitty expo at my house and I want to invite everyone that lives within 50km of Sydney, Australia - see the list specification going on here?</p>
+
+<p>Let&#8217;s say this list gives us 25000 users. My house&#8217;s better be huge.</p>
+
+<p>Simple enough, but I actually have 2 emails to send. They have different content, say 2 different pictures, and before
+I invite everyone, I want to test which email works best by sending them both to a subset of the list - make it a thousand random users each.
+After all, I want my event to be a huge success.</p>
+
+<p>After I decide which email is best - the system tracks opens, clicks, etc&#8230; - I want to send it to the rest of the list,
+which is to say every user that has not received an email from this Push yet.</p>
+
+<h2>Offloading work, the problem begins</h2>
+
+<p>Due to certain architecture and performance requirements the unit of code that runs the list&#8217;s criteria against the database,
+gets the user ids and sends the email, is sent to a job queue to be later executed by a background process.</p>
+
+<p>In development and staging we only ever had a single background process running so all was well. The code was basically executed sequentially.</p>
+
+<p>In production however, we can - and usually have - several background workers picking up jobs from the queue. And that&#8217;s when the bug happened:</p>
+
+<p><img src="/writings/assets/images/activity.png"></p>
+
+<p>As you can see in the above image, given you have 2 jobs running in parallel, Job#1 selects the users from the list, starts sending some emails and in the meantime
+Job#2 comes along, selects roughly the same users and starts doing the same before Job#1 has had enough time to mark
+those users as having received the email already. Bam! Some users will receive duplicates!</p>
+
+<h2>The solution</h2>
+
+<p>  I spent a lot of time literally staring at my laptop&#8217;s screen thinking about how to solve this issue. Locking the table?
+  Nah&#8230; that would render having multiple workers useless.</p>
+
+<p>  What I really needed was a way to partition the data between jobs so as to avoid different jobs from dealing with the same set of users.</p>
+
+<p>  My next thought was to run the query once beforehand to sort the list of user ids, split it in groups equal to the number of jobs
+  and work out the id ranges each job should deal with.</p>
+
+<p>  Although this solution would work, it would add the extra step of running the query once before actually running the jobs.
+  That did not make me happy.</p>
+
+<p>  That&#8217;s when I started thinking about a metaphor that helped me come up with this insight: a Hash Table. If you ever implemented
+  one you can see that the buckets in a hash table could be related to the jobs we have running.</p>
+
+<p>  I basically wanted different users to go to different buckets. Think hash functions. Think modulus.</p>
+
+<p>  To follow this approach I changed my code so that each job would be assigned an id, starting at 0, up to (number_of_jobs - 1).
+  Then, when putting the jobs in the queue I would provide 2 extra arguments:
+  <strong>the current job id</strong> and <strong>the total number of jobs</strong>.</p>
+
+<p>  Upon execution, the job would use these extra arguments to modify the query, adding an extra field to the select clause:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">SELECT</span> <span class="p">...,</span> <span class="k">MOD</span><span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">number_of_jobs</span><span class="p">)</span> <span class="k">AS</span> <span class="n">modulus</span><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  And it would also append an extra filter to the where clause:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">WHERE</span> <span class="p">...</span> <span class="k">AND</span> <span class="n">modulus</span> <span class="o">=</span> <span class="n">current_job_id</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  That way, users would be spread as evenly as possible between jobs and no single user would be processed by more than one job.</p>
+
+<p>  For example: If we had 2 jobs, ids 0 and 1 and a list of 10 users with ids from 0 to 10, this would be the users distribution between jobs:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">0</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">0</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">1</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">1</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">2</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">2</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">3</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">3</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">4</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">4</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">5</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">5</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">6</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">6</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">7</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">7</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">8</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">8</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">9</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">9</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">10</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">10</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  A simple, elegant solution for a tricky problem. One that I&#8217;m finally happy about.</p>
+
+<p>  If you made it to here, I appreciate your patience and hope you enjoyed the read ;)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-19T00:00:00+10:00" pubdate data-updated="true">Jun 19<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/concurrency/'>concurrency</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2011/05/29/a-few-useful-git-commands/">A Few Useful Git Commands</a></h1>
+	<div class="entry-content">
+		<p>I&#8217;ve been working fulltime with <a href="http://git-scm.com/">Git</a> for a while now and I&#8217;ve noticed a pattern of commands that emerge every so often, but not often enough that would make me remember them.</p>
+
+<p>That&#8217;s why I decided to post them here so I know where to look in the future. And of course they can turn out to be useful to someone else too.</p>
+
+<p>So without further ado, here they are:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#undo last commit</span>
+</span><span class='line'>git reset HEAD^
+</span><span class='line'>
+</span><span class='line'><span class="c">#show files in a given commit</span>
+</span><span class='line'>git show --pretty<span class="o">=</span><span class="s2">&quot;format:&quot;</span> --name-only rev_number
+</span><span class='line'>
+</span><span class='line'><span class="c">#remove untracked files and directories</span>
+</span><span class='line'>git clean -f -d
+</span><span class='line'>
+</span><span class='line'><span class="c">#track remote branch</span>
+</span><span class='line'>git branch --track branch_name origin/master
+</span><span class='line'>
+</span><span class='line'><span class="c"># given you created a new local branch &#39;branch_name&#39;</span>
+</span><span class='line'><span class="c"># pushes &#39;branch_name&#39; to &#39;origin/branch_name&#39;, creating the remote branch for you</span>
+</span><span class='line'>git push origin branch_name
+</span><span class='line'>
+</span><span class='line'><span class="c">#delete remote branch</span>
+</span><span class='line'>git push origin :remote_branch_name
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&#8217;ll keep this list up to date and add more useful stuff as need arises. Enjoy.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-29T00:00:00+10:00" pubdate data-updated="true">May 29<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/git/'>git</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/writings/writings/page/3/" class="prev">Prev</a>
+    
+    
+        <a href="/writings/writings/page/5/" class="next">Next</a>
+    
+    <div class="center"><a href="/writings/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

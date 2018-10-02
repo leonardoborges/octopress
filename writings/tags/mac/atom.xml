@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mac | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/mac/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mac OS X: Getting MySQL and Rails to work]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/08/28/mac-os-x-getting-mysql-and-rails-to-work/"/>
+    <updated>2008-08-28T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/08/28/mac-os-x-getting-mysql-and-rails-to-work</id>
+    <content type="html"><![CDATA[<p>
+So I couldn't resist and bought myself a MacBook Pro! It's my first week with my new toy and I'm really enjoying it.<br><br>But I need to do something useful with it so I started to prepare it to be my new development platform, starting with Ruby/Rails + MySQL: Here is where the fun begins!<br><br>After I installed both Rails and MySQL, I fired up a terminal an typed:<br><pre lang="bash">sudo gem install mysql</pre><br>...and here is what u get<br><pre lang="bash">ERROR: Failed to build gem native extension.</pre><br>If you google this error you will find a couple solutions and this is the one that worked for me:<br><pre lang="bash">ARCHFLAGS="-Os -arch x86_64 -fno-common"<br>sudo gem install mysql -- --with-mysql-dir=/usr/local/mysql<br>--with-mysql-config=/usr/local/mysql/bin/mysql_config</pre><br>Now, confident enough, I created a sample rails app and tried to create the development database:<br><pre lang="bash">leo$ rake db:create (in /Users/leo/projects/test)<br>dyld: lazy symbol binding failed: Symbol not found: _mysql_init</pre><br>Doesn't look happy yet huh? This took me a while to figure out but it turned out to be fairly simple.<br>I have no idea why but after I installed the gem I had the file mysql.bundle in two different places:<br><pre lang="bash">/Library/Ruby/Gems/1.8/gems/mysql-2.7/lib/mysql.bundle<br>/Library/Ruby/Gems/1.8/gems/mysql-2.7/mysql.bundle</pre><br>The solution was to remove the first copy of the file. Now everything is working fine at this end!<br>I really hope this is useful to someone!
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

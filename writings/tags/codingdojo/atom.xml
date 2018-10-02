@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: CodingDojo | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/codingdojo/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Coding Dojo #1 - the fun begins]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/06/06/coding-dojo-1-the-fun-begins/"/>
+    <updated>2009-06-06T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/06/06/coding-dojo-1-the-fun-begins</id>
+    <content type="html"><![CDATA[<p>
+Yesterday I organized our first <a href="http://codingdojo.org" target="_blank">CodingDojo</a> here at the company and I'm glad to say it was a great success!<br>The problem chosen was the <a href="http://codekata.pragprog.com/2007/01/kata_two_karate.html" target="_blank">Karate Chop</a>, from Dave Thomas' <a href="http://codekata.pragprog.com/" target="_blank">Code Kata</a>.<br><br>As it was also my first time organizing a Dojo, we took some time to get things straight, explain everyone the rules and start coding. Nothing that would compromise the experience, though.<br><br>The rules were basically the ones of a <a href="http://codingdojo.org/cgi-bin/wiki.pl?back=RandoriKata" target="_blank">RandoriKata</a> and as a mechanism for switching pairs we chose the <a href="http://codingdojo.org/cgi-bin/wiki.pl?back=TimeBox" target="_blank">TimeBox</a> with a limit of 5 minutes.<br><br>We came up with 3 different solutions in about 1h 30min. The 1st one looking like crap! :)<br><br>Which was actually interesting because the general feeling before we started was that it would be boring, or too easy since "everyone" knows what a binary chop/search is.<br>Wrong!!! It all changes when you have a time limit and a bunch of people behind you doing funny noises! It's a pressure different from your day to day job. A healthy one in my opinion.<br><br>Hearing the feedback afterwards was rewarding. Everyone seemed to have had a lot of fun and can't wait for the next one.<br><br>I guess the most important lesson we got from it was to be quiet and not bother the current pair when we do not agree with their idea - not even if we do. This one is very important as it both shows respect and allows you to learn from how your colleagues think.<br><br>Next thursday we'll keep going with this one and hopefully finish and pick up the next problem! :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

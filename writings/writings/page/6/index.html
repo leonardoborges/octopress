@@ -1,0 +1,591 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="What&#8217;s the difference between your application&#8217;s javascript code and its java/ruby/python/whatever code?Think about it for a second. &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/06/14/are_you_testing_your_javascript_yet/">Are You Testing Your Javascript Yet?</a></h1>
+	<div class="entry-content">
+		<p>
+What&#8217;s the difference between your application&#8217;s javascript code and its java/ruby/python/whatever code?<br><br>Think about it for a second. Done? Well, the answer is: none!<br><br>In today&#8217;s web applications your javascript code is no different from the rest of your code base but yet we treat it with disregard - and we&#8217;re all to blame.<br><br>We often see developers investing time writing all sorts of automated tests around their code base but fail to do the same for their javascript -  and yet they get surprised when their client can&#8217;t click on a button on their web app that depends on that ajax call that has been manually tested once when the page was first released.<br><br>Ask yourself this question if you&#8217;re not sure if you should be testing your javascript: If it breaks, can my users still benefit from my app? - I think the answer for most web apps is obvious.<br><br>As for tools, I can only speak of two, <a href="http://code.google.com/p/js-test-driver/" target="_blank">JsTestDriver</a> and <a href="http://github.com/nkallen/screw-unit" target="_blank">screw-unit</a>, the latter being the one we&#8217;re using in my current project at <a href="http://www.thoughtworks.com" target="_blank">ThoughtWorks</a>.<br><br>What I liked about screw-unit is that it&#8217;s very easy to get it up and running. Being a Behavior-Driven Testing Framework it&#8217;s not surprising it has a syntax similar to <a href="http://rspec.info/" target="_blank">Rspec</a> -which I prefer over JsTestDriver&#8217;s similarity to <a href="http://www.junit.org/" target="_blank">JUnit&#8217;s</a>.<br><br><script src="https://gist.github.com/790871.js?file=gistfile1.js"></script> This is how a test written with screw-unit could look like:  <script src="https://gist.github.com/790873.js?file=gistfile1.js"></script><br><br>Not too bad for a javascript test suite huh?<br><br>So the next time you write a javascript line of code, how about writing a test for it? Consider using screw-unit as your tool but if you have been writing tests using a different framework and you&#8217;re happy with it, share your experience.<br>I&#8217;m always keen to learn better ways of doing what I do.<br><br>Cheers!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-14T00:00:00+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/javascript/'>Javascript</a>, <a class='category' href='/writings/tags/testing/'>Testing</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/04/24/small-update-to-appconstants/">Small Update to AppConstants</a></h1>
+	<div class="entry-content">
+		<p>
+It&#8217;s been now over a week since we moved to Sydney and everything is just great. We&#8217;re still house hunting but I got a feeling we&#8217;ll have a home soon. :)<br><br>In the meantime, this morning I got a feature request on github to allow <a href="http://github.com/leonardoborges/app_constants" target="_blank">AppConstants</a> to interpret YAML files with embedded code like this:<br><br><script src="https://gist.github.com/790877.js?file=gistfile1.yml"></script><br><br>I haven&#8217;t needed it myself but thought it would be a nice addition so my <a href="http://github.com/leonardoborges/app_constants/commit/7c116c8cf9307942f7d8682779510e623156fd08">latest commit</a> does exactly that. Let me know if you find any issues.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-24T00:00:00+10:00" pubdate data-updated="true">Apr 24<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/04/10/goodbye-europe-a-two-year-retrospective/">Goodbye Europe, a Two-Year Retrospective</a></h1>
+	<div class="entry-content">
+		<p>
+Now several months after I announced my <a href="http://www.leonardoborges.com/writings/2009/10/08/soon-off-to-conquer-lands-afar/" target="_blank">odyssey</a> to obtain my Australian work visa, the time has finally come!<br><br>I&#8217;ll be flying to Sydney next week, April 15th, and as you can probably guess, I&#8217;m excited as hell! :) This starts an important new page both in my life and my career, but that&#8217;s not what this post is about. It&#8217;s about sharing the experience of living for over two years in Europe.<br><br>First off, I traveled. A whole lot. Both for work and leisure. I&#8217;ve been to 23 cities in 11 countries, which you can check on my <a href="http://www.tripadvisor.com/MemberProfile?uid=F36E8157798EAF76A8684BC6FDB95DBD&amp;c=pt" target="_blank">map</a>. Getting to explore all these different cultures was definitely rewarding and fun, to say the least. But I have my favorites, including Prague, London, Dublin and Bruges&#8230;<br><br>While in Madrid, I worked for <a href="http://www.miraiespana.com/" target="_blank">Mirai España</a>, the company that provided me with great professional experiences. I had the opportunity to work with a <a href="http://twitter.com/pratiknaik" target="_blank">few</a> <a href="http://twitter.com/zukunftsalick" target="_blank">very</a> <a href="http://twitter.com/philly_mac">smart</a> <a href="http://twitter.com/fxn" target="_blank">people</a> that, in a way or another, contributed to improve my skills as a software engineer.  Not to mention the several conferences I attended, including QCon in London, RailsConf in Berlin and serveral <a href="http://www.leonardoborges.com/writings/category/conferences/" target="_blank">others</a>.<br><br>Being a rock/metal fan I am in the ideal place to see just about every band I always wanted to. Concerts in Europe are high quality, frequent and affordable and as such, I&#8217;ve attended a whole bunch of them:<br><br>- Metallica<br>- Megadeth<br>- Soilwork<br>- Machine Head<br>- Offspring<br>- Cavalera Conspiracy<br>- Within Temptation<br>- The Haunted<br>- At the gates<br>- Judas Priest<br>- Testament<br>- Nine Inch Nails<br>- AC/DC<br>- Rammstein<br>- Grave<br>- Krisiun<br>- Nile<br><br>On a more personal note Madrid is also the place where I met Enif, my beloved girlfriend. We are both very excited about this new experience and, of course, we&#8217;re moving together to Sydney, with plans of getting married next year! :D<br><br>As you can see, Europe has been kind to me and I will certainly miss the experiences, cities, cultures and people I&#8217;ve met. But I&#8217;m only making room for more and more interesting things that will certainly happen on the land down under. Let&#8217;s conquer it all!<br><br>Hopefully my next post will be written by the beach, in my new home in Australia.<br><br>Cheers, mate! :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-10T00:00:00+10:00" pubdate data-updated="true">Apr 10<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/world/'>World</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/04/09/fallingdreams-my-very-own-tetris-clone/">FallingDreams, My Very Own Tetris Clone</a></h1>
+	<div class="entry-content">
+		<p>
+This will come as no surprise to my closest friends, but I am a long time game development admirer.  Although I&#8217;ve never done anything professionally I did spend some time in the past studying this amazingly interesting field - it&#8217;s my dark hobby. As hardware evolves and gamers demand more and more reality from their consoles, the game development industry is one of the few that basically didn&#8217;t suffer with the latest economic crisis.<br><br>3D games are getting more and more sophisticated to the point that it&#8217;s very hard for a single person, or even a small team, to develop something worthwhile - think of all the people you need to develop a game such as <a title="God of War III on Wikipedia" href="http://en.wikipedia.org/wiki/God_of_War_III" target="_blank">God of War III</a>: screenwriters, artists, musicians, sound engineers, 3D artists, animators, programmers, level designers, combat designers, actors, voiceovers&#8230;<br><br>So I just wanted to have the experience of writing a full game, end-to-end, and that&#8217;s where FallingDreams comes in. To be able to do that in a short amount of time, it had to be something simple and that&#8217;s why I chose <a title="Tetris on Wikipedia" href="http://en.wikipedia.org/wiki/Tetris">Tetris</a>. Although simple, it does share most of the steps common to modern games development. It was a very interesting project to work at and you can grab the result <a title="FallingDreams binary" href="http://www.leonardoborges.com/writings/wp-content/uploads/2010/04/fallingdreams.jar">here</a>. The source code is also available on my github account, <a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">here</a>.<br><br><a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">FallingDreams</a> is written in Java (JDK 6) and as such it should work fine on Windows, Linux and Mac OS. I tried to be as loyal as possible to the original Tetris rules, but you might find one thing or two that don&#8217;t work as one&#8217;d exepct.<br><br>Enjoy! ;)<br><br><strong><br></strong><br><br><em><strong>Disclaimer:</strong> This was my first &#8216;full game&#8217; and is not intended to be production ready. The code has definitely got room for improvement and it served as my playground where I experimented different design techniques, both game and general software related. And it doesn&#8217;t have a single line of tests - crucify me :P </em><br><br><em>As I said, it&#8217;s not supposed to be considered bug free but I&#8217;m sure people interested in games development can benefit from the source files. Feel free to fork it as well! It would be cool to see what people would do with it :)</em>
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-09T00:00:00+10:00" pubdate data-updated="true">Apr 9<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/games/'>Games</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/programming/'>Programming</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/02/28/upgrading-appconstants-to-rails-3/">Upgrading AppConstants to Rails 3</a></h1>
+	<div class="entry-content">
+		<p>
+Back in January I <a href="http://www.leonardoborges.com/writings/2010/01/23/my-take-on-rails-environment-specific-constants/" target="_blank">announced</a> a small but useful plugin called <a href="http://github.com/leonardoborges/app_constants">AppConstants</a>, that basically provides a central place where you can store environment specific constants. And since I started using Rails 3 in the past week, I thought I&#8217;d make it Rails 3 compatible.<br><br>The code is really simple and - as I expected - the upgrade process was quite straight forward.<br><br>I&#8217;m not gonna write a guide here on how to upgrade your plugins to Rails 3 - there is plenty about that around the web - but instead, just show the steps I went through to upgrade mine. Similar plugins might have a similar upgrade path.<br><br><strong>- Generators</strong><br><br>My plugin makes use of a simple generator that copies its default constants file and initializer to <em>Rails.root/config</em> and <em>Rails.root/config/initializers</em>, respectively. In Rails 2.x it was located under <em>Rails.root/vendor/plugins/app_constants/generators/app_constants</em> and it was defined like so:<br><br><script src="https://gist.github.com/790878.js?file=gistfile1.rb"></script><br><br>In Rails 3, the generators had to be moved to <em>Rails.root/vendor/plugins/app_constants/lib/generators</em>. Notice the root directory app_constants under generators has been removed as well. And the code was changed to this:<br><br><script src="https://gist.github.com/790879.js?file=gistfile1.rb"></script><br><br>We had three simple changes here:<br><br>- <em>The generator now extends from <em><strong>Rails::Generators::Base</strong></em></em>: This class uses the Thor infrastructure to handle generators. - more info <a href="http://blog.plataformatec.com.br/2009/07/creating-your-own-generators-with-thor/" target="_blank">here</a>.<br><br>- <em>I had to implement the <strong>source_root</strong> class method</em>, which basically tells your generator where to find your template files.<br><br>- <em>The <em><strong>manifest</strong></em> method is now called <em><strong>copy_config_files</strong></em> - or <strong><em>anything</em></strong></em> you want. <br><br>The way this works is that, once you invoke the generator, Thor will sequentially call all instance methods in your generator class - or the only instance method in the example above. If your generator does a lot, it will allow for a better organization of your tasks.<br><br>And that&#8217;s it! I did change a couple of other things but that had to be changed anyway and are not related to the migration.<br><br>For Rails 2.3.x users, you&#8217;ll find a 2.3.x branch on github that should work for you.<br><br>Cheers
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-28T00:00:00+11:00" pubdate data-updated="true">Feb 28<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/02/25/learning-objective-c-a-ruby-analogy/">Learning Objective-C: A Ruby Analogy</a></h1>
+	<div class="entry-content">
+		<p>
+Learning new programming languages is fun. And if it&#8217;s your 2nd, 3rd&#8230;Nth programming language you will eventually look for features you already know and love.<br><br>Coming from Ruby - but after having done my fair amount of Java for many years, among other things - I end up looking for features like <a href="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/" target="_blank">blocks</a>, <a href="http://rubylearning.com/satishtalim/ruby_open_classes.html" target="_blank">open classes</a> and syntax sugar like <a href="http://ruby-doc.org/core/classes/Module.html#M001681" target="_blank">automatic generation of attribute accessors.</a> These are hard to let go of.<br><br>Having decided to learn <a href="http://developer.apple.com/Mac/library/documentation/Cocoa/Conceptual/ObjectiveC/index.html" target="_blank">Objective-C</a> recently, I was delighted to find out that all of these are available - for better or for worse - and wanted to share this analogy with its Ruby counterparts.<br><br><strong>- Attribute accessors</strong><br><br><br>In ruby, this class definition<br><br><script src="https://gist.github.com/790881.js?file=gistfile1.rb"></script><br><br>implements for you the getters and setters of the instance variable <strong>name</strong>.<br><br><br>In Objective-C, the combination of the @property and @synthesize directives provides you with roughly the same result:<br><br><script src="https://gist.github.com/790882.js?file=gistfile1.m"></script><br><br>Now the compiler is responsible for writing those getters/setters for you.<br><br><strong>- Open classes & blocks</strong><br><br><br>Blocks in ruby are the structures that allow you to - among other things - iterate over arrays like this:<br><br><script src="https://gist.github.com/790883.js?file=gistfile1.rb"></script><br><br>Objective-C doesn&#8217;t have an &#8216;each&#8217; method in its root array class (NSArray) but since it does support blocks and open classes, you could just write it yourself:<br><br><script src="https://gist.github.com/790884.js?file=gistfile1.m"></script><br><br>Yes, I know the syntax isn&#8217;t appealing, but using it in your program is a bit better:<br><br><script src="https://gist.github.com/790886.js?file=gistfile1.m"></script><br><br>Given the syntactic differences, the code above is very similar to its ruby counterpart. Iterating over an array is just one of the many things blocks are useful for. Others might include dealing with files, network sockets etc&#8230;<br><br>Blocks are powerful structures and are not created everyday, but it&#8217;s nice to know that you can resort to them when the time comes. ;)<br>
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-25T00:00:00+11:00" pubdate data-updated="true">Feb 25<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/objective-c/'>Objective-C</a>, <a class='category' href='/writings/tags/programming/'>Programming</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/02/03/hacking-rubys-syntax/">Hacking Ruby&#8217;s Syntax</a></h1>
+	<div class="entry-content">
+		<p>
+<strong>What?</strong><br><br>In Ruby you have basically two ways of defining private methods:<br><br><script src="https://gist.github.com/791025.js?file=test.rb"></script><br><br>I see a small problem with both approaches. In the first one, and the most obvious, is that you need to duplicate the method name as well as add an extra method call - private - just to change its visibility.<br><br>The second approach avoids this but adds the risk of accidentally putting a method that is intended to be public under the private section of the source file, which can render an annoying debugging session.<br><br><strong>Why?</strong><br><br>Personally, I like to have a <a href="http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/" target="_blank">smooth reading flow in my source files</a>. That means that if the public method_a makes use of the private method_b, I want method_b defined right below its caller, which is possible - but verbose - using the private method call:<br><br><script src="https://gist.github.com/791026.js?file=test.rb"></script><br><br>But can be somewhat harder to accomplish if you decide to split your source file in sections:<br><br><script src="https://gist.github.com/791028.js?file=test.rb"></script><br><br>I wanted to be able to define a private method with a single reserved keyword&#8230;<br><br><strong>How?</strong><br><br>What if I could define a private method using this new syntax:<br><br><script src="https://gist.github.com/791029.js?file=test.rb"></script><br><br>It turns out I can.<br><br>Notice the <strong>def_p</strong> keyword? This is a new keyword I created by changing ruby&#8217;s parser and that behaves mostly like the <strong>def</strong> keyword, except that it defines a private method instead.<br><br>If you wanna read the code that allows this behavior and try it yourself, <a href="http://www.leonardoborges.com/writings/wp-content/uploads/2010/02/def_p_extension.diff">download the patch I wrote</a> and apply it to the ruby source code - I patched version <strong>1.9.1-p376</strong>.<br><br>After applying the patch, just build ruby as usual:<br><br><script src="https://gist.github.com/791031.js?file=gistfile1.eclass"></script><br><br>And then try running this script:<br><br><script src="https://gist.github.com/791033.js?file=test.rb"></script><br><br>You should see the following output:<br><br><script src="https://gist.github.com/791034.js?file=gistfile1.eclass"></script><br><br>Happy hacking :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-03T00:00:00+11:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/01/23/my-take-on-rails-environment-specific-constants/">My Take on Rails Environment Specific Constants</a></h1>
+	<div class="entry-content">
+		<p>
+It’s funny how every Rails application I - and possibly you - work on ends up needing some sort of per-environment global constants.<br><br>Examples may include the application url - It might be used in account activation emails and thus should be different between the development and production environments.<br><br>Or perhaps your application depends on external services that, depending on the environment, are available in different URIs.<br><br>There are a couple solutions out there but my needs were simple and straightforward, thus I developed a small rails plugin that is the simplest thing that could possibly work: <strong><a href="http://github.com/leonardoborges/app_constants">AppConstants</a></strong>.<br><br>It&#8217;s been useful for my current project and I hope it can be useful to someone else too ;)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-23T00:00:00+11:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/01/13/monit-thinking-sphinx-and-rvm/">Monit, Thinking Sphinx and RVM</a></h1>
+	<div class="entry-content">
+		<p>
+In one of my Rails projects I&#8217;m using <a href="http://www.sphinxsearch.com/" target="_blank">Sphinx</a> to provide full-text search capabilities. To integrate both worlds I chose <a href="http://freelancing-god.github.com/ts/en/" target="_blank">Thinking Sphinx</a>, which is just great and so far has met all of my expectations.<br><br>Also, <a href="http://www.leonardoborges.com/writings/2010/01/02/managing-multiple-ruby-versions/" target="_blank">as I previously mentioned</a>, I&#8217;m using <a href="http://rvm.beginrescueend.com/">RVM</a> to manage my ruby installations on both my development and production machines and this setup is what motivated this post.<br><br>I use <a href="http://mmonit.com/monit/" target="_blank">Monit</a> to monitor the services running on my production server - nginx, mysql, php - and as of the first deploy of this application, it only made sense to also monitor Sphinx.<br><br>In order to create an initialization script, I would need at least a way to start and stop sphinx from the command line, which, using Thinking Sphinx, can be done using these rake tasks:<br><pre lang="bash"><br>$ rake thinking_sphinx:stop<br>$ rake thinking_sphinx:start<br></pre><br>It&#8217;s worth mentioning now that I don&#8217;t run sphinx as root. I run it with the same user my rails application uses. For the purpose of this post, let&#8217;s call it <em>deploy</em>.<br><br>When I tried using my script I got errors such as these:<br><br><pre lang="bash"><br>Missing the Rails 2.3.5 gem. Please `gem install -v=2.3.5 rails`, update your RAILS_GEM_VERSION setting in config/environment.rb for the Rails version you do have installed, or comment out RAILS_GEM_VERSION to use the latest version installed.<br></pre><br><br>After some digging around I found that the GEM_HOME environment variable for my deploy user wasn&#8217;t being set correctly - something to do with rvm, but not quite sure - and to fix this, well, I just had to set it, leaving the final working version of my script somewhat like this - simplified :
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#! /bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">### BEGIN INIT INFO</span>
+</span><span class='line'><span class="c">### END INIT INFO</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">set_path</span><span class="o">=</span><span class="s2">&quot;cd /your/rails/app/root; export GEM_HOME=/path/to/your/gems; RAILS_ENV=production;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>  start<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> -n <span class="s2">&quot;Starting sphinx: &quot;</span>
+</span><span class='line'>                su - deploy -c <span class="s2">&quot;$set_path rake ts:start&quot;</span> &gt;&gt; /var/log/sphinx.log 2&gt;&amp;1
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;done.&quot;</span>
+</span><span class='line'>        ;;
+</span><span class='line'>  stop<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> -n <span class="s2">&quot;Stopping sphinx: &quot;</span>
+</span><span class='line'>                su - deploy -c <span class="s2">&quot;$set_path rake ts:stop&quot;</span> &gt;&gt; /var/log/sphinx.log 2&gt;&amp;1
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;done.&quot;</span>
+</span><span class='line'>        ;;
+</span><span class='line'>      *<span class="o">)</span>
+</span><span class='line'>            <span class="nv">N</span><span class="o">=</span>/etc/init.d/sphinx
+</span><span class='line'>            <span class="nb">echo</span> <span class="s2">&quot;Usage: $N {start|stop}&quot;</span> &gt;&amp;2
+</span><span class='line'>            <span class="nb">exit </span>1
+</span><span class='line'>            ;;
+</span><span class='line'><span class="k">esac</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure>
+
+There are 2 things happening here. First, regardless of the user I&#8217;m running this init script as, I drop privileges in order to execute the rake task with my deploy user. Second, I set the GEM_HOME environment variable to stop getting the &#8216;gem not found&#8217; errors.<br><br>After that, monit was able not only to monitor my sphinx instance, but also (re)start/stop it with the correct user.<br><br>I&#8217;m no Linux wizard so if you wanna suggest improvements to this script, feel free to do so!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-13T00:00:00+11:00" pubdate data-updated="true">Jan 13<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/sphinx/'>Sphinx</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2010/01/02/managing-multiple-ruby-versions/">Managing Multiple Ruby Versions</a></h1>
+	<div class="entry-content">
+		<p>
+Today I read a nice <a href="http://akitaonrails.com/2010/01/01/limpando-meu-ambiente-de-desenvolvimento" target="_blank">post</a> - in Portuguese - by <a href="http://akitaonrails.com/" target="_blank">Fábio Akita</a> on how to manage multiple ruby versions on your machine. I&#8217;ve tried it once with some tool I can&#8217;t even remember the name but failed miserably.<br><br>But this time things look very different. The tool here is the <a href="http://rvm.beginrescueend.com" target="_blank">rvm</a> - short for Ruby Version manager - and it works just great.<br><br>Let&#8217;s cut to the chase and imagine that you, like me, want to run/develop/test your code on both ruby 1.8.7 and ruby 1.9.1. These steps would get you up and running in a few minutes:<br><br><strong>Install rvm:</strong><br><pre lang="bash"><br>$ gem sources -a http://gemcutter.org/<br>$ gem install rvm<br>$ rvm-install<br>$ echo "if [[ ! -z $HOME/.rvm ]] ; then source $HOME/.rvm ; fi" >> ~/.bash_profile<br>$ source ~/.rvm/scripts/rvm<br></pre><br><br><strong>Install the ruby interpreters you want to use:</strong><br><pre lang="bash"><br>$ rvm  install ruby-1.8.7-p160<br>$ rvm  install ruby-1.9.1<br></pre><br><br>Now it&#8217;s important to notice that at this point you have separate gem installations for each of the interpreters you&#8217;ve installed in the previous step. That said, just go ahead and switch between your interpreters and use your command line scripts - ruby, gem, etc&#8230; - as usual.<br><br><strong>Switching between interpreters:</strong><br><pre lang="bash"><br>$ rvm ruby-1.8.7-p160  #switch to the specified version <br>$ ruby -v<br>ruby 1.8.7 (2009-04-08 patchlevel 160) [i686-darwin9.8.0]<br>$ gem install rails  #note I'm not using sudo since the new gem paths point to the user's home directory <br><br>$ rvm ruby-1.9.1  #switch to the specified version <br>$ ruby -v<br>ruby 1.9.1p376 (2009-12-07 revision 26041) [i386-darwin9.8.0]<br>$ gem install rails  #note I'm not using sudo since the new gem paths point to the user's home directory<br></pre><br><br>And that&#8217;s it, just go on and install rails, merb, sinatra or whatever rocks your boat!<br>rvm will work with MRI/YARV, JRuby, Ruby EE and Rubinius. Enjoy and don&#8217;t forget to check <a href="http://rvm.beginrescueend.com" target="_blank">rvm</a>&#8217;s website for the complete documentation! :) 
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-02T00:00:00+11:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/writings/writings/page/5/" class="prev">Prev</a>
+    
+    
+        <a href="/writings/writings/page/7/" class="next">Next</a>
+    
+    <div class="center"><a href="/writings/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

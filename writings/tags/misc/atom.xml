@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: misc | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/misc/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mission accomplished]]></title>
+    <link href="http://www.leonardoborges.com/writings/2016/05/27/mission-accomplished/"/>
+    <updated>2016-05-27T17:40:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2016/05/27/mission-accomplished</id>
+    <content type="html"><![CDATA[<p>A year and four months ago <a href="http://www.leonardoborges.com/writings/2014/12/27/staring-a-new-chapter/">I joined Atlassian</a> to pursue a very exciting opportunity: to deliver realtime collaborative editing to Confluence. I have talked about it last year at <a href="https://www.youtube.com/watch?v=3QR8meTrh5g&amp;index=16&amp;list=PLZdCLR02grLoBx0Y5ZrpdmLxc160PIwzQ">EuroClojure</a> and this year at <a href="http://qconsp.com/presentation/colabora%C3%A7%C3%A3o-em-tempo-real-com-clojure-e-clojurescript%E2%80%8B">QCon Brazil</a>. Even <a href="http://www.cognitect.com/">Cognitect</a> wrote <a href="http://blog.cognitect.com/blog/2015/7/21/atlassian-builds-realtime-collaboration-services-with-clojure">a few words about it</a>.</p>
+
+<p>In a nutshell this involved writing Clojure code all day to build an awesome service we call Synchrony. Synchrony is capable of realtime data synchronisation - not just collaborative editing - and as such its applications are many! This has been proven again and again internally during the Atlassian ShipIt hackatons, and externally via <a href="https://enso.me/">Enso.me</a>, which is powered by Synchrony.</p>
+
+<p>Throughout this journey I took on more responsibility and transitioned into the Development Team Lead role. This gave me the opportunity to help drive the product roadmap and vision within the company in addition to leading a very capable team. What an amazing learning experience it has been!</p>
+
+<h3>Today</h3>
+
+<p>Fast-forward to today and collaborative editing is finally being used by real customers as part of our early access program! It's been a great journey and we have achieved a huge milestone!</p>
+
+<p>For a more up to date look at Synchrony I highly recommend <a href="https://twitter.com/draftkraft">Haymo Meran</a>'s presentation at <a href="https://www.youtube.com/watch?v=EgCYd6ei7QI">this year's AtlasCamp</a>. Haymo is a friend and one of the original founders of Wikidocs, the company where the technology behind Synchrony was originally developed.</p>
+
+<p>I'm really proud of what we have accomplished and it's a great moment to look for a change, again :)</p>
+
+<h3>The future</h3>
+
+<p>Yes, I am leaving Atlassian - last day is June 17th. I'll be moving on to a new opportunity about which I'm really excited. But that is the subject of another blog post :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Clojure Sydney Meetup, four years in]]></title>
+    <link href="http://www.leonardoborges.com/writings/2016/02/08/the-clojure-sydney-meetup-four-years-in/"/>
+    <updated>2016-02-08T12:43:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2016/02/08/the-clojure-sydney-meetup-four-years-in</id>
+    <content type="html"><![CDATA[<h2>In the beginning</h2>
+
+<p>Nearly 4 years ago I founded the Sydney Clojure User Group. I had been playing with Clojure for a little while
+and started a small study group to learn more. Initially this group was private and held at the ThoughtWorks office.</p>
+
+<p>After a couple of meetups and conversations I decided to open up the group to the public and then realised we weren't the only ones interested in Clojure and, even more important, interested in meeting like-minded people, share experiences and help each other.</p>
+
+<p>Back then none of us used Clojure for anything serious. Apart from Steve. Steve is a brave man and was building his new startup on top of Clojure. This was a great source of inspiration and learning for all of us. Steve hired Harry and Harry told us first hand what using Clojure for work could be like.</p>
+
+<p>For all of us hobbyist Clojurists, this was a great start.</p>
+
+<p>Since then we've held 37 meetups with an average of 22.25 attendees per meetup. These numbers won't impress many people, no doubt about that. What is impressive however is how it's changed over the years.</p>
+
+<h2>Where are we at?</h2>
+
+<p>Last December I sent out a survey and the result for one of the questions made me smile. The question was: <em>Do you currently use Clojure in your day job?</em></p>
+
+<p><img class="center border" src="/assets/images/working-with-clojure-survey-results.png" width="541" height="195"></p>
+
+<p>This is absolutely amazing. It's great to see how much the community has matured. Nearly 50% of meetup attendees currently work with Clojure in Sydney! I'm fortunate to say I can <a href="http://www.leonardoborges.com/writings/2014/12/27/staring-a-new-chapter/">include myself towards this milestone</a>!</p>
+
+<h2>Going forward</h2>
+
+<p>We're now in 2016 and the group shows no signs of slowing down. In fact, we're picking up the pace a little and starting the new year with a new venue: from now on we'll be meeting at <a href="https://www.atlassian.com/">Atlassian</a>!</p>
+
+<p>I would like to thank ThoughtWorks for all the support in starting and running the meetup. I wouldn't have been able to do it if it wasn't for them.</p>
+
+<p>See you at the <a href="http://www.meetup.com/clj-syd/events/228691721/">next meetup</a>!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[So Long 2015: Year Highlights]]></title>
+    <link href="http://www.leonardoborges.com/writings/2016/01/04/so-long-2015-year-highlights/"/>
+    <updated>2016-01-04T16:10:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2016/01/04/so-long-2015-year-highlights</id>
+    <content type="html"><![CDATA[<p>I should have published this post still in 2015 but as I was on holidays traveling around Australia I didn't really have the time to do it. Better late than never, right? (also Linode - the provider hosting this site - has been under a <a href="https://news.ycombinator.com/item?id=10825425">severe DDoS attack</a> so the site just came back up today)</p>
+
+<p>2015 has been a unusually quiet year in this blog. Thankfully that is because I have been extremely busy in many other areas. I'd like to take the opportunity and look back at 2015's highlights.</p>
+
+<h2>Atlassian</h2>
+
+<p>I started working with Clojure full-time at Atlassian and it's been a great experience so far. One of the big things we're working on is bringing collaborative editing to Confluence. However we had the opportunity to put our service to the test with the launch of <a href="https://enso.me/">Project Enso</a>, an Atlassian Labs beta product. Check out <a href="https://vimeo.com/145662314">this teaser video</a> to get a quick feature run down.</p>
+
+<h2>Book</h2>
+
+<p>Back in March my book - <a href="http://www.amazon.com/Clojure-Reactive-Programming-Leonardo-Borges/dp/1783986662/">Clojure Reactive Programming</a> - was finally published. I have <a href="http://www.leonardoborges.com/writings/2015/03/27/clojure-reactive-programming-has-been-published/">written about it</a> before so I won't dwell too much.</p>
+
+<p>One last note on this though: you can <strong><a href="https://www.packtpub.com/web-development/clojure-reactive-programming">get a digital copy of my book for only $5</a></strong> as part of my publisher's (Packt) Skill Up offer. <strong>Hurry, offer ends on the 8th of January!</strong></p>
+
+<h2>Learning</h2>
+
+<p>I tend to do a mix of reading, courses and deliberate practice when learning new things. In terms of reading, you can have a look at a few things I read in my <a href="https://www.goodreads.com/user/year_in_books/2015/15882031">Good Reads - 2015 in books</a> profile.</p>
+
+<p>As for courses I decided to give <a href="https://en.wikipedia.org/wiki/Massive_open_online_course">MOOCs</a> a try and am really happy with the courses I picked:</p>
+
+<p><strong>Coursera:</strong></p>
+
+<ul>
+<li><a href="https://www.coursera.org/learn/r-programming">R Programming</a> - This is a great source for anyone who'd like to get started with data processing. Even though R isn't one of my favourite languages I cannot deny how easy it is to start making sense of your data.</li>
+<li><a href="https://www.coursera.org/course/reactive">Principles of Reactive Programming</a> - As I have been into Reactive Programming myself for quite a while this gave me a bit of perspective on what Scala people mean by it. In particular the parts about Actor systems have been really valuable. Additionally the exercises are challenging and do drive the point home.</li>
+<li><a href="https://www.coursera.org/learn/guitar">Introduction to Guitar</a> - I have been playing the guitar for a long time now but I have never had any proper education on the matter. I decided to give it a go with this MOOC by Berkeley and am pleased with the results. Especially since I can now put names to things I have done for years :)</li>
+<li><a href="https://www.coursera.org/specializations/leading-teams">Leading People and Teams Specialisation</a> - Leadership is a broad area and having been under both good and bad leadership I don't want to make some of the same mistakes I've seen in the past. As such, I am seeking advice from multiple different sources - such as some of the books in my GoodReads profile above - as well as this specialisation. It has 5 courses in total. I'm two in and have enjoyed it so far.</li>
+</ul>
+
+
+<p><strong>Edx:</strong></p>
+
+<ul>
+<li><a href="https://www.edx.org/course/introduction-functional-programming-delftx-fp101x-0">FP101x - Introduction to Functional Programming</a> - I picked this course for two reasons: (1) it's taught by Erik Meijer and I'm fan and (2) as I don't get to write Haskell all that often I use these courses as practice so my Haskell doesn't get too rusty. This is an excellent course though if you're looking to get into functional programming.</li>
+</ul>
+
+
+<p>I have also been dabbling more and more with <a href="http://elm-lang.org/">Elm</a> and <a href="http://www.purescript.org/">PureScript</a>. But more on that later. Maybe. :)</p>
+
+<h2>Speaking</h2>
+
+<p>Another good year in this area. Here's what I spoke about this year:</p>
+
+<ul>
+<li><a href="http://www.slideshare.net/borgesleonardo/futures-e-abstrao-qcon-so-paulo-2015">Concurrent programming with Futures (in Portuguese)</a> - QCon, March 2015 - Sao Paulo, Brazil</li>
+<li>Something about types being useful? - Sydney Clojure User Group, May 2015 - Sydney, Australia</li>
+<li><a href="https://github.com/leonardoborges/elm-workshop-ylj2015">Workshop: From Zero to Pong Using Elm</a> - LambdaJam, May 2015 - Brisbane, Australia</li>
+<li><a href="https://www.youtube.com/watch?v=3QR8meTrh5g">Realtime Collaboration with Clojure</a> - EuroClojure, June 2015 - Barcelona, Spain</li>
+</ul>
+
+
+<h2>Training</h2>
+
+<p>In case you don't know one of my hobbies is weightlifting. Names such as Clean, Clean &amp; Jerk, Snatches and Deadlifts are common in my day to day and 2015 has been a super year for my strength goals. In particular I've reached <strong>120kg</strong> for my Squats and <strong>140kg</strong> for my deadlifts which are my all time goals. For a bit of perspective I currently weigh <strong>69kg</strong>.</p>
+
+<p>These numbers are <strong>good</strong> but they are not elite level. However what makes them impressive - for me anyway - is that four years ago I injured my lower back and was diagnosed with Level 1 spondylolisthesis. My doctor at the time told me I wouldn't be able to lift anymore and I was extremely down for quite a while. It wasn't until I switched doctors and dedicated 100% to having proper form that I was able to reach a whole new strength level.</p>
+
+<p>These results make me extremely happy. In case you're into this sort of thing you can check a <a href="https://www.youtube.com/watch?v=6OhYvZqPuTM">short video of my best lifts here</a>.</p>
+
+<h3>That's it</h3>
+
+<p>It's been a great year. Let 2016 be even better!</p>
+
+<p><strong> Happy new year and keep on kicking ass :) </strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[So Long 2014: Year Highlights]]></title>
+    <link href="http://www.leonardoborges.com/writings/2014/12/31/so-long-2014-year-highlights/"/>
+    <updated>2014-12-31T17:23:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2014/12/31/so-long-2014-year-highlights</id>
+    <content type="html"><![CDATA[<p>Another year is about to end and as it is tradition in this blog it's time to look at the year's highlights!</p>
+
+<h2>Functional Programming</h2>
+
+<p>I have been advocating Functional Programming and Clojure for a while now and 2014 has been good to me. It was the first year where I was paid to work almost entirely in functional languages. Most of it was in Scala and a little less in Clojure.</p>
+
+<p>I did have a short 8-week gig in Javascript but even then I tried to make it as functional as possible - e.g.: making use of Reactive Programming techniques (<a href="http://reactivex.io/">Rx-style</a>)</p>
+
+<p>I'm also thankful for the opportunity to have organised the first Sydney edition of <a href="http://www.clojurebridge.org/">ClojureBridge</a>, a workshop aimed at increasing diversity in the Clojure community by delivering free workshops for women. You can read more about what we did on the day <a href="http://www.leonardoborges.com/writings/2014/12/22/clojurebridge-sydney/">here</a>.</p>
+
+<p>Another bit of exciting news is that I've decided to quit <a href="http://www.thoughtworks.com/">ThoughtWorks</a>. Starting in January I'll be doing Clojure full-time at <a href="https://www.atlassian.com/">Atlassian</a>. I've written about it <a href="http://www.leonardoborges.com/writings/2014/12/27/staring-a-new-chapter/">here</a>.</p>
+
+<p>I'm looking forward to a very functional year!</p>
+
+<h2>Writing</h2>
+
+<p>Early this year I was invited by <a href="https://www.packtpub.com/">Packt Publishing</a> to write a book on Reactive Programming in Clojure. I've <a href="http://www.leonardoborges.com/writings/2014/07/20/euroclojure-2014-and-clojure-reactive-programming/">announced it before in this blog</a> but it is definitely a highlight of this year.</p>
+
+<p>The <a href="https://twitter.com/CljReactiveProg">book</a> has been a while in the making and I had no idea of the amount of effort involved in writing one. I'm mostly content-complete now but working through a number of useful bits of feedback I got from early reviewers. I expect to be done with these in January and then the book should go into production.</p>
+
+<p>I'll keep everybody posted :)</p>
+
+<h2>Reading</h2>
+
+<p>Most of what I read this year - with the little free time I had - were academic papers and I would like to highlight a few that I particularly enjoyed:</p>
+
+<ul>
+<li><a href="http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf">Monads for functional programming</a></li>
+<li><a href="http://homepages.inf.ed.ac.uk/wadler/papers/propositions-as-types/propositions-as-types.pdf">Propositions as Types</a></li>
+<li><a href="http://ttic.uchicago.edu/~dreyer/course/papers/wadler.pdf">Theorems for free!</a></li>
+<li><a href="http://www.cis.upenn.edu/~byorgey/pub/monoid-pearl.pdf">Monoids: Theme and Variations (Functional Pearl)</a></li>
+<li><a href="http://conal.net/papers/icfp97/icfp97.pdf">Functional Reactive Animation</a></li>
+<li><a href="http://conal.net/papers/push-pull-frp/push-pull-frp.pdf">Push-pull Functional Reactive Programming</a></li>
+<li><a href="http://elm-lang.org/papers/concurrent-frp.pdf">Elm: Concurrent FRP for Functional GUIs</a></li>
+</ul>
+
+
+<p>Additionally I can't help myself and recommend that you read <a href="http://www.manning.com/bjarnason/">Functional Programming in Scala</a> if you have any interest in FP and  Scala. <a href="https://twitter.com/runarorama">Rúnar</a> and <a href="https://twitter.com/pchiusano">Paul</a> have done a great job and put a lot of good advice in this book.</p>
+
+<h2>Speaking</h2>
+
+<p>Between work and writing the book I'm happy I managed to speak this much:</p>
+
+<ul>
+<li><a href="http://www.slideshare.net/borgesleonardo/the-algebra-of-library-design">The Algebra of Library Design</a> - Sydney Clojure User Group, October 2014 - Sydney, Australia</li>
+<li><a href="http://www.slideshare.net/borgesleonardo/high-performance-web-apps-in-om-react-and-clojurescript">High Performance web apps in Om, React and ClojureScript</a> - LambdaJam, May 2014 - Brisbane, Australia</li>
+<li><a href="http://www.slideshare.net/borgesleonardo/functional-reactive-programming-compositional-event-systems">Taming asynchronous workflows with Functional Reactive Programming</a> - EuroClojure, April 2014 - Krakow, Poland</li>
+<li><a href="http://www.slideshare.net/borgesleonardo/programao-functional-reativa-lidando-com-cdigo-assncrono">Taming asynchronous workflows with Functional Reactive Programming (portuguese)</a> - QCon, March 2014 - São Paulo, Brazil</li>
+<li><a href="http://www.slideshare.net/borgesleonardo/monads-in-clojure">Monads in Clojure</a> - Sydney Clojure User Group, February 2014 - Sydney, Australia</li>
+</ul>
+
+
+<h2>Content</h2>
+
+<p>Here's the Top 5 posts from this blog in 2014:</p>
+
+<ul>
+<li><p><a href="http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/">Functional Composition With Monads, Kleislis and Functors</a> - With learning Scala and Scalaz, I've come to learn new ways of composing programs. This short post is a brief look on one of them, Kleisli arrows.</p></li>
+<li><p><a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Monads in Small Bites - Part I - Functors</a> - I'm pleasantly surprised this post ranked this high. It's from a series about Monads and I'm glad it has been helping people understand the general idea behind them.</p></li>
+<li><p><a href="http://www.leonardoborges.com/writings/2013/03/25/clojure-and-why-calculating-is-better-than-scheming/">Clojure and 'Why Calculating Is Better Than Scheming'</a> - A fresh look at this popular paper by <a href="http://homepages.inf.ed.ac.uk/wadler/">Philip Wadler</a> from a Clojure perspective.</p></li>
+<li><p><a href="http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/">Clojure, core.async and the Lisp Advantage</a> - <a href="https://github.com/clojure/core.async">core.async</a> is still all the rage in the Clojure community and this post from 2013 gives a brief introduction as to what it's all about.</p></li>
+<li><p><a href="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/">Purely Functional Data Structures in Clojure: Red-Black Trees</a> - This post is from a series - though I only have two posts at the moment - about <a href="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/">persistent data structures</a> in Clojure.</p></li>
+</ul>
+
+
+<p>If this tells me anything it's that I need to blog more!</p>
+
+<p><strong>Happy new year! Here's to an amazing 2015!</strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A new chapter begins]]></title>
+    <link href="http://www.leonardoborges.com/writings/2014/12/27/staring-a-new-chapter/"/>
+    <updated>2014-12-27T14:04:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2014/12/27/staring-a-new-chapter</id>
+    <content type="html"><![CDATA[<h2>Thanks, ThoughtWorks</h2>
+
+<p>After 4 years and 8 months I have made the hard decision to change jobs: Friday, 19th of December, was my last day at <a href="http://www.thoughtworks.com/">ThoughtWorks</a>.</p>
+
+<p>In this time I have made many friends and have grown a lot as a professional. Consulting presents so many new challenges that often times the technical problems you are trying to solve are the easiest part of the whole project. I am thankful for that.</p>
+
+<p>I am also thankful for the opportunities I've had.</p>
+
+<p>A few years ago I started dedicating most, if not all, my free time to learning Functional Programming. ThoughtWorks supported and encouraged my endeavours in doing so and that is a big part of enabling me to create and grow the Clojure community in Sydney through <a href="http://www.meetup.com/clj-syd/">#cljsyd</a>.</p>
+
+<p>Additionally ThoughtWorks has also recognised the importance of Functional Programming in modern software development and allowed me to work almost exclusively in FP languages such as Scala and Clojure for the past year and a half.</p>
+
+<p>About three years ago I <a href="http://www.leonardoborges.com/writings/2011/04/25/one-year-of-thoughtworks-a-retrospective/">wrote a post</a> detailing my first year at ThoughtWorks. Much of it is still true so there is no point in repeating it. ThoughtWorks remains a great place to work.</p>
+
+<h2>What's next?</h2>
+
+<p>My next challenge will be at <a href="https://www.atlassian.com/">Atlassian</a>, an Australian Software company best known for being the creators of <a href="https://www.atlassian.com/software/jira">JIRA</a>, <a href="https://www.atlassian.com/software/confluence">Confluence</a>, <a href="https://www.atlassian.com/software/stash">Stash</a> and <a href="https://www.atlassian.com/software">many other products</a>.</p>
+
+<p>Over the years I have met several Atlassians - that's what they call themselves - and many of them have been heavily involved in the Functional Programming community. So when I was contacted by a friend saying Atlassian needed an experienced Clojure developer I was intrigued.</p>
+
+<p>A few months ago Atlassian acquired <a href="https://wikidocs.com/">WikiDocs</a>, a startup whose business is to build technology that enables <a href="http://en.wikipedia.org/wiki/Collaborative_real-time_editor">real-time collaborative editing</a>. It turns out that this product is developed in Clojure and Clojurescript. That's essentially what I'm going to be working on - I'll write more about it once I settle in.</p>
+
+<p>When I started learning Clojure over 3 years ago, little did I know that I'd be working full-time with the language so soon and I am super excited about it. It's great to see that much effort paying off like this.</p>
+
+<p>My start date at Atlassian is the 5th of January and I am looking forward to meeting a bunch of great people and making new friends.</p>
+]]></content>
+  </entry>
+  
+</feed>

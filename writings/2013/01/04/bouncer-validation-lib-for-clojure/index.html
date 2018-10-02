@@ -1,0 +1,416 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Announcing bouncer, a validation library for Clojure Apps - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Today I&#8217;m releasing bouncer, which was extracted from a project I&#8217;ve been working on. It&#8217;s a validation library for Clojure apps &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Announcing Bouncer, a Validation Library for Clojure Apps</h1>
+	<div class="entry-content"><p>Today I&#8217;m releasing bouncer, which was extracted from a project I&#8217;ve been working on.</p>
+
+<p>It&#8217;s a validation library for Clojure apps and it lets you write code like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">person</span> <span class="p">{</span><span class="nv">:name</span> <span class="s">&quot;Leo&quot;</span><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">validate</span> <span class="nv">person</span>
+</span><span class='line'>    <span class="nv">:name</span> <span class="nv">required</span>
+</span><span class='line'>    <span class="nv">:age</span>  <span class="p">[</span><span class="nv">required</span> <span class="nv">number</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&#8217;d like to see more examples and a detailed guide check out the <a href="http://github.com/leonardoborges/bouncer">github repository</a>. The README should get you started.</p>
+
+<p>This post however isn&#8217;t only about announcing bouncer. It&#8217;s also about the motivation and implementation details behind it.</p>
+
+<p>There are a couple of Clojure validation libraries already out there so why would I write a new one?
+Well&#8230;</p>
+
+<ul>
+<li><p>Writing Clojure is fun! (who knew? :P)</p></li>
+<li><p>Because I believe this problem can be solved more elegantly with the use of Monads</p></li>
+</ul>
+
+
+<p>If you&#8217;ve been following me for a while, you&#8217;ll know that I spent most of 2012 deepening my knowledge about functional programming.</p>
+
+<p>In that journey, the unavoidable subject of monads came about - and it was both interesting and enlightening enough that made me <a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">write a whole series of posts about it</a>.</p>
+
+<p>After learning what they are and then thinking about the validation problem for a while, I couldn&#8217;t help but notice that the problem had a lot in common with the <a href="http://www.haskell.org/haskellwiki/State_Monad">State Monad</a>.</p>
+
+<p>In order to explain how the two relate, I&#8217;ll have to digress for a moment. It&#8217;ll all make sense in the end - or so I hope</p>
+
+<h2>Purity</h2>
+
+<p>In pure functional languages, such as Haskell, functions can&#8217;t have side effects. These include performing IO, changing global variables or launching missiles.</p>
+
+<p>Because of that, functions in Haskell are pure: if you repeatedly call a function <em>f</em> with the same argument <code>x</code> over time you will <em>always</em> get the same result back.</p>
+
+<p>Pure functions are not a feature of Haskell though. We, too, can write pure functions if we wish:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">double</span> <span class="p">[</span><span class="nv">x</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">+ </span><span class="nv">x</span> <span class="nv">x</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The function <code>double</code> above is pure. If we call it with 10, we can be sure the result will always be 20.</p>
+
+<p>This leaves us with a question though: If we were to write our programs with pure functions only, how would we perform computations that need to carry state - state that needs to change over time - around?</p>
+
+<p>A good example of such computation is generating random numbers.</p>
+
+<p>Most programming languages provide generators capable of creating random numbers on demand. Using them is usually trivial. Here&#8217;s an example in Java:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Random</span> <span class="n">gen</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gen</span><span class="o">.</span><span class="na">nextDouble</span><span class="o">();</span> <span class="c1">// 0.0037635726242281065</span>
+</span><span class='line'><span class="n">gen</span><span class="o">.</span><span class="na">nextDouble</span><span class="o">();</span> <span class="c1">// 0.15821091918430885</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Impurity alert!</strong></p>
+
+<p>The function <code>nextDouble</code> above is obviously <em>not</em> pure. Multiple invocations of it with the same argument - in this case, none - returns different results.</p>
+
+<p><code>nextDouble</code>  is keeping some sort of global state between function calls.</p>
+
+<p>This is where the State Monad comes in. It allows such functions to remain pure.</p>
+
+<h2>The State Monad</h2>
+
+<p>The State Monad provides a way to abstract <em>state</em> from the function that needs to operate on it.</p>
+
+<p>Sounds confusing? Hopefully an example will clear things up.</p>
+
+<p>Let&#8217;s have a look at the clojure function <code>rand</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">rand</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; 0.04388682005715605</span>
+</span><span class='line'><span class="p">(</span><span class="nf">rand</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; 0.43057496371080517</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>rand</code> suffers from the same problem as <code>nextDouble</code> we saw above. It keeps it&#8217;s own state that is shared across calls, therefore being an impure function.</p>
+
+<p>Now let&#8217;s write a pure version of <code>rand</code>. We&#8217;ll call it <code>pure-rand</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">gen</span> <span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">util</span><span class="o">.</span><span class="nv">Random</span><span class="o">.</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">pure-rand</span> <span class="p">[</span><span class="nv">g</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">[(</span><span class="o">.</span><span class="nv">nextDouble</span> <span class="nv">g</span><span class="p">)</span> <span class="nv">g</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">pure-rand</span> <span class="nv">gen</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; [0.5783608063218478 #&lt;Random java.util.Random@7f30ab6&gt;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">pure-rand</span> <span class="nv">gen</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; [0.9251968987499839 #&lt;Random java.util.Random@7f30ab6&gt;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is interesting. <code>pure-rand</code> now takes a generator as an argument and returns a two-element vector containing the random number itself - the result we&#8217;re actually interested in - and the generator that was passed in.</p>
+
+<p>Recall however that the generator returned, albeit the same object, is in a new sate.</p>
+
+<p>By re-writing the function like this, we&#8217;ve regained purity, as demonstrated below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">pure-rand</span> <span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">util</span><span class="o">.</span><span class="nv">Random</span><span class="o">.</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;; [0.7220096548596434 #&lt;Random java.util.Random@bb14fe1&gt;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">pure-rand</span> <span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">util</span><span class="o">.</span><span class="nv">Random</span><span class="o">.</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'><span class="c1">;; [0.7220096548596434 #&lt;Random java.util.Random@bb14fe1&gt;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, as long as we provide the same generator - the same argument - we get the same result back.</p>
+
+<p>If you&#8217;re wondering why I&#8217;m returning a two element vector from our little function, the answer lies in the State Monad implementation as found in the <a href="https://github.com/clojure/algo.monads/">algo.monads</a> library.</p>
+
+<p>From its docstring:</p>
+
+<blockquote><p><strong>State Monad</strong>: Monad describing stateful computations. The monadic values have the structure:</p>
+
+<pre><code>(fn [old-state] [result new-state]).
+</code></pre></blockquote>
+
+<p>It expects a function that receives its old state and returns the result and the new state - these are called monadic values.</p>
+
+<p>By designing the function to follow this contract, we can leverage the <code>domonad</code> macro - think of it as syntactic sugar for working with monads:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">clojure</span><span class="o">.</span><span class="nv">algo</span><span class="o">.</span><span class="nv">monads</span> <span class="nv">:as</span> <span class="nv">m</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">((</span><span class="nf">m/domonad</span> <span class="nv">m/state-m</span>
+</span><span class='line'>    <span class="p">[</span><span class="nv">a</span> <span class="nv">pure-rand</span>
+</span><span class='line'>     <span class="nv">b</span> <span class="nv">pure-rand</span>
+</span><span class='line'>     <span class="nv">c</span> <span class="nv">pure-rand</span><span class="p">]</span>
+</span><span class='line'>     <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">])</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">util</span><span class="o">.</span><span class="nv">Random</span><span class="o">.</span> <span class="mi">100</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; [[0.7220096548596434 0.19497605734770518 0.6671595726539502] </span>
+</span><span class='line'><span class="c1">;; #&lt;Random java.util.Random@358ddfd6&gt;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the example above, we&#8217;re using our <code>pure-rand</code> function in the context of the State Monad to generate 3 random numbers - based on some initial state - and returning them as a vector.</p>
+
+<p>As we&#8217;ve seen before the result is itself in a vector alongside the new state.</p>
+
+<p>This is where the State Monad and the validation problem meet:</p>
+
+<p>In <a href="http://github.com/leonardoborges/bouncer">bouncer</a>, each validation function is designed to be compatible with the State Monad, just like <code>pure-rand</code> above:</p>
+
+<p>It receives an initial state - at first, the map to be validated - and returns a vector with the map of errors and the new state: the original map augmented with any errors from previous validators.</p>
+
+<p>The end result, should one or more validations fail, is a map with all errors that might have happened, plus our new state.</p>
+
+<p>Now if you head to the <a href="http://github.com/leonardoborges/bouncer">github repository</a> and read the examples by keeping the State Monad and the above explanation in mind, the similarities should be obvious.</p>
+
+<h2>Wrapping up</h2>
+
+<p>As I mentioned in the beginning of the article, there are <a href="https://github.com/r0man/validation-clj">other</a> validation <a href="https://github.com/michaelklishin/validateur">libraries</a> for Clojure and at the time of this writing they have more features than <a href="http://github.com/leonardoborges/bouncer">bouncer</a> - by all means have a look at them.</p>
+
+<p>However I will keep maintaining <a href="http://github.com/leonardoborges/bouncer">bouncer</a> for a couple of reasons:</p>
+
+<ul>
+<li>That&#8217;s what I&#8217;m using in my current side project</li>
+<li>It takes a fundamentally different implementation approach that is in itself worthy of exploration</li>
+<li>If nothing else, this is yet another example of where Monads can be useful.</li>
+</ul>
+
+
+<h4>Acknowledgments</h4>
+
+<p>Thanks to <a href="https://twitter.com/stevebuik">Steve</a> and <a href="https://twitter.com/juliansgamble">Julian</a> for reviewing early drafts of this post as well as <a href="https://twitter.com/nick_s_drew">Nick</a> for being such a PITA :) - our discussions led to a considerably nicer design.</p>
+
+<p>As usual, let me know your thoughts.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T17:39:00+11:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2013/01/04/bouncer-validation-lib-for-clojure/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2013/01/04/bouncer-validation-lib-for-clojure/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2013/01/04/bouncer-validation-lib-for-clojure/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2013/01/04/bouncer-validation-lib-for-clojure/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2013/01/04/bouncer-validation-lib-for-clojure/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2013/01/04/bouncer-validation-lib-for-clojure/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

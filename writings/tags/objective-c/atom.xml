@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Objective-C | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/objective-c/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RottingNames for iPhone available for free]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/03/19/rottingnames-for-iphone-available-for-free/"/>
+    <updated>2011-03-19T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/03/19/rottingnames-for-iphone-available-for-free</id>
+    <content type="html"><![CDATA[<p>
+Following the staggering success of the online version of <a href="http://rottingnames.heroku.com">RottingNames</a> - where by success I mean the handful of metal heads constantly using the app :) - I released the <a href="http://itunes.apple.com/au/app/rottingnames/id413043377?mt=8">iPhone version for free </a>. You can now generate crazy and fun names anywhere! Go <a href="http://itunes.apple.com/au/app/rottingnames/id413043377?mt=8">get it</a>!<br><br>I've been meaning to post this for  a while but I was waiting to have some free time and add a few new features to the app, which I just realised won't happen any time soon given the priorities I have at the moment. But by all means feel free to drop a line if you're dying about a missing feature.<br><br>Now go have fun ;)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Objective-C: a Ruby analogy]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/02/25/learning-objective-c-a-ruby-analogy/"/>
+    <updated>2010-02-25T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/02/25/learning-objective-c-a-ruby-analogy</id>
+    <content type="html"><![CDATA[<p>
+Learning new programming languages is fun. And if it's your 2nd, 3rd...Nth programming language you will eventually look for features you already know and love.<br><br>Coming from Ruby - but after having done my fair amount of Java for many years, among other things - I end up looking for features like <a href="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/" target="_blank">blocks</a>, <a href="http://rubylearning.com/satishtalim/ruby_open_classes.html" target="_blank">open classes</a> and syntax sugar like <a href="http://ruby-doc.org/core/classes/Module.html#M001681" target="_blank">automatic generation of attribute accessors.</a> These are hard to let go of.<br><br>Having decided to learn <a href="http://developer.apple.com/Mac/library/documentation/Cocoa/Conceptual/ObjectiveC/index.html" target="_blank">Objective-C</a> recently, I was delighted to find out that all of these are available - for better or for worse - and wanted to share this analogy with its Ruby counterparts.<br><br><strong>- Attribute accessors</strong><br><br><br>In ruby, this class definition<br><br><script src="https://gist.github.com/790881.js?file=gistfile1.rb"></script><br><br>implements for you the getters and setters of the instance variable <strong>name</strong>.<br><br><br>In Objective-C, the combination of the @property and @synthesize directives provides you with roughly the same result:<br><br><script src="https://gist.github.com/790882.js?file=gistfile1.m"></script><br><br>Now the compiler is responsible for writing those getters/setters for you.<br><br><strong>- Open classes & blocks</strong><br><br><br>Blocks in ruby are the structures that allow you to - among other things - iterate over arrays like this:<br><br><script src="https://gist.github.com/790883.js?file=gistfile1.rb"></script><br><br>Objective-C doesn't have an 'each' method in its root array class (NSArray) but since it does support blocks and open classes, you could just write it yourself:<br><br><script src="https://gist.github.com/790884.js?file=gistfile1.m"></script><br><br>Yes, I know the syntax isn't appealing, but using it in your program is a bit better:<br><br><script src="https://gist.github.com/790886.js?file=gistfile1.m"></script><br><br>Given the syntactic differences, the code above is very similar to its ruby counterpart. Iterating over an array is just one of the many things blocks are useful for. Others might include dealing with files, network sockets etc...<br><br>Blocks are powerful structures and are not created everyday, but it's nice to know that you can resort to them when the time comes. ;)<br>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

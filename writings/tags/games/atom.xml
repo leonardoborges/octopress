@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Games | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/games/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FallingDreams, my very own Tetris clone]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/04/09/fallingdreams-my-very-own-tetris-clone/"/>
+    <updated>2010-04-09T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/04/09/fallingdreams-my-very-own-tetris-clone</id>
+    <content type="html"><![CDATA[<p>
+This will come as no surprise to my closest friends, but I am a long time game development admirer.  Although I've never done anything professionally I did spend some time in the past studying this amazingly interesting field - it's my dark hobby. As hardware evolves and gamers demand more and more reality from their consoles, the game development industry is one of the few that basically didn't suffer with the latest economic crisis.<br><br>3D games are getting more and more sophisticated to the point that it's very hard for a single person, or even a small team, to develop something worthwhile - think of all the people you need to develop a game such as <a title="God of War III on Wikipedia" href="http://en.wikipedia.org/wiki/God_of_War_III" target="_blank">God of War III</a>: screenwriters, artists, musicians, sound engineers, 3D artists, animators, programmers, level designers, combat designers, actors, voiceovers...<br><br>So I just wanted to have the experience of writing a full game, end-to-end, and that's where FallingDreams comes in. To be able to do that in a short amount of time, it had to be something simple and that's why I chose <a title="Tetris on Wikipedia" href="http://en.wikipedia.org/wiki/Tetris">Tetris</a>. Although simple, it does share most of the steps common to modern games development. It was a very interesting project to work at and you can grab the result <a title="FallingDreams binary" href="http://www.leonardoborges.com/writings/wp-content/uploads/2010/04/fallingdreams.jar">here</a>. The source code is also available on my github account, <a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">here</a>.<br><br><a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">FallingDreams</a> is written in Java (JDK 6) and as such it should work fine on Windows, Linux and Mac OS. I tried to be as loyal as possible to the original Tetris rules, but you might find one thing or two that don't work as one'd exepct.<br><br>Enjoy! ;)<br><br><strong><br></strong><br><br><em><strong>Disclaimer:</strong> This was my first 'full game' and is not intended to be production ready. The code has definitely got room for improvement and it served as my playground where I experimented different design techniques, both game and general software related. And it doesn't have a single line of tests - crucify me :P </em><br><br><em>As I said, it's not supposed to be considered bug free but I'm sure people interested in games development can benefit from the source files. Feel free to fork it as well! It would be cool to see what people would do with it :)</em>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

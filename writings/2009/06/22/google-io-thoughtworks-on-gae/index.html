@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Google IO: Thoughtworks on GAE - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I&#8217;ve just watched a video from Google IO where Martin Fowler and Rebecca Parsons went through some of the aspects that involves the &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Google IO: Thoughtworks on GAE</h1>
+	<div class="entry-content"><p>
+I&#8217;ve just watched a <a href="http://www.youtube.com/watch?v=-4fA_UciDaA">video</a> from <a href="http://code.google.com/events/io/">Google IO</a> where <a href="http://code.google.com/events/io/">Martin Fowler</a> and Rebecca Parsons went through some of the aspects that involves the development of an application for the cloud - focusing on the JVM.<br><br>In terms of the Google App Engine, you don&#8217;t have access to a relational database, thing I found out <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">when I first tried it</a>.  Instead you get a <a href="http://labs.google.com/papers/bigtable.html">Big Table</a>.<br><br>Martin put out a good analogy and you can just think of it as a nested hash map. It&#8217;s certainly a shift on how we think these days, but layers of abstraction like google&#8217;s DataStore and the Java Persistence API will help in the transition.<br><br>Another interesting bit about the presentation was on how concurrency works on GAE.<br><br>Essentially, in an standard Java application you have a single memory space where you have at least one running thread. You can create threads on the fly, which will share the same memory space, thus making it easy to share data.<br><br>On the app engine, things work differently. What you have are separate memory spaces with a single thread on each one. Any attempt to create a new thread will result in an exception. The solution for sharing information in this case? Use the nested hash map (big table).<br><br>Now, whereas you might not be worried about this since your application doesn&#8217;t span any threads, as well pointed by Martin Fowler, it&#8217;s the code you don&#8217;t see that you need to be careful with. Any Java application uses a number of 3rd party libraries that might span out threads of their own, which will result in your application blowing up.<br><br>That rang a bell. Again, back when <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">I was trying the app engine</a>, one of the configuration bits shared by <a href="http://olabini.com/blog/2009/04/jruby-on-rails-on-google-app-engine/">Ola Bini</a> looked like this:<br><pre>   config.webxml.jruby.min.runtimes = 1<br>   config.webxml.jruby.max.runtimes = 1<br>   config.webxml.jruby.init.serial = true</pre><br><br>I think the properties are pretty much self-explanatory but I didn&#8217;t quite understand the reason for setting it back then.<br><br>If you happen to have bigger values for the number of runtimes you want, you need to set the serial property to true, otherwise JRuby will span several threads to create the runtimes.<br><br>This is a really good example of things that might fail whether you&#8217;re migrating or developing a new app to deploy on the App Engine. Luckily for us, JRuby has a smart and neat way to handle this - the configuration I&#8217;ve just shown, but most of the libraries out there that might rely on threads are not prepared.<br><br>Martin and Rebecca&#8217;s opinion on this is that new releases of these same libraries will start to take it into account, since a bigger adoption of the Cloud seem to be on the way.<br><br>Make sure you watch the video. I certainly left a lot of interesting stuff out.
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-22T00:00:00+10:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/java/'>Java</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

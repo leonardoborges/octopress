@@ -1,0 +1,249 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Report: Clojure Meetup #1 - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Last Tuesday we held ThoughtWorks&#8217; Australia first Clojure meetup here in Sydney. It was a lot of fun so I thought I&#8217;d share a few words &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Report: Clojure Meetup #1</h1>
+	<div class="entry-content"><p>Last Tuesday we held ThoughtWorks&#8217; Australia first Clojure meetup here in Sydney. It was a lot of fun so I thought I&#8217;d share a few words about it.</p>
+
+<p>The format was rather simple. First, we had a brief introduction to the language syntax by breaking down a couple of snippets and understanding how each bit worked. For instance, this is one of those snippets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="c1">;;word count</span>
+</span><span class='line'><span class="p">(</span><span class="nb">reduce </span><span class="o">#</span><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">%1</span> <span class="nv">%2</span><span class="p">)</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">assoc </span><span class="nv">%1</span> <span class="nv">%2</span> <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nf">%1</span> <span class="nv">%2</span><span class="p">)))</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">assoc </span><span class="nv">%1</span> <span class="nv">%2</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'><span class="p">{}</span>
+</span><span class='line'><span class="p">(</span><span class="nf">clojure</span><span class="o">.</span><span class="nv">string/split</span> <span class="s">&quot;Clojure 101 - this is is gonna be be great great great&quot;</span> <span class="o">#</span><span class="s">&quot;\s&quot;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>The cool thing here is that a simple example like this can show quite a few things about Clojure&#8217;s syntax:</p>
+
+<ul>
+  <li><a href="http://en.wikipedia.org/wiki/Polish_notation">Polish notation</a> - this is really the first thing you need to get used to</li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/fn">Anonymous functions</a></li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/hash-map">The hash map literal and how to use it as a function</a></li>
+  <li><a href="http://clojuredocs.org/clojure_core/clojure.core/re-pattern">Regular expressions</a></li>
+</ul>
+
+<p>After this brief discussion about Clojure&#8217;s API, we split up in pairs to solve a simple <a
+    href="http://projecteuler.net/problem=1">problem</a> from <a href="http://projecteuler.net/">Project Euler</a>:</p>
+
+<p><i>Add all the natural numbers below one thousand that are multiples of 3 or 5.</i></p>
+
+<p>It&#8217;s the easiest on the site so it allowed us to focus entirely on the language. My first thought was to implement it in an imperative way,
+but that wouldn&#8217;t really teach me anything new so Kurman - the colleague I was pairing with - and I came up with this solution, which I really like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">reduce </span><span class="o">#</span><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">or </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">rem </span><span class="nv">%2</span> <span class="mi">3</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">rem </span><span class="nv">%2</span> <span class="mi">5</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">%1</span> <span class="nv">%2</span><span class="p">)</span>
+</span><span class='line'>           <span class="nv">%1</span><span class="p">)</span>
+</span><span class='line'>      <span class="mi">0</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">take </span><span class="mi">1000</span> <span class="p">(</span><span class="nb">iterate </span><span class="nv">inc</span> <span class="mi">0</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>A simple, concise solution that demanded a functional approach. It allowed us to explore Clojure&#8217;s APIs and concepts such as lazyness through the use of an
+  <a href="http://en.wikibooks.org/wiki/Clojure_Programming/Examples/Cookbook#Infinite_Sequences">infinite sequence</a>. Fun :)</p>
+
+<p>I created a <a href="https://github.com/leonardoborges/twoz-clojure-meetup">github repository</a> to host this and upcoming solutions from our group. Feel free to browse around.</p>
+
+<p>Can&#8217;t wait for our next meetup, when we&#8217;ll hack on <a href="http://overtone.github.com/">Overtone</a>!</p></div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-12T00:00:00+11:00" pubdate data-updated="true">Oct 12<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/thoughtworks/'>ThoughtWorks</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2011/10/12/report-clojure-meetup-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

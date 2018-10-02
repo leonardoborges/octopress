@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: functional-data-structures | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/functional-data-structures/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Purely functional data structures in Clojure: Red-Black Trees]]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/"/>
+    <updated>2013-07-15T21:42:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees</id>
+    <content type="html"><![CDATA[<blockquote><p>This post is part of a series about Chris Okasaki's <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a>. You can see all posts in the series by visiting the <a href="http://www.leonardoborges.com/writings/tags/functional-data-structures/">functional-data-structures</a> category in this blog.</p></blockquote>
+
+<hr />
+
+<p>Recently I had some free time to come back to <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a> and implement a new data structure: <a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree">Red-black trees</a>.</p>
+
+<h3>Red-black trees</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree">Red-black trees</a> are a type of <a href="http://en.wikipedia.org/wiki/Self-balancing_binary_search_tree">self-balancing binary search tree</a>. Back when I first learned the balancing algorithm used in operations such as insert and delete, I remember it being a particularly tricky one.</p>
+
+<p>Traditionally, red-black trees are implemented destructively - meaning insertions and deletions happen in place. So in imperative languages like C or Java there is a lot of node pointer manipulation floating around, making this algorithm error prone.</p>
+
+<p>This post, as its title implies, will deal with the functional implementation which, besides simpler, is also persistent.</p>
+
+<h4>Invariants</h4>
+
+<p>A big disadvantage of binary search trees is that they operate poorly on sorted data with O(N) worst case, pretty much becoming nothing more than a linked list.</p>
+
+<p>This is where Red-black trees come in: when inserting/removing new nodes, the tree balances itself thus guaranteeing search times of O(logN). It does so by satisfying two invariants:</p>
+
+<ul>
+<li>No red nodes can have red children</li>
+<li>Every path from the root to an empty node contains the same number of black nodes</li>
+</ul>
+
+
+<p>The image below - taken from the book itself - concisely summarises the 4 cases involved in these invariants, starting at the top and then moving counter-clockwise.</p>
+
+<p><img class="center" src="/assets/images/posts/red-black-tree.jpg" width="250" height="333" title="Red-black trees invariants" ></p>
+
+<p>With this in mind I set out to write the <em>balance</em> function in Clojure.</p>
+
+<h3>The code</h3>
+
+<p>In the functional version of a Red-black tree all pointer manipulation required in its destructive counterpart simply disappears, rendering the algorithm a lot simpler.</p>
+
+<p>Nevertheless, we're left with some complexity in the <em>balance</em> function around testing a node's colour as well as its children's and grandchildren's.</p>
+
+<p>My first attempt at writing it started like this:</p>
+
+<p>```clojure
+(defn mk-tree [color left value right]
+  {:color color :left left :value value :right right})</p>
+
+<p>(defn balance [tree]</p>
+
+<pre><code>;; case 1
+(let [{z :value d :right} tree
+      {x-color :color x :value a :left} (-&gt; tree :left)
+      {y-color :color y :value b :left c :right} (-&gt; tree :left :right)
+      d (:right tree)]
+  (if (and (= x-color :red) (= y-color :red))
+    (mk-tree :red
+                (mk-tree :black a x b)
+                y
+                (mk-tree :black c z d))
+    tree)
+    ...))
+</code></pre>
+
+<p>```</p>
+
+<p>I was extremely unhappy with this. A lot of boilerplate around bindings and tests. And this is only the first case.</p>
+
+<p>But if you read Okasaki's implementation of the algorithm in ML - or Haskell -  you'll quickly realise how concise and elegant it is. The main reason for that is pattern matching, something we don't have built-in in Clojure.</p>
+
+<p>However, Clojure is a Lisp and has a powerful macros system at its disposal. That has given us <a href="https://github.com/clojure/core.match">core.match</a>, a pattern matching library for Clojure.</p>
+
+<h4>core.match</h4>
+
+<p>Using core.match, I rewrote my <em>balance</em> function:</p>
+
+<p>```clojure
+(defn balance [tree]
+  (match [tree]</p>
+
+<pre><code>     [(:or {:left {:color :red
+                   :left {:color :red :left a :value x :right b}
+                   :value y :right c}
+            :value z :right d}
+
+           {:left {:color :red                    
+                   :left  a :value x
+                   :right {:color :red :value y :left b :right c}}
+            :value z :right d}
+
+           {:left a :value x
+            :right {:color :red
+                    :left {:color :red
+                           :left b :value y :right c}
+                    :value z :right d}}
+
+           {:left a :value x
+            :right {:color :red
+                    :left b :value y
+                    :right {:color :red
+                            :left c :value z :right d}}})]
+     (mk-tree :red
+                 (mk-tree :black a x b)
+                 y
+                 (mk-tree :black c z d))
+
+     :else tree))
+</code></pre>
+
+<p>```</p>
+
+<p>If you look closely at the patterns being matched, you'll see they cater for all 4 cases and allow for both matching and binding in the same expressions. With only a little over double the size of a single case using the previous function, we now have a fully functioning <em>balance</em> implementation. This is better, but I wanted more.</p>
+
+<p>What I really wanted to be able to write is this:</p>
+
+<p>```clojure
+(defn balance [tree]</p>
+
+<pre><code>(match [tree]
+       [(:or (Black. (Red. (Red. a x b) y c) z d)
+             (Black. (Red. a x (Red. b y c)) z d)
+             (Black. a x (Red. (Red. b y c) z d))
+             (Black. a x (Red. b y (Red. c z d))))] (Red. (Black. a x b)
+                                                          y
+                                                          (Black. c z d))
+             :else tree))
+</code></pre>
+
+<p>```</p>
+
+<p>Unfortunately core.match doesn't support records/protocols yet. However, while reading core.match's source code, I found a test that implemented the balance algorithm using a different way of representing a tree.</p>
+
+<p>You see, I went with the map approach because I like how you can ask for the specific keys that represent the parts of the tree, such as <em>:color</em>, <em>:left</em>, <em>:value</em> and <em>:right</em>. But if you're happy with using positional elements in a vector to represent your tree, our <em>balance</em> function in Clojure becomes this:</p>
+
+<p>```clojure
+(defn balance [tree]
+  (match [tree]</p>
+
+<pre><code>     [(:or [:black [:red [:red a x b] y c] z d]
+           [:black [:red a x [:red b y c]] z d]
+           [:black a x [:red [:red b y c] z d]]
+           [:black a x [:red b y [:red c z d]]])] [:red [:black a x b]
+                                                        y
+                                                        [:black c z d]]
+           :else tree))
+</code></pre>
+
+<p>```</p>
+
+<p>Which is <em>amazingly</em> similar to the protocols/records version above.</p>
+
+<p>I guess one of the lessons here is that by carefully choosing the data structure to represent your problem, your implementation can become substantially simpler.</p>
+
+<p>As usual, <a href="https://github.com/leonardoborges/purely-functional-data-structures">all code is on github</a>, with the Red-black tree specific section in <a href="https://github.com/leonardoborges/purely-functional-data-structures/blob/master/src/purely_functional_data_structures/ch3.clj#L384">this direct link</a>. The project also includes tests.</p>
+
+<p>Until next time.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Purely functional data structures in Clojure: Leftist Heaps]]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps/"/>
+    <updated>2013-02-03T12:41:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps</id>
+    <content type="html"><![CDATA[<blockquote><p>This post is part of a series about Chris Okasaki's <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a>. You can see all posts in the series by visiting the <a href="http://www.leonardoborges.com/writings/tags/functional-data-structures/">functional-data-structures</a> category in this blog.</p></blockquote>
+
+<hr />
+
+<p>Last year I started reading a book called <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a>. It's a fascinating book and if you've ever wondered how Clojure's persistent data structures work, it's mandatory reading.</p>
+
+<p>However, all code samples in the book are written in <a href="http://bit.ly/YqYjtt">ML</a> - with <a href="http://bit.ly/YqYmp6">Haskell</a> versions in the end of the book. This means I got stuck in Chapter 3, where the ML snippets start.</p>
+
+<p>I had no clue about Haskell's - much less ML's! - syntax and I was finding it very difficult to follow along. What I did notice is that their syntaxes are not so different from each other.</p>
+
+<p>So I put the book down and read <a href="http://amzn.to/VuD3jT">Learn You a Haskell For Great Good!</a> with the hopes that learning more about haskell's syntax - in particular, learning how to read its type signatures - would help me get going with <em>Puretly Functional Data Structures</em>.</p>
+
+<p>Luckily, I was right - and I recommend you do the same if you're not familiar with either of those languages. <a href="http://amzn.to/VuD3jT">Learn You a Haskell For Great Good!</a> is a great book and I got a lot out of it. <a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">My series on Monads</a> is a product of reading it.</p>
+
+<p>Enough background though.</p>
+
+<p>The purpose of this post is two-fold: One is to share the <a href="https://github.com/leonardoborges/purely-functional-data-structures">github repository</a> I created and that will contain the Clojure versions of the data structures in the book as well as most solutions to the exercises - or at least as many as my time-poor life allows me to implement.</p>
+
+<p>The other is to walk you through some of the code and get a discussion going. Hopefully we will all learn something - as I certainly have when implementing these. Today, we'll start with Leftist Heaps.</p>
+
+<h3>Leftist Heaps</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Leftist_tree">Leftist Heaps</a> - or trees - are a variant of <a href="http://en.wikipedia.org/wiki/Binary_heap">binary heaps</a> that can be used as priority queues. On top of the standard invariants of binary heaps, it obeys the leftist property:</p>
+
+<ul>
+<li>Every node has a <em>rank</em>, which is the distance from its right spine to the nearest leaf</li>
+<li>A node's left child has a rank at least as large as its right child</li>
+</ul>
+
+
+<p>In a nutshell, these are the operations we need to be able to perform on a leftist heap:</p>
+
+<ul>
+<li>insert a value into an existing heap</li>
+<li>merge two heaps</li>
+<li>find the minimum value in a heap</li>
+<li>delete the minimum value, returning a new heap</li>
+</ul>
+
+
+<p>Since the book uses ML/Haskell, it starts with a data type definition for Heaps that exposes these and a couple of other auxiliary functions. I decided to take a stab at writing the solution using Clojure's protocols and records:</p>
+
+<p>```clojure
+(defprotocol Heap
+  (is-empty?   [this])
+  (insert      [this v])
+  (merge       [this other])
+  (rank        [this])
+  (find-min    [this])
+  (delete-min  [this]))</p>
+
+<p>(defrecord LeftistHeap [rank value left right])
+```</p>
+
+<p>When implementing the algorithms the base case for the recursive solutions will involve dealing with <em>nil</em> values which at first seems like it wouldn't be a problem. However, protocol functions dispatch on the type of its first argument so what happens if I call the function <em>is-empty?</em> on <em>nil</em>?</p>
+
+<p>Luckily, Clojure allows us to extend a protocol to core types:</p>
+
+<p>```clojure
+(extend-protocol Heap
+  nil
+  (rank [<em>] 0)
+  (merge [</em> other] other)
+  (is-empty? [_] true)</p>
+
+<p>  LeftistHeap
+  (is-empty? [this]</p>
+
+<pre><code>(nil? this))
+</code></pre>
+
+<p>  (rank [this]</p>
+
+<pre><code>(:rank this))
+</code></pre>
+
+<p>  (merge [{val-this :value left-this :left right-this :right :as this}</p>
+
+<pre><code>      {val-other :value left-other :left right-other :right :as other}]
+(cond
+ (is-empty? other) this
+ (&lt;= val-this val-other) (ensure-leftist left-this
+                                         (merge right-this other)
+                                         val-this)
+ :else (ensure-leftist left-other
+                       (merge this right-other)
+                       val-other)))
+</code></pre>
+
+<p>  (insert [this v]</p>
+
+<pre><code>(merge (-&gt;LeftistHeap 1 v nil nil)
+       this))
+</code></pre>
+
+<p>  (find-min [{v :value}] v)</p>
+
+<p>  (delete-min [{left :left right :right}]</p>
+
+<pre><code>(merge right left)))
+</code></pre>
+
+<p>```</p>
+
+<p>Note how I extended a few of the protocol functions to the nil data type, allowing me to continue with this implementation with no nasty hacks.</p>
+
+<p>There's one last bit missing: a function that will ensure each heap retains the leftist property:</p>
+
+<p>```
+(defn ensure-leftist
+ [this other v]
+ (let [rank-this (rank this)</p>
+
+<pre><code>   rank-other (rank other)]
+</code></pre>
+
+<p>   (if (>= rank-this rank-other)</p>
+
+<pre><code> (-&gt;LeftistHeap (inc rank-other) v this other)
+ (-&gt;LeftistHeap (inc rank-this) v other this))))
+</code></pre>
+
+<p>```</p>
+
+<p>The reason this function is isolated is that the Heap protocol defined above is fairly generic and could be used for defining other types of heaps - and I didn't feel it warranted its own interface.</p>
+
+<p>We can now play with it and create a new leftist heap:</p>
+
+<p>```clojure
+(-> (->LeftistHeap 1 3 nil nil)</p>
+
+<pre><code>               (insert 2)
+               (insert 7)
+               (insert 4)
+               (insert 10)
+               (insert 1)
+               (insert 20))
+</code></pre>
+
+<p>```</p>
+
+<p>While I quite like this approach, I thought I'd also implement this solution using Clojure's core data types - maps in this case - and no protocols. The code is shown below:</p>
+
+<p>```clojure
+(defn mk-heap [rank value left right]
+  {:rank rank :value value :left left :right right})</p>
+
+<p>(defn heap-rank [heap]
+  (if (nil? heap)</p>
+
+<pre><code>0
+(:rank heap)))
+</code></pre>
+
+<p>(defn ensure-leftist-heap [value heap-a heap-b]
+  (let [rank-a (heap-rank heap-a)</p>
+
+<pre><code>    rank-b (heap-rank heap-b)]
+(if (&gt;= rank-a rank-b)
+  (mk-heap (inc rank-b) value heap-a heap-b)
+  (mk-heap (inc rank-a) value heap-b heap-a))))
+</code></pre>
+
+<p>(defn merge-heaps [{val-a :value left-a :left right-a :right :as heap-a}</p>
+
+<pre><code>               {val-b :value left-b :left right-b :right :as heap-b}]
+</code></pre>
+
+<p>  (cond
+   (nil? heap-a) heap-b
+   (nil? heap-b) heap-a
+   (&lt;= val-a val-b) (ensure-leftist-heap val-a</p>
+
+<pre><code>                                     left-a
+                                     (merge-heaps right-a heap-b))
+</code></pre>
+
+<p>   :else (ensure-leftist-heap val-b</p>
+
+<pre><code>                          left-b
+                          (merge-heaps heap-a right-b))))
+</code></pre>
+
+<p>(defn heap-insert [value heap]
+  (merge-heaps (mk-heap 1 value nil nil)</p>
+
+<pre><code>           heap))
+</code></pre>
+
+<p>(defn heap-find-min [{v :value}] v)</p>
+
+<p>(defn heap-delete-min [{left :left right :right}]
+  (merge-heaps right left))
+```</p>
+
+<p>Using it is equally simple:</p>
+
+<p>```clojure
+(->> (mk-heap 1 3 nil nil)</p>
+
+<pre><code>                (heap-insert 2)
+                (heap-insert 7)
+                (heap-insert 4)
+                (heap-insert 10)
+                (heap-insert 1)
+                (heap-insert 20))
+</code></pre>
+
+<p>```</p>
+
+<p>That's it for now.</p>
+
+<p>As I implement more of the book's code and exercises I'll add them to the <a href="https://github.com/leonardoborges/purely-functional-data-structures">github repo</a> - it also includes tests for all implementations.</p>
+
+<p>Enjoy :)</p>
+]]></content>
+  </entry>
+  
+</feed>

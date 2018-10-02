@@ -1,0 +1,402 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Purely functional data structures in Clojure: Red-Black Trees - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="This post is part of a series about Chris Okasaki&#8217;s Purely Functional Data Structures. You can see all posts in the series by visiting the &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Purely Functional Data Structures in Clojure: Red-Black Trees</h1>
+	<div class="entry-content"><blockquote><p>This post is part of a series about Chris Okasaki&#8217;s <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a>. You can see all posts in the series by visiting the <a href="http://www.leonardoborges.com/writings/tags/functional-data-structures/">functional-data-structures</a> category in this blog.</p></blockquote>
+
+<hr />
+
+<p>Recently I had some free time to come back to <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a> and implement a new data structure: <a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree">Red-black trees</a>.</p>
+
+<h3>Red-black trees</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree">Red-black trees</a> are a type of <a href="http://en.wikipedia.org/wiki/Self-balancing_binary_search_tree">self-balancing binary search tree</a>. Back when I first learned the balancing algorithm used in operations such as insert and delete, I remember it being a particularly tricky one.</p>
+
+<p>Traditionally, red-black trees are implemented destructively - meaning insertions and deletions happen in place. So in imperative languages like C or Java there is a lot of node pointer manipulation floating around, making this algorithm error prone.</p>
+
+<p>This post, as its title implies, will deal with the functional implementation which, besides simpler, is also persistent.</p>
+
+<h4>Invariants</h4>
+
+<p>A big disadvantage of binary search trees is that they operate poorly on sorted data with O(N) worst case, pretty much becoming nothing more than a linked list.</p>
+
+<p>This is where Red-black trees come in: when inserting/removing new nodes, the tree balances itself thus guaranteeing search times of O(logN). It does so by satisfying two invariants:</p>
+
+<ul>
+<li>No red nodes can have red children</li>
+<li>Every path from the root to an empty node contains the same number of black nodes</li>
+</ul>
+
+
+<p>The image below - taken from the book itself - concisely summarises the 4 cases involved in these invariants, starting at the top and then moving counter-clockwise.</p>
+
+<p><img class="center" src="/writings/assets/images/posts/red-black-tree.jpg" width="250" height="333" title="Red-black trees invariants" ></p>
+
+<p>With this in mind I set out to write the <em>balance</em> function in Clojure.</p>
+
+<h3>The code</h3>
+
+<p>In the functional version of a Red-black tree all pointer manipulation required in its destructive counterpart simply disappears, rendering the algorithm a lot simpler.</p>
+
+<p>Nevertheless, we&#8217;re left with some complexity in the <em>balance</em> function around testing a node&#8217;s colour as well as its children&#8217;s and grandchildren&#8217;s.</p>
+
+<p>My first attempt at writing it started like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">mk-tree</span> <span class="p">[</span><span class="nv">color</span> <span class="nv">left</span> <span class="nv">value</span> <span class="nv">right</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">{</span><span class="nv">:color</span> <span class="nv">color</span> <span class="nv">:left</span> <span class="nv">left</span> <span class="nv">:value</span> <span class="nv">value</span> <span class="nv">:right</span> <span class="nv">right</span><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">balance</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+</span><span class='line'>    <span class="c1">;; case 1</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">let </span><span class="p">[{</span><span class="nv">z</span> <span class="nv">:value</span> <span class="nv">d</span> <span class="nv">:right</span><span class="p">}</span> <span class="nv">tree</span>
+</span><span class='line'>          <span class="p">{</span><span class="nv">x-color</span> <span class="nv">:color</span> <span class="nv">x</span> <span class="nv">:value</span> <span class="nv">a</span> <span class="nv">:left</span><span class="p">}</span> <span class="p">(</span><span class="nb">-&gt; </span><span class="nv">tree</span> <span class="nv">:left</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">{</span><span class="nv">y-color</span> <span class="nv">:color</span> <span class="nv">y</span> <span class="nv">:value</span> <span class="nv">b</span> <span class="nv">:left</span> <span class="nv">c</span> <span class="nv">:right</span><span class="p">}</span> <span class="p">(</span><span class="nb">-&gt; </span><span class="nv">tree</span> <span class="nv">:left</span> <span class="nv">:right</span><span class="p">)</span>
+</span><span class='line'>          <span class="nv">d</span> <span class="p">(</span><span class="nf">:right</span> <span class="nv">tree</span><span class="p">)]</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">= </span><span class="nv">x-color</span> <span class="nv">:red</span><span class="p">)</span> <span class="p">(</span><span class="nb">= </span><span class="nv">y-color</span> <span class="nv">:red</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:red</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">)</span>
+</span><span class='line'>                    <span class="nv">y</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">))</span>
+</span><span class='line'>        <span class="nv">tree</span><span class="p">)</span>
+</span><span class='line'>        <span class="o">...</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was extremely unhappy with this. A lot of boilerplate around bindings and tests. And this is only the first case.</p>
+
+<p>But if you read Okasaki&#8217;s implementation of the algorithm in ML - or Haskell -  you&#8217;ll quickly realise how concise and elegant it is. The main reason for that is pattern matching, something we don&#8217;t have built-in in Clojure.</p>
+
+<p>However, Clojure is a Lisp and has a powerful macros system at its disposal. That has given us <a href="https://github.com/clojure/core.match">core.match</a>, a pattern matching library for Clojure.</p>
+
+<h4>core.match</h4>
+
+<p>Using core.match, I rewrote my <em>balance</em> function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">balance</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">match</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+</span><span class='line'>         <span class="p">[(</span><span class="nf">:or</span> <span class="p">{</span><span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+</span><span class='line'>                       <span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span> <span class="nv">:left</span> <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span> <span class="nv">:right</span> <span class="nv">b</span><span class="p">}</span>
+</span><span class='line'>                       <span class="nv">:value</span> <span class="nv">y</span> <span class="nv">:right</span> <span class="nv">c</span><span class="p">}</span>
+</span><span class='line'>                <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>               <span class="p">{</span><span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+</span><span class='line'>                       <span class="nv">:left</span>  <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span>
+</span><span class='line'>                       <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span> <span class="nv">:value</span> <span class="nv">y</span> <span class="nv">:left</span> <span class="nv">b</span> <span class="nv">:right</span> <span class="nv">c</span><span class="p">}}</span>
+</span><span class='line'>                <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>               <span class="p">{</span><span class="nv">:left</span> <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span>
+</span><span class='line'>                <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+</span><span class='line'>                        <span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+</span><span class='line'>                               <span class="nv">:left</span> <span class="nv">b</span> <span class="nv">:value</span> <span class="nv">y</span> <span class="nv">:right</span> <span class="nv">c</span><span class="p">}</span>
+</span><span class='line'>                        <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>               <span class="p">{</span><span class="nv">:left</span> <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span>
+</span><span class='line'>                <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+</span><span class='line'>                        <span class="nv">:left</span> <span class="nv">b</span> <span class="nv">:value</span> <span class="nv">y</span>
+</span><span class='line'>                        <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+</span><span class='line'>                                <span class="nv">:left</span> <span class="nv">c</span> <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}}})]</span>
+</span><span class='line'>         <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:red</span>
+</span><span class='line'>                     <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">)</span>
+</span><span class='line'>                     <span class="nv">y</span>
+</span><span class='line'>                     <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="nv">:else</span> <span class="nv">tree</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you look closely at the patterns being matched, you&#8217;ll see they cater for all 4 cases and allow for both matching and binding in the same expressions. With only a little over double the size of a single case using the previous function, we now have a fully functioning <em>balance</em> implementation. This is better, but I wanted more.</p>
+
+<p>What I really wanted to be able to write is this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">balance</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">match</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+</span><span class='line'>           <span class="p">[(</span><span class="nf">:or</span> <span class="p">(</span><span class="nf">Black</span><span class="o">.</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">)</span> <span class="nv">y</span> <span class="nv">c</span><span class="p">)</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">)</span>
+</span><span class='line'>                 <span class="p">(</span><span class="nf">Black</span><span class="o">.</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="nv">a</span> <span class="nv">x</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="nv">b</span> <span class="nv">y</span> <span class="nv">c</span><span class="p">))</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">)</span>
+</span><span class='line'>                 <span class="p">(</span><span class="nf">Black</span><span class="o">.</span> <span class="nv">a</span> <span class="nv">x</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="nv">b</span> <span class="nv">y</span> <span class="nv">c</span><span class="p">)</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">))</span>
+</span><span class='line'>                 <span class="p">(</span><span class="nf">Black</span><span class="o">.</span> <span class="nv">a</span> <span class="nv">x</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="nv">b</span> <span class="nv">y</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">))))]</span> <span class="p">(</span><span class="nf">Red</span><span class="o">.</span> <span class="p">(</span><span class="nf">Black</span><span class="o">.</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">)</span>
+</span><span class='line'>                                                              <span class="nv">y</span>
+</span><span class='line'>                                                              <span class="p">(</span><span class="nf">Black</span><span class="o">.</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">))</span>
+</span><span class='line'>                 <span class="nv">:else</span> <span class="nv">tree</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately core.match doesn&#8217;t support records/protocols yet. However, while reading core.match&#8217;s source code, I found a test that implemented the balance algorithm using a different way of representing a tree.</p>
+
+<p>You see, I went with the map approach because I like how you can ask for the specific keys that represent the parts of the tree, such as <em>:color</em>, <em>:left</em>, <em>:value</em> and <em>:right</em>. But if you&#8217;re happy with using positional elements in a vector to represent your tree, our <em>balance</em> function in Clojure becomes this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">balance</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">match</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+</span><span class='line'>         <span class="p">[(</span><span class="nf">:or</span> <span class="p">[</span><span class="nv">:black</span> <span class="p">[</span><span class="nv">:red</span> <span class="p">[</span><span class="nv">:red</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">]</span> <span class="nv">y</span> <span class="nv">c</span><span class="p">]</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">]</span>
+</span><span class='line'>               <span class="p">[</span><span class="nv">:black</span> <span class="p">[</span><span class="nv">:red</span> <span class="nv">a</span> <span class="nv">x</span> <span class="p">[</span><span class="nv">:red</span> <span class="nv">b</span> <span class="nv">y</span> <span class="nv">c</span><span class="p">]]</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">]</span>
+</span><span class='line'>               <span class="p">[</span><span class="nv">:black</span> <span class="nv">a</span> <span class="nv">x</span> <span class="p">[</span><span class="nv">:red</span> <span class="p">[</span><span class="nv">:red</span> <span class="nv">b</span> <span class="nv">y</span> <span class="nv">c</span><span class="p">]</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">]]</span>
+</span><span class='line'>               <span class="p">[</span><span class="nv">:black</span> <span class="nv">a</span> <span class="nv">x</span> <span class="p">[</span><span class="nv">:red</span> <span class="nv">b</span> <span class="nv">y</span> <span class="p">[</span><span class="nv">:red</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">]]])]</span> <span class="p">[</span><span class="nv">:red</span> <span class="p">[</span><span class="nv">:black</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">]</span>
+</span><span class='line'>                                                            <span class="nv">y</span>
+</span><span class='line'>                                                            <span class="p">[</span><span class="nv">:black</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">]]</span>
+</span><span class='line'>               <span class="nv">:else</span> <span class="nv">tree</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which is <em>amazingly</em> similar to the protocols/records version above.</p>
+
+<p>I guess one of the lessons here is that by carefully choosing the data structure to represent your problem, your implementation can become substantially simpler.</p>
+
+<p>As usual, <a href="https://github.com/leonardoborges/purely-functional-data-structures">all code is on github</a>, with the Red-black tree specific section in <a href="https://github.com/leonardoborges/purely-functional-data-structures/blob/master/src/purely_functional_data_structures/ch3.clj#L384">this direct link</a>. The project also includes tests.</p>
+
+<p>Until next time.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-15T21:42:00+10:00" pubdate data-updated="true">Jul 15<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-data-structures/'>functional-data-structures</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2013/07/15/purely-functional-data-structures-in-clojure-red-black-trees/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

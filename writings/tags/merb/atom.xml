@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Merb | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/merb/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Merb turns 1.0, and started driving me crazy]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy/"/>
+    <updated>2008-11-18T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/11/18/merb-turns-10-and-started-driving-me-crazy</id>
+    <content type="html"><![CDATA[<p>
+As you may already know, <a href="http://www.merbivore.com/">Merb</a> turned 1.0 a while ago and I decided to resume my studies to learn the framework.<br><br>So I just built a new app with a few resources and fired the migration scripts:<br><pre lang="bash"><br>$ rake db:automigrate<br></pre><br><br>And this is what I got:<br><pre lang="bash"><br>Loading init file from /Users/leo/projects/merb/my-first-app/config/init.rb<br>Loading /Users/leo/projects/merb/my-first-app/config/environments/development.rb<br> ~ Connecting to database...<br>/opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `initialize': wrong number of arguments (8 for 1) (ArgumentError)<br>  from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `new'<br>  from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:137:in `normalize_uri'<br>    from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/abstract_adapter.rb:44:in `initialize'<br>    from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core/adapters/data_objects_adapter.rb:159:in `initialize'<br>   from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core.rb:157:in `new'<br>    from /opt/local/lib/ruby/gems/1.8/gems/dm-core-0.9.6/lib/dm-core.rb:157:in `setup'<br>  from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb/orms/data_mapper/connection.rb:44:in `setup_connections'<br>    from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb/orms/data_mapper/connection.rb:27:in `connect'<br>  from /opt/local/lib/ruby/gems/1.8/gems/merb_datamapper-1.0/lib/merb_datamapper.rb:17:in `run'<br>   from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/bootloader.rb:99:in `run'<br>    from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/server.rb:172:in `bootup'<br>    from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core/server.rb:42:in `start'<br>  from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/lib/merb-core.rb:169:in `start'<br>    from /opt/local/lib/ruby/gems/1.8/gems/merb-core-1.0/bin/merb:11<br>    from /opt/local/bin/merb:19:in `load'<br>   from /opt/local/bin/merb:19<br></pre><br><br>Lovely, isn't it?  <br>After a fair amount of googling around it turns out that there seems to be a problem with the URI parser <a href="http://www.merbivore.com/">Merb</a> uses underneath, called <a href="http://addressable.rubyforge.org/">Addressable</a>.<br><br>As of the installation of Merb 1.0, the installed version of this library was 2.0.0.<br>The solution? Install a older Addressable version:<br><br><pre lang="bash"><br>$ sudo gem uninstall addressable<br><br>You have requested to uninstall the gem:<br>   addressable-2.0.0<br>dm-core-0.9.6 depends on [addressable (>= 1.0.4)]<br>data_objects-0.9.6 depends on [addressable (>= 1.0.3)]<br>If you remove this gems, one or more dependencies will not be met.<br>Continue with Uninstall? [Yn]  Y<br>Successfully uninstalled addressable-2.0.0<br><br>$ sudo gem install addressable -v 1.0.4<br>Successfully installed addressable-1.0.4<br>1 gem installed<br>Installing ri documentation for addressable-1.0.4...<br>Installing RDoc documentation for addressable-1.0.4...<br></pre><br><br>I haven't figured out the reason for this issue, so please do share if you know. I'll be glad to update the post. :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

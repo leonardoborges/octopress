@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Clouds against the Floods - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I think by now everyone&#8217;s heard of the hard time the guys up in Queensland, Australia are having because of the recent floods. People have &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Clouds Against the Floods</h1>
+	<div class="entry-content"><p>
+I think by now everyone&#8217;s heard of the hard time the guys up in Queensland, Australia are having because of the <a title="Queensland Floods" href="http://www.google.com/search?q=qld+floods" target="_blank">recent floods</a>. People have lost their lives and many others have lost their homes and businesses, product of years of hard work.<br><br>As a result of this massive disaster the Queensland Government decided to run a telethon to encourage donations to help the flood victims. The Telethon aired last Sunday, 09/01/11, on Channel 9 and lasted for 2 hours.<br><br>The problem was the existing donations system that the Government had been using so far: it was just not thought out to handle the load we were expecting to have on Sunday.<br><br>That&#8217;s when my employer, <a title="ThoughtWorks" href="http://www.thoughtworks.com/" target="_blank">ThoughtWorks</a>, kindly offered a hand to <a href="http://www.qld.gov.au/smartservice/" target="_blank">Smart Services Queensland</a> in the attempt to make sure they could receive all donations that were likely to come through the web.<br><br>After that, on the Thursday afternoon before the event, <a title="Phillip Calçado" href="http://fragmental.tw/" target="_blank">Phillip Calçado</a>, Ben Barnard and I set off on a mission against the clock: we had a little over 48 hours to develop, test and deploy an application that was expected to handle thousands of users. Not only that but an application that, should it fail, would prevent millions of dollars from reaching the people in need in Queensland. This was a great responsibility but we knew we could do it.<br><br>Given the time constraints it was a bit obvious that we would use <a title="Ruby on Rails" href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a> for this app. Both because of the productivity it&#8217;s known for and because we had the knowledge right there. With that out of the way, we had to decide how and where we would deploy this thing. We thought a little about it and came down to to 2 options: <a title="Amazon EC2" href="http://aws.amazon.com/ec2/">Amazon EC2</a> or <a title="Heroku" href="http://heroku.com/" target="_blank">Heroku</a> (which is powered by Amazon EC2 under the hood). I pushed hard for Heroku and that&#8217;s what we ended up going with.<br><br>Now it was time to get down and dirty and start coding the app. In principle it should be fairly simple. It needed a form where a potential donor would fill out his/her information, giving the option to receive the tax receipt by email or regular mail - more on that later. Upon clicking submit users would be taken to the secure payment gateway website where they could input their credit card number and finish the payment, after which they would be taken back to our app with a success - or an error - message and a transaction number.<br><br>Now this work flow has a couple of implications: First, all emails would have to be sent in the background so as to not interfere with the website performance. We were expecting to be sending thousands of them - workers anyone?<br><br>Second, the payment gateway integration would have to be developed and tested from scratch. Up until now the Queensland Government integrated with it in a different manner that could not be reused in this case.<br><br>And most important of all, although simple in concept, we had no idea of the load we should be preparing for. There was just no data from previous telethons. Thus we decided to prepare for the maximum we possibly could.<br><br>As we developed the application we deployed continuously to Heroku in order to test the payment gateway integration, benchmark the app using <a title="Apache AB" href="http://httpd.apache.org/docs/2.0/programs/ab.html" target="_blank">Apache AB</a>, setup cache headers - Heroku uses <a title="Varnish" href="http://www.varnish-cache.org/" target="_blank">Varnish</a> - and find bottlenecks.<br><br>Email was one of these bottlenecks and that&#8217;s why we decided to handle that in the background using <a title="Delayed::Job" href="https://github.com/collectiveidea/delayed_job" target="_blank">Delayed::Jobs</a>.<br><br>Since the first deployment, we also tweaked a couple of things at Heroku, such as migrating from their free PostgreSQL offering to a dedicated instance that we believed would both take the load and have plenty of room for all the data - as I write this post, we are already well over the 5MB limit they offer for free.<br><br>Long story short, by Saturday evening  the website was up and running on 5 app instances, a 6th instance running background jobs - sending emails - and a dedicated PostgreSQL database server.<br><br>As Heroku is outside the Government network, their SMTP server was a no go on the short term so we also integrated the app with <a title="SendGrid" href="http://sendgrid.com/" target="_blank">SendGrid</a>, an email delivery service that fitted perfectly our needs - although the site got so much traction that we went over our monthly quota with them. But the nice guys from SendGrid increased our limit after I opened a ticket explaining the situation!<br><br>As for performance we used <a href="http://newrelic.com/">NewRelic</a> to monitor the application, which Heroku also makes a breeze to integrate with.<br><br>We all went home to rest and get ready for Sunday, the day of the Telethon, when we would be monitoring the app throughout the day. We were all excited and when the show went live, we started seeing all those beautiful access charts moving like crazy, spiking over 720 requests per minute and being solid like a rock with flat and fast response times throughout the night.<br><br>In about two hours we had over AUD$2,000,000.00 (two million) donated through our website.<br><br>Since then the number of transactions dropped but has stayed constant and as of today we&#8217;ve received AUD$25,438,518.32 (over 25 millions of dollars) that will be donated to the flood victims in Queensland.<br><br>Oh, and the site is still up and going strong so move your fingers and go help: <a title="Queensland Floods Telethon" href="http://telethon.smartservice.qld.gov.au/" target="_blank">telethon.smartservice.qld.gov.au</a> - there will be heaps of people grateful for your donation.
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-16T00:00:00+11:00" pubdate data-updated="true">Jan 16<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>, <a class='category' href='/writings/tags/thoughtworks/'>ThoughtWorks</a>, <a class='category' href='/writings/tags/world/'>World</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

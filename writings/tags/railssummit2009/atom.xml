@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: RailsSummit2009 | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/railssummit2009/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[My slides from Rails Summit '09]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/10/18/my-slides-from-rails-summit-09/"/>
+    <updated>2009-10-18T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/10/18/my-slides-from-rails-summit-09</id>
+    <content type="html"><![CDATA[<p>
+<a href='http://www.leonardoborges.com/writings/assets/images/rs2009.jpg'><img src="/assets/images/rs2009.jpg"></a><br>Rails Summit finished a few days ago and I have only one word to describe it: <strong>Awesome</strong>!<br><br>I met some really cool people, discussed a whole bunch of technical subjects and managed not to get so nervous in my first presentation ever - I'm not counting internal presentations I've done for my team...<br><br>My slides and source files can be found <a href="http://github.com/leonardoborges/railssummit09">here</a>. Feel free to contact me with questions if you got any.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

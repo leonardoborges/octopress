@@ -1,0 +1,517 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Clojure, core.async and the Lisp advantage - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Long gone are the days when systems needed to do only one thing at a time. Concurrency is the word but it often leads to complex code, dealing with &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Clojure, core.async and the Lisp Advantage</h1>
+	<div class="entry-content"><p>Long gone are the days when systems needed to do only one thing at a time.</p>
+
+<p>Concurrency is the word but it often leads to complex code, dealing with locks, mutexes etc…</p>
+
+<p>There are several different abstractions which allows us to both model and think about asynchronous code in a more sane fashion: futures, promises and events/callbacks are but a few of them.</p>
+
+<p>I won&#8217;t get into the merits - or lack thereof - of these alternatives in this post but rather focus on a different alternative: <a href="http://en.wikipedia.org/wiki/Communicating_sequential_processes">Communicating Sequential Processes - CSP</a>.</p>
+
+<h3>CSP and Go</h3>
+
+<p>CSP isn&#8217;t new. It was first described in 1978 by <a href="http://en.wikipedia.org/wiki/C._A._R._Hoare">Tony Hoare</a> and languages such as <a href="http://bit.ly/14rEwxU">Occam</a> and <a href="http://bit.ly/14rEAh7">Erlang</a> stem from it.</p>
+
+<p>It has however gained momentum by being natively supported by the <a href="http://bit.ly/11ZvMzj">Go programming language</a>.</p>
+
+<p>I haven&#8217;t read Hoare&#8217;s paper so I&#8217;ll use a little bit of what I know about Go&#8217;s implementation of CSP.</p>
+
+<p>Go introduced the concept of a <code>goroutine</code>. It <em>looks</em> like a function call:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="c1">// doing some stuff...</span>
+</span><span class='line'><span class="k">go</span> <span class="n">myFunction</span><span class="p">(</span><span class="s">&quot;argument&quot;</span><span class="p">)</span> <span class="c1">//does stuff in the background...</span>
+</span><span class='line'><span class="c1">//continuing about my business...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What this does is it creates a <em>lightweight</em> process and returns control immediately to the caller.</p>
+
+<p>It is <em>lightweight</em> because it doesn&#8217;t map 1-1 to native OS threads.</p>
+
+<p>The reasoning behind it is that creating too many threads can bring your machine (or VM) down due to the amount of stack allocated to each one.</p>
+
+<p><code>goroutines</code> are cheap to create so you can have hundreds of thousands of them, and the runtime will multiplex them into a thread pool.</p>
+
+<p>The immediate advantage is that it is dead simple to achieve a higher degree of concurrency.</p>
+
+<p>So far it sounds awfully similar to using futures with a pre-configured thread pool and a bit of syntactic sugar. But this is not the end of it.</p>
+
+<h3>Communication</h3>
+
+<p><code>goroutines</code> really shine when your several lightweight processes need to talk to each other. This is where a new abstraction comes into play:<code>channels</code>.</p>
+
+<p>Channels are first-class citizens - meaning you can pass them as arguments to functions as well as the return value of functions.</p>
+
+<p>Using them is straightforward:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="n">c</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">string</span><span class="p">)</span>
+</span><span class='line'><span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">time</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="p">*</span> <span class="n">time</span><span class="p">.</span><span class="n">Millisecond</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">c</span> <span class="p">&lt;-</span> <span class="s">&quot;Leo&quot;</span>
+</span><span class='line'><span class="p">}()</span>
+</span><span class='line'><span class="n">fmt</span><span class="p">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;Hello: %s\n&quot;</span><span class="p">,</span> <span class="p">&lt;-</span><span class="n">c</span><span class="p">)</span> <span class="c1">//this will block until the channel has something to give us </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code above creates a goroutine from an anonymous-executing function that will, in the background, sleep for 5 seconds and then send the string <code>Leo</code> to the channel <code>c</code>. Since control is returned immediately after that, the call blocks on the next line where it&#8217;s trying to read a value from the channel using the <code>&lt;-c</code> statement.</p>
+
+<h3>Lisp</h3>
+
+<p>&#8220;But What does all this have to do with Lisp?&#8221; - ah! I&#8217;m glad you asked.</p>
+
+<p>It actually has more to do with <a href="http://clojure.org/">Clojure</a> - and by extension, Lisp.</p>
+
+<p><a href="http://clojure.org/">Clojure</a> is a modern Lisp for the JVM, built for concurrency. The core team recently released <a href="https://github.com/clojure/core.async">core.async</a>, a new library that adds support for asynchronous programming much in the same way Go does with goroutines.</p>
+
+<p>To highlight the similarities, I&#8217;ll show and translate a couple of the examples from Rob Pike&#8217;s presentation, <a href="http://talks.golang.org/2012/concurrency.slide#1">Go Concurrency patterns</a>.</p>
+
+<h4>Setting the scene</h4>
+
+<p>Say you&#8217;re Google. And you need to write code that takes user input, - a search string - hits 3 different search services, - web, images and video - aggregates the results and presents them to the user.</p>
+
+<p>Since they are three different services, you wish to do this concurrently.</p>
+
+<p>To simulate these services, Rob presented a function that has unpredictable performance based of a random amount of sleep, shown below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="k">var</span> <span class="p">(</span>
+</span><span class='line'>    <span class="n">Web</span>   <span class="p">=</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="s">&quot;web&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Image</span> <span class="p">=</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="s">&quot;image&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Video</span> <span class="p">=</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="s">&quot;video&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">type</span> <span class="n">Search</span> <span class="k">func</span><span class="p">(</span><span class="n">query</span> <span class="nb">string</span><span class="p">)</span> <span class="n">Result</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="n">kind</span> <span class="nb">string</span><span class="p">)</span> <span class="n">Search</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">func</span><span class="p">(</span><span class="n">query</span> <span class="nb">string</span><span class="p">)</span> <span class="n">Result</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">time</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">rand</span><span class="p">.</span><span class="n">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> <span class="p">*</span> <span class="n">time</span><span class="p">.</span><span class="n">Millisecond</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">return</span> <span class="n">Result</span><span class="p">(</span><span class="n">fmt</span><span class="p">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">&quot;%s result for %q\n&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">query</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is one way we could write such function in Clojure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">fake-search</span> <span class="p">[</span><span class="nv">kind</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">query</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">Thread/sleep</span> <span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">lang</span><span class="o">.</span><span class="nv">Math/random</span><span class="p">)</span> <span class="mi">1000</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">str </span><span class="nv">kind</span> <span class="s">&quot; result for &quot;</span> <span class="nv">query</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">web</span>   <span class="p">(</span><span class="nf">fake-search</span> <span class="s">&quot;Web&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">image</span> <span class="p">(</span><span class="nf">fake-search</span> <span class="s">&quot;Image&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">video</span> <span class="p">(</span><span class="nf">fake-search</span> <span class="s">&quot;Video&quot;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Google Search 2.0</h4>
+
+<p>The first example is the simple case: we hit the services concurrently, wait for them to respond and then return the results:</p>
+
+<blockquote><p>This example is from <a href="http://talks.golang.org/2012/concurrency.slide#46">slide #46</a>.</p></blockquote>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="k">func</span> <span class="n">Google</span><span class="p">(</span><span class="n">query</span> <span class="nb">string</span><span class="p">)</span> <span class="p">(</span><span class="n">results</span> <span class="p">[]</span><span class="n">Result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">c</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">Result</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span> <span class="n">c</span> <span class="p">&lt;-</span> <span class="n">Web</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">}</span> <span class="p">()</span>
+</span><span class='line'>    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span> <span class="n">c</span> <span class="p">&lt;-</span> <span class="n">Image</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">}</span> <span class="p">()</span>
+</span><span class='line'>    <span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span> <span class="n">c</span> <span class="p">&lt;-</span> <span class="n">Video</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">}</span> <span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">result</span> <span class="p">:=</span> <span class="p">&lt;-</span><span class="n">c</span>
+</span><span class='line'>        <span class="n">results</span> <span class="p">=</span> <span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And here&#8217;s the Clojure version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">google2-0</span> <span class="p">[</span><span class="nv">query</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">c</span> <span class="p">(</span><span class="nf">chan</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">web</span> <span class="nv">query</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">image</span> <span class="nv">query</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">video</span> <span class="nv">query</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">reduce </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">results</span> <span class="nv">_</span><span class="p">]</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">conj </span><span class="nv">results</span> <span class="p">(</span><span class="nf">&lt;!!</span> <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&lt;!</span> <span class="nv">c</span><span class="p">)))))</span>
+</span><span class='line'>            <span class="p">[]</span>
+</span><span class='line'>            <span class="p">(</span><span class="nb">range </span><span class="mi">3</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">google2-0</span> <span class="s">&quot;Clojure&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; prints [&quot;Video result for Clojure&quot; &quot;Web result for Clojure&quot; &quot;Image result for Clojure&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <a href="http://clojure.github.io/core.async/#clojure.core.async/%3E!"><code>&gt;!</code></a> operator puts a value into a channel inside a <code>go</code> form. The function then uses <a href="http://clojure.github.io/core.async/#clojure.core.async/&lt;!!"><code>&lt;!!</code></a> to block on the <code>c</code> channel until it gets a value we can use.</p>
+
+<h4>Google Search 2.1</h4>
+
+<p>This is virtually the same example but this time we do not wish to wait on slow servers. So we&#8217;ll return whatever results we have after a pre-defined timeout.</p>
+
+<blockquote><p>This example is from <a href="http://talks.golang.org/2012/concurrency.slide#47">slide #47</a>.</p></blockquote>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="n">c</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="n">Result</span><span class="p">)</span>
+</span><span class='line'><span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span> <span class="n">c</span> <span class="p">&lt;-</span> <span class="n">Web</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">}</span> <span class="p">()</span>
+</span><span class='line'><span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span> <span class="n">c</span> <span class="p">&lt;-</span> <span class="n">Image</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">}</span> <span class="p">()</span>
+</span><span class='line'><span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span> <span class="n">c</span> <span class="p">&lt;-</span> <span class="n">Video</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">}</span> <span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">timeout</span> <span class="p">:=</span> <span class="n">time</span><span class="p">.</span><span class="n">After</span><span class="p">(</span><span class="mi">80</span> <span class="p">*</span> <span class="n">time</span><span class="p">.</span><span class="n">Millisecond</span><span class="p">)</span>
+</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="p">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="p">++</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">select</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">result</span> <span class="p">:=</span> <span class="p">&lt;-</span><span class="n">c</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">results</span> <span class="p">=</span> <span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">&lt;-</span><span class="n">timeout</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">fmt</span><span class="p">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;timed out&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">return</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You&#8217;ll notice the use of <code>select</code> here.</p>
+
+<p><code>select</code> waits on multiple channels and returns as soon as <em>any</em> of them has something to say.</p>
+
+<p>The trick of this example is that one of these channels times out, at which point you get the message &#8220;timed out&#8221;, effectively moving on to the next iteration and ignoring that slow server(s) response.</p>
+
+<p>We can express the same intent in Clojure as well:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">google2-1</span> <span class="p">[</span><span class="nv">query</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">c</span> <span class="p">(</span><span class="nf">chan</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">t</span> <span class="p">(</span><span class="nf">timeout</span> <span class="mi">500</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">web</span> <span class="nv">query</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">image</span> <span class="nv">query</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">video</span> <span class="nv">query</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">(</span><span class="nb">reduce </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">results</span> <span class="nv">_</span><span class="p">]</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">conj </span><span class="nv">results</span> <span class="p">(</span><span class="nb">first </span><span class="p">(</span><span class="nf">alts!!</span> <span class="p">[</span><span class="nv">c</span> <span class="nv">t</span><span class="p">]))))</span>
+</span><span class='line'>            <span class="p">[]</span>
+</span><span class='line'>            <span class="p">(</span><span class="nb">range </span><span class="mi">3</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">google2-1</span> <span class="s">&quot;Clojure&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; prints [&quot;Video result for Clojure&quot; nil nil]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Everything looks the same but we&#8217;re using <a href="http://clojure.github.io/core.async/#clojure.core.async/alts!!"><code>alts!!</code></a> to wait on the channels <code>c</code> and <code>t</code> (the timeout channel). This is analogous to Go&#8217;s <code>select</code> form in that it waits for any channel to receive a value or, in this case, to timeout.</p>
+
+<p>Note the <code>nil</code> values. Those came from servers which did not respond in time and were simply ignored.</p>
+
+<p>Effectively what this means is that each time you run this function you&#8217;ll likely get different results, depending on how long the <code>fake-search</code> function takes to run.</p>
+
+<p>Amazing, huh?</p>
+
+<h3>The big deal</h3>
+
+<p>But here&#8217;s the <em>big deal</em> about this: although <a href="https://github.com/clojure/core.async">core.async</a> looks like it&#8217;s deeply integrated into the language, it is <em>just</em> a library!</p>
+
+<p>It&#8217;s not a separate compiler. It&#8217;s not a new language. And it&#8217;s not a special version of Clojure.</p>
+
+<p>Since Clojure supports macros - like all Lisps - the core team was able to create the syntax required to easily use <a href="https://github.com/clojure/core.async">core.async</a>. And that&#8217;s the beauty of it!</p>
+
+<p><em>The Lisp advantage, once again.</em></p>
+
+<h4>Clojure&#8217;s advantage</h4>
+
+<p>Now one thing I haven&#8217;t mentioned is that Clojure is particularly well suited for this - and in a way even more so than Go: Clojure is opinionated and favours immutability.</p>
+
+<p>That means that when using channels - and in fact any type of concurrent programming - you can safely share your data structures between concurrent units of work. Since they&#8217;re immutable, you can&#8217;t shoot yourself in the foot.</p>
+
+<p>One last thing: <a href="https://github.com/clojure/core.async">core.async</a> states as one of its goals Clojurescript compatibility, bringing channel based concurrent programming to the browser. Exciting stuff.</p>
+
+<h3>More on core.async</h3>
+
+<p><a href="https://github.com/clojure/core.async">core.async</a> is still in alpha but you are encouraged to take it for a spin. Documentation is still lacking so I recommend you look at:</p>
+
+<ul>
+<li><a href="http://clojure.com/blog/2013/06/28/clojure-core-async-channels.html">Rich&#8217;s blog post about it</a></li>
+<li><a href="https://github.com/clojure/core.async">The source code on github</a></li>
+<li><a href="https://github.com/clojure/core.async/blob/master/examples/walkthrough.clj">The walkthrough namespace</a>, which showcases its features.</li>
+</ul>
+
+
+<p>Also, the full Clojure code I used here can be seen in <a href="https://gist.github.com/leonardoborges/5924461">this gist</a>.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-06T18:50:00+10:00" pubdate data-updated="true">Jul 6<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/concurrency/'>concurrency</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

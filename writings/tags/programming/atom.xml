@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Programming | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/programming/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FallingDreams, my very own Tetris clone]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/04/09/fallingdreams-my-very-own-tetris-clone/"/>
+    <updated>2010-04-09T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/04/09/fallingdreams-my-very-own-tetris-clone</id>
+    <content type="html"><![CDATA[<p>
+This will come as no surprise to my closest friends, but I am a long time game development admirer.  Although I've never done anything professionally I did spend some time in the past studying this amazingly interesting field - it's my dark hobby. As hardware evolves and gamers demand more and more reality from their consoles, the game development industry is one of the few that basically didn't suffer with the latest economic crisis.<br><br>3D games are getting more and more sophisticated to the point that it's very hard for a single person, or even a small team, to develop something worthwhile - think of all the people you need to develop a game such as <a title="God of War III on Wikipedia" href="http://en.wikipedia.org/wiki/God_of_War_III" target="_blank">God of War III</a>: screenwriters, artists, musicians, sound engineers, 3D artists, animators, programmers, level designers, combat designers, actors, voiceovers...<br><br>So I just wanted to have the experience of writing a full game, end-to-end, and that's where FallingDreams comes in. To be able to do that in a short amount of time, it had to be something simple and that's why I chose <a title="Tetris on Wikipedia" href="http://en.wikipedia.org/wiki/Tetris">Tetris</a>. Although simple, it does share most of the steps common to modern games development. It was a very interesting project to work at and you can grab the result <a title="FallingDreams binary" href="http://www.leonardoborges.com/writings/wp-content/uploads/2010/04/fallingdreams.jar">here</a>. The source code is also available on my github account, <a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">here</a>.<br><br><a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">FallingDreams</a> is written in Java (JDK 6) and as such it should work fine on Windows, Linux and Mac OS. I tried to be as loyal as possible to the original Tetris rules, but you might find one thing or two that don't work as one'd exepct.<br><br>Enjoy! ;)<br><br><strong><br></strong><br><br><em><strong>Disclaimer:</strong> This was my first 'full game' and is not intended to be production ready. The code has definitely got room for improvement and it served as my playground where I experimented different design techniques, both game and general software related. And it doesn't have a single line of tests - crucify me :P </em><br><br><em>As I said, it's not supposed to be considered bug free but I'm sure people interested in games development can benefit from the source files. Feel free to fork it as well! It would be cool to see what people would do with it :)</em>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Objective-C: a Ruby analogy]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/02/25/learning-objective-c-a-ruby-analogy/"/>
+    <updated>2010-02-25T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/02/25/learning-objective-c-a-ruby-analogy</id>
+    <content type="html"><![CDATA[<p>
+Learning new programming languages is fun. And if it's your 2nd, 3rd...Nth programming language you will eventually look for features you already know and love.<br><br>Coming from Ruby - but after having done my fair amount of Java for many years, among other things - I end up looking for features like <a href="http://www.leonardoborges.com/writings/2009/07/22/procs-lambdas-blocks-whats-the-difference/" target="_blank">blocks</a>, <a href="http://rubylearning.com/satishtalim/ruby_open_classes.html" target="_blank">open classes</a> and syntax sugar like <a href="http://ruby-doc.org/core/classes/Module.html#M001681" target="_blank">automatic generation of attribute accessors.</a> These are hard to let go of.<br><br>Having decided to learn <a href="http://developer.apple.com/Mac/library/documentation/Cocoa/Conceptual/ObjectiveC/index.html" target="_blank">Objective-C</a> recently, I was delighted to find out that all of these are available - for better or for worse - and wanted to share this analogy with its Ruby counterparts.<br><br><strong>- Attribute accessors</strong><br><br><br>In ruby, this class definition<br><br><script src="https://gist.github.com/790881.js?file=gistfile1.rb"></script><br><br>implements for you the getters and setters of the instance variable <strong>name</strong>.<br><br><br>In Objective-C, the combination of the @property and @synthesize directives provides you with roughly the same result:<br><br><script src="https://gist.github.com/790882.js?file=gistfile1.m"></script><br><br>Now the compiler is responsible for writing those getters/setters for you.<br><br><strong>- Open classes & blocks</strong><br><br><br>Blocks in ruby are the structures that allow you to - among other things - iterate over arrays like this:<br><br><script src="https://gist.github.com/790883.js?file=gistfile1.rb"></script><br><br>Objective-C doesn't have an 'each' method in its root array class (NSArray) but since it does support blocks and open classes, you could just write it yourself:<br><br><script src="https://gist.github.com/790884.js?file=gistfile1.m"></script><br><br>Yes, I know the syntax isn't appealing, but using it in your program is a bit better:<br><br><script src="https://gist.github.com/790886.js?file=gistfile1.m"></script><br><br>Given the syntactic differences, the code above is very similar to its ruby counterpart. Iterating over an array is just one of the many things blocks are useful for. Others might include dealing with files, network sockets etc...<br><br>Blocks are powerful structures and are not created everyday, but it's nice to know that you can resort to them when the time comes. ;)<br>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How do you keep yourself focused?]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/06/08/how-do-you-keep-yourself-focused/"/>
+    <updated>2009-06-08T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/06/08/how-do-you-keep-yourself-focused</id>
+    <content type="html"><![CDATA[<p>
+This is basically a compilation of a few tools/habits that I use to keep focused and at a high level of productivity when working alone. Works great for me and I hope there are useful tips for you as well.<br><br><dl> <dt><strong>Music</strong></dt> <dd>This is one of my favorites. When working alone I hate having noisy people around, which happens quite often if you work in an open office space like me. - It is great for pair programming but I find it inefficient otherwise. Thus, I came up with the term <strong>the Heavy Metal effect</strong>. Ok, just fit your favorite music genre there but the important thing is that it must act as a barrier to the outside world. It won't work if you put something new and start babbling the lyrics!</dd> <dt><strong>Password Manager</strong></dt> <dd>In my day to day I have a number of web sites open like API documents, programming related groups, email... There are also the ones you open a few times a day like the company bug tracker, review board and etc. I find that having a password manager, in my case <a href="https://lastpass.com/" target="_blank">LastPass</a>, saves a lot of time. The big advantage of it over similar tools like 1Password is that it works on mac, linux or windows. It's just a firefox plugin.</dd> <dt><strong>Multiple Workspaces</strong></dt> <dd>Probably the most obvious item on this list to developers but I's never too much to reinforce it. Multiple workspaces are great. And they are available in whatever platform you happen to be locked in. In my case, I split my environment in at least 3 workspaces:<br>-<strong>Development</strong> - where I keep things like my IDE, Browser and Terminal<br>-<strong>Documentation</strong> - where I keep API documents, tutorials and related stuff<br>-<strong>Communication</strong> - where I have my email, both personal and business, twitter and etc. This allows me to easily set a time per day to do each of my stuff without having noise from things that aren't important to what I'm focusing in that very moment. </dd> <dt><strong>App Launcher</strong></dt> <dd>A must! On Mac I use <a href="http://www.versiontracker.com/dyn/moreinfo/macosx/22549" target="_blank">QuickSilver</a> and on Linux, <a href="http://do.davebsd.com/release.shtml" target="_blank">Gnome Do</a>. I won't say much here. If you don't use some sort of application launcher, do yourself a favor, stop reading and install one. You have no idea of how comfortable and time saver they are.</dd> <dt><strong>Batch tasks</strong></dt> <dd>Maybe this wasn't the best title but I couldn't think of anything better.<br>As a result of having a communication workspace that I use a few times a day, I find stuff that I'm interested in but don't have the time to dig at the moment. So I need a way to queue that and read later when I'm home. The tools of the trade in this case are <a href="http://www.twitter.com" target="_blank">Twitter</a> + <a href="http://blog.evernote.com/2009/04/14/evernote_twitter/" target="_blank">Evernote</a>.<br>Evernote is roughly a to-do manager. And since they released their Twitter integration it's been dead easy to queue those things I talked about earlier. Just send a direct message to evernote and the item gets added instantly. </dd> </dl>Now, what about you? What works for you?
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why every programmer has to be dumb?]]></title>
+    <link href="http://www.leonardoborges.com/writings/2007/11/23/why-every-programmer-have-to-be-dumb/"/>
+    <updated>2007-11-23T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2007/11/23/why-every-programmer-have-to-be-dumb</id>
+    <content type="html"><![CDATA[<p>
+At least, dumb for the companies hiring them. The old dream is still for sale out there: Build a "I do everything framework" and hire a bunch of dumb programmers - monkeys? - and you shall make money easily!<br><br>Just put some button pressers and a full featured enterprise system will be waiting on the other side of this "machine"!<br><br>C'mon, I thought this dream was over! We've had enough proofs that this doesn't work!<br><br>Why? Because a framework, system builder, code generator or what you may want to call this thing just can't do everything. And if you try to build this "monster" you will get yourself a hell of a problem:<br><ul><br>    <li>Your product will never be ready.<br>Or you think that "everything" has limits? Someone will always say: Hey, let's put this new feature right there... it's so small....</li><br>  <li>Your product will not work well.<br>Bugs! Bugs! Bugs! I've never knew a team that has written enough tests building such a monster. Be prepared! If it's never ready, you will always be in a rush!</li><br></ul><br>But ok, even if you manage to develop this "framework" and hire a bunch of monkeys to press its buttons, that's when the worst problem arise. (At least worst in my opinion)<br><br>With this "philosophy", you assume that you want to hire low level programmers that don't need to learn anything new besides how to use your full-fledged systems generator. And who the hell likes to work in a place like that?<br><br>You take from your employees all the joy of development, which is about creativity. All about putting your brain to work. And sooner or later, they will notice that and just quit. You will never be able to stablish a trustworthy relationship within your team as well as to motivate them.<br><br>How will you motivate a team by telling them they will learn a new framework that isn't used anywhere else in the world and that they will not improve their thinking?<br><br>They will become bored. And if not, man, I wouldn't like to have someone like that in my team.<br><br>The problem is that managers usually love the idea to build huge enterprise systems at low costs. And some consultants sell this idea quite well.<br><br>I prefer to have trustworthy people in my team. Provide an environment that promotes learning. Let their creativity flow. Only with this approach you will have a first class team of developers producing, happily, high quality enterprise systems.<br><br>That's the message for the companies out there: Software development IS a creative process. Promote learning. Let them create.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

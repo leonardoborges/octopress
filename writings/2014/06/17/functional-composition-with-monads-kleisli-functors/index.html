@@ -1,0 +1,484 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Functional composition with Monads, Kleislis and Functors - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I&#8217;ve been learning Scala for my current client project and I find writing to be a great tool to test my understanding of any given topic. This &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Functional Composition With Monads, Kleislis and Functors</h1>
+	<div class="entry-content"><p>I&#8217;ve been learning Scala for my current client project and I find writing to be a great tool to test my understanding of any given topic. This means there might be a few Scala posts coming up soon as I keep learning interesting things.</p>
+
+<p>Today I&#8217;ll be exploring a few different ways in which you can compose programs. I&#8217;ll be using <a href="https://github.com/scalaz/scalaz">Scalaz</a> in this post.</p>
+
+<p>The examples that follow all deal with Vehicles - more specifically makes and parts:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">import</span> <span class="nn">scalaz._</span><span class="o">,</span> <span class="nc">Scalaz</span><span class="o">.</span><span class="k">_</span>
+</span><span class='line'>  <span class="k">import</span> <span class="nn">scalaz.Kleisli._</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">case</span> <span class="k">class</span> <span class="nc">Make</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">case</span> <span class="k">class</span> <span class="nc">Part</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next we have a couple of functions which interact with these case classes:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">make</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="nc">Make</span> <span class="k">=</span> <span class="o">(</span><span class="n">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Make</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Suzuki&quot;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">val</span> <span class="n">parts</span><span class="k">:</span> <span class="kt">Make</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Part</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nc">Make</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Part</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Gear Box&quot;</span><span class="o">),</span> <span class="nc">Part</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">&quot;Clutch cable&quot;</span><span class="o">))</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So we have a function from <code>Int</code> to <code>Make</code> and then a function from <code>Make</code> to <code>List[Part]</code>. From set theory we know this implies we must have a function from <code>Int</code> to <code>List[Part]</code>. This is nothing more than simple function composition:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="n">parts</span> <span class="n">compose</span> <span class="n">make</span>
+</span><span class='line'>  <span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>  <span class="c1">// List[Part] = List(Part(1,Gear Box), Part(2,Clutch cable))</span>
+</span><span class='line'>
+</span><span class='line'> <span class="c1">// alternatively you can use &#39;andThen&#39; which works like compose, but with the arguments flipped:</span>
+</span><span class='line'> <span class="k">val</span> <span class="n">g</span> <span class="k">=</span> <span class="n">make</span> <span class="n">andThen</span> <span class="n">parts</span>
+</span><span class='line'> <span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'> <span class="c1">// List[Part] = List(Part(1,Gear Box), Part(2,Clutch cable))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pretty boring stuff.</p>
+
+<p>A more realistic example accounts for failure in our functions. One way we can encode this is using the <code>Option</code> data type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">make</span>  <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="nc">Make</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Suzuki&quot;</span><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">parts</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Make</span><span class="o">)</span> <span class="k">=&gt;</span>
+</span><span class='line'>  <span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="nc">NonEmptyList</span><span class="o">(</span><span class="nc">Part</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Gear Box&quot;</span><span class="o">),</span> <span class="nc">Part</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">&quot;Clutch cable&quot;</span><span class="o">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we have a function <code>make: Int =&gt; Option[Make]</code> and a function <code>parts: Make =&gt; Option[NonEmptyList[Part]]</code>. Based on our first example we should have a way to create a function from <code>Int</code> to <code>Option[NonEmptyList[Part]]</code>. This isn&#8217;t immediately obvious however.</p>
+
+<p>While <code>make</code> does return a <code>Make</code>, it is wrapped inside an <code>Option</code> so we need to account for a possible failure. This leads to our first attempt:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Make</span><span class="o">]</span> <span class="k">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">NonEmptyList</span><span class="o">[</span><span class="kt">Part</span><span class="o">]]</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">m</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">parts</span><span class="o">(</span><span class="n">m</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="nc">None</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">g</span> <span class="k">=</span> <span class="n">f</span> <span class="n">compose</span> <span class="n">make</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="c1">// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While this works, we had to manually create the plumbing between the two functions.  You can imagine that with different return and input types, this plubming would have to be rewritten over and over.</p>
+
+<p>All the function <code>f</code> above is doing is serving as an <em>adapter</em> for <code>parts</code>. It turns out there is a couple of ways in which this pattern can be generalised.</p>
+
+<h2>Monadic bind</h2>
+
+<p><code>Option</code> is a <a href="http://www.leonardoborges.com/writings/2012/12/08/monads-in-small-bites-part-iv-monads/">monad</a> so we can define <em>f</em> using a for comprehension:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="k">for</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">m</span> <span class="k">&lt;-</span> <span class="n">make</span><span class="o">(</span><span class="n">x</span><span class="o">)</span>
+</span><span class='line'>    <span class="n">p</span> <span class="k">&lt;-</span> <span class="n">parts</span><span class="o">(</span><span class="n">m</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">yield</span> <span class="n">p</span>
+</span><span class='line'>  <span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="c1">// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which is simply syntactic sugar for:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">g</span> <span class="k">=</span> <span class="n">make</span><span class="o">(</span><span class="n">_:</span><span class="nc">Int</span><span class="o">)</span> <span class="n">flatMap</span> <span class="o">(</span><span class="n">m</span> <span class="k">=&gt;</span>
+</span><span class='line'>    <span class="n">parts</span><span class="o">(</span><span class="n">m</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">p</span> <span class="k">=&gt;</span> <span class="n">p</span><span class="o">))</span>
+</span><span class='line'><span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'><span class="c1">// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// you can also use the symbolic alias for &#39;bind&#39;, which makes it a lot nicer</span>
+</span><span class='line'><span class="k">val</span> <span class="n">h</span> <span class="k">=</span> <span class="n">make</span><span class="o">(</span><span class="n">_:</span><span class="nc">Int</span><span class="o">)</span> <span class="o">&gt;&gt;=</span> <span class="n">parts</span>
+</span><span class='line'><span class="n">h</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'><span class="c1">// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The reason this is better is that <code>make</code> and <code>parts</code> could operate under a different monad but the client code would not need to change. In the example below, we&#8217;re operating under the <code>List</code> monad:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">words</span><span class="k">:</span> <span class="o">(</span><span class="kt">String</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="n">_</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;&quot;&quot;\s&quot;&quot;&quot;</span><span class="o">).</span><span class="n">toList</span>
+</span><span class='line'><span class="k">val</span> <span class="n">chars</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Char</span><span class="o">]</span> <span class="k">=</span> <span class="n">_</span><span class="o">.</span><span class="n">toList</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="o">(</span><span class="n">phrase</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="k">for</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">m</span> <span class="k">&lt;-</span> <span class="n">words</span><span class="o">(</span><span class="n">phrase</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">p</span> <span class="k">&lt;-</span> <span class="n">chars</span><span class="o">(</span><span class="n">m</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span> <span class="k">yield</span> <span class="n">p</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">f</span><span class="o">(</span><span class="s">&quot;Motorcycles are fun to ride!&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="c1">// List(M, o, t, o, r, c, y, c, l, e, s, a, r, e, f, u, n, t, o, r, i, d, e, !)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// or even:</span>
+</span><span class='line'><span class="k">val</span> <span class="n">g</span> <span class="k">=</span> <span class="n">words</span><span class="o">(</span><span class="n">_:</span><span class="nc">String</span><span class="o">)</span> <span class="n">flatMap</span> <span class="o">(</span><span class="n">w</span> <span class="k">=&gt;</span>
+</span><span class='line'>    <span class="n">chars</span><span class="o">(</span><span class="n">w</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">c</span> <span class="k">=&gt;</span> <span class="n">c</span><span class="o">))</span>
+</span><span class='line'><span class="n">g</span><span class="o">(</span><span class="s">&quot;Motorcycles are fun to ride!&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="c1">// List(M, o, t, o, r, c, y, c, l, e, s, a, r, e, f, u, n, t, o, r, i, d, e, !)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We used the exact same <em>for</em> comprehension syntax to compose these operations. This works because both <code>Option</code> and <code>List</code> are monads.</p>
+
+<p>Notwithstanding, this still feels like unnecessary plumbing. All we are doing with the <em>for</em> comprehenstion / <code>flatMap</code> is extracting the values from their respective monads to simply put them back in. It would be nice if we could simply do something like <code>make compose parts</code> as we did in our first example.</p>
+
+<h2>Kleisli Arrows</h2>
+
+<p>A <a href="http://www.haskell.org/haskellwiki/Arrow_tutorial#Kleisli_Arrows">Kleisli arrow</a> is simply a <em>wrapper</em> for a function of type <code>A =&gt; F[B]</code>. This is the same type of the second argument to the monadic <em>bind</em> as <a href="https://github.com/scalaz/scalaz/blob/scalaz-seven/core/src/main/scala/scalaz/Bind.scala#L16">defined</a> in Scalaz:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">bind</span><span class="o">[</span><span class="kt">A</span>, <span class="kt">B</span><span class="o">](</span><span class="n">fa</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">A</span><span class="o">])(</span><span class="n">f</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="n">F</span><span class="o">[</span><span class="kt">B</span><span class="o">])</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">B</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By creating a Kleisli arrow from a function, we are given a function that knows how to extract the value from a Monad <code>F</code> and feed it into the underlying function, much like bind does, but without actually having to do any binding yourself.</p>
+
+<p>To use a concrete example, let&#8217;s create a kleisli arrow from our <code>parts</code> function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">kleisli</span><span class="o">(</span><span class="n">parts</span><span class="o">)</span>
+</span><span class='line'><span class="c1">// scalaz.Kleisli[Option,Make,scalaz.NonEmptyList[Part]]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can read this type as being a function which knows how to get a value of type <code>Make</code> from the <code>Option</code> monad and will ultimately return an <code>Option[NonEmptyList[Part]]</code>. Now you might be asking, why would we want to wrap our functions in a kleisli arrow?</p>
+
+<p>By doing so, you have access to a number of useful functions defined in the Kleisli trait, one of which is <code>&lt;==&lt;</code> (aliased as <code>composeK</code>):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="n">kleisli</span><span class="o">(</span><span class="n">parts</span><span class="o">)</span> <span class="o">&lt;==&lt;</span> <span class="n">make</span>
+</span><span class='line'>  <span class="c1">// same as   kleisli(parts) composeK make</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="c1">// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This gives us the same result as the version using the <em>for</em> comprehension but with less work and with code that looks similar to simple function composition.</p>
+
+<h2>Not there yet</h2>
+
+<p>One thing that was bugging me is the return type for <code>parts</code> above:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">Make</span> <span class="k">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">NonEmptyList</span><span class="o">[</span><span class="kt">Part</span><span class="o">]]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sure this works but since lists already represent non-deterministic results, one can make the point that the Option type there is reduntant since, for this example, we can treat both <code>None</code> and the empty List as the <em>absence of result</em>. Let&#8217;s update the code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">make</span>  <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="o">).</span><span class="n">option</span><span class="o">(</span><span class="nc">Make</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Suzuki&quot;</span><span class="o">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">parts</span><span class="k">:</span> <span class="kt">Make</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Part</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="nc">Make</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Part</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Gear Box&quot;</span><span class="o">),</span> <span class="nc">Part</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">&quot;Clutch cable&quot;</span><span class="o">))</span>
+</span><span class='line'>  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="nc">Nil</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It seems we&#8217;re in worse shape now! As before, <code>parts</code>&#8217;s input type doesn&#8217;t line up with <code>make</code>&#8217;s return type. Not only that, they aren&#8217;t even in the same monad anymore!</p>
+
+<p>This clearly breaks our previous approach using a kleisli arrow to perform the composition. On the other hand it makes room for another approach: <a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">Functor</a> <em>lifting</em>.</p>
+
+<h2>Lifting</h2>
+
+<p>In Scala - and category theory - monads are <a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">functors</a>. As such both <code>Option</code> and <code>List</code> have access to a set of useful functor combinators. The one we&#8217;re interested in is called <a href="https://github.com/scalaz/scalaz/blob/scalaz-seven/core/src/main/scala/scalaz/Functor.scala#L31">lift</a>.</p>
+
+<p>Say you have a function <code>A =&gt; B</code> and you have a functor <code>F[A]</code>. Lifting is the name of the operation that transforms the function  <code>A =&gt; B</code> into a function of type <code>F[A] =&gt; F[B]</code>.</p>
+
+<p>This sounds useful. Here are our function types again:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">make</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">Make</span><span class="o">]</span>
+</span><span class='line'><span class="n">parts</span><span class="k">:</span> <span class="kt">Make</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Part</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can&#8217;t get a function <code>Int =&gt; List[Part]</code> because <code>make</code> returns an <code>Option[Make]</code> meaning it can fail. We need to propagate this possibility in the composition. We can however <em>lift</em> <code>parts</code> into the <code>Option</code> monad, effectively changing its type from <code>Make =&gt; List[Part]</code> to <code>Option[Make] =&gt; Option[List[Part]]</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="nc">Functor</span><span class="o">[</span><span class="kt">Option</span><span class="o">].</span><span class="n">lift</span><span class="o">(</span><span class="n">parts</span><span class="o">)</span> <span class="n">compose</span> <span class="n">make</span>
+</span><span class='line'><span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'><span class="c1">// Some(List(Part(1,Gear Box), Part(2,Clutch cable)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>f</code> now has the type <code>Int =&gt; Option[List[Part]]</code> and we have once again successfully composed both functions without writing any plumbing code ourselves.</p>
+
+<p><a href="https://twitter.com/markhibberd">Mark</a> pointed out to me that <code>lift</code> is pretty much the same as <code>map</code> but with the arguments reversed. So the example above can be more succintly expressed as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">g</span> <span class="k">=</span> <span class="n">make</span><span class="o">(</span><span class="n">_:</span><span class="nc">Int</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">parts</span><span class="o">)</span>
+</span><span class='line'><span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'><span class="c1">// Some(List(Part(1,Gear Box), Part(2,Clutch cable)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Summary</h2>
+
+<p>If you are only now getting to this whole Functor/Monad/Kleisli <em>thing</em> this was probably quite heavy to get through. The point I am trying to make here is that learning at least <em>some</em> of the abstractions provided by Scalaz is certainly worthwhile. They encode common patterns which we would otherwise keep re-writing a lot of the time.</p>
+
+<p>Special Thanks to <a href="https://twitter.com/markhibberd">Mark Hibberd</a> who kindly reviewed an early draft of this post.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-17T11:00:00+10:00" pubdate data-updated="true">Jun 17<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>, <a class='category' href='/writings/tags/scala/'>scala</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2014/06/17/functional-composition-with-monads-kleisli-functors/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

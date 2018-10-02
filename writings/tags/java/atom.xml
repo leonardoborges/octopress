@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Java | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/java/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FallingDreams, my very own Tetris clone]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/04/09/fallingdreams-my-very-own-tetris-clone/"/>
+    <updated>2010-04-09T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/04/09/fallingdreams-my-very-own-tetris-clone</id>
+    <content type="html"><![CDATA[<p>
+This will come as no surprise to my closest friends, but I am a long time game development admirer.  Although I've never done anything professionally I did spend some time in the past studying this amazingly interesting field - it's my dark hobby. As hardware evolves and gamers demand more and more reality from their consoles, the game development industry is one of the few that basically didn't suffer with the latest economic crisis.<br><br>3D games are getting more and more sophisticated to the point that it's very hard for a single person, or even a small team, to develop something worthwhile - think of all the people you need to develop a game such as <a title="God of War III on Wikipedia" href="http://en.wikipedia.org/wiki/God_of_War_III" target="_blank">God of War III</a>: screenwriters, artists, musicians, sound engineers, 3D artists, animators, programmers, level designers, combat designers, actors, voiceovers...<br><br>So I just wanted to have the experience of writing a full game, end-to-end, and that's where FallingDreams comes in. To be able to do that in a short amount of time, it had to be something simple and that's why I chose <a title="Tetris on Wikipedia" href="http://en.wikipedia.org/wiki/Tetris">Tetris</a>. Although simple, it does share most of the steps common to modern games development. It was a very interesting project to work at and you can grab the result <a title="FallingDreams binary" href="http://www.leonardoborges.com/writings/wp-content/uploads/2010/04/fallingdreams.jar">here</a>. The source code is also available on my github account, <a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">here</a>.<br><br><a title="FallingDreams on GitHub" href="http://github.com/leonardoborges/FallingDreams" target="_blank">FallingDreams</a> is written in Java (JDK 6) and as such it should work fine on Windows, Linux and Mac OS. I tried to be as loyal as possible to the original Tetris rules, but you might find one thing or two that don't work as one'd exepct.<br><br>Enjoy! ;)<br><br><strong><br></strong><br><br><em><strong>Disclaimer:</strong> This was my first 'full game' and is not intended to be production ready. The code has definitely got room for improvement and it served as my playground where I experimented different design techniques, both game and general software related. And it doesn't have a single line of tests - crucify me :P </em><br><br><em>As I said, it's not supposed to be considered bug free but I'm sure people interested in games development can benefit from the source files. Feel free to fork it as well! It would be cool to see what people would do with it :)</em>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A few more thoughts on final classes]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/"/>
+    <updated>2009-10-07T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes</id>
+    <content type="html"><![CDATA[<p>
+I <a href="http://www.leonardoborges.com/writings/2009/03/17/final-classes-are-evil/" target="_blank">said final classes are evil</a> and that post got some attention with interesting comments. Maybe because of the title and the tone I wrote it, a few comments didn't get my real intention and perhaps I should have been more explicit about it. Go ahead and <a href="http://www.leonardoborges.com/writings/2009/03/17/final-classes-are-evil/" target="_blank">read it</a>. I'll wait. :)<br><br>Anyway, I thought I'd expand a little more on that subject, explaining my motivation to write that post and going through the topics I think were raised by my dear readers.<br><br>First off, final classes <strong>are evil for testing</strong>. And that's what it was all about in my previous post.<br><br>If you depend on a final class, your code will be harder to test. Unless the final class provides an interface that captures its intent - or you wrap that dependency.<br><br>But this affirmation has some implications that were pointed out by a few comments, some of which I agree with - others, not so much. So let's start!<br><br><strong>- Immutability </strong><br><br><span style="background-color: #ffffff;">Someone said "Why make a class final ? To make it immutable". This is not entirely true. Only by marking it final you do not ensure immutability. There is no point in doing that if you provide mutators - e.g. setters. - and don't declare your members private and final.</span><br><br>I think it's important to make this clear and understand that the immutability part you achieve by marking a class final is the one of preventing inheritance. Subclasses could possibly contain malicious/careless code and change the internal state of the class.<br><br><span style="background-color: #ffffff;">But there is another way of preventing subclassing without marking the parent final: declare its constructor private and provide a <a href="http://www.javapractices.com/topic/TopicAction.do?Id=21" target="_blank">static factory</a>.</span><br><br><strong>- Designing for extensibility</strong><br><br>This is hard. It basically means that if you don't mark a class final, you should document it for inheritance.<br><br>And this is why inheritance is, in general, a bad OO practice. By documenting the class you basically break encapsulation since you tell the world about your internals.<br><br>Therefore, the recommendation is to mark a class final if you're not sure if it's safe to subclass it - or if you just don't wanna bother writing documentation and thinking too much about your "client" subclasses.<br><br><strong>- Coding against interfaces</strong><br><br>This one is simple but yet often forgotten. Do not code to concrete classes. Always choose interfaces where possible.<br>It roughly means to do this:<br><pre lang="java">  List args = new ArrayList();</pre><br>instead of this:<br><pre lang="java">  ArrayList args = new ArrayList();</pre><br>By doing so you have the flexibility to not care about the implementation you're working with, as long as it obeys the interface. That way, the implementations can be swapped at any time without breaking any client's code.<br><br><strong>- The problem with testing</strong><br><br><strong></strong>All items listed here so far are widely regarded as best practices and the bullet I raised about hard testing usually happens when you "violate" some of them.<br><br>Specifically, if you decide not to design a class for inheritance and mark it as final, it's wise - in my opinion - to try and capture the class's intent through an interface.<br><br>That way you can safely mark your class final and users of your class can easily use the interface to extend it - by favoring <a href="http://www.artima.com/lejava/articles/designprinciples4.html" target="_blank">composition over inheritance</a> - or by providing it to mocking frameworks for easy testing.<br><br><strong>- Conclusion</strong><br><br>I don't really think there is a rule of thumb here. Java's standard library shows many examples of both approaches and some of them are now considered bad practices but yet are there for backward compatibility. Nevertheless, these are points to consider when designing your classes.<br><br>As pointed out by Josua Bloch in his awesome book <a href="http://www.shelfari.com/books/purchase?EditionId=1523265&amp;AssociateId=leonaborge-20&amp;WidgetId=111594" target="_blank">Effective Java</a>, "If a concrete class does not implement a standard interface, then you may inconvenience some programmers by prohibiting inheritance".<br><br>As usual, comments are more than welcome :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JVM language preferences poll results]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/07/31/jvm-language-preferences-poll-results/"/>
+    <updated>2009-07-31T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/07/31/jvm-language-preferences-poll-results</id>
+    <content type="html"><![CDATA[<p>
+<strong>- Overall results</strong><br><br>First off, I'd like to thank everyone who voted on this poll.<br>With a total of 236 votes, here is the summary of the first two questions:<br><br><strong>- Are you currently working with or researching about language alternatives for the JVM? - e.g. JRuby, Scala, Groovy</strong><br><br><a href='http://www.leonardoborges.com/writings/assets/images/scala_improvements.png'><img src="/assets/images/scala_improvements.png"></a></em><br><br>Tooling. The majority of comment urge for better tooling and IDE support. That simple.<br><br><strong>- Others</strong><br><br>People who chose others mentioned <a href="http://clojure.org/" target="_blank">Clojure</a>, <a href="http://www.fandev.org/" target="_blank">Fan</a> and <a href="http://www.jython.org/">Jython</a>, with a clear advantage for Clojure.<br><br><strong>- Disclaimer</strong><br><br><strong>This poll has no scientific foundations whatsoever and its sole purpose is to summarize the feelings and personal choices of the people who answered it. If you would like the original spreadsheet with the answers, you can find it <a href="http://spreadsheets.google.com/ccc?key=0AuABB6DyTXV2dHEtZnNwSDhCb2RVOThFcUNaSUhpbEE&amp;hl=en" target="_blank">here</a> and do your own analyzis.<br></strong>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JRuby on Rails and legacy java apps: Managing dependencies]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/07/01/jruby-on-rails-and-legacy-java-apps-managing-dependencies/"/>
+    <updated>2009-07-01T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/07/01/jruby-on-rails-and-legacy-java-apps-managing-dependencies</id>
+    <content type="html"><![CDATA[<p>
+The motivation for this post came from a couple of messages I've seen on the jruby's google group and because I think it's pretty cool to share how we tackled this problem.<br><br><strong>- A little bit of context</strong><br><br>We, as a vast amount of people out there, have legacy Java code. A lot. In our case this legacy is pretty much crucial to our business. We can't just trash it and start from scratch. Bad idea.<br><br>On the other hand we do have new features to be built on top of it. But we wanted an easier way to develop this new stuff and decided for a JRuby on Rails solution, using it as a front-end to our existing services.<br><br><strong>- What we decided to do</strong><br><br>Our final rails project would make use of a specially created jar file containing our Java application. This Jar would also contain a public interface of the services we'd have to interact with from rails.<br><br>As any Java application, ours depend on a number of external jar files that correspond to the various framewoks we usually have in place. e.g.: Hibernate, Spring, apache-commons ...<br><br>Which means we need to make our app's jar and all it's dependencies available in the JRuby classpath in order to use it.<br><br>Given we're using warbler to package our application as a war file, we just need to place all jars needed into our rails app's lib folder. Warbler then takes care of copying any jar files located in there into the war.<br><br><strong>- The problem</strong><br><br>So we needed a smart way to include all these dependencies into the project, and copy/paste isn't an option.<br><br>In the Java world we use <a href="http://maven.apache.org/">Maven</a> to manage our projects dependencies - and you should too. Because of that our approach involved turning our rails application into a Maven aware project.<br><br>Basically we needed a <a href="http://maven.apache.org/pom.html">pom file</a> that would declaratively list our java project as a dependency. From there on, Maven knows what the dependencies are and downloads them to your local repository.<br><br>Which leaves us with one more task. We need to put all these dependencies into our lib folder after maven has downloaded them.<br><br>Below you'll find the pom.xml file that we use to achieve this with inline comments explaining each bit:<br>
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.company</groupId>
+  <!-- notice how we specify the packaging to be a war,
+          that way, maven knows where to copy the jar files -->
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <artifactId>railsApp</artifactId>
+  <name>railsApp</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.company</groupId>
+            <artifactId>java-legacy-app</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>railsApp</finalName>
+        <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <!-- This tasks only creates a basic structure expected by maven,
+                    so it can do its work -->
+            <id>create-mock-web-descriptor</id>
+            <phase>compile</phase>
+            <configuration>
+              <executable>/bin/sh</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>-c</argument>
+                <argument>
+                    mkdir -p src/main/webapp/WEB-INF
+                    touch    src/main/webapp/WEB-INF/web.xml
+                </argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+          <execution>
+            <!-- Now in the package phase we copy the jar files
+                    that maven put into the fake web app to our rails' lib folder -->
+            <id>copy-needed-jars-into-lib</id>
+            <phase>package</phase>
+            <configuration>
+              <executable>/bin/sh</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>-c</argument>
+                <argument>
+                    rm -f lib/*.jar
+                    cp target/railsApp/WEB-INF/lib/*.jar lib
+                    rm -rf target/railsApp*
+                    rm -rf src
+                </argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+          <execution>
+           <!-- Here we optionally create the final war file containing our rails app using warbler,
+                     doing a small cleanup of the files and folders maven created  -->
+            <id>create-final-war</id>
+            <phase>package</phase>
+            <configuration>
+              <executable>/bin/sh</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>-c</argument>
+                <argument>
+                   rm -rf *.war tmp/war
+                   jruby -S warble &amp;&amp; \
+                   mv *.war target/railsApp.war
+                </argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+     </plugins>
+    </build>
+</project>
+```
+
+<br><br>Now from the command line we can just run <em>mvn package</em> and we're good to go.<br><br>Maven will start to package the application as a war file. Since it's not a Java application we create the empty web.xml file in the compile phase, to fool maven. <br><br><br>After it has copied all the dependencies into WEB-INF/lib the next packaging goals will make sure we copy them to our rails' lib folder, also creating the final war file, ready for deployment.<br><br><br>Note that once done, you can use a simple code snippet similar to this one as an initializer and load all dependencies:<br><pre lang="ruby"><br>Dir.entries("#{RAILS_ROOT}/lib").sort.each do |entry|<br>  if entry =~ /.jar$/<br>    require entry<br>  end<br>end<br></pre><br><br>Then we can just use script/console, script/server and so on, as we normally would.<br><br>Sorry for the long post, I tried to pack in as much as I could and I certainly hope it's useful to someone. Any doubts, comments and etc... just drop me a line. :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Google IO: Thoughtworks on GAE]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae/"/>
+    <updated>2009-06-22T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/06/22/google-io-thoughtworks-on-gae</id>
+    <content type="html"><![CDATA[<p>
+I've just watched a <a href="http://www.youtube.com/watch?v=-4fA_UciDaA">video</a> from <a href="http://code.google.com/events/io/">Google IO</a> where <a href="http://code.google.com/events/io/">Martin Fowler</a> and Rebecca Parsons went through some of the aspects that involves the development of an application for the cloud - focusing on the JVM.<br><br>In terms of the Google App Engine, you don't have access to a relational database, thing I found out <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">when I first tried it</a>.  Instead you get a <a href="http://labs.google.com/papers/bigtable.html">Big Table</a>.<br><br>Martin put out a good analogy and you can just think of it as a nested hash map. It's certainly a shift on how we think these days, but layers of abstraction like google's DataStore and the Java Persistence API will help in the transition.<br><br>Another interesting bit about the presentation was on how concurrency works on GAE.<br><br>Essentially, in an standard Java application you have a single memory space where you have at least one running thread. You can create threads on the fly, which will share the same memory space, thus making it easy to share data.<br><br>On the app engine, things work differently. What you have are separate memory spaces with a single thread on each one. Any attempt to create a new thread will result in an exception. The solution for sharing information in this case? Use the nested hash map (big table).<br><br>Now, whereas you might not be worried about this since your application doesn't span any threads, as well pointed by Martin Fowler, it's the code you don't see that you need to be careful with. Any Java application uses a number of 3rd party libraries that might span out threads of their own, which will result in your application blowing up.<br><br>That rang a bell. Again, back when <a href="http://www.leonardoborges.com/writings/2009/04/10/jruby-on-rails-and-google-app-engine/">I was trying the app engine</a>, one of the configuration bits shared by <a href="http://olabini.com/blog/2009/04/jruby-on-rails-on-google-app-engine/">Ola Bini</a> looked like this:<br><pre>   config.webxml.jruby.min.runtimes = 1<br>   config.webxml.jruby.max.runtimes = 1<br>   config.webxml.jruby.init.serial = true</pre><br><br>I think the properties are pretty much self-explanatory but I didn't quite understand the reason for setting it back then.<br><br>If you happen to have bigger values for the number of runtimes you want, you need to set the serial property to true, otherwise JRuby will span several threads to create the runtimes.<br><br>This is a really good example of things that might fail whether you're migrating or developing a new app to deploy on the App Engine. Luckily for us, JRuby has a smart and neat way to handle this - the configuration I've just shown, but most of the libraries out there that might rely on threads are not prepared.<br><br>Martin and Rebecca's opinion on this is that new releases of these same libraries will start to take it into account, since a bigger adoption of the Cloud seem to be on the way.<br><br>Make sure you watch the video. I certainly left a lot of interesting stuff out.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

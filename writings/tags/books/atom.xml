@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: books | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/books/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure Reactive Programming has been published]]></title>
+    <link href="http://www.leonardoborges.com/writings/2015/03/27/clojure-reactive-programming-has-been-published/"/>
+    <updated>2015-03-27T15:10:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2015/03/27/clojure-reactive-programming-has-been-published</id>
+    <content type="html"><![CDATA[<p>I'm extremely happy to let everyone know my book, <a href="https://www.packtpub.com/web-development/clojure-reactive-programming">Clojure Reactive Programming</a>, has finally been published!</p>
+
+<p>You can get it at the <a href="https://www.packtpub.com/web-development/clojure-reactive-programming">publisher's website</a> or on <a href="http://www.amazon.com/Clojure-Reactive-Programming-Leonardo-Borges/dp/1783986662/ref=sr_1_1?ie=UTF8&amp;qid=1427205216&amp;sr=8-1&amp;keywords=Clojure+Reactive+Programming">Amazon</a>. I had a great time writing it and I truly hope you find it useful!</p>
+
+<p>I've met a few authors here and there and I heard more than once that a book is never really finished. I now know what they mean.</p>
+
+<p>The book doesn't cover everything I wanted to write about due to time and space limitations. Having said that, now that the book is out I do plan to expand on a few things using this blog.</p>
+
+<p>Stay tuned!</p>
+
+<p>Thanks to everyone who gave me feedback on early drafts of the book! :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[EuroClojure 2014 and announcing my book]]></title>
+    <link href="http://www.leonardoborges.com/writings/2014/07/20/euroclojure-2014-and-clojure-reactive-programming/"/>
+    <updated>2014-07-20T15:50:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2014/07/20/euroclojure-2014-and-clojure-reactive-programming</id>
+    <content type="html"><![CDATA[<p>A bit late for a EuroClojure 2014 post but I suppose "better late than never" applies here.</p>
+
+<p>The best part of every conference is the networking. Meeting new and interesting people is priceless and I did plenty of that - mostly over Polish beer and food. Polish beer isn't the greatest but if you must have it, better stick to Żywiec. It's widely available and was the one which didn't give me a headache :) - I've been told there are amazing microbreweries though I didn't get a chance to try any while in Krákow.</p>
+
+<p>The food on the other hand was excellent every single time. But I digress.</p>
+
+<p>There's no point in me describing the talks I watched as someone else has already done a
+much better job of it: it's all <a href="https://gist.github.com/philandstuff/299cda371c7e74b03f18">in this gist</a> by <a href="https://twitter.com/philandstuff">Philip Potter</a>.</p>
+
+<p>I gave a talk titled <em>Taming Asynchronous Workflows with Functional Reactive Programming</em>. You can check out the <a href="http://www.slideshare.net/borgesleonardo/functional-reactive-programming-compositional-event-systems">slides here</a>. The video will be available in  <a href="https://vimeo.com/100688924">this link</a> soon. I've received a lot of great feedback on it both at the event and afterwards through different channels. I'm really happy with how it turned out.</p>
+
+<p>In this talk I mentioned publicly for the first time* that I am working on a book called <strong>Clojure Reactive Programming</strong> to be published by <a href="http://www.packtpub.com/">PacktPub</a>. It seemed appropriate to announce it here as well.</p>
+
+<p>As of yet there's no set date but I'm spending most of my free time working on it. I'd say I have 55% of it done. Feel free to ping me directly if you'd like to know more. Alternatively you might want to follow the <a href="https://twitter.com/CljReactiveProg">twitter account I created for the book</a>.</p>
+
+<p>There's not much there yet but I'll try and post book updates somewhat regularly.</p>
+
+<p>See you around.</p>
+
+<p>* <em>Strictly not true as I've announced it before but this was the first time for a wider Clojure audience and the first time captured on camera so there's no denying now ;)</em></p>
+]]></content>
+  </entry>
+  
+</feed>

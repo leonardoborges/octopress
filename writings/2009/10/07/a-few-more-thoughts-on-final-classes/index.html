@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>A few more thoughts on final classes - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I said final classes are evil and that post got some attention with interesting comments. Maybe because of the title and the tone I wrote it, a few &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">A Few More Thoughts on Final Classes</h1>
+	<div class="entry-content"><p>
+I <a href="http://www.leonardoborges.com/writings/2009/03/17/final-classes-are-evil/" target="_blank">said final classes are evil</a> and that post got some attention with interesting comments. Maybe because of the title and the tone I wrote it, a few comments didn&#8217;t get my real intention and perhaps I should have been more explicit about it. Go ahead and <a href="http://www.leonardoborges.com/writings/2009/03/17/final-classes-are-evil/" target="_blank">read it</a>. I&#8217;ll wait. :)<br><br>Anyway, I thought I&#8217;d expand a little more on that subject, explaining my motivation to write that post and going through the topics I think were raised by my dear readers.<br><br>First off, final classes <strong>are evil for testing</strong>. And that&#8217;s what it was all about in my previous post.<br><br>If you depend on a final class, your code will be harder to test. Unless the final class provides an interface that captures its intent - or you wrap that dependency.<br><br>But this affirmation has some implications that were pointed out by a few comments, some of which I agree with - others, not so much. So let&#8217;s start!<br><br><strong>- Immutability </strong><br><br><span style="background-color: #ffffff;">Someone said &#8220;Why make a class final ? To make it immutable&#8221;. This is not entirely true. Only by marking it final you do not ensure immutability. There is no point in doing that if you provide mutators - e.g. setters. - and don&#8217;t declare your members private and final.</span><br><br>I think it&#8217;s important to make this clear and understand that the immutability part you achieve by marking a class final is the one of preventing inheritance. Subclasses could possibly contain malicious/careless code and change the internal state of the class.<br><br><span style="background-color: #ffffff;">But there is another way of preventing subclassing without marking the parent final: declare its constructor private and provide a <a href="http://www.javapractices.com/topic/TopicAction.do?Id=21" target="_blank">static factory</a>.</span><br><br><strong>- Designing for extensibility</strong><br><br>This is hard. It basically means that if you don&#8217;t mark a class final, you should document it for inheritance.<br><br>And this is why inheritance is, in general, a bad OO practice. By documenting the class you basically break encapsulation since you tell the world about your internals.<br><br>Therefore, the recommendation is to mark a class final if you&#8217;re not sure if it&#8217;s safe to subclass it - or if you just don&#8217;t wanna bother writing documentation and thinking too much about your &#8220;client&#8221; subclasses.<br><br><strong>- Coding against interfaces</strong><br><br>This one is simple but yet often forgotten. Do not code to concrete classes. Always choose interfaces where possible.<br>It roughly means to do this:<br><pre lang="java">  List args = new ArrayList();</pre><br>instead of this:<br><pre lang="java">  ArrayList args = new ArrayList();</pre><br>By doing so you have the flexibility to not care about the implementation you&#8217;re working with, as long as it obeys the interface. That way, the implementations can be swapped at any time without breaking any client&#8217;s code.<br><br><strong>- The problem with testing</strong><br><br><strong></strong>All items listed here so far are widely regarded as best practices and the bullet I raised about hard testing usually happens when you &#8220;violate&#8221; some of them.<br><br>Specifically, if you decide not to design a class for inheritance and mark it as final, it&#8217;s wise - in my opinion - to try and capture the class&#8217;s intent through an interface.<br><br>That way you can safely mark your class final and users of your class can easily use the interface to extend it - by favoring <a href="http://www.artima.com/lejava/articles/designprinciples4.html" target="_blank">composition over inheritance</a> - or by providing it to mocking frameworks for easy testing.<br><br><strong>- Conclusion</strong><br><br>I don&#8217;t really think there is a rule of thumb here. Java&#8217;s standard library shows many examples of both approaches and some of them are now considered bad practices but yet are there for backward compatibility. Nevertheless, these are points to consider when designing your classes.<br><br>As pointed out by Josua Bloch in his awesome book <a href="http://www.shelfari.com/books/purchase?EditionId=1523265&amp;AssociateId=leonaborge-20&amp;WidgetId=111594" target="_blank">Effective Java</a>, &#8220;If a concrete class does not implement a standard interface, then you may inconvenience some programmers by prohibiting inheritance&#8221;.<br><br>As usual, comments are more than welcome :)
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-07T00:00:00+11:00" pubdate data-updated="true">Oct 7<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/architecture/'>Architecture</a>, <a class='category' href='/writings/tags/java/'>Java</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2009/10/07/a-few-more-thoughts-on-final-classes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>A Tale Of Concurrency: Partitioning Data Between Processes - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="So I had just finished writing this feature. I was confident it&#8217;d work - after all I had a good level of tests around it.
+It sounded like yet &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">A Tale of Concurrency: Partitioning Data Between Processes</h1>
+	<div class="entry-content"><p>So I had just finished writing this feature. I was confident it&#8217;d work - after all I had a good level of tests around it.
+It sounded like yet another successful deployment.</p>
+
+<p>One week in and something starts breaking. It was hard to track down but at the end I realised it was caused by having concurrent processes running in parallel.</p>
+
+<p>That&#8217;s what happened in a recent production release at our current client. It was a very interesting problem to track
+down and solve and I&#8217;ll do my best to explain and walk you through it here.</p>
+
+<h2>What we were trying to achieve</h2>
+
+<p> I&#8217;ll try not to go into many details here as to how the feature works but here is the gist of it:</p>
+
+<p> A user from the staff can select from a range of criteria to create a &#8220;List&#8221; that is used to match users against the database.
+ These criteria are serialized to the database in this list object to allow for further processing.</p>
+
+<p> When required, the staff can choose to mail the users resulting from that list. To get the set of users, the system
+ de-serializes the criteria contained in the list, builds a SQL query and runs it against the database.</p>
+
+<h2>Constraints</h2>
+
+<p>These lists are contained in something called a &#8220;Push&#8221;. That&#8217;s just a concept that identifies that a set of lists and
+emails belong to a specific theme, say, &#8216;Kitty lovers&#8217;.</p>
+
+<p>It&#8217;s a powerful concept though because its single most important rule is that a user should <strong>never</strong> receive more than one email within the same &#8220;Push&#8221;.</p>
+
+<p>For example, take a look at the image below, which represents a Push in progress. Let <strong>U</strong> be the universe of all users in the database. <strong>L</strong> are users returned by a List within a given Push. <strong>R</strong> is the set of users that have already received an email from that Push.</p>
+
+<p><img src="/writings/assets/images/sets.png"></p>
+
+<p>Based on the rules I explained above, the green area then represents users we can still send emails to.</p>
+
+<h2>Content testing</h2>
+
+<p>With all the basic concepts in place, let&#8217;s pretend we are actually creating a Push for the &#8216;Kitty Lovers&#8217;. I am organizing
+a kitty expo at my house and I want to invite everyone that lives within 50km of Sydney, Australia - see the list specification going on here?</p>
+
+<p>Let&#8217;s say this list gives us 25000 users. My house&#8217;s better be huge.</p>
+
+<p>Simple enough, but I actually have 2 emails to send. They have different content, say 2 different pictures, and before
+I invite everyone, I want to test which email works best by sending them both to a subset of the list - make it a thousand random users each.
+After all, I want my event to be a huge success.</p>
+
+<p>After I decide which email is best - the system tracks opens, clicks, etc&#8230; - I want to send it to the rest of the list,
+which is to say every user that has not received an email from this Push yet.</p>
+
+<h2>Offloading work, the problem begins</h2>
+
+<p>Due to certain architecture and performance requirements the unit of code that runs the list&#8217;s criteria against the database,
+gets the user ids and sends the email, is sent to a job queue to be later executed by a background process.</p>
+
+<p>In development and staging we only ever had a single background process running so all was well. The code was basically executed sequentially.</p>
+
+<p>In production however, we can - and usually have - several background workers picking up jobs from the queue. And that&#8217;s when the bug happened:</p>
+
+<p><img src="/writings/assets/images/activity.png"></p>
+
+<p>As you can see in the above image, given you have 2 jobs running in parallel, Job#1 selects the users from the list, starts sending some emails and in the meantime
+Job#2 comes along, selects roughly the same users and starts doing the same before Job#1 has had enough time to mark
+those users as having received the email already. Bam! Some users will receive duplicates!</p>
+
+<h2>The solution</h2>
+
+<p>  I spent a lot of time literally staring at my laptop&#8217;s screen thinking about how to solve this issue. Locking the table?
+  Nah&#8230; that would render having multiple workers useless.</p>
+
+<p>  What I really needed was a way to partition the data between jobs so as to avoid different jobs from dealing with the same set of users.</p>
+
+<p>  My next thought was to run the query once beforehand to sort the list of user ids, split it in groups equal to the number of jobs
+  and work out the id ranges each job should deal with.</p>
+
+<p>  Although this solution would work, it would add the extra step of running the query once before actually running the jobs.
+  That did not make me happy.</p>
+
+<p>  That&#8217;s when I started thinking about a metaphor that helped me come up with this insight: a Hash Table. If you ever implemented
+  one you can see that the buckets in a hash table could be related to the jobs we have running.</p>
+
+<p>  I basically wanted different users to go to different buckets. Think hash functions. Think modulus.</p>
+
+<p>  To follow this approach I changed my code so that each job would be assigned an id, starting at 0, up to (number_of_jobs - 1).
+  Then, when putting the jobs in the queue I would provide 2 extra arguments:
+  <strong>the current job id</strong> and <strong>the total number of jobs</strong>.</p>
+
+<p>  Upon execution, the job would use these extra arguments to modify the query, adding an extra field to the select clause:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">SELECT</span> <span class="p">...,</span> <span class="k">MOD</span><span class="p">(</span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">number_of_jobs</span><span class="p">)</span> <span class="k">AS</span> <span class="n">modulus</span><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  And it would also append an extra filter to the where clause:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">WHERE</span> <span class="p">...</span> <span class="k">AND</span> <span class="n">modulus</span> <span class="o">=</span> <span class="n">current_job_id</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  That way, users would be spread as evenly as possible between jobs and no single user would be processed by more than one job.</p>
+
+<p>  For example: If we had 2 jobs, ids 0 and 1 and a list of 10 users with ids from 0 to 10, this would be the users distribution between jobs:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">0</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">0</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">1</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">1</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">2</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">2</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">3</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">3</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">4</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">4</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">5</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">5</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">6</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">6</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">7</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">7</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">8</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">8</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">9</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">1</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">9</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">user_id</span><span class="p">:</span><span class="mi">10</span> <span class="o">-</span> <span class="n">processed</span> <span class="k">by</span> <span class="n">job_id</span><span class="p">:</span><span class="mi">0</span> <span class="p">(</span><span class="n">given</span> <span class="k">by</span> <span class="mi">10</span> <span class="k">mod</span> <span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  A simple, elegant solution for a tricky problem. One that I&#8217;m finally happy about.</p>
+
+<p>  If you made it to here, I appreciate your patience and hope you enjoyed the read ;)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-19T00:00:00+10:00" pubdate data-updated="true">Jun 19<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/concurrency/'>concurrency</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

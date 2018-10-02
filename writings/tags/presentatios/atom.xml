@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Presentatios | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/presentatios/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Clouds against the floods: presentation available]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/02/12/clouds-against-the-floods-presentation-available/"/>
+    <updated>2011-02-12T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/02/12/clouds-against-the-floods-presentation-available</id>
+    <content type="html"><![CDATA[<p>
+Last Tuesday I gave a short presentation on the whole <a title="Clouds against the Floods" href="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/" target="_blank">Clouds Against the Floods</a> thing at the <a title="Ruby on Rails Oceania Meetup" href="http://rubyonrails.com.au/sydney-meetups" target="_blank">Ruby on Rails Oceania User Group</a> here in Sydney.<br><br>Those guys are awesome and they recorded the talk - thanks guys!<br><br>If you'd like to download the slides, they're available on <a title="Slideshare profile" href="http://www.slideshare.net/borgesleonardo/clouds-against-the-floods" target="_blank">Slideshare</a>.<br><br>Enjoy! ;)<br><br><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="425" height="344" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.youtube.com/v/DYDD9XiW3Gg?hl=en&amp;fs=1" /><param name="allowfullscreen" value="true" /><embed type="application/x-shockwave-flash" width="425" height="344" src="http://www.youtube.com/v/DYDD9XiW3Gg?hl=en&amp;fs=1" allowscriptaccess="always" allowfullscreen="true"></embed></object>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Presentation: Spring framework]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/06/07/presentation-spring-framework/"/>
+    <updated>2008-06-07T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/06/07/presentation-spring-framework</id>
+    <content type="html"><![CDATA[<p>
+Last friday I've done a small presentation about Dependency Injection and how it can improve the testing environment of a project. You can find it in the <a href="http://leonardoborges.com/writings/presentations">presentations</a> page.<br><br>Hope you like it.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

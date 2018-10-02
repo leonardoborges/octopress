@@ -1,0 +1,476 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Purely functional data structures in Clojure: Leftist Heaps - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="This post is part of a series about Chris Okasaki&#8217;s Purely Functional Data Structures. You can see all posts in the series by visiting the &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Purely Functional Data Structures in Clojure: Leftist Heaps</h1>
+	<div class="entry-content"><blockquote><p>This post is part of a series about Chris Okasaki&#8217;s <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a>. You can see all posts in the series by visiting the <a href="http://www.leonardoborges.com/writings/tags/functional-data-structures/">functional-data-structures</a> category in this blog.</p></blockquote>
+
+<hr />
+
+<p>Last year I started reading a book called <a href="http://amzn.to/UcIidh">Purely Functional Data Structures</a>. It&#8217;s a fascinating book and if you&#8217;ve ever wondered how Clojure&#8217;s persistent data structures work, it&#8217;s mandatory reading.</p>
+
+<p>However, all code samples in the book are written in <a href="http://bit.ly/YqYjtt">ML</a> - with <a href="http://bit.ly/YqYmp6">Haskell</a> versions in the end of the book. This means I got stuck in Chapter 3, where the ML snippets start.</p>
+
+<p>I had no clue about Haskell&#8217;s - much less ML&#8217;s! - syntax and I was finding it very difficult to follow along. What I did notice is that their syntaxes are not so different from each other.</p>
+
+<p>So I put the book down and read <a href="http://amzn.to/VuD3jT">Learn You a Haskell For Great Good!</a> with the hopes that learning more about haskell&#8217;s syntax - in particular, learning how to read its type signatures - would help me get going with <em>Puretly Functional Data Structures</em>.</p>
+
+<p>Luckily, I was right - and I recommend you do the same if you&#8217;re not familiar with either of those languages. <a href="http://amzn.to/VuD3jT">Learn You a Haskell For Great Good!</a> is a great book and I got a lot out of it. <a href="http://www.leonardoborges.com/writings/2012/11/30/monads-in-small-bites-part-i-functors/">My series on Monads</a> is a product of reading it.</p>
+
+<p>Enough background though.</p>
+
+<p>The purpose of this post is two-fold: One is to share the <a href="https://github.com/leonardoborges/purely-functional-data-structures">github repository</a> I created and that will contain the Clojure versions of the data structures in the book as well as most solutions to the exercises - or at least as many as my time-poor life allows me to implement.</p>
+
+<p>The other is to walk you through some of the code and get a discussion going. Hopefully we will all learn something - as I certainly have when implementing these. Today, we&#8217;ll start with Leftist Heaps.</p>
+
+<h3>Leftist Heaps</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Leftist_tree">Leftist Heaps</a> - or trees - are a variant of <a href="http://en.wikipedia.org/wiki/Binary_heap">binary heaps</a> that can be used as priority queues. On top of the standard invariants of binary heaps, it obeys the leftist property:</p>
+
+<ul>
+<li>Every node has a <em>rank</em>, which is the distance from its right spine to the nearest leaf</li>
+<li>A node&#8217;s left child has a rank at least as large as its right child</li>
+</ul>
+
+
+<p>In a nutshell, these are the operations we need to be able to perform on a leftist heap:</p>
+
+<ul>
+<li>insert a value into an existing heap</li>
+<li>merge two heaps</li>
+<li>find the minimum value in a heap</li>
+<li>delete the minimum value, returning a new heap</li>
+</ul>
+
+
+<p>Since the book uses ML/Haskell, it starts with a data type definition for Heaps that exposes these and a couple of other auxiliary functions. I decided to take a stab at writing the solution using Clojure&#8217;s protocols and records:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">defprotocol</span> <span class="nv">Heap</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">is-empty?</span>   <span class="p">[</span><span class="nv">this</span><span class="p">])</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">insert</span>      <span class="p">[</span><span class="nv">this</span> <span class="nv">v</span><span class="p">])</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">merge </span>      <span class="p">[</span><span class="nv">this</span> <span class="nv">other</span><span class="p">])</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">rank</span>        <span class="p">[</span><span class="nv">this</span><span class="p">])</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">find-min</span>    <span class="p">[</span><span class="nv">this</span><span class="p">])</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">delete-min</span>  <span class="p">[</span><span class="nv">this</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">defrecord</span> <span class="nv">LeftistHeap</span> <span class="p">[</span><span class="nv">rank</span> <span class="nv">value</span> <span class="nv">left</span> <span class="nv">right</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>When implementing the algorithms the base case for the recursive solutions will involve dealing with <em>nil</em> values which at first seems like it wouldn&#8217;t be a problem. However, protocol functions dispatch on the type of its first argument so what happens if I call the function <em>is-empty?</em> on <em>nil</em>?</p>
+
+<p>Luckily, Clojure allows us to extend a protocol to core types:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">extend-protocol</span> <span class="nv">Heap</span>
+</span><span class='line'>  <span class="nv">nil</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">rank</span> <span class="p">[</span><span class="nv">_</span><span class="p">]</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">merge </span><span class="p">[</span><span class="nv">_</span> <span class="nv">other</span><span class="p">]</span> <span class="nv">other</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">is-empty?</span> <span class="p">[</span><span class="nv">_</span><span class="p">]</span> <span class="nv">true</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">LeftistHeap</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">is-empty?</span> <span class="p">[</span><span class="nv">this</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">nil? </span><span class="nv">this</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="nf">rank</span> <span class="p">[</span><span class="nv">this</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">:rank</span> <span class="nv">this</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="nb">merge </span><span class="p">[{</span><span class="nv">val-this</span> <span class="nv">:value</span> <span class="nv">left-this</span> <span class="nv">:left</span> <span class="nv">right-this</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">this</span><span class="p">}</span>
+</span><span class='line'>          <span class="p">{</span><span class="nv">val-other</span> <span class="nv">:value</span> <span class="nv">left-other</span> <span class="nv">:left</span> <span class="nv">right-other</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">other</span><span class="p">}]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">cond</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">is-empty?</span> <span class="nv">other</span><span class="p">)</span> <span class="nv">this</span>
+</span><span class='line'>     <span class="p">(</span><span class="nb">&lt;= </span><span class="nv">val-this</span> <span class="nv">val-other</span><span class="p">)</span> <span class="p">(</span><span class="nf">ensure-leftist</span> <span class="nv">left-this</span>
+</span><span class='line'>                                             <span class="p">(</span><span class="nb">merge </span><span class="nv">right-this</span> <span class="nv">other</span><span class="p">)</span>
+</span><span class='line'>                                             <span class="nv">val-this</span><span class="p">)</span>
+</span><span class='line'>     <span class="nv">:else</span> <span class="p">(</span><span class="nf">ensure-leftist</span> <span class="nv">left-other</span>
+</span><span class='line'>                           <span class="p">(</span><span class="nb">merge </span><span class="nv">this</span> <span class="nv">right-other</span><span class="p">)</span>
+</span><span class='line'>                           <span class="nv">val-other</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="nf">insert</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">v</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">merge </span><span class="p">(</span><span class="nf">-&gt;LeftistHeap</span> <span class="mi">1</span> <span class="nv">v</span> <span class="nv">nil</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'>           <span class="nv">this</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="nf">find-min</span> <span class="p">[{</span><span class="nv">v</span> <span class="nv">:value</span><span class="p">}]</span> <span class="nv">v</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">(</span><span class="nf">delete-min</span> <span class="p">[{</span><span class="nv">left</span> <span class="nv">:left</span> <span class="nv">right</span> <span class="nv">:right</span><span class="p">}]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">merge </span><span class="nv">right</span> <span class="nv">left</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note how I extended a few of the protocol functions to the nil data type, allowing me to continue with this implementation with no nasty hacks.</p>
+
+<p>There&#8217;s one last bit missing: a function that will ensure each heap retains the leftist property:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">ensure-leftist</span>
+</span><span class='line'> <span class="p">[</span><span class="nv">this</span> <span class="nv">other</span> <span class="nv">v</span><span class="p">]</span>
+</span><span class='line'> <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">rank-this</span> <span class="p">(</span><span class="nf">rank</span> <span class="nv">this</span><span class="p">)</span>
+</span><span class='line'>       <span class="nv">rank-other</span> <span class="p">(</span><span class="nf">rank</span> <span class="nv">other</span><span class="p">)]</span>
+</span><span class='line'>   <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt;= </span><span class="nv">rank-this</span> <span class="nv">rank-other</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">-&gt;LeftistHeap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-other</span><span class="p">)</span> <span class="nv">v</span> <span class="nv">this</span> <span class="nv">other</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">(</span><span class="nf">-&gt;LeftistHeap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-this</span><span class="p">)</span> <span class="nv">v</span> <span class="nv">other</span> <span class="nv">this</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The reason this function is isolated is that the Heap protocol defined above is fairly generic and could be used for defining other types of heaps - and I didn&#8217;t feel it warranted its own interface.</p>
+
+<p>We can now play with it and create a new leftist heap:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">-&gt; </span><span class="p">(</span><span class="nf">-&gt;LeftistHeap</span> <span class="mi">1</span> <span class="mi">3</span> <span class="nv">nil</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'>                   <span class="p">(</span><span class="nf">insert</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>                   <span class="p">(</span><span class="nf">insert</span> <span class="mi">7</span><span class="p">)</span>
+</span><span class='line'>                   <span class="p">(</span><span class="nf">insert</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>                   <span class="p">(</span><span class="nf">insert</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>                   <span class="p">(</span><span class="nf">insert</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>                   <span class="p">(</span><span class="nf">insert</span> <span class="mi">20</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While I quite like this approach, I thought I&#8217;d also implement this solution using Clojure&#8217;s core data types - maps in this case - and no protocols. The code is shown below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">mk-heap</span> <span class="p">[</span><span class="nv">rank</span> <span class="nv">value</span> <span class="nv">left</span> <span class="nv">right</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">{</span><span class="nv">:rank</span> <span class="nv">rank</span> <span class="nv">:value</span> <span class="nv">value</span> <span class="nv">:left</span> <span class="nv">left</span> <span class="nv">:right</span> <span class="nv">right</span><span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">heap-rank</span> <span class="p">[</span><span class="nv">heap</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">nil? </span><span class="nv">heap</span><span class="p">)</span>
+</span><span class='line'>    <span class="mi">0</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">:rank</span> <span class="nv">heap</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">ensure-leftist-heap</span> <span class="p">[</span><span class="nv">value</span> <span class="nv">heap-a</span> <span class="nv">heap-b</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">rank-a</span> <span class="p">(</span><span class="nf">heap-rank</span> <span class="nv">heap-a</span><span class="p">)</span>
+</span><span class='line'>        <span class="nv">rank-b</span> <span class="p">(</span><span class="nf">heap-rank</span> <span class="nv">heap-b</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt;= </span><span class="nv">rank-a</span> <span class="nv">rank-b</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">mk-heap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-b</span><span class="p">)</span> <span class="nv">value</span> <span class="nv">heap-a</span> <span class="nv">heap-b</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">mk-heap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-a</span><span class="p">)</span> <span class="nv">value</span> <span class="nv">heap-b</span> <span class="nv">heap-a</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">merge-heaps</span> <span class="p">[{</span><span class="nv">val-a</span> <span class="nv">:value</span> <span class="nv">left-a</span> <span class="nv">:left</span> <span class="nv">right-a</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">heap-a</span><span class="p">}</span>
+</span><span class='line'>                   <span class="p">{</span><span class="nv">val-b</span> <span class="nv">:value</span> <span class="nv">left-b</span> <span class="nv">:left</span> <span class="nv">right-b</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">heap-b</span><span class="p">}]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">cond</span>
+</span><span class='line'>   <span class="p">(</span><span class="nb">nil? </span><span class="nv">heap-a</span><span class="p">)</span> <span class="nv">heap-b</span>
+</span><span class='line'>   <span class="p">(</span><span class="nb">nil? </span><span class="nv">heap-b</span><span class="p">)</span> <span class="nv">heap-a</span>
+</span><span class='line'>   <span class="p">(</span><span class="nb">&lt;= </span><span class="nv">val-a</span> <span class="nv">val-b</span><span class="p">)</span> <span class="p">(</span><span class="nf">ensure-leftist-heap</span> <span class="nv">val-a</span>
+</span><span class='line'>                                         <span class="nv">left-a</span>
+</span><span class='line'>                                         <span class="p">(</span><span class="nf">merge-heaps</span> <span class="nv">right-a</span> <span class="nv">heap-b</span><span class="p">))</span>
+</span><span class='line'>   <span class="nv">:else</span> <span class="p">(</span><span class="nf">ensure-leftist-heap</span> <span class="nv">val-b</span>
+</span><span class='line'>                              <span class="nv">left-b</span>
+</span><span class='line'>                              <span class="p">(</span><span class="nf">merge-heaps</span> <span class="nv">heap-a</span> <span class="nv">right-b</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">heap-insert</span> <span class="p">[</span><span class="nv">value</span> <span class="nv">heap</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">merge-heaps</span> <span class="p">(</span><span class="nf">mk-heap</span> <span class="mi">1</span> <span class="nv">value</span> <span class="nv">nil</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'>               <span class="nv">heap</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">heap-find-min</span> <span class="p">[{</span><span class="nv">v</span> <span class="nv">:value</span><span class="p">}]</span> <span class="nv">v</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="k">defn </span><span class="nv">heap-delete-min</span> <span class="p">[{</span><span class="nv">left</span> <span class="nv">:left</span> <span class="nv">right</span> <span class="nv">:right</span><span class="p">}]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">merge-heaps</span> <span class="nv">right</span> <span class="nv">left</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using it is equally simple:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">(</span><span class="nf">mk-heap</span> <span class="mi">1</span> <span class="mi">3</span> <span class="nv">nil</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">heap-insert</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">heap-insert</span> <span class="mi">7</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">heap-insert</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">heap-insert</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">heap-insert</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">heap-insert</span> <span class="mi">20</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it for now.</p>
+
+<p>As I implement more of the book&#8217;s code and exercises I&#8217;ll add them to the <a href="https://github.com/leonardoborges/purely-functional-data-structures">github repo</a> - it also includes tests for all implementations.</p>
+
+<p>Enjoy :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-03T12:41:00+11:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-data-structures/'>functional-data-structures</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2013/02/03/purely-functional-data-structures-in-clojure-leftist-heaps/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Testing | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/testing/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Are you testing your javascript yet?]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/06/14/are_you_testing_your_javascript_yet/"/>
+    <updated>2010-06-14T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/06/14/are_you_testing_your_javascript_yet</id>
+    <content type="html"><![CDATA[<p>
+What's the difference between your application's javascript code and its java/ruby/python/whatever code?<br><br>Think about it for a second. Done? Well, the answer is: none!<br><br>In today's web applications your javascript code is no different from the rest of your code base but yet we treat it with disregard - and we're all to blame.<br><br>We often see developers investing time writing all sorts of automated tests around their code base but fail to do the same for their javascript -  and yet they get surprised when their client can't click on a button on their web app that depends on that ajax call that has been manually tested once when the page was first released.<br><br>Ask yourself this question if you're not sure if you should be testing your javascript: If it breaks, can my users still benefit from my app? - I think the answer for most web apps is obvious.<br><br>As for tools, I can only speak of two, <a href="http://code.google.com/p/js-test-driver/" target="_blank">JsTestDriver</a> and <a href="http://github.com/nkallen/screw-unit" target="_blank">screw-unit</a>, the latter being the one we're using in my current project at <a href="http://www.thoughtworks.com" target="_blank">ThoughtWorks</a>.<br><br>What I liked about screw-unit is that it's very easy to get it up and running. Being a Behavior-Driven Testing Framework it's not surprising it has a syntax similar to <a href="http://rspec.info/" target="_blank">Rspec</a> -which I prefer over JsTestDriver's similarity to <a href="http://www.junit.org/" target="_blank">JUnit's</a>.<br><br><script src="https://gist.github.com/790871.js?file=gistfile1.js"></script> This is how a test written with screw-unit could look like:  <script src="https://gist.github.com/790873.js?file=gistfile1.js"></script><br><br>Not too bad for a javascript test suite huh?<br><br>So the next time you write a javascript line of code, how about writing a test for it? Consider using screw-unit as your tool but if you have been writing tests using a different framework and you're happy with it, share your experience.<br>I'm always keen to learn better ways of doing what I do.<br><br>Cheers!
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rcov, JRuby and rcov_plugin]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/05/05/rcov-jruby-and-rcov_plugin/"/>
+    <updated>2009-05-05T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/05/05/rcov-jruby-and-rcov_plugin</id>
+    <content type="html"><![CDATA[<p>
+The <a href="http://github.com/commondream/rcov_plugin/tree/master" target="_blank">rcov_plugin</a> project is a rails plugin for <a href="http://eigenclass.org/hiki.rb?rcov" target="_blank">rcov</a> that adds some useful rake tasks to your application.  And since I'm currently working in a JRuby project it made sense to use this plugin.<br><br>The thing is, among other stuff, an rcov report from a JRuby project includes some files that shouldn't be there at all, plus you also need to change the way you call rcov as such. Thus, I thought I'd contribute these changes to the plugin and my pull request was approved this morning - just install the latest version and you should be good to go.<br><br>It was useful for us here, hope it might be useful for you too.<br><br>Enjoy :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mock Objects]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/07/07/mock-objects/"/>
+    <updated>2008-07-07T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/07/07/mock-objects</id>
+    <content type="html"><![CDATA[<p>
+When testing it's pretty common to see the need for mocking a certain object, say, a Data Access Ojbect. This way you don't need to depend on a database and you can focus on the actual logic implemented by the method being tested.<br><br>For that you have several alternatives like creating the Mock class by hand or - and this is the more common - use one of the various mocking libraries out there.<br><br>They all look the same but the past couple of days I've come accross to a new - at least for me - mocking library for Java. It's called <a href="http://code.google.com/p/mockito/">Mockito</a>. As the creators state, technically, Mockito is a fork of <a href="http://www.easymock.org/">EasyMock</a>.<br><br>I have used EasyMock already but I do think Mockito has its advantages. I find it clear and a bit less verbose to write.<br><br>From one of the stubbing examples on their website:<br><pre lang="java"><br>//You can mock concrete classes, not only interfaces<br>LinkedList mockedList = mock(LinkedList.class);<br><br>//stubbing - before execution<br>stub(mockedList.get(0)).toReturn("first");<br><br>//following prints "first"<br>System.out.println(mockedList.get(0));<br><br>//following prints "null" because get(999) was not stubbed<br>System.out.println(mockedList.get(999));<br></pre><br>Looking forward to using it in production! ;)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[DBUnit and Hibernate]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate/"/>
+    <updated>2008-01-17T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/01/17/dbunit-and-hibernate</id>
+    <content type="html"><![CDATA[<p>
+I never paid too much attention on testing database stuff. While working with java, the closest I got to something <em>workable </em>was using the test case abstractions provided by the Spring framework. It ensures that each test method runs in its own transaction that is rolled back after the test's execution.<br><br>Fair enough. I used the <a href="http://junit.sourceforge.net/javadoc/junit/framework/TestCase.html#setUp()">setUp()</a> method on my <a href="http://junit.sourceforge.net/javadoc/junit/framework/TestCase.html">TestCase</a> to configure some records so I could work with them, removing all of them in the <a href="http://junit.sourceforge.net/javadoc/junit/framework/TestCase.html#tearDown()">tearDown()</a> method. It was quite simple and worked.<br><br>But I always felt something strange with this solution. First of all, I had to add another framework just for that. - Actually I was using spring for dependency injection, but if I wasn't, it wouldn't be a nice option. And another thing that bothered me, is that you cannot guarantee that your database is in a known state.<br><br>After I started to work with Ruby - and Rails - I discovered the <a href="http://manuals.rubyonrails.com/read/chapter/26">testing fixtures</a>. It is a really nice way to set up your testing data without having to worry about your database state. - If you don't know what I'm talking about, follow the above link first.<br><br>Then I received a message from a co-worker saying he was having some trouble in using <a href="http://www.dbunit.org/">DBUnit</a> with Hibernate, and asked for some help. I've heard of DBUnit before but never tried it myself. It was a very good opportunity to take a better look into it.<br><br>The basic idea after all is very similar to that of the Rails Fixtures: You have some sort of external file - XML in this case - where you set up the testing data. So the framework takes care of erasing the database, inserting your test data and returning it to its original state.<br><br>So far so good, DBUnit's default Classes works with <a href="http://www.dbunit.org/apidocs/org/dbunit/JdbcBasedDBTestCase.html">JDBC,</a> <a href="http://www.dbunit.org/apidocs/org/dbunit/DataSourceBasedDBTestCase.html">DataSources</a> and <a href="http://www.dbunit.org/apidocs/org/dbunit/JndiBasedDBTestCase.html">JNDIDatasources</a>, but not with Hibernate.  The effort to put them working together is minimal and is documented in their web site.<br><br>I decided to share how this can be done with hibernate and in the end, you would have a test case similar to this one:<br><br><!--more--><br><br>[java]<br>public class DBUnitTest extends TestCase {<br>private Session s;<br>private FileInputStream is;<br>private IDatabaseConnection conn;<br>private IDataSet dataSet;<br><br>public DBUnitTest() {<br>try {<br>s = HibernateUtil.getSession();<br>is = new FileInputStream("task-sample-data.xml");<br>conn = new DatabaseConnection(s.connection());<br>dataSet = new FlatXmlDataSet(is);<br>} catch (Exception e) {<br>e.printStackTrace();<br>}<br>}<br><br>@Override<br>protected void setUp() throws Exception {<br>super.setUp();<br>try {<br>DatabaseOperation.INSERT.execute(conn, dataSet);<br>} catch (Exception e) {<br>e.printStackTrace();<br>}<br><br>}<br><br>public void testTrue() {<br>List<task> tasks = s.createQuery("from Task").list();<br>for (Task task : tasks) {<br>System.out.println(task.getId());<br>System.out.println(task.getDetails());<br>}<br>assertTrue(true);<br>}</task><br><br>@Override<br>protected void tearDown() throws Exception {<br>super.tearDown();<br>try {<br>DatabaseOperation.DELETE_ALL.execute(conn, dataSet);<br>} catch (Exception e) {<br>e.printStackTrace();<br>}<br>}<br>}<br>[/java]<br><br>Note that you don't need to extend any DBUnit class. You extend only Junit's plain old TestCase. In its constructor I set up everything I need: The session factory (through the HibernateUtil), and use it to get a session's connection, needed for DBUnit.<br><br>This example is quite simple and I decided to keep it like this to show everything working together. But you would more likely make this class abstract with an abstract method, say getDataSet() so your subclasses wouldn't have to worry with DBUnit at all.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

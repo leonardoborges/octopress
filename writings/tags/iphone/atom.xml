@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: iphone | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/iphone/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Build automation with XCode 4.3, KIF and Jenkins]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/05/03/build-automation-with-xcode-4-dot-3-kif-and-jenkins/"/>
+    <updated>2012-05-03T13:17:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/05/03/build-automation-with-xcode-4-dot-3-kif-and-jenkins</id>
+    <content type="html"><![CDATA[<p><strong>UPDATE:</strong> As pointed to me in <a href="http://www.leonardoborges.com/writings/2012/05/03/build-automation-with-xcode-4-dot-3-kif-and-jenkins/#comment-703288043">this commment</a>, sym links aren't necessary for Waxsim anymore. Check <a href="https://github.com/jonathanpenn/WaxSim">Jonathan Penn's fork on github</a>.</p>
+
+<hr />
+
+<p>After coming back from my holidays in China - which were awesome - I had no downtime at ThoughtWorks and started at a brand new client/project - a much needed change from what I had been working on lately.</p>
+
+<p>It's an iOS project, more specifically an iPad app and that's pretty much all I can tell you about it. I will however tell you how my first few days in the project have been so far.</p>
+
+<p>Being a brand new project I wanted to get our <a href="http://en.wikipedia.org/wiki/Continuous_integration">CI</a> environment up and running as fast as possible - after all the project has only a couple of tests now. For context, here's our setup:</p>
+
+<ul>
+<li>XCode 4.3</li>
+<li><a href="https://github.com/gabriel/gh-unit">GHUnit</a> (I'm not gonna talk too much about it since this was the easy part - their docs are pretty decent)</li>
+<li><a href="https://github.com/square/KIF">KIF</a> (for UI tests)</li>
+<li><a href="http://jenkins-ci.org/">Jenkins</a></li>
+<li><a href="https://github.com/square/waxsim">WaxSim</a> (Hack to get the iPhone Simulator to run on the command line)</li>
+</ul>
+
+
+<p>In most environments I had worked so far - Java, Ruby, Clojure etc.. - running acceptance tests from the command line is a given and so is integrating that into your build system.</p>
+
+<p>Well, that's just not the case with iOS projects. These tasks can be a real pain and take a while to complete. Here's what I had to do:</p>
+
+<h3>On your development Mac</h3>
+
+<p>I'm assuming here you have an XCode project with at least one KIF test and that it builds successfully from the GUI, when you hit play. Now we can move on to run the tests from the command line.</p>
+
+<p>This is the script I'm using to run my KIF tests. I call it <code>RunKIF.sh</code> and  will walk you through it:</p>
+
+<p>```bash</p>
+
+<h1>!/bin/bash</h1>
+
+<p>killall "iPhone Simulator"
+rm /tmp/KIF-*</p>
+
+<p>echo "Build the "UI Tests" target to run in the simulator"
+xcodebuild -target "UI Tests" -configuration Release -sdk iphonesimulator clean build</p>
+
+<p>OUT_FILE=/tmp/KIF-$$.out</p>
+
+<h1>Run the app we just built in the simulator and send its output to a file</h1>
+
+<h1>/path/to/MyApp.app should be the relative or absolute path to the application bundle that was built in the previous step</h1>
+
+<p>echo "Running KIF tests"
+/tmp/waxsim -f "ipad" "build/Release-iphonesimulator/MyApp.app" > $OUT_FILE 2>&amp;1</p>
+
+<h1>WaxSim hides the return value from the app, so to determine success we search for a "no failures" line</h1>
+
+<p>grep -q "TESTING FINISHED: 0 failures" $OUT_FILE</p>
+
+<p>success=<code>exec grep -c "TESTING FINISHED: 0 failures" $OUT_FILE</code></p>
+
+<h1>if there was a failure, show what waxsim was hiding and crucially return with a non-zero exit code</h1>
+
+<p>if [ "$success" = '0' ]
+then</p>
+
+<pre><code>cat $OUT_FILE
+echo "==========================================="
+echo "GUI Tests failed"
+echo "==========================================="
+exit 1
+</code></pre>
+
+<p>else</p>
+
+<pre><code>echo "==========================================="
+echo "GUI Tests passed"
+echo "==========================================="
+</code></pre>
+
+<p>fi
+```</p>
+
+<p>You'll notice there are mainly two things happening in this script:</p>
+
+<ul>
+<li>It runs xcodebuild to build the target against which your tests will run</li>
+<li>uses WaxSim to finally run your tests</li>
+</ul>
+
+
+<p>To get the building step to work, despite what KIF's documentation DOESN'T tell you, you need to add KIF as a target dependency to your KIF Tests target. <a href="http://stackoverflow.com/questions/10000600/build-error-on-zapp-when-running-iphone-app-with-kif-testsuites">This SO thread</a> can walk you through it.</p>
+
+<p>Now on to the fun stuff!
+For some reason I didn't have the time to dig into, WaxSim seems to expect XCode to be under <code>/Developer/</code> on your Mac.</p>
+
+<p>The problem is that since Apple started distributing Xcode through the AppStore, it now lives under <code>/Applications/Xcode.app/Contents/Developer/</code>. Bam! This can cause all sorts of issues when building both WaxSim and your project. So if you see weird error messages complaining about not being able to find <code>DevToolsFoundation.framework</code> and the like, these sym links will probably fix things for you:</p>
+
+<p><code>bash
+sudo ln -s /Applications/Xcode.app/Contents/Developer/ /Developer
+sudo ln -s /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsCore.framework /Developer/Library/PrivateFrameworks/
+sudo ln -s /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsCParsing.framework /Developer/Library/PrivateFrameworks/
+sudo ln -s /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsFoundation.framework /Developer/Library/PrivateFrameworks/
+sudo ln -s /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsInterface.framework /Developer/Library/PrivateFrameworks/
+sudo ln -s /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsKit.framework /Developer/Library/PrivateFrameworks/
+sudo ln -s /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsRemoteClient.framework /Developer/Library/PrivateFrameworks/
+sudo ln -s /Applications/Xcode.app/Contents/OtherFrameworks/DevToolsSupport.framework /Developer/Library/PrivateFrameworks/
+</code></p>
+
+<p>I know, right? Moving on.</p>
+
+<p>By now you should be able to successfully run <code>RunKIF.sh</code> and get meaningful results from your test. Let's configure our CI server now, shall we?</p>
+
+<h3>On your CI Mac</h3>
+
+<p>Depending on which state your build box is, you might need to create the same sym links I created in the previous section. So ssh into your build box and try to build your project from the command line:</p>
+
+<p><code>bash
+xcodebuild -target "UI Tests" -configuration Release -sdk iphonesimulator clean build
+</code></p>
+
+<p>This time I'll assume you already have Jenkins installed and running.</p>
+
+<p>Your Jenkins server is probably running as the jenkins user. You need to change that. Jenkins has to be running within a Desktop session - that's a requirement from WaxSim.
+It needs an active desktop session in order to launch the simulator - and thus needs to run as a user who can login to your CI Mac.</p>
+
+<p>If you installed Jenkins using Homebrew, here's a plist you can use to specify which user jenkins should run as:</p>
+
+<p>```xml
+&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict></p>
+
+<pre><code>&lt;key&gt;Label&lt;/key&gt;
+&lt;string&gt;Jenkins&lt;/string&gt;
+&lt;key&gt;ProgramArguments&lt;/key&gt;
+&lt;array&gt;
+&lt;string&gt;/usr/bin/java&lt;/string&gt;
+&lt;string&gt;-jar&lt;/string&gt;
+&lt;string&gt;/usr/local/Cellar/jenkins/1.439/lib/jenkins.war&lt;/string&gt;
+&lt;/array&gt;
+&lt;key&gt;RunAtLoad&lt;/key&gt;
+&lt;true/&gt;
+&lt;key&gt;UserName&lt;/key&gt;
+&lt;string&gt;UserWhoCanLogintoThisMac&lt;/string&gt;
+</code></pre>
+
+<p></dict>
+</plist>
+```</p>
+
+<p>Then load the new plist:</p>
+
+<p><code>bash
+launchctl load -w  /Users/UserWhoCanLogintoThisMac/Library/LaunchAgents/org.jenkins-ci.plist
+</code></p>
+
+<p>Don't forget to enable automatic login on the CI Mac for the user Jenkins is using. Check <a href="http://www.tech-faq.com/how-to-re-enable-mac-os-x-automatic-login.html">this article</a> to learn how to do it.</p>
+
+<p>Now we're mostly done. Just go ahead and configure your project.</p>
+
+<p>Add a build step of the type <code>Execute Shell</code> and provide <code>sh RunKIF.sh</code> as the command string. Trigger your build and everything should work as expected.</p>
+
+<h3>Final thoughts</h3>
+
+<p>Once I actually got these steps together to write this post, it didn't look like much. But the amount of time I wasted finding out what had to be done to actually make this work is just insane.</p>
+
+<p>I'm shocked at how much behind iOS development tools seem to be. It just shouldn't take this much effort and time only to get some UI tests automated. So far I'm disappointed with the tooling around the Apple ecosystem and I really hope this improves sooner rather than later.</p>
+]]></content>
+  </entry>
+  
+</feed>

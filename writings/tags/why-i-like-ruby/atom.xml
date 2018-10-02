@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Why I Like Ruby | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/why-i-like-ruby/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Why I like Ruby #1: alias_method]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/08/07/why-i-like-ruby-1-alias_method/"/>
+    <updated>2008-08-07T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/08/07/why-i-like-ruby-1-alias_method</id>
+    <content type="html"><![CDATA[<p>
+So you found yourself in the need to override a method but still count on it's old behaviour?<br><br>No problem! Override it with your new code, call <strong>super</strong> and.... Uh oh!! Suddenly this turned into a problem... Let me give some more context.<br><br>I was testing <a href="http://ferret.davebalmain.com/trac/wiki">Ferret</a> (and the <a href="http://projects.jkraemer.net/acts_as_ferret/">acts_as_ferret</a> plugin) in a project to provide full text search capabilities to our models. One of the things the plugin does is to add a new method to ActiveRecord, called <em>find_with_ferret</em>. That way, every model can use it. Great!<br><br>So I thought that would make sense for me to remove all <a href="http://en.wikipedia.org/wiki/Diacritics">diatrictics</a> from the input text before letting ferret do its job. You know, like removing <a href="http://en.wikipedia.org/wiki/Umlaut_%28diacritic%29">umlauts</a> and all that.<br><br>I could do that by overriding this method with code to remove the undesired chars and then call its older version to finally do the search - something like calling super, but not quite. And I didn't want my models to inherit from anything else than ActiveRecord::Base. That wouldn't make any sense.<br><br><a href="http://www.ruby-doc.org/core/classes/Module.html#M000395">alias_method</a> to the rescue!<br><br>You know that to redefine a method in an existing class you can open it up and rewrite it. But since you don't wanna loose the behaviour provided by the original method, this is how you can achieve this:<br><br><pre lang="ruby" line="1"><br>module ActiveRecord<br>  class Base<br>    alias_method :find_with_ferret_original, :find_with_ferret<br><br>    def find_with_ferret(q, options = {}, find_options = {})<br>      remove_diatrictics!(q)<br>      find_with_ferret_original(q, options, find_options)<br>    end<br>  end<br>end<br></pre><br><br>And you're good to go. On line 3 you're just giving the original method an alias, making a copy of it.<br><br>Then you redefine it the way you like and on line 6 you call the old version to make sure u still got the same behaviour.  <br>Now all my models can benefit of this change without requiring them to call another method nor inherit from another class.<br><br>Cool, huh? :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Why I like ruby #0 (...or Ruby: The language of the lazy programmer)]]></title>
+    <link href="http://www.leonardoborges.com/writings/2008/04/01/why-i-like-ruby-or-ruby-the-language-of-the-lazy-programmer/"/>
+    <updated>2008-04-01T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2008/04/01/why-i-like-ruby-or-ruby-the-language-of-the-lazy-programmer</id>
+    <content type="html"><![CDATA[<p>
+This is quite funny. A friend, Perl addicted, is now learning Ruby. He really enjoys the language but made a interesting observation: Ruby is a language for lazy programmers!<br><br>Well, I have to agree... You know, I love saving keystrokes and achieving more by writing less. And this is so true with Ruby.<br><br>Let me give a really simple example, comparing with java - don't get me wrong... I love java, specially the platform, but it fits well here since I've always been a Java guy.<br><br>Imagine you have a Phone class with the attributes number and type, which can indicate whether the phone is a land line or a mobile phone. Then you got an array filled with phone classes and you want to narrow it by creating a new array only with mobile phones.<br><br>In Java, such a class could look very much like this:<br><pre><br>public class Phone {<br>  private String number;<br>  private String type;</code><br><br>  public String getNumber() {<br>    return number;<br>  }<br>  public void setNumber(String number) {<br>    this.number = number;<br>  }<br>  public String getType() {<br>    return type;<br>  }<br>  public void setType(String type) {<br>    this.type = type;<br>  }<br>}<br></pre><br><br>Quite simple, isn't it? But we are telling the compiler many things we actually shouldn't need to. This class is a java bean and as such, among other things, it needs a pair of getters and setters for each of its attributes.<br><br>Now, on with our example, the same class, in ruby, looks like this:<br><br><pre><br>class Phone<br>  attr_accessor :number, :type<br>end<br></pre><br><br>Yeah, I know the feeling. This class has exactly what we need: the two attributes with its own pairs of getters and setters each. But we didn't need to inform it in the verbose way Java has teached us. Cleaner, period.<br><br>Now to the code that actually returns the new array containing only mobile numbers. In java, we can do it in two different ways.<br>Using an ArrayList:<br><br><pre><br>//Create two phone objects, one land line and one mobile<br>...<br>// Add them to an array<br>ArrayList<phone> phones = new ArrayList<phone>();<br>phones.add(land);<br>phones.add(mobile);<br><br>//Return an array only with mobile numbers:<br>private static ArrayList<phone> selectMobilePhones(ArrayList<phone> phones) {<br><br>  ArrayList&lt;Phone&gt; mobiles = new ArrayList&lt;Phone&gt;();<br><br>  for (Phone phone : phones) {<br>    if (phone.getType().equals("mobile")) {<br>      mobiles.add(phone);<br>    }<br>  }<br>  return mobiles;<br>}<br></pre><br><br>Or using ordinary arrays:<br><br><pre><br>// Assume the same phone objects here<br>...<br>//Add them to the array<br>Phone[] phones = new Phone[]{land, mobile};<br><br>//Return an array only with mobile numbers:<br>Phone[] mobiles = new Phone[a.length];<br><br>for (int i = 0; i &lt; a.length; i++) {<br><br>  if (a[i].getType().equals("mobile")) {<br>    mobiles[i] = a[i];<br>  }<br>}<br></pre><br><br>And you're good to go. Actually this code with an ArrayList here only looks good thanks to generics. But this is another matter. Let's take a look at the ruby code that accomplishes de same task:<br><br><pre><br>//Create two phone objects, one land line and one mobile<br>...<br>//Add them to an array<br>phones = [land, mobile]</code><br><br>//Return an array only with mobile numbers:<br>mobiles = phones.select { |phone|<br>   phone.type == "mobile"<br>}<br></pre><br><br>See the difference? Java is a great language but too verbose at times. This is a really simple example but if you take the same principle to a bigger app... yeah, you see where I'm going.<br><br>The bottom line... Ruby may be the language of the lazy programmer, as my friend pointed out. But I don't mind being called lazy as long as I can type less and be more productive. Do you? :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

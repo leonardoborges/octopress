@@ -1,0 +1,534 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="This week we started to test mod_rails in a couple of projects where I work on. One in production.Of course it&#8217;s too early for any conclusions &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/06/07/passenger-mod_rails-and-problems-with-custom-apache-installation/">Passenger (Mod_rails) and Problems With Custom Apache Installation</a></h1>
+	<div class="entry-content">
+		<p>
+This week we started to test <a href="http://www.modrails.com/">mod_rails</a> in a couple of projects where I work on. One in production.<br><br>Of course it&#8217;s too early for any conclusions, but I just wanted to share a couple of problems you might find when the installer tries to compile the Apache module.<br><br>In our case, and I believe it is the case of many servers out there, we have a custom Apache installation, what makes the installer not find it and/or not find the Apache Portable Runtime (APR) sometimes.<br><br>The first one is easy and is documented <a href="http://www.modrails.com/documentation/Users%20guide.html#specifying_correct_apache_in">here</a>. You just seed to export the following environment variable, pointing to your apache installation:<br><pre><tt><tt>export APXS2=/opt/apache2/bin/apxs<br></tt></tt></pre><br>The second one is a bit tricky but it happened only when I tried to install passenger in another server that had CentOS. In this case, you will also need the following environment variable, pointing to your Apache APR config:<br><pre>export APR_CONFIG=/usr/local/apache2/bin/<span class="nfakPe">apr</span>-1-config</pre><br>It took me a fair amount of time googling around to find this answer, so I hope it&#8217;ll be useful for someone. :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-07T00:00:00+10:00" pubdate data-updated="true">Jun 7<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/05/14/euruko-2008-materials-available/">Euruko 2008: Materials Available</a></h1>
+	<div class="entry-content">
+		<p>
+As some of you know <a href="http://leonardoborges.com/writings/2008/03/25/euruko-2008-european-rubyconf-prague/">I went</a> to the <a href="http://www.euruko2008.org">European Ruby Conf in Prague</a>, this year.<br><br>The event was awesome and it&#8217;s good to know they finally made available the majority of the slides, <a href="http://www.euruko2008.org/pages/2-program">here</a>.<br><br>They also published <a href="http://www.avc-cvut.cz/avc.php?id=6830&amp;language=en_US">Matz&#8217;s keynote</a>, and more videos from the conference are being edited right now, so stay tuned to their home page!<br><br>Enjoy!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-14T00:00:00+10:00" pubdate data-updated="true">May 14<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/05/10/a-couple-of-things-from-here/">A Couple of Things From Here&#8230;</a></h1>
+	<div class="entry-content">
+		<p>
+It&#8217;s been some time since my last post but here I am! Where? In Spain, of course! Having a great time, I must say.<br><br>I arrived last week in Madrid and the past 2 weeks before that I spent basically packing my stuff. There is still some paperwork going on but everything is flowing well.<br><br>Besides this little feedback, I was reading this week&#8217;s issue of the excellent series <a href="http://antoniocangiano.com/2008/05/05/this-week-in-ruby-may-5-2008/">This Week In Ruby</a>, from my friend <a href="http://antoniocangiano.com/">Antonio Cangiano</a>. I found something quite interesting, a plugin called <a href="http://hobocentral.net/hobofields/">HoboFields</a>.<br><br>One of the things that bothers me in rails is the fact that by looking at your model classes, you can&#8217;t tell the fields you have there. Sure, you can look at the migration script. Yeah, you can also load the development environment and inspect the object. It&#8217;s a pain in the @zz! But this is the way ActiveRecord works&#8230;<br><br>Other ORM solutions like <a href="http://datamapper.org/">DataMapper</a>, allows you to define the fields directly in the class. It&#8217;s a much cleaner and clear way to maintain your models. And you get to know what properties you have just by looking at your classes.<br><br>That&#8217;s exactly what HoboFields adds to ActiveRecord.<br><br>You define your properties and its types straight into your model class, and the plugin creates the migration scripts for you. Coming from a java world my self, I find it rather interesting, useful and it also reminds me of the way <a href="http://hibernate.org">Hibernate</a> works. You define your mappings with anotations in your class and hibernate just generate the schemas from there.<br><br>It&#8217;s worth a try.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-10T00:00:00+10:00" pubdate data-updated="true">May 10<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>, <a class='category' href='/writings/tags/world/'>World</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/04/14/passengermod_rails-released/">Passenger(mod_rails) Released</a></h1>
+	<div class="entry-content">
+		<p>
+<a href="http://www.modrails.com/">Passenger(mod_rails)</a> has been released.<br><br>The idea is to ease the pain on rails applications deployment. I tested myself and in less than five minutes I had my application working behind Apache!<br><br>I&#8217;m not going to say much here besides the fact that it seems like a really good option for rails deployment and <a href="http://www.modrails.com/testimonials.html">people</a> have been talking about it already, including <a href="http://www.loudthinking.com/">DHH</a>.<br><br>But I do recommend a read on the <a href="http://www.modrails.com/documentation/Architectural%20overview.html">architecture overview</a> document. Be sure to read it all, specially the part on <a href="http://www.modrails.com/documentation/Architectural%20overview.html#concurrent_requests">handling concurrent requests</a>.<br><br>To install, &#8220;it doesn&#8217;t get easier than&#8221; <a href="http://www.modrails.com/install.html">that</a>.<br><br>Good job guys.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-14T00:00:00+10:00" pubdate data-updated="true">Apr 14<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/04/08/time-to-reveal/">Time to Reveal</a></h1>
+	<div class="entry-content">
+		<p>
+Some of you may know. Some of you may not. Some of you may find weird. And most of you probably have no idea of what I&#8217;m talking about but the thing is: <strong>This is a year of big changes for me</strong>.<br><br>I&#8217;ve been hired by <a href="http://www.miraiespana.com/">Mirai</a>, a Spanish company located in Madrid, to work as a Software Engineer. Yes, <strong>it does</strong> mean I&#8217;ll be moving there. Sooner than later.<br><br>Last Friday I&#8217;ve received the great news that my work permit has been approved so I can now request my visa in my hometown and move to Madrid, what will probably happen by the end of this month or the beginning of May.<br><br>This post probably explain something to some people. And the bottom line is that this whole story means a great step on my career and for those of you that have been following my posts, that&#8217;s probably clear.<br><br>Because of that I was able to meet wonderful people , learn a bunch of new stuff and be present in important events such as <a href="http://jaoo.dk/london-2008/conference/">QCon 2008</a> in London and <a href="http://www.euruko2008.org/">Euruko 2008</a> in Prague.<br><br>That&#8217;s it for now. I&#8217;ll keep you posted about my new endeavor.<br><br>I&#8217;m really excited about this chance and I invite you all for a beer or two either in RioÂ  or Madrid - Just let me know your preference&#8230; :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-08T00:00:00+10:00" pubdate data-updated="true">Apr 8<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/world/'>World</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/04/07/jruby-db2-xquery-bug/">JRuby + DB2 + xQuery == Bug?</a></h1>
+	<div class="entry-content">
+		<p>
+<strong>Update</strong>: Follow up link to this issue on JRuby&#8217;s Jira, <a href="http://jira.codehaus.org/browse/JRUBY-2430">here</a><br><br>As I told in my last <a href="http://leonardoborges.com/writings/2008/04/04/qcon-2008-slides-available/">post</a>, it was time to give JRuby a serious try. So I took one of our rails projects at work and decided to migrate it to JRuby and see what happens.<br><br>We heavily use the XML capabilities of DB2 and this was a huge problem. Every query would work just fine through the activerecord-jdbc-adapter - part of the <a href="http://rubyforge.org/projects/jruby-extras">JRuby Extras</a> . But every <strong>X</strong>query would gracefully <strong>fail</strong>!<br><br>After some debugging I got stuck and decided to get JRuby and activerecord-jdbc-adapter&#8217;s source to see what was happening.<br><br>As I could see, it has a bug -in my opinion - at the java part of the code. The jdbc-adapter is a bridge to allow Active Record to talk with databases through native JDBC drivers, so it&#8217;s normal that we do have a java part here. At this point, what the code does is to inspect the sql statement sent from ruby and decide if it&#8217;s a select, update or insert.<br><br>I fixed the problem and submitted a <a href="http://rubyforge.org/tracker/index.php?func=detail&amp;aid=19340&amp;group_id=2014&amp;atid=7859">patch</a> to rubyforge. I&#8217;m not sure if it&#8217;s the best solution or not, but now I got the xQueries working just fine.<br><br>I&#8217;d love to hear from people with similar environments whether this patch works for you or not. I&#8217;m sure I didn&#8217;t try every possibility.<br><br>If you wanna try it, just drop me a message (e-mail in the <a href="http://leonardoborges.com/writings/about/">About</a> page) and I can send the pre-compiled jar file - for activerecord-jdbc-0.8<br><br>You can also just check out the code and compile yourself. ;)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-07T00:00:00+10:00" pubdate data-updated="true">Apr 7<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/04/04/qcon-2008-slides-available/">QCon 2008: Slides Available</a></h1>
+	<div class="entry-content">
+		<p>
+Most of last QCon&#8217;s presentations are available for download <a href="http://jaoo.dk/london-2008/schedule">here</a>.<br><br>Highlights to Ola Bini&#8217;s on <a href="http://jaoo.dk/london-2008/file?path=/qcon-london-2008/slides/OlaBini_JRuby_Power_on_the_JVM.pdf">JRuby(pdf)</a> and Randy Shoup&#8217;s on  <a href="http://jaoo.dk/london-2008/file?path=/qcon-london-2008/slides/RandyShoup_eBaysArchitecturalPrinciples.pdf">eBay&#8217;s architectural principles(pdf)</a>.<br><br>And while we&#8217;re talking about JRuby, it&#8217;s impressive how it&#8217;s becoming a recurrent and big subject. Fast. It had its own small space at big event like QCon and in the last Euruko in Prague, we had a presentation by the JRuby Core Developers <a href="http://headius.blogspot.com/">Charles Nutter</a> and <a href="http://www.bloglines.com/blog/ThomasEEnebo">Thomas Enebo</a>.<br><br>Big companies are sponsoring JRuby&#8217;s development indirectly or directly, like <a href="http://www.sun.com">Sun</a>. And other big companies are endorsing its production ready state, like <a href="http://www.oracle.com">Oracle</a>, which has a publicly available website developed with JRuby On Rails.<br><br>It&#8217;s past the time to give it a serious try&#8230;
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-04T00:00:00+11:00" pubdate data-updated="true">Apr 4<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/jruby/'>JRuby</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/04/01/why-i-like-ruby-or-ruby-the-language-of-the-lazy-programmer/">Why I Like Ruby #0 (&#8230; Or Ruby: The Language of the Lazy Programmer)</a></h1>
+	<div class="entry-content">
+		<p>
+This is quite funny. A friend, Perl addicted, is now learning Ruby. He really enjoys the language but made a interesting observation: Ruby is a language for lazy programmers!<br><br>Well, I have to agree&#8230; You know, I love saving keystrokes and achieving more by writing less. And this is so true with Ruby.<br><br>Let me give a really simple example, comparing with java - don&#8217;t get me wrong&#8230; I love java, specially the platform, but it fits well here since I&#8217;ve always been a Java guy.<br><br>Imagine you have a Phone class with the attributes number and type, which can indicate whether the phone is a land line or a mobile phone. Then you got an array filled with phone classes and you want to narrow it by creating a new array only with mobile phones.<br><br>In Java, such a class could look very much like this:<br><pre><br>public class Phone {<br>  private String number;<br>  private String type;</code><br><br>  public String getNumber() {<br>    return number;<br>  }<br>  public void setNumber(String number) {<br>    this.number = number;<br>  }<br>  public String getType() {<br>    return type;<br>  }<br>  public void setType(String type) {<br>    this.type = type;<br>  }<br>}<br></pre><br><br>Quite simple, isn&#8217;t it? But we are telling the compiler many things we actually shouldn&#8217;t need to. This class is a java bean and as such, among other things, it needs a pair of getters and setters for each of its attributes.<br><br>Now, on with our example, the same class, in ruby, looks like this:<br><br><pre><br>class Phone<br>  attr_accessor :number, :type<br>end<br></pre><br><br>Yeah, I know the feeling. This class has exactly what we need: the two attributes with its own pairs of getters and setters each. But we didn&#8217;t need to inform it in the verbose way Java has teached us. Cleaner, period.<br><br>Now to the code that actually returns the new array containing only mobile numbers. In java, we can do it in two different ways.<br>Using an ArrayList:<br><br><pre><br>//Create two phone objects, one land line and one mobile<br>...<br>// Add them to an array<br>ArrayList<phone> phones = new ArrayList<phone>();<br>phones.add(land);<br>phones.add(mobile);<br><br>//Return an array only with mobile numbers:<br>private static ArrayList<phone> selectMobilePhones(ArrayList<phone> phones) {<br><br>  ArrayList&lt;Phone&gt; mobiles = new ArrayList&lt;Phone&gt;();<br><br>  for (Phone phone : phones) {<br>    if (phone.getType().equals("mobile")) {<br>      mobiles.add(phone);<br>    }<br>  }<br>  return mobiles;<br>}<br></pre><br><br>Or using ordinary arrays:<br><br><pre><br>// Assume the same phone objects here<br>...<br>//Add them to the array<br>Phone[] phones = new Phone[]{land, mobile};<br><br>//Return an array only with mobile numbers:<br>Phone[] mobiles = new Phone[a.length];<br><br>for (int i = 0; i &lt; a.length; i++) {<br><br>  if (a[i].getType().equals("mobile")) {<br>    mobiles[i] = a[i];<br>  }<br>}<br></pre><br><br>And you&#8217;re good to go. Actually this code with an ArrayList here only looks good thanks to generics. But this is another matter. Let&#8217;s take a look at the ruby code that accomplishes de same task:<br><br><pre><br>//Create two phone objects, one land line and one mobile<br>...<br>//Add them to an array<br>phones = [land, mobile]</code><br><br>//Return an array only with mobile numbers:<br>mobiles = phones.select { |phone|<br>   phone.type == &#8220;mobile&#8221;<br>}<br></pre><br><br>See the difference? Java is a great language but too verbose at times. This is a really simple example but if you take the same principle to a bigger app&#8230; yeah, you see where I&#8217;m going.<br><br>The bottom line&#8230; Ruby may be the language of the lazy programmer, as my friend pointed out. But I don&#8217;t mind being called lazy as long as I can type less and be more productive. Do you? :)
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-01T00:00:00+11:00" pubdate data-updated="true">Apr 1<span>st</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>, <a class='category' href='/writings/tags/why-i-like-ruby/'>Why I Like Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/03/25/euruko-2008-european-rubyconf-prague/">Euruko 2008: European RubyConf, Prague</a></h1>
+	<div class="entry-content">
+		<p>
+On friday I&#8217;ll be heading Prague for the <a href="http://www.euruko2008.org/">European RubyConf</a>.<br><br>Anyone is going? :)<br><br>Almost 300 attendees already registered for the event. And a few very interesting people will be speaking there like <a href="http://en.wikipedia.org/wiki/Yukihiro_Matsumoto">Matz</a> and <a href="http://www.loudthinking.com/">DHH</a> (this one, through skype).<br><br>Besides that, the organization staff is scheduling 2 parties, friday and saturday, for the attendees.<br><br>Networking comes to mind, doesn&#8217;t it? I think it will be a great opportunity to meet interesting and bright people.<br><br>So, see u in Prague!
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-25T00:00:00+11:00" pubdate data-updated="true">Mar 25<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h1 class="title"><a href="/writings/2008/03/10/qcon-2008-domain-specific-languages/">QCon 2008: Domain Specific Languages</a></h1>
+	<div class="entry-content">
+		<p>
+Today was the first day of the conference and it started with a tutorial about DSL&#8217;s with <a href="http://www.martinfowler.com">Martin Fowler</a>, <a href="http://www.nealford.com/">Neal Ford</a> and Rebecca Parsons. We also had as attendants <a href="http://ola-bini.blogspot.com/">Ola Bini</a>, core developer of JRuby, and others. My expectations were pretty high and the presentation didn&#8217;t let me down. I&#8217;ll try to put here toghether my impressions and some notes I took while I was there.<br><br>Marting Fowler started discussing what DSL&#8217;s are and giving some examples that many of us use in our day to day Job. Like the XML configuration files in the Java world. It is a kind of DSL, it has it&#8217;s own keywords and syntax in order to express some information that will be used , for instance, to configure an underlying framework.<br><br>The problem with XML is that it becomes hard to see the overall behavior behind it. It&#8217;s not very fluent to understand the purpose of an XML file just by looking at it for the first time. There is too much &#8220;noise&#8221;. Things that get into the way of the readability. - <a href="http://www.yaml.org/">YAML</a> files are an much more readable alternatives to XML.<br><br>The same happens with a standard framework api code.  Let&#8217;s take for instance a sample API configuration code written in Java to tackle the domain of hotel reservations. A framework like this could have the following implementation:<br><br><code><br>HotelService hotelService = new HotelService();<br>PersonService personService = new HotelService();</code><br><br>Hotel hotel = hotelService.findById(1);<br>Person guest = personService.findById(10) ;<br><br>Reservation reservation = new Reservation() ;<br>reservation.setFrom(&#8220;2008-03-10&#8221;) ;<br>reservation.setTo(&#8220;2008-03-14&#8221;);<br>reservation.setGuests(new Person[]{guest});<br><br>hotelService.book(hotel, reservation);<br>Of course implementations of this simple example may vary but we can see here some of the readability problems. One approach we could use for that is to develop a Fluent Interface to wrap this API. This was one of the techniques explored during the tutorial and the actual fluent interface could now look somewhat similar with this:<br><br><code><br>new Hotel(1)<br>.book()<br>.forGuests({<br>person.find(10)<br>})<br>.rooms(1)<br>.from("2008-03-10")<br>.to("2008-03-10");<br></code><br><br>Much more readable, huh?  One of the main benefits of using DSL&#8217;s they highlighted in the tutorial is the simplicity of code you can achieve. You can actually show this code to a business person and he can understand it.  This is a kind of <a href="http://www.martinfowler.com/bliki/InternalDslStyle.html">internal DSL</a>.<br><br>But there is still a bit of noise in this code. The the parenthesis which are not always desirable, and the use of double quotes for dates. But, this is Java code, and Java doesn&#8217;t give too much room for you on the DSL subject. Here was when the speakers changed their focus a bit to Ruby. It&#8217;s dynamic nature and metaprogramming techniques provides a powerful flexibility that allows for a looser syntax.<br><br>So in ruby the previous interface could look like this now:<br><br><code><br>Hotel.find(1) .book(1.room).forGuests {<br>Person.find(10)<br>}.from(march.10.2008).to(march.10.2008)<br></code><br><br>We got rid of the double quotes and the code looks more fluent, like a normal english sentence. I doubt a business guy woudn&#8217;t understand what this code is doing. With this, we can get closer to the business guys, with a common vocabulary, and fill the gap between us.<br><br>This is just one of the ways we could have written this code and is not the actual example used in the tutorial.  The syntax also really depends on how readable you wanna make your code. I&#8217;ll provide those later when they release the digital format of the presentation.<br><br>So one of the flows that the development of an internal DSL can get is to build a framework and define the DSL on top of it. But we should also keep in mind that DSL&#8217;s shouldn&#8217;t be general purpose programming languages. They should be created to tackle a specific kind of domain problem, so we would have a whole system made of small DSL&#8217;s.<br><br>Another interesting subject that was touched is testing. How do you test DSL&#8217;s?<br>The suggested approach, and that I think is quite reasonable, is to have separate tests for the underlying framework and another to test the DSL and its parser you can assure you have the expected behaviour of both parts.<br><br>This is really just a summary of my thoughts and of what happened there. I&#8217;m not going into too much details right now but if you found something too abstract - and it is! ;) - feel free to ask details. I&#8217;ll be more than happy to help.<br><br>This is definetly an interesting subject and now I&#8217;ll head to play more with all that. :)<br><br>PS; This is not the whole presentation, just the best of it from my stand point. Other subjects include External DSL&#8217;s which can actually involve you coding Lexers, Parsers and Compilers. It&#8217;s usually not worth the hassle. And it&#8217;s too complicated anyway, that&#8217;s why I left it out from this post.
+</p>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-10T00:00:00+11:00" pubdate data-updated="true">Mar 10<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/dsl/'>DSL</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/writings/writings/page/10/" class="prev">Prev</a>
+    
+    
+        <a href="/writings/writings/page/12/" class="next">Next</a>
+    
+    <div class="center"><a href="/writings/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

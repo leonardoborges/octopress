@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>QCon 2008: Domain Specific Languages - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Today was the first day of the conference and it started with a tutorial about DSL&#8217;s with Martin Fowler, Neal Ford and Rebecca Parsons. We &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">QCon 2008: Domain Specific Languages</h1>
+	<div class="entry-content"><p>
+Today was the first day of the conference and it started with a tutorial about DSL&#8217;s with <a href="http://www.martinfowler.com">Martin Fowler</a>, <a href="http://www.nealford.com/">Neal Ford</a> and Rebecca Parsons. We also had as attendants <a href="http://ola-bini.blogspot.com/">Ola Bini</a>, core developer of JRuby, and others. My expectations were pretty high and the presentation didn&#8217;t let me down. I&#8217;ll try to put here toghether my impressions and some notes I took while I was there.<br><br>Marting Fowler started discussing what DSL&#8217;s are and giving some examples that many of us use in our day to day Job. Like the XML configuration files in the Java world. It is a kind of DSL, it has it&#8217;s own keywords and syntax in order to express some information that will be used , for instance, to configure an underlying framework.<br><br>The problem with XML is that it becomes hard to see the overall behavior behind it. It&#8217;s not very fluent to understand the purpose of an XML file just by looking at it for the first time. There is too much &#8220;noise&#8221;. Things that get into the way of the readability. - <a href="http://www.yaml.org/">YAML</a> files are an much more readable alternatives to XML.<br><br>The same happens with a standard framework api code.  Let&#8217;s take for instance a sample API configuration code written in Java to tackle the domain of hotel reservations. A framework like this could have the following implementation:<br><br><code><br>HotelService hotelService = new HotelService();<br>PersonService personService = new HotelService();</code><br><br>Hotel hotel = hotelService.findById(1);<br>Person guest = personService.findById(10) ;<br><br>Reservation reservation = new Reservation() ;<br>reservation.setFrom(&#8220;2008-03-10&#8221;) ;<br>reservation.setTo(&#8220;2008-03-14&#8221;);<br>reservation.setGuests(new Person[]{guest});<br><br>hotelService.book(hotel, reservation);<br>Of course implementations of this simple example may vary but we can see here some of the readability problems. One approach we could use for that is to develop a Fluent Interface to wrap this API. This was one of the techniques explored during the tutorial and the actual fluent interface could now look somewhat similar with this:<br><br><code><br>new Hotel(1)<br>.book()<br>.forGuests({<br>person.find(10)<br>})<br>.rooms(1)<br>.from("2008-03-10")<br>.to("2008-03-10");<br></code><br><br>Much more readable, huh?  One of the main benefits of using DSL&#8217;s they highlighted in the tutorial is the simplicity of code you can achieve. You can actually show this code to a business person and he can understand it.  This is a kind of <a href="http://www.martinfowler.com/bliki/InternalDslStyle.html">internal DSL</a>.<br><br>But there is still a bit of noise in this code. The the parenthesis which are not always desirable, and the use of double quotes for dates. But, this is Java code, and Java doesn&#8217;t give too much room for you on the DSL subject. Here was when the speakers changed their focus a bit to Ruby. It&#8217;s dynamic nature and metaprogramming techniques provides a powerful flexibility that allows for a looser syntax.<br><br>So in ruby the previous interface could look like this now:<br><br><code><br>Hotel.find(1) .book(1.room).forGuests {<br>Person.find(10)<br>}.from(march.10.2008).to(march.10.2008)<br></code><br><br>We got rid of the double quotes and the code looks more fluent, like a normal english sentence. I doubt a business guy woudn&#8217;t understand what this code is doing. With this, we can get closer to the business guys, with a common vocabulary, and fill the gap between us.<br><br>This is just one of the ways we could have written this code and is not the actual example used in the tutorial.  The syntax also really depends on how readable you wanna make your code. I&#8217;ll provide those later when they release the digital format of the presentation.<br><br>So one of the flows that the development of an internal DSL can get is to build a framework and define the DSL on top of it. But we should also keep in mind that DSL&#8217;s shouldn&#8217;t be general purpose programming languages. They should be created to tackle a specific kind of domain problem, so we would have a whole system made of small DSL&#8217;s.<br><br>Another interesting subject that was touched is testing. How do you test DSL&#8217;s?<br>The suggested approach, and that I think is quite reasonable, is to have separate tests for the underlying framework and another to test the DSL and its parser you can assure you have the expected behaviour of both parts.<br><br>This is really just a summary of my thoughts and of what happened there. I&#8217;m not going into too much details right now but if you found something too abstract - and it is! ;) - feel free to ask details. I&#8217;ll be more than happy to help.<br><br>This is definetly an interesting subject and now I&#8217;ll head to play more with all that. :)<br><br>PS; This is not the whole presentation, just the best of it from my stand point. Other subjects include External DSL&#8217;s which can actually involve you coding Lexers, Parsers and Compilers. It&#8217;s usually not worth the hassle. And it&#8217;s too complicated anyway, that&#8217;s why I left it out from this post.
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-10T00:00:00+11:00" pubdate data-updated="true">Mar 10<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/conferences/'>Conferences</a>, <a class='category' href='/writings/tags/dsl/'>DSL</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/ruby/'>Ruby</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2008/03/10/qcon-2008-domain-specific-languages/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

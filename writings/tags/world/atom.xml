@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: World | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/world/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Clouds against the Floods]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods/"/>
+    <updated>2011-01-16T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/01/16/clouds-against-the-floods</id>
+    <content type="html"><![CDATA[<p>
+I think by now everyone's heard of the hard time the guys up in Queensland, Australia are having because of the <a title="Queensland Floods" href="http://www.google.com/search?q=qld+floods" target="_blank">recent floods</a>. People have lost their lives and many others have lost their homes and businesses, product of years of hard work.<br><br>As a result of this massive disaster the Queensland Government decided to run a telethon to encourage donations to help the flood victims. The Telethon aired last Sunday, 09/01/11, on Channel 9 and lasted for 2 hours.<br><br>The problem was the existing donations system that the Government had been using so far: it was just not thought out to handle the load we were expecting to have on Sunday.<br><br>That's when my employer, <a title="ThoughtWorks" href="http://www.thoughtworks.com/" target="_blank">ThoughtWorks</a>, kindly offered a hand to <a href="http://www.qld.gov.au/smartservice/" target="_blank">Smart Services Queensland</a> in the attempt to make sure they could receive all donations that were likely to come through the web.<br><br>After that, on the Thursday afternoon before the event, <a title="Phillip Calçado" href="http://fragmental.tw/" target="_blank">Phillip Calçado</a>, Ben Barnard and I set off on a mission against the clock: we had a little over 48 hours to develop, test and deploy an application that was expected to handle thousands of users. Not only that but an application that, should it fail, would prevent millions of dollars from reaching the people in need in Queensland. This was a great responsibility but we knew we could do it.<br><br>Given the time constraints it was a bit obvious that we would use <a title="Ruby on Rails" href="http://rubyonrails.org/" target="_blank">Ruby on Rails</a> for this app. Both because of the productivity it's known for and because we had the knowledge right there. With that out of the way, we had to decide how and where we would deploy this thing. We thought a little about it and came down to to 2 options: <a title="Amazon EC2" href="http://aws.amazon.com/ec2/">Amazon EC2</a> or <a title="Heroku" href="http://heroku.com/" target="_blank">Heroku</a> (which is powered by Amazon EC2 under the hood). I pushed hard for Heroku and that's what we ended up going with.<br><br>Now it was time to get down and dirty and start coding the app. In principle it should be fairly simple. It needed a form where a potential donor would fill out his/her information, giving the option to receive the tax receipt by email or regular mail - more on that later. Upon clicking submit users would be taken to the secure payment gateway website where they could input their credit card number and finish the payment, after which they would be taken back to our app with a success - or an error - message and a transaction number.<br><br>Now this work flow has a couple of implications: First, all emails would have to be sent in the background so as to not interfere with the website performance. We were expecting to be sending thousands of them - workers anyone?<br><br>Second, the payment gateway integration would have to be developed and tested from scratch. Up until now the Queensland Government integrated with it in a different manner that could not be reused in this case.<br><br>And most important of all, although simple in concept, we had no idea of the load we should be preparing for. There was just no data from previous telethons. Thus we decided to prepare for the maximum we possibly could.<br><br>As we developed the application we deployed continuously to Heroku in order to test the payment gateway integration, benchmark the app using <a title="Apache AB" href="http://httpd.apache.org/docs/2.0/programs/ab.html" target="_blank">Apache AB</a>, setup cache headers - Heroku uses <a title="Varnish" href="http://www.varnish-cache.org/" target="_blank">Varnish</a> - and find bottlenecks.<br><br>Email was one of these bottlenecks and that's why we decided to handle that in the background using <a title="Delayed::Job" href="https://github.com/collectiveidea/delayed_job" target="_blank">Delayed::Jobs</a>.<br><br>Since the first deployment, we also tweaked a couple of things at Heroku, such as migrating from their free PostgreSQL offering to a dedicated instance that we believed would both take the load and have plenty of room for all the data - as I write this post, we are already well over the 5MB limit they offer for free.<br><br>Long story short, by Saturday evening  the website was up and running on 5 app instances, a 6th instance running background jobs - sending emails - and a dedicated PostgreSQL database server.<br><br>As Heroku is outside the Government network, their SMTP server was a no go on the short term so we also integrated the app with <a title="SendGrid" href="http://sendgrid.com/" target="_blank">SendGrid</a>, an email delivery service that fitted perfectly our needs - although the site got so much traction that we went over our monthly quota with them. But the nice guys from SendGrid increased our limit after I opened a ticket explaining the situation!<br><br>As for performance we used <a href="http://newrelic.com/">NewRelic</a> to monitor the application, which Heroku also makes a breeze to integrate with.<br><br>We all went home to rest and get ready for Sunday, the day of the Telethon, when we would be monitoring the app throughout the day. We were all excited and when the show went live, we started seeing all those beautiful access charts moving like crazy, spiking over 720 requests per minute and being solid like a rock with flat and fast response times throughout the night.<br><br>In about two hours we had over AUD$2,000,000.00 (two million) donated through our website.<br><br>Since then the number of transactions dropped but has stayed constant and as of today we've received AUD$25,438,518.32 (over 25 millions of dollars) that will be donated to the flood victims in Queensland.<br><br>Oh, and the site is still up and going strong so move your fingers and go help: <a title="Queensland Floods Telethon" href="http://telethon.smartservice.qld.gov.au/" target="_blank">telethon.smartservice.qld.gov.au</a> - there will be heaps of people grateful for your donation.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Goodbye Europe, A Two-Year Retrospective]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/04/10/goodbye-europe-a-two-year-retrospective/"/>
+    <updated>2010-04-10T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/04/10/goodbye-europe-a-two-year-retrospective</id>
+    <content type="html"><![CDATA[<p>
+Now several months after I announced my <a href="http://www.leonardoborges.com/writings/2009/10/08/soon-off-to-conquer-lands-afar/" target="_blank">odyssey</a> to obtain my Australian work visa, the time has finally come!<br><br>I'll be flying to Sydney next week, April 15th, and as you can probably guess, I'm excited as hell! :) This starts an important new page both in my life and my career, but that's not what this post is about. It's about sharing the experience of living for over two years in Europe.<br><br>First off, I traveled. A whole lot. Both for work and leisure. I've been to 23 cities in 11 countries, which you can check on my <a href="http://www.tripadvisor.com/MemberProfile?uid=F36E8157798EAF76A8684BC6FDB95DBD&amp;c=pt" target="_blank">map</a>. Getting to explore all these different cultures was definitely rewarding and fun, to say the least. But I have my favorites, including Prague, London, Dublin and Bruges...<br><br>While in Madrid, I worked for <a href="http://www.miraiespana.com/" target="_blank">Mirai España</a>, the company that provided me with great professional experiences. I had the opportunity to work with a <a href="http://twitter.com/pratiknaik" target="_blank">few</a> <a href="http://twitter.com/zukunftsalick" target="_blank">very</a> <a href="http://twitter.com/philly_mac">smart</a> <a href="http://twitter.com/fxn" target="_blank">people</a> that, in a way or another, contributed to improve my skills as a software engineer.  Not to mention the several conferences I attended, including QCon in London, RailsConf in Berlin and serveral <a href="http://www.leonardoborges.com/writings/category/conferences/" target="_blank">others</a>.<br><br>Being a rock/metal fan I am in the ideal place to see just about every band I always wanted to. Concerts in Europe are high quality, frequent and affordable and as such, I've attended a whole bunch of them:<br><br>- Metallica<br>- Megadeth<br>- Soilwork<br>- Machine Head<br>- Offspring<br>- Cavalera Conspiracy<br>- Within Temptation<br>- The Haunted<br>- At the gates<br>- Judas Priest<br>- Testament<br>- Nine Inch Nails<br>- AC/DC<br>- Rammstein<br>- Grave<br>- Krisiun<br>- Nile<br><br>On a more personal note Madrid is also the place where I met Enif, my beloved girlfriend. We are both very excited about this new experience and, of course, we're moving together to Sydney, with plans of getting married next year! :D<br><br>As you can see, Europe has been kind to me and I will certainly miss the experiences, cities, cultures and people I've met. But I'm only making room for more and more interesting things that will certainly happen on the land down under. Let's conquer it all!<br><br>Hopefully my next post will be written by the beach, in my new home in Australia.<br><br>Cheers, mate! :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RuPy 2009: Poznan]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/11/04/rupy-2009-poznan/"/>
+    <updated>2009-11-04T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/11/04/rupy-2009-poznan</id>
+    <content type="html"><![CDATA[<p>
+Next week the <a href="http://rupy.eu/">RuPy Conference 2009</a> will be held in Poznan, Poland and I was planning to talk there.<br><br>My talk had been approved and everything was looking good - I was gonna talk about JRuby in the Enterprise - until <a href="http://www.leonardoborges.com/writings/2009/10/08/soon-off-to-conquer-lands-afar/">my move to ThoughtWorks</a> became a reality less than a month ago.<br><br>This move led to a lack of support and time from my current company. I was counting on it to go there but since I'll be leaving soon, that wouldn't be possible.<br><br>Since then I've been in touch with Adam Parchimowicz - part of RuPy's organization team - and we tried to find alternatives to this. I wanted to thank him for all the effort he put into trying to make this happen. The terms we agreed on were good enough but this change of priorities kicked in too close to the event.<br><br>Long story short, I'd like to apologize for not being able to give my talk at RuPy this year.<br><br>Apart from that, I gave a very similar talk at the <a href="http://www.railssummit.com.br/">Rails Summit Latin America</a> this year in Brazil and you can find the slides and sources for it in my <a href="http://www.leonardoborges.com/writings/presentations/">Presentations</a> page. ( Video coming soon )
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My slides from Rails Summit '09]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/10/18/my-slides-from-rails-summit-09/"/>
+    <updated>2009-10-18T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/10/18/my-slides-from-rails-summit-09</id>
+    <content type="html"><![CDATA[<p>
+<a href='http://www.leonardoborges.com/writings/assets/images/rs2009.jpg'><img src="/assets/images/rs2009.jpg"></a><br>Rails Summit finished a few days ago and I have only one word to describe it: <strong>Awesome</strong>!<br><br>I met some really cool people, discussed a whole bunch of technical subjects and managed not to get so nervous in my first presentation ever - I'm not counting internal presentations I've done for my team...<br><br>My slides and source files can be found <a href="http://github.com/leonardoborges/railssummit09">here</a>. Feel free to contact me with questions if you got any.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Soon, off to conquer lands afar]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/10/08/soon-off-to-conquer-lands-afar/"/>
+    <updated>2009-10-08T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/10/08/soon-off-to-conquer-lands-afar</id>
+    <content type="html"><![CDATA[<p>
+Once more my life is taking a huge turn.<br><br>I've been pretty quiet for the past month and honestly don't know how I managed to hold in my excitement. I've just accepted an offer from <a href="http://www.thoughtworks.com.au/" target="_blank">ThoughtWorks</a> to be based at their australian offices, either in Sydney or Melbourne, depending  on where my 1st project will be.<br><br>For those of you who don't know, ThoughtWorks is a global IT consultancy that is really well known in the software development community. It's been advocating agile methodologies and test-driven development for several years now and seems to work really hard to attract and keep <a title="Martin Fowler" href="http://www.martinfowler.com" target="_blank">many</a> <a title="Rebecca Parsons" href="http://www.thoughtworks.com/who-we-are/leadership-profiles/rebecca-parsons.html" target="_blank">bright</a> <a title="Neal Ford" href="http://www.nealford.com/" target="_blank">people</a> <a title="Ola Bini" href="http://olabini.com/" target="_blank">working</a> <a title="All ThoughtWorkers" href="http://www.thoughtworks.com/who-we-are/our-people/profiles.html" target="_blank">there</a>.<br><br>As a result, ThoughtWorks inspires companies and professionals around the world by delivering high quality projects and massively supporting/contributing to <a title="Projects created/contributed to by ThoughtWorks" href="http://opensource.thoughtworks.com" target="_blank">open source projects</a>.<br><br>Needless to say, I am really excited to be joining a company with such an amazing culture and so many smart people.<br><br>The hiring process was long, tough and tiring - but yet enjoyable. It took 5 interviews, 1 code review and 1 pairing session, a process through which I talked to 8 thoughtworkers. They take pride on their hiring process and now I understand why.<br><br>Now I'm just going through the bureaucratic side of things: gathering documents, certificates, translations - all in order to apply for my VISA, which can take up to 3 months to get ready. In the meantime, you can still find me here in Madrid, where I'll be celebrating with a few 'cañas'. Feel free to join me! ;)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

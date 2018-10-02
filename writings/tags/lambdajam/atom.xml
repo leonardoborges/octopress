@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: lambdajam | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/lambdajam/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Functional Programmers Unite! LambdaJam down under]]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/04/11/functional-programmers-unite-lambdajam-down-under/"/>
+    <updated>2013-04-11T11:37:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/04/11/functional-programmers-unite-lambdajam-down-under</id>
+    <content type="html"><![CDATA[<p>I hinted at <a href="http://www.yowconference.com.au/lambdajam/">LambdaJam Australia</a> back in my <a href="http://www.leonardoborges.com/writings/2013/01/02/so-long-2012-year-highlights/">2012 Highlights post</a> and the dates are fast approaching so I thought appropriate to blog about it once more.</p>
+
+<p><a href="http://www.yowconference.com.au/lambdajam/">YOW! LambdaJam</a> is a conference targeted at intermediate and advanced functional programmers and is organised in talks, jams and workshops.</p>
+
+<ul>
+<li><strong>Talks</strong> are the traditional format and are 30 minutes long;</li>
+<li><strong>Workshops</strong> aim to introduce a specific subjects to attendees in great detail and are up to two hours long;</li>
+<li><strong>Jams</strong> are hands-on sessions. Participants will be guided through pre-defined problems around a given subject/technology and encouraged to work through the solutions either by themselves or ideally as small groups. Jams are also 2 hours long;</li>
+</ul>
+
+
+<p>Sounds pretty amazing, doesn't it?</p>
+
+<p>If you're still not convinced, check out the <a href="http://www.yowconference.com.au/lambdajam/Program.html">program</a>.</p>
+
+<p>The conference will run for 2 days, May 16-17, in Brisbane. <a href="http://yowlambdajam2013.eventbrite.com.au/">Tickets are on sale</a>.</p>
+
+<h3>Clojure</h3>
+
+<p>Besides the conference itself, <a href="http://clojure.com/">Clojure/core</a> will be giving an Intro to Clojure workshop in Sydney, Melbourne and Brisbane. It's a great opportunity to learn from the language maintainers.</p>
+
+<p>If you're attending the conference already, you're in luck because there is a 20% off discount <a href="http://yowlambdajam2013.eventbrite.com.au/">on the link above</a> if you attend both the conference and the workshop.</p>
+
+<p>In case you'd like to attend the workshops only, you can buy individual tickets for <a href="http://clojurecore-sydney.eventbrite.com.au/">Sydney</a>, <a href="http://clojurecore-melbourne.eventbrite.com.au/">Melbourne</a> and <a href="http://clojurecore-brisbane-eorg.eventbrite.com.au/">Brisbane</a>.</p>
+
+<h3>Scala</h3>
+
+<p><a href="http://tmorris.net/">Tony Morris</a> will also be delivering a Functional Programming in Scala workshop in Brisbane and 20% off combo tickets can be bought from the <a href="http://yowlambdajam2013.eventbrite.com.au/">EventBrite page for LambdaJam</a>.</p>
+
+<h3>See you there</h3>
+
+<p>Got tickets yet? No? What are you waiting for?</p>
+]]></content>
+  </entry>
+  
+</feed>

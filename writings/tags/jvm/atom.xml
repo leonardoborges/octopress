@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: JVM | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/jvm/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JVM language preferences poll results]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/07/31/jvm-language-preferences-poll-results/"/>
+    <updated>2009-07-31T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/07/31/jvm-language-preferences-poll-results</id>
+    <content type="html"><![CDATA[<p>
+<strong>- Overall results</strong><br><br>First off, I'd like to thank everyone who voted on this poll.<br>With a total of 236 votes, here is the summary of the first two questions:<br><br><strong>- Are you currently working with or researching about language alternatives for the JVM? - e.g. JRuby, Scala, Groovy</strong><br><br><a href='http://www.leonardoborges.com/writings/assets/images/scala_improvements.png'><img src="/assets/images/scala_improvements.png"></a></em><br><br>Tooling. The majority of comment urge for better tooling and IDE support. That simple.<br><br><strong>- Others</strong><br><br>People who chose others mentioned <a href="http://clojure.org/" target="_blank">Clojure</a>, <a href="http://www.fandev.org/" target="_blank">Fan</a> and <a href="http://www.jython.org/">Jython</a>, with a clear advantage for Clojure.<br><br><strong>- Disclaimer</strong><br><br><strong>This poll has no scientific foundations whatsoever and its sole purpose is to summarize the feelings and personal choices of the people who answered it. If you would like the original spreadsheet with the answers, you can find it <a href="http://spreadsheets.google.com/ccc?key=0AuABB6DyTXV2dHEtZnNwSDhCb2RVOThFcUNaSUhpbEE&amp;hl=en" target="_blank">here</a> and do your own analyzis.<br></strong>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

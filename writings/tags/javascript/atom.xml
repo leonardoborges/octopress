@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Javascript | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/javascript/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Simple jquery-daterange-picker]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/03/31/simplejquery-daterange-picker/"/>
+    <updated>2011-03-31T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/03/31/simplejquery-daterange-picker</id>
+    <content type="html"><![CDATA[<p>
+As in many web apps out there, this week I needed a date range picker. I shopped around and while I did find a couple of good options they were (a) too clunky and (b) didn't prevent you from selecting invalid ranges. The latter being the one I was really interested in.<br><br>So I coded up something simple that worked and looked nice and decided to share around. It's the <a title="jquery-daterange-picker" href="http://github.com/leonardoborges/jquery-daterange-picker">jquery-daterange-picker</a>. Its only dependencies are <a title="jQuery" href="http://jquery.com/">jQuery</a> and <a title="jQueryUI datepicker " href="http://docs.jquery.com/UI/Datepicker">jQueryUI's datepicker</a>.<br><br>Got <a title="jquery-daterange-picker" href="http://github.com/leonardoborges/jquery-daterange-picker">get it</a>, <a title="jquery-daterange-picker" href="http://github.com/leonardoborges/jquery-daterange-picker">fork it</a>, <a title="jquery-daterange-picker" href="http://github.com/leonardoborges/jquery-daterange-picker">contribute to it</a> or <a title="Examples" href="http://leonardoborges.github.com/jquery-daterange-picker/demo/index.html">check out some examples</a>.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Are you testing your javascript yet?]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/06/14/are_you_testing_your_javascript_yet/"/>
+    <updated>2010-06-14T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/06/14/are_you_testing_your_javascript_yet</id>
+    <content type="html"><![CDATA[<p>
+What's the difference between your application's javascript code and its java/ruby/python/whatever code?<br><br>Think about it for a second. Done? Well, the answer is: none!<br><br>In today's web applications your javascript code is no different from the rest of your code base but yet we treat it with disregard - and we're all to blame.<br><br>We often see developers investing time writing all sorts of automated tests around their code base but fail to do the same for their javascript -  and yet they get surprised when their client can't click on a button on their web app that depends on that ajax call that has been manually tested once when the page was first released.<br><br>Ask yourself this question if you're not sure if you should be testing your javascript: If it breaks, can my users still benefit from my app? - I think the answer for most web apps is obvious.<br><br>As for tools, I can only speak of two, <a href="http://code.google.com/p/js-test-driver/" target="_blank">JsTestDriver</a> and <a href="http://github.com/nkallen/screw-unit" target="_blank">screw-unit</a>, the latter being the one we're using in my current project at <a href="http://www.thoughtworks.com" target="_blank">ThoughtWorks</a>.<br><br>What I liked about screw-unit is that it's very easy to get it up and running. Being a Behavior-Driven Testing Framework it's not surprising it has a syntax similar to <a href="http://rspec.info/" target="_blank">Rspec</a> -which I prefer over JsTestDriver's similarity to <a href="http://www.junit.org/" target="_blank">JUnit's</a>.<br><br><script src="https://gist.github.com/790871.js?file=gistfile1.js"></script> This is how a test written with screw-unit could look like:  <script src="https://gist.github.com/790873.js?file=gistfile1.js"></script><br><br>Not too bad for a javascript test suite huh?<br><br>So the next time you write a javascript line of code, how about writing a test for it? Consider using screw-unit as your tool but if you have been writing tests using a different framework and you're happy with it, share your experience.<br>I'm always keen to learn better ways of doing what I do.<br><br>Cheers!
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

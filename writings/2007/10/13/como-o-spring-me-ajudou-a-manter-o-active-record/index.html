@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Como o Spring me ajudou a manter o Active Record - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Nesse primeiro post vou falar um pouco sobre meu novo trabalho. Na verdade, sobre um problema que encontramos lÃ¡.Dentre diversas coisas que estamos &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Como O Spring Me Ajudou a Manter O Active Record</h1>
+	<div class="entry-content"><p>
+Nesse primeiro post vou falar um pouco sobre meu novo trabalho. Na verdade, sobre um problema que encontramos lÃ¡.<br><br>Dentre diversas coisas que estamos fazendo, como migraÃ§Ãµes por exemplo, estou ajudando na elaboraÃ§Ã£o da arquitetura que irÃ¡ abrigar as novas aplicaÃ§Ãµes desenvolvidas na empresa. <!--more-->Ã‰ uma tarefa desgastante e cada decisÃ£o Ã© crÃ­tica, indo de discussÃµes sobre qual tecnologia usar para MVC atÃ© como organizar o <em>layering</em> da aplicaÃ§Ã£o. Essa arquitetura compreende tambÃ©m o desenvolvimento de um <em>framework </em>para facilitar a vida dos novos desenvolvedores que integrarÃ£o a equipe.<br><br>Pois bem, uma das decisÃµes que tomei foi a de evitar o <a target="_blank" href="http://martinfowler.com/bliki/AnemicDomainModel.html" title="Anemic Domain Model"><em>Anemic Domain Model</em></a><em> </em>e usar o Spring<em> </em>como framework de <a target="_blank" href="http://martinfowler.com/bliki/InversionOfControl.html" title="IoC">IoC</a>.<em> </em>Os benefÃ­cios disso sÃ£o assunto para outro post. ;) E um outro padrÃ£o que ajuda nisso se chama <em><a target="_blank" href="http://martinfowler.com/eaaCatalog/activeRecord.html" title="Active Record">Active Record</a></em>. AÃ­ comeÃ§aram os problemas! Essa divisÃ£o de responsabilidades sempre agrega uma nova (nem tÃ£o nova assim) forma de pensar. Vou mostrar um exemplo para ilustrar isso.<br><br>[java]<br>public class Usuario {<br>private String login;<br>private String senha;<br>//normal getters e setters<br>}<br>[/java]<br>Nada de novo certo? Mais uma classe burra sem lÃ³gica de negÃ³cio alguma! Pois bem, seguindo o padrÃ£o Active Record, essa classe deveria &#8220;saber&#8221; como se persistir, delegando a real lÃ³gica para um <em>Repository</em>, que nada mais Ã© que uma espÃ©cie de DAO. Desta forma, a classe que acabei de mostrar ficaria parecida com isso:<br><br>[java]<br>public class Usuario {<br>private String login;<br>private String senha;<br>// getters e setters<br><br>private Repository repo;<br><br>public void setRepository(Repository repo) {<br>this.repo = repo;<br>}<br><br>public void save();<br>public void update();<br>public void delete();<br><br>}<br>[/java]<br><br>A variÃ¡vel repo seria injetada pelo Spring, evitando assim qualquer cÃ³digo de lookup na classe UsuÃ¡rio. PorÃ©m, como vocÃª espera carregar um usuÃ¡rio previamente cadastrado no banco de dados? Recorrendo a um DAO padrÃ£o no cÃ³digo cliente - um faÃ§ade por exemplo ?<br><br>AÃ­ tudo que foi feito teria sido em vÃ£o! Se a classe sabe como se persistir, deve prover meios de se carregar objetos do seu repositÃ³rio da mesma forma, isolando totalmente detalhes de implementaÃ§Ã£o do cÃ³digo cliente. E aÃ­ comeÃ§am os problemas.<br><br>Vamos Ã  terceira versÃ£o de nossa classe:<br><br>[java]<br>public class Usuario {<br>private String login;<br>private String senha;<br>// getters e setters<br><br>private Repository repo;<br><br>public void setRepository(Repository repo) {<br>this.repo = repo;<br>}<br><br>public void save();<br>public void update();<br>public void delete();<br><br>public static Collection<usuario></usuario> findByLogin(String login) {<br>return this.repo.findByLogin(login);<br>}<br>[/java]<br><br>Ora ora ora! Espera aÃ­! Um mÃ©todo estÃ¡tico acessando uma variÃ¡vel de instÃ¢ncia?!? NÃ£o pode! E isso me tirou o sono! Como Ã© que eu vou injetar uma dependÃªncia num objeto se eu preciso dela antes mesmo de ter uma instÃ¢ncia do mesmo?<br><br>Uma maneira, porca, de se resolver isso seria alterando a variÃ¡vel repo para static e inicializando-a num bloco static, assim:<br><br>[java]<br>static {<br>repo = new Usuario().getRepo();<br>}<br>[/java]<br><br>Dois problemas com isso: Eu exponho meu dao para o mundo - tÃ¡, posso resolver alterando o modificador de acesso do mÃ©todo - e instancio um novo objeto Ãºnica e exclusivamente para pegar o DAO que o Spring injetou e joga-lo fora.<br><br>Soa estranho nÃ£o? E Ã©! NÃ£o queria ter que fazer isso. Funciona, mas Ã© feio e tosco! E agora vem mais um motivo da minha lista de coisas que eu amo no Spring! A classe <em>MethodInvokingFactoryBean</em>!<br><br>SÃ£o poucas linhas de configuraÃ§Ã£o no arquivo do contexto da aplicaÃ§Ã£o:<br><br>[xml]<br><bean id="userConfigurer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"></bean><br><br><property value="Usuario.setRepository" name="staticMethod"></property><br><property ref="userRepo" name="arguments"></property><!-- userRepo Ã© apenas um bean comum configurado em algum ponto do arquivo, que representa o repositÃ³rio de usuÃ¡rios--><br><!-- bean-->[/xml]Dessa forma, na inicializaÃ§Ã£o do container de InversÃ£o de controle, a classe usuÃ¡rio jÃ¡ teria sua variÃ¡vel estÃ¡tica inicializada e, como nÃ£o Ã© proibido usar uma variÃ¡vel estÃ¡tica a partir de um mÃ©todo de instÃ¢ncia, os mÃ©todos save(), update() e delete() jÃ¡ estariam com suas vidas resolvidas tambÃ©m, usando o mesmo repositÃ³rio que foi inicializado no carregamento do container!Acho que fica uma soluÃ§Ã£o limpa, elegante e nÃ£o te faz abrir mÃ£o dos benefÃ­cios da inversÃ£o de controle e do padrÃ£o Active Record.Desculpem o primeiro post! Ficou meio grande nÃ©? Mas espero que tenha ficado legal! Um grande abraÃ§o e atÃ© a prÃ³xima!
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-10-13T00:00:00+10:00" pubdate data-updated="true">Oct 13<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/architecture/'>Architecture</a>, <a class='category' href='/writings/tags/java/'>Java</a>, <a class='category' href='/writings/tags/patterns/'>Patterns</a>, <a class='category' href='/writings/tags/spring/'>Spring</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2007/10/13/como-o-spring-me-ajudou-a-manter-o-active-record/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2007/10/13/como-o-spring-me-ajudou-a-manter-o-active-record/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2007/10/13/como-o-spring-me-ajudou-a-manter-o-active-record/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2007/10/13/como-o-spring-me-ajudou-a-manter-o-active-record/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2007/10/13/como-o-spring-me-ajudou-a-manter-o-active-record/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2007/10/13/como-o-spring-me-ajudou-a-manter-o-active-record/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

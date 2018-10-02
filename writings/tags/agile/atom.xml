@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Agile | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/agile/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Long stand up meetings]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/04/06/long-stand-up-meetings/"/>
+    <updated>2009-04-06T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/04/06/long-stand-up-meetings</id>
+    <content type="html"><![CDATA[<p>
+It's been more than a year since I started my new endeavor here in Spain, moving from Brazil and starting a whole new life - both personal and professional. Time for a little retrospective.<br><br>More precisely, a retrospective about the agile practices here at the company.<br><br>When I first started out back in January '08 the company thought they were agile. NOT! They did adopt some XP practices but just to give you an idea, I'm gonna focus on just one: stand-up meetings.<br><br>My first stand-up meeting was a shock! We were a team of 6 developers and 2 sys admins and the meeting lasted for 40 -yes, forty - minutes!<br><br>The reason? Several, but the most obvious one was that in their stand up meeting they were actually, well, sit. That was my first suggestion which some people were actually reluctant about. But we survived.<br><br>Since then we improved a lot our stand-up meetings being able to usually cut it down to 10 minutes. But we can get better.<br><br>Another problem we usually have is the "i-want-my-finger-in-everything" syndrome. I guess you're all familiar with that. It's the developer who wants to know everything in its minimum detail and interrupts everyone in the stand-up meeting to ask questions or make clarifications that could, both, be done afterwards. And that's a problem we still have every now and then.<br><br>But we are much better now and to get here we basically successfully tried:<br><br>- Standing up ( duh?! - believe me, this was harder than you might think)<br><br>- Trying to bind people's thoughts on what they've done the day before and what they are going to do that day. Anything else should be left for after the meeting - it's probably not everyone else's concern. Focus.<br><br>- Limiting the amount of time allowed for each developer - currently we have a generous 2 minute limit.<br><br>- Using a token -any object light enough to be hold while you're talking. People are only allowed to talk when they get hold of it. This was a nice idea brought by my colleague <a href="http://www.ivercore.com/">Philip MacIver</a>.<br><br>But we still have issues. People still jump in somebody else's turn and get the token basically as if just by getting it they can talk. And because of that we still suffer from the  "i-want-my-finger-in-everything" syndrome.<br><br>So after telling this little story about how stand-up meetings evolved here, I'd like to hear from you guys what do you do to keep your meetings short and to the point. I'm really willing to hear suggestions and success stories.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

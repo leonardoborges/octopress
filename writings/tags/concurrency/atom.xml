@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: concurrency | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/concurrency/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure, core.async and the Lisp advantage]]></title>
+    <link href="http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage/"/>
+    <updated>2013-07-06T18:50:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2013/07/06/clojure-core-dot-async-lisp-advantage</id>
+    <content type="html"><![CDATA[<p>Long gone are the days when systems needed to do only one thing at a time.</p>
+
+<p>Concurrency is the word but it often leads to complex code, dealing with locks, mutexes etc…</p>
+
+<p>There are several different abstractions which allows us to both model and think about asynchronous code in a more sane fashion: futures, promises and events/callbacks are but a few of them.</p>
+
+<p>I won't get into the merits - or lack thereof - of these alternatives in this post but rather focus on a different alternative: <a href="http://en.wikipedia.org/wiki/Communicating_sequential_processes">Communicating Sequential Processes - CSP</a>.</p>
+
+<h3>CSP and Go</h3>
+
+<p>CSP isn't new. It was first described in 1978 by <a href="http://en.wikipedia.org/wiki/C._A._R._Hoare">Tony Hoare</a> and languages such as <a href="http://bit.ly/14rEwxU">Occam</a> and <a href="http://bit.ly/14rEAh7">Erlang</a> stem from it.</p>
+
+<p>It has however gained momentum by being natively supported by the <a href="http://bit.ly/11ZvMzj">Go programming language</a>.</p>
+
+<p>I haven't read Hoare's paper so I'll use a little bit of what I know about Go's implementation of CSP.</p>
+
+<p>Go introduced the concept of a <code>goroutine</code>. It <em>looks</em> like a function call:</p>
+
+<p><code>go
+// doing some stuff...
+go myFunction("argument") //does stuff in the background...
+//continuing about my business...
+</code></p>
+
+<p>What this does is it creates a <em>lightweight</em> process and returns control immediately to the caller.</p>
+
+<p>It is <em>lightweight</em> because it doesn't map 1-1 to native OS threads.</p>
+
+<p>The reasoning behind it is that creating too many threads can bring your machine (or VM) down due to the amount of stack allocated to each one.</p>
+
+<p><code>goroutines</code> are cheap to create so you can have hundreds of thousands of them, and the runtime will multiplex them into a thread pool.</p>
+
+<p>The immediate advantage is that it is dead simple to achieve a higher degree of concurrency.</p>
+
+<p>So far it sounds awfully similar to using futures with a pre-configured thread pool and a bit of syntactic sugar. But this is not the end of it.</p>
+
+<h3>Communication</h3>
+
+<p><code>goroutines</code> really shine when your several lightweight processes need to talk to each other. This is where a new abstraction comes into play:<code>channels</code>.</p>
+
+<p>Channels are first-class citizens - meaning you can pass them as arguments to functions as well as the return value of functions.</p>
+
+<p>Using them is straightforward:</p>
+
+<p><code>go
+c := make(chan string)
+go func() {
+  time.Sleep(time.Duration(5000) * time.Millisecond)
+  c &lt;- "Leo"
+}()
+fmt.Printf("Hello: %s\n", &lt;-c) //this will block until the channel has something to give us
+</code></p>
+
+<p>The code above creates a goroutine from an anonymous-executing function that will, in the background, sleep for 5 seconds and then send the string <code>Leo</code> to the channel <code>c</code>. Since control is returned immediately after that, the call blocks on the next line where it's trying to read a value from the channel using the <code>&lt;-c</code> statement.</p>
+
+<h3>Lisp</h3>
+
+<p>"But What does all this have to do with Lisp?" - ah! I'm glad you asked.</p>
+
+<p>It actually has more to do with <a href="http://clojure.org/">Clojure</a> - and by extension, Lisp.</p>
+
+<p><a href="http://clojure.org/">Clojure</a> is a modern Lisp for the JVM, built for concurrency. The core team recently released <a href="https://github.com/clojure/core.async">core.async</a>, a new library that adds support for asynchronous programming much in the same way Go does with goroutines.</p>
+
+<p>To highlight the similarities, I'll show and translate a couple of the examples from Rob Pike's presentation, <a href="http://talks.golang.org/2012/concurrency.slide#1">Go Concurrency patterns</a>.</p>
+
+<h4>Setting the scene</h4>
+
+<p>Say you're Google. And you need to write code that takes user input, - a search string - hits 3 different search services, - web, images and video - aggregates the results and presents them to the user.</p>
+
+<p>Since they are three different services, you wish to do this concurrently.</p>
+
+<p>To simulate these services, Rob presented a function that has unpredictable performance based of a random amount of sleep, shown below:</p>
+
+<p>```go
+var (</p>
+
+<pre><code>Web   = fakeSearch("web")
+Image = fakeSearch("image")
+Video = fakeSearch("video")
+</code></pre>
+
+<p>)</p>
+
+<p>type Search func(query string) Result</p>
+
+<p>func fakeSearch(kind string) Search {</p>
+
+<pre><code>    return func(query string) Result {
+          time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond)
+          return Result(fmt.Sprintf("%s result for %q\n", kind, query))
+    }
+</code></pre>
+
+<p>}
+```</p>
+
+<p>This is one way we could write such function in Clojure:</p>
+
+<p>```clojure
+(defn fake-search [kind]
+  (fn [query]</p>
+
+<pre><code>(Thread/sleep (int (* (java.lang.Math/random) 1000)))
+(str kind " result for " query)))
+</code></pre>
+
+<p>(def web   (fake-search "Web"))
+(def image (fake-search "Image"))
+(def video (fake-search "Video"))
+```</p>
+
+<h4>Google Search 2.0</h4>
+
+<p>The first example is the simple case: we hit the services concurrently, wait for them to respond and then return the results:</p>
+
+<blockquote><p>This example is from <a href="http://talks.golang.org/2012/concurrency.slide#46">slide #46</a>.</p></blockquote>
+
+<p>```go
+func Google(query string) (results []Result) {</p>
+
+<pre><code>c := make(chan Result)
+go func() { c &lt;- Web(query) } ()
+go func() { c &lt;- Image(query) } ()
+go func() { c &lt;- Video(query) } ()
+
+for i := 0; i &lt; 3; i++ {
+    result := &lt;-c
+    results = append(results, result)
+}
+return
+</code></pre>
+
+<p>}
+```</p>
+
+<p>And here's the Clojure version:</p>
+
+<p>```clojure
+(defn google2-0 [query]
+  (let [c (chan)]</p>
+
+<pre><code>(go (&gt;! c (web query)))
+(go (&gt;! c (image query)))
+(go (&gt;! c (video query)))
+(reduce (fn [results _]
+          (conj results (&lt;!! (go (&lt;! c)))))
+        []
+        (range 3))))
+</code></pre>
+
+<p>(google2-0 "Clojure")
+;; prints ["Video result for Clojure" "Web result for Clojure" "Image result for Clojure"]
+```</p>
+
+<p>The <a href="http://clojure.github.io/core.async/#clojure.core.async/%3E!"><code>&gt;!</code></a> operator puts a value into a channel inside a <code>go</code> form. The function then uses <a href="http://clojure.github.io/core.async/#clojure.core.async/&lt;!!"><code>&lt;!!</code></a> to block on the <code>c</code> channel until it gets a value we can use.</p>
+
+<h4>Google Search 2.1</h4>
+
+<p>This is virtually the same example but this time we do not wish to wait on slow servers. So we'll return whatever results we have after a pre-defined timeout.</p>
+
+<blockquote><p>This example is from <a href="http://talks.golang.org/2012/concurrency.slide#47">slide #47</a>.</p></blockquote>
+
+<p>```go
+c := make(chan Result)
+go func() { c &lt;- Web(query) } ()
+go func() { c &lt;- Image(query) } ()
+go func() { c &lt;- Video(query) } ()</p>
+
+<p>timeout := time.After(80 * time.Millisecond)
+for i := 0; i &lt; 3; i++ {</p>
+
+<pre><code>select {
+case result := &lt;-c:
+    results = append(results, result)
+case &lt;-timeout:
+    fmt.Println("timed out")
+    return
+}
+</code></pre>
+
+<p>}
+return
+```</p>
+
+<p>You'll notice the use of <code>select</code> here.</p>
+
+<p><code>select</code> waits on multiple channels and returns as soon as <em>any</em> of them has something to say.</p>
+
+<p>The trick of this example is that one of these channels times out, at which point you get the message "timed out", effectively moving on to the next iteration and ignoring that slow server(s) response.</p>
+
+<p>We can express the same intent in Clojure as well:</p>
+
+<p>```clojure
+(defn google2-1 [query]
+  (let [c (chan)</p>
+
+<pre><code>    t (timeout 500)]
+(go (&gt;! c (web query)))
+(go (&gt;! c (image query)))
+(go (&gt;! c (video query)))
+
+(reduce (fn [results _]
+          (conj results (first (alts!! [c t]))))
+        []
+        (range 3))))
+</code></pre>
+
+<p>(google2-1 "Clojure")
+;; prints ["Video result for Clojure" nil nil]
+<code>``
+Everything looks the same but we're using [</code>alts!!<code>](http://clojure.github.io/core.async/#clojure.core.async/alts!!) to wait on the channels</code>c<code>and</code>t<code>(the timeout channel). This is analogous to Go's</code>select` form in that it waits for any channel to receive a value or, in this case, to timeout.</p>
+
+<p>Note the <code>nil</code> values. Those came from servers which did not respond in time and were simply ignored.</p>
+
+<p>Effectively what this means is that each time you run this function you'll likely get different results, depending on how long the <code>fake-search</code> function takes to run.</p>
+
+<p>Amazing, huh?</p>
+
+<h3>The big deal</h3>
+
+<p>But here's the <em>big deal</em> about this: although <a href="https://github.com/clojure/core.async">core.async</a> looks like it's deeply integrated into the language, it is <em>just</em> a library!</p>
+
+<p>It's not a separate compiler. It's not a new language. And it's not a special version of Clojure.</p>
+
+<p>Since Clojure supports macros - like all Lisps - the core team was able to create the syntax required to easily use <a href="https://github.com/clojure/core.async">core.async</a>. And that's the beauty of it!</p>
+
+<p><em>The Lisp advantage, once again.</em></p>
+
+<h4>Clojure's advantage</h4>
+
+<p>Now one thing I haven't mentioned is that Clojure is particularly well suited for this - and in a way even more so than Go: Clojure is opinionated and favours immutability.</p>
+
+<p>That means that when using channels - and in fact any type of concurrent programming - you can safely share your data structures between concurrent units of work. Since they're immutable, you can't shoot yourself in the foot.</p>
+
+<p>One last thing: <a href="https://github.com/clojure/core.async">core.async</a> states as one of its goals Clojurescript compatibility, bringing channel based concurrent programming to the browser. Exciting stuff.</p>
+
+<h3>More on core.async</h3>
+
+<p><a href="https://github.com/clojure/core.async">core.async</a> is still in alpha but you are encouraged to take it for a spin. Documentation is still lacking so I recommend you look at:</p>
+
+<ul>
+<li><a href="http://clojure.com/blog/2013/06/28/clojure-core-async-channels.html">Rich's blog post about it</a></li>
+<li><a href="https://github.com/clojure/core.async">The source code on github</a></li>
+<li><a href="https://github.com/clojure/core.async/blob/master/examples/walkthrough.clj">The walkthrough namespace</a>, which showcases its features.</li>
+</ul>
+
+
+<p>Also, the full Clojure code I used here can be seen in <a href="https://gist.github.com/leonardoborges/5924461">this gist</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A Tale Of Concurrency: Partitioning Data Between Processes]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes/"/>
+    <updated>2011-06-19T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/06/19/a-tale-of-concurrency-partitioning-data-between-processes</id>
+    <content type="html"><![CDATA[<p>So I had just finished writing this feature. I was confident it'd work - after all I had a good level of tests around it.
+It sounded like yet another successful deployment.</p>
+
+<p>One week in and something starts breaking. It was hard to track down but at the end I realised it was caused by having concurrent processes running in parallel.</p>
+
+<p>That's what happened in a recent production release at our current client. It was a very interesting problem to track
+down and solve and I'll do my best to explain and walk you through it here.</p>
+
+<h2>What we were trying to achieve</h2>
+
+<p> I'll try not to go into many details here as to how the feature works but here is the gist of it:</p>
+
+<p> A user from the staff can select from a range of criteria to create a "List" that is used to match users against the database.
+ These criteria are serialized to the database in this list object to allow for further processing.</p>
+
+<p> When required, the staff can choose to mail the users resulting from that list. To get the set of users, the system
+ de-serializes the criteria contained in the list, builds a SQL query and runs it against the database.</p>
+
+<h2>Constraints</h2>
+
+<p>These lists are contained in something called a "Push". That's just a concept that identifies that a set of lists and
+emails belong to a specific theme, say, 'Kitty lovers'.</p>
+
+<p>It's a powerful concept though because its single most important rule is that a user should <strong>never</strong> receive more than one email within the same "Push".</p>
+
+<p>For example, take a look at the image below, which represents a Push in progress. Let <strong>U</strong> be the universe of all users in the database. <strong>L</strong> are users returned by a List within a given Push. <strong>R</strong> is the set of users that have already received an email from that Push.</p>
+
+<p><img src="/assets/images/sets.png"></p>
+
+<p>Based on the rules I explained above, the green area then represents users we can still send emails to.</p>
+
+<h2>Content testing</h2>
+
+<p>With all the basic concepts in place, let's pretend we are actually creating a Push for the 'Kitty Lovers'. I am organizing
+a kitty expo at my house and I want to invite everyone that lives within 50km of Sydney, Australia - see the list specification going on here?</p>
+
+<p>Let's say this list gives us 25000 users. My house's better be huge.</p>
+
+<p>Simple enough, but I actually have 2 emails to send. They have different content, say 2 different pictures, and before
+I invite everyone, I want to test which email works best by sending them both to a subset of the list - make it a thousand random users each.
+After all, I want my event to be a huge success.</p>
+
+<p>After I decide which email is best - the system tracks opens, clicks, etc... - I want to send it to the rest of the list,
+which is to say every user that has not received an email from this Push yet.</p>
+
+<h2>Offloading work, the problem begins</h2>
+
+<p>Due to certain architecture and performance requirements the unit of code that runs the list's criteria against the database,
+gets the user ids and sends the email, is sent to a job queue to be later executed by a background process.</p>
+
+<p>In development and staging we only ever had a single background process running so all was well. The code was basically executed sequentially.</p>
+
+<p>In production however, we can - and usually have - several background workers picking up jobs from the queue. And that's when the bug happened:</p>
+
+<p><img src="/assets/images/activity.png"></p>
+
+<p>As you can see in the above image, given you have 2 jobs running in parallel, Job#1 selects the users from the list, starts sending some emails and in the meantime
+Job#2 comes along, selects roughly the same users and starts doing the same before Job#1 has had enough time to mark
+those users as having received the email already. Bam! Some users will receive duplicates!</p>
+
+<h2>The solution</h2>
+
+<p>  I spent a lot of time literally staring at my laptop's screen thinking about how to solve this issue. Locking the table?
+  Nah... that would render having multiple workers useless.</p>
+
+<p>  What I really needed was a way to partition the data between jobs so as to avoid different jobs from dealing with the same set of users.</p>
+
+<p>  My next thought was to run the query once beforehand to sort the list of user ids, split it in groups equal to the number of jobs
+  and work out the id ranges each job should deal with.</p>
+
+<p>  Although this solution would work, it would add the extra step of running the query once before actually running the jobs.
+  That did not make me happy.</p>
+
+<p>  That's when I started thinking about a metaphor that helped me come up with this insight: a Hash Table. If you ever implemented
+  one you can see that the buckets in a hash table could be related to the jobs we have running.</p>
+
+<p>  I basically wanted different users to go to different buckets. Think hash functions. Think modulus.</p>
+
+<p>  To follow this approach I changed my code so that each job would be assigned an id, starting at 0, up to (number_of_jobs - 1).
+  Then, when putting the jobs in the queue I would provide 2 extra arguments:
+  <strong>the current job id</strong> and <strong>the total number of jobs</strong>.</p>
+
+<p>  Upon execution, the job would use these extra arguments to modify the query, adding an extra field to the select clause:</p>
+
+<p>```sql</p>
+
+<pre><code>    SELECT ..., MOD(users.id, number_of_jobs) AS modulus...
+</code></pre>
+
+<p>```</p>
+
+<p>  And it would also append an extra filter to the where clause:
+```sql</p>
+
+<pre><code>    WHERE ... AND modulus = current_job_id
+</code></pre>
+
+<p>```</p>
+
+<p>  That way, users would be spread as evenly as possible between jobs and no single user would be processed by more than one job.</p>
+
+<p>  For example: If we had 2 jobs, ids 0 and 1 and a list of 10 users with ids from 0 to 10, this would be the users distribution between jobs:</p>
+
+<p>```</p>
+
+<pre><code>  user_id:0 - processed by job_id:0 (given by 0 mod 2)
+  user_id:1 - processed by job_id:1 (given by 1 mod 2)
+  user_id:2 - processed by job_id:0 (given by 2 mod 2)
+  user_id:3 - processed by job_id:1 (given by 3 mod 2)
+  user_id:4 - processed by job_id:0 (given by 4 mod 2)
+  user_id:5 - processed by job_id:1 (given by 5 mod 2)
+  user_id:6 - processed by job_id:0 (given by 6 mod 2)
+  user_id:7 - processed by job_id:1 (given by 7 mod 2)
+  user_id:8 - processed by job_id:0 (given by 8 mod 2)
+  user_id:9 - processed by job_id:1 (given by 9 mod 2)
+  user_id:10 - processed by job_id:0 (given by 10 mod 2)
+</code></pre>
+
+<p>```</p>
+
+<p>  A simple, elegant solution for a tricky problem. One that I'm finally happy about.</p>
+
+<p>  If you made it to here, I appreciate your patience and hope you enjoyed the read ;)</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,260 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Monit, Thinking Sphinx and RVM - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="In one of my Rails projects I&#8217;m using Sphinx to provide full-text search capabilities. To integrate both worlds I chose Thinking Sphinx, which &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Monit, Thinking Sphinx and RVM</h1>
+	<div class="entry-content"><p>
+In one of my Rails projects I&#8217;m using <a href="http://www.sphinxsearch.com/" target="_blank">Sphinx</a> to provide full-text search capabilities. To integrate both worlds I chose <a href="http://freelancing-god.github.com/ts/en/" target="_blank">Thinking Sphinx</a>, which is just great and so far has met all of my expectations.<br><br>Also, <a href="http://www.leonardoborges.com/writings/2010/01/02/managing-multiple-ruby-versions/" target="_blank">as I previously mentioned</a>, I&#8217;m using <a href="http://rvm.beginrescueend.com/">RVM</a> to manage my ruby installations on both my development and production machines and this setup is what motivated this post.<br><br>I use <a href="http://mmonit.com/monit/" target="_blank">Monit</a> to monitor the services running on my production server - nginx, mysql, php - and as of the first deploy of this application, it only made sense to also monitor Sphinx.<br><br>In order to create an initialization script, I would need at least a way to start and stop sphinx from the command line, which, using Thinking Sphinx, can be done using these rake tasks:<br><pre lang="bash"><br>$ rake thinking_sphinx:stop<br>$ rake thinking_sphinx:start<br></pre><br>It&#8217;s worth mentioning now that I don&#8217;t run sphinx as root. I run it with the same user my rails application uses. For the purpose of this post, let&#8217;s call it <em>deploy</em>.<br><br>When I tried using my script I got errors such as these:<br><br><pre lang="bash"><br>Missing the Rails 2.3.5 gem. Please `gem install -v=2.3.5 rails`, update your RAILS_GEM_VERSION setting in config/environment.rb for the Rails version you do have installed, or comment out RAILS_GEM_VERSION to use the latest version installed.<br></pre><br><br>After some digging around I found that the GEM_HOME environment variable for my deploy user wasn&#8217;t being set correctly - something to do with rvm, but not quite sure - and to fix this, well, I just had to set it, leaving the final working version of my script somewhat like this - simplified :
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#! /bin/sh</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">### BEGIN INIT INFO</span>
+</span><span class='line'><span class="c">### END INIT INFO</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">set_path</span><span class="o">=</span><span class="s2">&quot;cd /your/rails/app/root; export GEM_HOME=/path/to/your/gems; RAILS_ENV=production;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>  start<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> -n <span class="s2">&quot;Starting sphinx: &quot;</span>
+</span><span class='line'>                su - deploy -c <span class="s2">&quot;$set_path rake ts:start&quot;</span> &gt;&gt; /var/log/sphinx.log 2&gt;&amp;1
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;done.&quot;</span>
+</span><span class='line'>        ;;
+</span><span class='line'>  stop<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> -n <span class="s2">&quot;Stopping sphinx: &quot;</span>
+</span><span class='line'>                su - deploy -c <span class="s2">&quot;$set_path rake ts:stop&quot;</span> &gt;&gt; /var/log/sphinx.log 2&gt;&amp;1
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;done.&quot;</span>
+</span><span class='line'>        ;;
+</span><span class='line'>      *<span class="o">)</span>
+</span><span class='line'>            <span class="nv">N</span><span class="o">=</span>/etc/init.d/sphinx
+</span><span class='line'>            <span class="nb">echo</span> <span class="s2">&quot;Usage: $N {start|stop}&quot;</span> &gt;&amp;2
+</span><span class='line'>            <span class="nb">exit </span>1
+</span><span class='line'>            ;;
+</span><span class='line'><span class="k">esac</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure>
+
+There are 2 things happening here. First, regardless of the user I&#8217;m running this init script as, I drop privileges in order to execute the rake task with my deploy user. Second, I set the GEM_HOME environment variable to stop getting the &#8216;gem not found&#8217; errors.<br><br>After that, monit was able not only to monitor my sphinx instance, but also (re)start/stop it with the correct user.<br><br>I&#8217;m no Linux wizard so if you wanna suggest improvements to this script, feel free to do so!
+</p>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-13T00:00:00+11:00" pubdate data-updated="true">Jan 13<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/rails/'>Rails</a>, <a class='category' href='/writings/tags/sphinx/'>Sphinx</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2010/01/13/monit-thinking-sphinx-and-rvm/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2010/01/13/monit-thinking-sphinx-and-rvm/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2010/01/13/monit-thinking-sphinx-and-rvm/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2010/01/13/monit-thinking-sphinx-and-rvm/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2010/01/13/monit-thinking-sphinx-and-rvm/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2010/01/13/monit-thinking-sphinx-and-rvm/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

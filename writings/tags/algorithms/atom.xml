@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: algorithms | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/algorithms/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Project Euler: problem 4 in clojure]]></title>
+    <link href="http://www.leonardoborges.com/writings/2012/02/05/project-euler-problem-4-in-clojure/"/>
+    <updated>2012-02-05T13:29:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2012/02/05/project-euler-problem-4-in-clojure</id>
+    <content type="html"><![CDATA[<p>I solved a few of the problems on <a href="http://projecteuler.net/">Project Euler</a> in the past, both in Java and Ruby, and thought it would be useful to redo them in Clojure, thus improving my skills on the language's core functions and libraries. Today I'll share <a href="http://projecteuler.net/problem=4">problem 4</a>.</p>
+
+<p>Go ahead and read it but here's the meat of it:</p>
+
+<p><em>"Find the largest palindrome made from the product of two 3-digit numbers."</em></p>
+
+<p>From this statement we can tell two things: (1) we'll need a function that can tell whether a number is a <a href="http://en.wikipedia.org/wiki/Palindrome">palindrome</a> or not and (2) that the largest palindrome is given by the product of two numbers between 100 and 999, inclusive.</p>
+
+<p>Let's tackle number one first:</p>
+
+<p>``` clojure
+(defn palindrome? [n]
+  (= (->> n str reverse (apply str))</p>
+
+<pre><code> (str n)))
+</code></pre>
+
+<p>```</p>
+
+<p>With our utility function in hand, one possible solution might be as follows:</p>
+
+<p>``` clojure
+(defn largest-palindrome []
+  (apply max (filter #(palindrome? %)</p>
+
+<pre><code>                 (for [x (range 100 (inc 999))
+                       y (range 100 (inc 999))]
+                   (* x y)))))
+</code></pre>
+
+<p>(time
+ (largest-palindrome))
+;;"Elapsed time: 1405.358 msecs
+```</p>
+
+<p>While this works, I wasn't happy with a couple of things in this solution. First, I thought I could do without using <em>filter</em>. Second, we have unnecessary multiplications going on, leading to poor performance - it takes ~1.4secs to finish.</p>
+
+<p>You see, when we begin multiplying the numbers, we'll see multiplications such as <em>100 * 100, 100 * 101, 100 * 102 ...</em> and then again, after the first loop is exhausted, <em>102 * 100, 102 * 101, 102 * 102 ...</em></p>
+
+<p>That led me to take a closer look at <a href="http://clojuredocs.org/clojure_core/clojure.core/for">for</a>, Clojure's list comprehension macro. It's a very powerful construct, providing 3 useful modifiers: <em>let</em>, <em>while</em> and <em>when</em>.</p>
+
+<p>With that in mind, I refactored my first solution to look like this:</p>
+
+<p>``` clojure
+(defn largest-palindrome-1 []
+  (apply max (for [x (range 100 1000)</p>
+
+<pre><code>               y (range 100 1000)
+               :while (&gt;= x y)
+               :let [z (* x y)]
+               :when (palindrome? z)]
+           z)))
+</code></pre>
+
+<p>(time
+ (largest-palindrome-1))
+;;"Elapsed time: 689.262 msecs"
+```</p>
+
+<p>Here, the <em>while</em> modifier makes sure we aren't wasting any time with unnecessary multiplications. The <em>when</em> modifier lets us get rid of the outer <em>filter</em> call.  And as you can see, the solution is about twice as fast as its first version.</p>
+
+<p>On top of that, it's still pretty concise. Not bad.</p>
+]]></content>
+  </entry>
+  
+</feed>

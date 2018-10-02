@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: JRuby | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/jruby/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Managing multiple ruby versions]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/01/02/managing-multiple-ruby-versions/"/>
+    <updated>2010-01-02T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/01/02/managing-multiple-ruby-versions</id>
+    <content type="html"><![CDATA[<p>
+Today I read a nice <a href="http://akitaonrails.com/2010/01/01/limpando-meu-ambiente-de-desenvolvimento" target="_blank">post</a> - in Portuguese - by <a href="http://akitaonrails.com/" target="_blank">Fábio Akita</a> on how to manage multiple ruby versions on your machine. I've tried it once with some tool I can't even remember the name but failed miserably.<br><br>But this time things look very different. The tool here is the <a href="http://rvm.beginrescueend.com" target="_blank">rvm</a> - short for Ruby Version manager - and it works just great.<br><br>Let's cut to the chase and imagine that you, like me, want to run/develop/test your code on both ruby 1.8.7 and ruby 1.9.1. These steps would get you up and running in a few minutes:<br><br><strong>Install rvm:</strong><br><pre lang="bash"><br>$ gem sources -a http://gemcutter.org/<br>$ gem install rvm<br>$ rvm-install<br>$ echo "if [[ ! -z $HOME/.rvm ]] ; then source $HOME/.rvm ; fi" >> ~/.bash_profile<br>$ source ~/.rvm/scripts/rvm<br></pre><br><br><strong>Install the ruby interpreters you want to use:</strong><br><pre lang="bash"><br>$ rvm  install ruby-1.8.7-p160<br>$ rvm  install ruby-1.9.1<br></pre><br><br>Now it's important to notice that at this point you have separate gem installations for each of the interpreters you've installed in the previous step. That said, just go ahead and switch between your interpreters and use your command line scripts - ruby, gem, etc... - as usual.<br><br><strong>Switching between interpreters:</strong><br><pre lang="bash"><br>$ rvm ruby-1.8.7-p160  #switch to the specified version <br>$ ruby -v<br>ruby 1.8.7 (2009-04-08 patchlevel 160) [i686-darwin9.8.0]<br>$ gem install rails  #note I'm not using sudo since the new gem paths point to the user's home directory <br><br>$ rvm ruby-1.9.1  #switch to the specified version <br>$ ruby -v<br>ruby 1.9.1p376 (2009-12-07 revision 26041) [i386-darwin9.8.0]<br>$ gem install rails  #note I'm not using sudo since the new gem paths point to the user's home directory<br></pre><br><br>And that's it, just go on and install rails, merb, sinatra or whatever rocks your boat!<br>rvm will work with MRI/YARV, JRuby, Ruby EE and Rubinius. Enjoy and don't forget to check <a href="http://rvm.beginrescueend.com" target="_blank">rvm</a>'s website for the complete documentation! :) 
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Refactoring for Readability]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability/"/>
+    <updated>2009-09-18T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/09/18/refactoring-for-readability</id>
+    <content type="html"><![CDATA[<p>
+Yesterday I've done something I should do more often: Revisit some code written a while ago for our current project and make it better.<br><br>Let's face it. We all write crappy code the 1st time. The difference is in what we do about it afterwards.<br>We might decide it's good enough and keep moving, or we could (and should!) stop and refactor it!<br><br>The code I revisited worked as a refactoring exercise and it's initial version is shown below:
+
+``` ruby Jphoto
+class Jphoto
+ ...
+
+ #a few other methods ...
+
+ def post_photo(file_data, hotel_id, send_rss, options = {})
+   file_name = "tmp/#{Time.now.to_i}_#{rand(1000000).to_s(36)}"
+   File.open(file_name, "wb") do |f|
+     f.puts(file_data)
+   end
+
+   params = [Curl::PostField.file('photo',file_name),
+      Curl::PostField.content('hotel', hotel_id),
+      Curl::PostField.content('source','PhotoUploadTest')]
+   extract_extra_params!(params, options)
+
+   c = Curl::Easy.new("#{service_uri_base}/photoupld")
+   c.multipart_form_post = true
+   c.http_post(*params)
+
+   if c.response_code != 200
+     error_msg = "File upload failed with code: #{c.response_code}"
+     Rails.logger.info error_msg
+     raise error_msg
+   end
+
+   File.delete(file_name)
+
+   hotel = Hotel.find_by_id(hotel_id)
+   hotel.cache.destroy_all
+
+   send_upload_rss(hotel, original_upload_url(c.body_str) , options) if send_rss
+ end
+
+ private
+
+ def send_upload_rss(hotel, photo_url, options)
+   ...
+ end
+ def manage_images_link(hotel_id)
+   ...
+ end
+
+ def extract_extra_params!(params, options)
+   params << Curl::PostField.content('status', options[:status]) if options[:status]
+   params << Curl::PostField.content('upload_source', options[:upload_source]) if options[:upload_source]
+   params << Curl::PostField.content('uploader_ip', options[:uploader_ip]) if options[:uploader_ip]
+   params << Curl::PostField.content('uploader_email', options[:uploader_email]) if options[:uploader_email]
+ end
+end
+```
+
+<br>Look at the post_photo method. It has problems in so many levels that it's hard to start. <br>Methods should do "one thing" and that method obviously does much more than that, mixing different levels of abstraction.<br><br>But let's start with the easy parts first, keeping in mind that I was aiming for readability.<br><br>Lines 7 to 10 seem to be there just to make the reader's life harder. It's creating a temporary file through some custom logic instead of using the tools provided by the language. Unnecessary and only pollutes our eyes. My first measure was to use ruby's TempFile class for this. Better, but we still have a long way.<br><br>Right at line 12 it creates some sort of default parameters list, after which it extracts some extra options. I don't know what that method does but it's clearly using output arguments, which we should avoid at all costs, as they lead to confusion. This is a big smell as well, and another refactoring step added to my list.<br><br>On line 21 starts the code that handles what to do when we get a response_code other than 200 from our request. Apart from the fact that this code doesn't feel right here, we just happen to know that in HTTP, 200 means success, but that might not be clear to someone looking at the code for the 1st time.<br><br>Then the code goes on to delete the temp file, clear the hotel's cache and send the rss if the rss' flag is true.<br><br><strong>Let there be refactoring....</strong><br><br>Geez, how many lines have I used to explain what the code does? Since I don't wanna bore you to death, here is my refactored version of this method, trying to avoid as much as I can the problems I highlighted previously:<br><br><br><br>
+
+``` ruby
+class Jphoto
+  ...
+  SUCCESS = 200
+  
+  #a few other methods ...
+  
+  def post_photo(file_data, hotel_id, send_rss, options = {})
+    response_body = make_post_request(file_data, hotel_id, options)
+    hotel = Hotel.find_by_id(hotel_id)
+    hotel.cache.destroy_all
+    send_upload_rss(hotel, original_upload_url(response_body) , options) if send_rss
+  end
+  ...
+```
+
+Ha! That reads much nicer, right? 
+Below you'll find the rest of the class, properly refactored. Note how I also changed the order of the private methods so the class has a reading flow. 
+You can now read it top down, without scrolling through the file several times trying to find where the methods are defined.
+
+``` ruby
+  private
+  def make_post_request(file_data, hotel_id, options)
+    temp_file = Tempfile.open('minisite_upload_')
+    temp_file.puts(file_data)
+    c = Curl::Easy.new("#{service_uri_base']}/photoupld")
+    c.multipart_form_post = true
+    c.http_post(*build_params_list(temp_file.path, hotel_id, options))
+    temp_file.delete
+    raise_and_log_error("File upload failed with code: #{c.response_code}") if c.response_code != SUCCESS
+    c.body_str
+  end
+  def build_params_list(file_path, hotel_id, options)
+    params = [Curl::PostField.file('photo', file_path), Curl::PostField.content('hotel', hotel_id), Curl::PostField.content('source','PhotoUploadTest')]
+    params << Curl::PostField.content('status', options[:status]) if options[:status]
+    params << Curl::PostField.content('upload_source', options[:upload_source]) if options[:upload_source]
+    params << Curl::PostField.content('uploader_ip', options[:uploader_ip]) if options[:uploader_ip]
+    params << Curl::PostField.content('uploader_email', options[:uploader_email]) if options[:uploader_email]
+    params
+  end
+  def raise_and_log_error(error_msg)
+    Rails.logger.info error_msg
+    raise error_msg
+  end
+  def original_upload_url(jphotos_response)
+    ...
+  end
+  def send_upload_rss(hotel, photo_url, options)
+    ...
+  end
+  def manage_images_link(hotel_id)
+    ...
+  end
+end
+
+```
+
+
+I've only applied 2 basic principles to this code: That methods should do one thing and that they should avoid output arguments. But the result was a drastic improvement over the old code.
+<strong>A last step...</strong>
+There is still one thing I would like to change in the post_photo method. It takes a boolean as an argument. The first time you see a call to this method, there is no way you can tell what that flag is used for:
+
+``` ruby
+  jphoto.post_photo(file_data, 1, false, options)
+```
+
+To make it more clear we could refactor the method once more to look like this:
+
+
+``` ruby
+  def post_photo_and_send_rss(file_data, hotel_id, options = {})
+    response_body = post_photo(file_data, hotel_id, options)
+    send_upload_rss(hotel, original_upload_url(response_body) , options)
+  end
+  def post_photo(file_data, hotel_id, options = {})
+    response_body = make_post_request(file_data, hotel_id, options)
+    hotel = Hotel.find_by_id(hotel_id)
+    hotel.cache.destroy_all
+    response_body
+  end
+``` 
+
+This way we avoid an extra parameter and save our reader - and possibly us - of the trouble to guess what that flag was for.<br><br><br>I am by no means saying this is the definitive refactored state of this code but instead sharing the steps I went through while refactoring it. As always, tips and comments are welcome! :) 
+</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Summit 2009: I'm speaking]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/09/03/rails-summit-2009-im-speaking/"/>
+    <updated>2009-09-03T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/09/03/rails-summit-2009-im-speaking</id>
+    <content type="html"><![CDATA[<p>
+<a href="http://www.railssummit.com.br?utm_campaign=Railssummit&amp;utm_source=banner_parceiros&amp;utm_medium=banner&amp;utm_content=en_souPalestrante_210x60"><img src="http://railssummit.com.br/images/banners/en_souPalestrante_210x60.jpg" alt="Rails Summit 2009" /></a><br><br>I'll be speaking at this year's <a href="http://railssummit.com.br/en/pages/home" target="_blank">Rails Summit Latin America</a> in Sao Paulo, Brazil. It will be a good opportunity to meet some <a href="http://railssummit.com.br/en/speakers">amazing people</a> and visit friends back home! :)<br><br>Overall I'll be spending 12 days in Brazil, with 2 of them dedicated to the conference. The other 10 I'll be in Rio de Janeiro visiting my family and friends. I strongly advise you to spend some time in Rio too, if at all possible. It's an amazing city and you can contact me if you have any questions.<br><br>Back to the conference, my session is called <strong>JRuby in the enterprise world: Using Rails with legacy code</strong>, and will be given in the form of a tutorial. I will walk you through some problems we had while making this kind of integration at my company, focusing mostly on dependency management.<br><br>At the end I hope you'll have a good understanding of what JRuby is capable of in a legacy environment.<br><br>If you're planning to attend and would like to hear anything specific about JRuby, please let me know, I can try and squeeze in.<br><br>C u there!
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JVM language preferences poll results]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/07/31/jvm-language-preferences-poll-results/"/>
+    <updated>2009-07-31T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/07/31/jvm-language-preferences-poll-results</id>
+    <content type="html"><![CDATA[<p>
+<strong>- Overall results</strong><br><br>First off, I'd like to thank everyone who voted on this poll.<br>With a total of 236 votes, here is the summary of the first two questions:<br><br><strong>- Are you currently working with or researching about language alternatives for the JVM? - e.g. JRuby, Scala, Groovy</strong><br><br><a href='http://www.leonardoborges.com/writings/assets/images/scala_improvements.png'><img src="/assets/images/scala_improvements.png"></a></em><br><br>Tooling. The majority of comment urge for better tooling and IDE support. That simple.<br><br><strong>- Others</strong><br><br>People who chose others mentioned <a href="http://clojure.org/" target="_blank">Clojure</a>, <a href="http://www.fandev.org/" target="_blank">Fan</a> and <a href="http://www.jython.org/">Jython</a>, with a clear advantage for Clojure.<br><br><strong>- Disclaimer</strong><br><br><strong>This poll has no scientific foundations whatsoever and its sole purpose is to summarize the feelings and personal choices of the people who answered it. If you would like the original spreadsheet with the answers, you can find it <a href="http://spreadsheets.google.com/ccc?key=0AuABB6DyTXV2dHEtZnNwSDhCb2RVOThFcUNaSUhpbEE&amp;hl=en" target="_blank">here</a> and do your own analyzis.<br></strong>
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JRuby on Rails and legacy java apps: Managing dependencies]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/07/01/jruby-on-rails-and-legacy-java-apps-managing-dependencies/"/>
+    <updated>2009-07-01T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/07/01/jruby-on-rails-and-legacy-java-apps-managing-dependencies</id>
+    <content type="html"><![CDATA[<p>
+The motivation for this post came from a couple of messages I've seen on the jruby's google group and because I think it's pretty cool to share how we tackled this problem.<br><br><strong>- A little bit of context</strong><br><br>We, as a vast amount of people out there, have legacy Java code. A lot. In our case this legacy is pretty much crucial to our business. We can't just trash it and start from scratch. Bad idea.<br><br>On the other hand we do have new features to be built on top of it. But we wanted an easier way to develop this new stuff and decided for a JRuby on Rails solution, using it as a front-end to our existing services.<br><br><strong>- What we decided to do</strong><br><br>Our final rails project would make use of a specially created jar file containing our Java application. This Jar would also contain a public interface of the services we'd have to interact with from rails.<br><br>As any Java application, ours depend on a number of external jar files that correspond to the various framewoks we usually have in place. e.g.: Hibernate, Spring, apache-commons ...<br><br>Which means we need to make our app's jar and all it's dependencies available in the JRuby classpath in order to use it.<br><br>Given we're using warbler to package our application as a war file, we just need to place all jars needed into our rails app's lib folder. Warbler then takes care of copying any jar files located in there into the war.<br><br><strong>- The problem</strong><br><br>So we needed a smart way to include all these dependencies into the project, and copy/paste isn't an option.<br><br>In the Java world we use <a href="http://maven.apache.org/">Maven</a> to manage our projects dependencies - and you should too. Because of that our approach involved turning our rails application into a Maven aware project.<br><br>Basically we needed a <a href="http://maven.apache.org/pom.html">pom file</a> that would declaratively list our java project as a dependency. From there on, Maven knows what the dependencies are and downloads them to your local repository.<br><br>Which leaves us with one more task. We need to put all these dependencies into our lib folder after maven has downloaded them.<br><br>Below you'll find the pom.xml file that we use to achieve this with inline comments explaining each bit:<br>
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.company</groupId>
+  <!-- notice how we specify the packaging to be a war,
+          that way, maven knows where to copy the jar files -->
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <artifactId>railsApp</artifactId>
+  <name>railsApp</name>
+    <dependencies>
+        <dependency>
+            <groupId>com.company</groupId>
+            <artifactId>java-legacy-app</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>railsApp</finalName>
+        <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <!-- This tasks only creates a basic structure expected by maven,
+                    so it can do its work -->
+            <id>create-mock-web-descriptor</id>
+            <phase>compile</phase>
+            <configuration>
+              <executable>/bin/sh</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>-c</argument>
+                <argument>
+                    mkdir -p src/main/webapp/WEB-INF
+                    touch    src/main/webapp/WEB-INF/web.xml
+                </argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+          <execution>
+            <!-- Now in the package phase we copy the jar files
+                    that maven put into the fake web app to our rails' lib folder -->
+            <id>copy-needed-jars-into-lib</id>
+            <phase>package</phase>
+            <configuration>
+              <executable>/bin/sh</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>-c</argument>
+                <argument>
+                    rm -f lib/*.jar
+                    cp target/railsApp/WEB-INF/lib/*.jar lib
+                    rm -rf target/railsApp*
+                    rm -rf src
+                </argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+          <execution>
+           <!-- Here we optionally create the final war file containing our rails app using warbler,
+                     doing a small cleanup of the files and folders maven created  -->
+            <id>create-final-war</id>
+            <phase>package</phase>
+            <configuration>
+              <executable>/bin/sh</executable>
+              <workingDirectory>.</workingDirectory>
+              <arguments>
+                <argument>-c</argument>
+                <argument>
+                   rm -rf *.war tmp/war
+                   jruby -S warble &amp;&amp; \
+                   mv *.war target/railsApp.war
+                </argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+     </plugins>
+    </build>
+</project>
+```
+
+<br><br>Now from the command line we can just run <em>mvn package</em> and we're good to go.<br><br>Maven will start to package the application as a war file. Since it's not a Java application we create the empty web.xml file in the compile phase, to fool maven. <br><br><br>After it has copied all the dependencies into WEB-INF/lib the next packaging goals will make sure we copy them to our rails' lib folder, also creating the final war file, ready for deployment.<br><br><br>Note that once done, you can use a simple code snippet similar to this one as an initializer and load all dependencies:<br><pre lang="ruby"><br>Dir.entries("#{RAILS_ROOT}/lib").sort.each do |entry|<br>  if entry =~ /.jar$/<br>    require entry<br>  end<br>end<br></pre><br><br>Then we can just use script/console, script/server and so on, as we normally would.<br><br>Sorry for the long post, I tried to pack in as much as I could and I certainly hope it's useful to someone. Any doubts, comments and etc... just drop me a line. :)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

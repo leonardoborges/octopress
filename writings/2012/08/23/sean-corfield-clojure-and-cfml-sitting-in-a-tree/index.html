@@ -1,0 +1,332 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sean Corfield: Clojure and CFML sitting in a tree - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Last night I attended the Adobe User Group here in Sydney. That might strike some of you as a big surprise
+given my relationship with Adobe is pretty &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Sean Corfield: Clojure and CFML Sitting in a Tree</h1>
+	<div class="entry-content"><p>Last night I attended the Adobe User Group here in Sydney. That might strike some of you as a big surprise
+given my relationship with Adobe is pretty much limited to fiddling with Photoshop/Lightroom to get my photos looking nice.</p>
+
+<p>However the reason for which I attended the meetup is that <a href="https://twitter.com/seancorfield">Sean Corfield</a> - a prolific member of the Clojure community - gave a presentation on how he introduced and migrated most of his backend code at <a href="http://worldsingles.com/ws2010/index.cfm">World Singles</a> from <a href="http://en.wikipedia.org/wiki/ColdFusion_Markup_Language">CFML</a> to <a href="http://clojure.org/">Clojure</a> - hence my interest.</p>
+
+<p>What follows is a mix of my own notes and what I could remember from the slides:</p>
+
+<h3>Going faster</h3>
+
+<p>The original platform was built in CFML between 2001 and 2008. It was essentially monolithic procedural code. It was rewritten in 2009 - when they introduced OO and a new version of CFML</p>
+
+<h3>Brief Stats</h3>
+
+<ul>
+<li>3 million members</li>
+<li>1 million emails sent every day</li>
+<li>2k concurrent users 24x7, on average</li>
+</ul>
+
+
+<h3>Clojure and WorldSingles</h3>
+
+<ul>
+<li>Tried .NET - ran into all sorts of trouble. Didn&#8217;t work well in production.</li>
+<li>Tried Scala - Memory leaks in the built-in actor library were a deal breaker. The type system also wasn&#8217;t a good cultural fit.</li>
+<li>Evaluated Clojure in 2010 - seemed like a good language to squeeze performance out of lower level components</li>
+<li>Clojure version released in production in 2011
+
+<ul>
+<li>Rewrote remaining Scala Code</li>
+<li>6.3k LOC - 1.5k Tests LOC</li>
+<li>equivalent to 4x the CFML LOC</li>
+<li>Clojure is essentially used in the model (as in MVC)</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Why add Clojure?</h3>
+
+<ul>
+<li>It&#8217;s fast - compiles down to JVM bytecode (and it&#8217;s faster than CFML)</li>
+<li>Immutability (automatic thread safety)
+
+<ul>
+<li>they found several thread safety bugs in the third party ColdFusion libraries being used</li>
+</ul>
+</li>
+<li>Built-in concurrency / parallelism support - <a href="http://clojuredocs.org/clojure_core/clojure.core/future">future</a>, <a href="http://clojuredocs.org/clojure_core/clojure.core/pmap">pmap</a>, <a href="http://clojuredocs.org/clojure_core/clojure.core/pvalues">pvalues</a> etc.</li>
+<li>Lazy sequences - being able to work with potentially ininite collections without bringing your server down.</li>
+<li>All high quality, production ready Java libraries easily accessible via <a href="http://clojure.org/java_interop">java interop</a>.</li>
+</ul>
+
+
+<h3>What do they use it for?</h3>
+
+<ul>
+<li>Email
+
+<ul>
+<li>html generation &amp; sending</li>
+<li>tracking &amp; log file analysis</li>
+</ul>
+</li>
+<li>Geolocation (rest/json)</li>
+<li>i18n</li>
+<li>Reporting (parallel queries) - he showed a bit of this code. Heavy use of <a href="http://clojuredocs.org/clojure_core/clojure.core/future">futures</a> + <a href="http://clojuredocs.org/clojure_core/clojure.core/deref">deref</a></li>
+<li>Search engine integration (json/xml)
+
+<ul>
+<li>This breaks down to two Clojure components:</li>
+<li>One feeds the search engine based on changes to the users profiles</li>
+<li>The other then runs against the search engine 24x7 trying to find new matches for users</li>
+</ul>
+</li>
+<li>(lightweight?) Persistence layer
+
+<ul>
+<li>no ORM - thin framework over sql instead</li>
+<li>Same interface for both Mysql &amp; MongoDB</li>
+<li>MongoDB being used after hitting performance issues in Mysql</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Clojure ecosystem/community</h3>
+
+<p>Having an active Community is crucial for language adoption and the clojure community got this right:</p>
+
+<ul>
+<li>Community
+
+<ul>
+<li>6700 developers on the <a href="https://groups.google.com/forum/?fromgroups#!forum/clojure">mailing list</a></li>
+<li>~300 developers on IRC 24x7</li>
+</ul>
+</li>
+<li>Active library development
+
+<ul>
+<li>#23 language on Github</li>
+<li>Over 7k projects on github</li>
+<li>Nearly 2k libs on <a href="https://clojars.org/">Clojars</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>The Future</h3>
+
+<ul>
+<li>Looking into <a href="https://github.com/nathanmarz/cascalog">Cascalog</a> for big data processing</li>
+<li>All new back-end/model code written in Clojure</li>
+<li>Views/Controllers will remain in CFML
+
+<ul>
+<li>This ties up with Sean&#8217;s answer to &#8216;What would you not use Clojure for?&#8217;</li>
+<li>He mentioned HTML rendering as the major reason. You can&#8217;t hand <a href="https://github.com/weavejester/hiccup">hiccup</a> code to a designer.</li>
+<li>Similarly, while designers can work on <a href="https://github.com/cgrand/enlive">Enlive</a> templates, updating the dynamic bits in Clojure can be cumbersome.</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Summary</h3>
+
+<p>It was great to hear the many good things Sean had to say about Clojure. WorldSingles seem pretty happy with the decision of migration their heavy-lifting code to it and hopefully these slide notes will give you some insight into the sort of things Clojure is good at.</p>
+
+<p><del>Sean is likely to put his slides up somewhere so I&#8217;ll link to it as soon as I have it.</del> <a href="http://corfield.org/articles/WorldSinglesWeb.pdf">Here they are.</a></p>
+
+<p>If you want to know more about Clojure and be involved in the community, you should come to the next <a href="http://www.meetup.com/clj-syd/">clj-syd meetup</a>.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-23T00:03:00+10:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clj-syd/'>clj-syd</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/08/23/sean-corfield-clojure-and-cfml-sitting-in-a-tree/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

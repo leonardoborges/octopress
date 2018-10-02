@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: railswaycon | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/railswaycon/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Railswaycon: JRuby Internals by Ola Bini]]></title>
+    <link href="http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini/"/>
+    <updated>2009-05-29T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2009/05/29/railswaycon-jruby-internals-by-ola-bini</id>
+    <content type="html"><![CDATA[<p>
+As always I expected a good talk from Ola and once more he delivered it. But this one was different. It might have been even boring to some ruby developers since we saw a fair amount of java code in this presentation. Ola gave us a tour through the main classes that make JRuby possible with a single purpose: so we can check out the code and hack ourselves. You can download his slides <a href="http://olabini.com/presentations/JRubyInternals.pdf" target="_blank">here</a>.<br><br>If you've been following both JRuby and Ola Bini for the past year or so, you've noticed the trend and evolution of this alternative - and so far the most complete one - implementation of the ruby language. Specially at conferences.<br><br>Last year at QCon London, Ola was also talking about JRuby. At Euruko '08, in Prague, <a href="http://blog.headius.com/" target="_blank">Charles Nutter</a> also talked about it. RailsConf in Berlin also had its share. What all these talks had in common is that they talked about JRuby from a user/developer point of view. They were selling the solution. Convincing people to use it and presenting successful use cases.<br><br>And as the trend goes on, JRuby is now faced as a true alternative - one that we, btw, believe here at the company as we're <strong>actively using it</strong> - and it seems that now the call is for help. Help to make JRuby an even more complete and overall better ruby implementation. Charles' <a href="http://blog.headius.com/2009/05/help-jruby-by-fixing-rubyspecs.html">call for help</a> was a great step. As he states, it's a good way to get your feet wet. I answered the call and am hacking JRuby myself, having already submitted a couple of patches. Perhaps this was the reason for which I enjoyed the talk the  most. I was already familiar with some of the structure and classes in JRuby.<br><br>There were 2 more talks about JRuby: <strong>The Pleasure and Pain of Migrating to jRuby</strong>, by <a href="http://twitter.com/stevenbristol" target="_blank">Steven Bristol</a> and <strong>Integrating Enterprise Java with JRuby and Rails</strong>, <a href="http://twitter.com/malagant" target="_blank">Michael Johann</a>. Unfortunately only the first one was a real case experience, where Steven walked through the problems he faced integrating JRuby with an existing java project. Interesting insights.<br><br>Michael Johann basically presented a short tutorial on how to integrate rails with EJB3 which, albeit interesting, failed to address issues faced on real life projects, like dependency management. Issues which we have already addressed in a very cool way here and I plan to share it soon. Still deciding how though...
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

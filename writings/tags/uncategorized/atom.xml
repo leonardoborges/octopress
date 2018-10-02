@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Uncategorized | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/uncategorized/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Help stop the IE Money Drain]]></title>
+    <link href="http://www.leonardoborges.com/writings/2010/09/28/help-stop-the-ie-money-drain/"/>
+    <updated>2010-09-28T00:00:00+10:00</updated>
+    <id>http://www.leonardoborges.com/writings/2010/09/28/help-stop-the-ie-money-drain</id>
+    <content type="html"><![CDATA[<p>
+I'm a big heavy metal fan. And so are most of my friends. As a result I launched <a title="RottingNames" href="http://rottingnames.heroku.com/" target="_blank">RottingNames</a>, a band name generator that will generate the most hilarious, nastiest and nonsense names the metal world is yet to discover - ok, that's probably a bit of an overstatement but the idea is good.<br><br>However, a friend pointed out the code had a bug when running under - gasp - Internet Explorer. That didn't surprise me at all and I didn't bother to fix it. It's a small app, it's for my own - a few other's - amusement but it did give me the idea about my next micro app.<br><br>Ever wondered how much time people all around the world are wasting trying to fix nasty IE bugs? How about putting that in numbers and actually seeing how much money is going down the hole? We can't just drop support - yet. But we can help those poor souls to upgrade to something better.<br><br>Enter <a title="The IE Money Drain" href="http://iemoneydrain.heroku.com/">The IE Money Drain</a>. Whenever you waste time working on trying to make IE behave the way it should, go there and log your hours. Share it with your clients and managers. Show them how much time and money could be saved if we were proactively helping users make the move.<br><br>And don't forget to tell colleagues, friends, even your grandma! Share the love ;)
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

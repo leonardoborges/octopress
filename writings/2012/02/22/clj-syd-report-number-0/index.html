@@ -1,0 +1,264 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>clj-syd report #0 - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="Last night we held the first ever meetup for the Sydney Clojure User Group! When I decided to start running the meetups I had no idea we&#8217;d end &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">Clj-syd Report #0</h1>
+	<div class="entry-content"><p>Last night we held the first ever meetup for the <a href="http://groups.google.com/group/clj-syd">Sydney Clojure User Group</a>!</p>
+
+<p>When I decided to start running the meetups I had no idea we&#8217;d end up with <strong>37</strong>
+people on the first night! What a great turn out!</p>
+
+<p>As for the content, here&#8217;s what you missed:</p>
+
+<ul>
+<li><strong>Running Clojure apps on Heroku</strong> - Lincoln Stoll (<a href="https://twitter.com/#!/lstoll">@lstoll</a>)</li>
+</ul>
+
+
+<p>Linc works for Heroku but ended up not spending a whole lot of time talking about
+that - instead he showed us how  to build a simple web application using
+<a href="https://github.com/weavejester/compojure/wiki">Compojure</a>, a small Clojure web framework.</p>
+
+<p>He then evolved the example by implementing it using <a href="http://webnoir.org/">Noir</a> - yet another web
+framework that builds on top of <a href="https://github.com/weavejester/compojure/wiki">Compojure</a>, adding some helpful macros.</p>
+
+<p>To top it off, the UI was implemented in <a href="https://github.com/clojure/clojurescript">ClojureScript</a> - so that was all Clojure
+from end to end!</p>
+
+<ul>
+<li><strong>Paredit (in Eclipse) for the IDE junkie</strong> - Matt Quail (<a href="https://twitter.com/#!/spudbean">@spudbean</a>)</li>
+</ul>
+
+
+<p>If you&#8217;re into lisps and use emacs - if not you <strong>should</strong> anyway - you learned to
+love <a href="http://www.emacswiki.org/emacs/ParEdit">paredit</a>.</p>
+
+<p>However, not everyone gets to write Clojure for a living and a lot of us end up in
+some sort of IDE. If you&#8217;re in Java land, a popular choice is Eclipse and Matt showed
+us how you can get the paredit goodness right there using the Eclipse plugin <a href="http://code.google.com/p/counterclockwise/">counterclockwise</a>.</p>
+
+<ul>
+<li><strong><a href="http://offbytwo.com/presentations/building-better-repl.pdf">Building a better Clojure REPL</a></strong> - Cosmin Sterejean (<a href="https://twitter.com/#!/offbytwo">@offbytwo</a>)</li>
+</ul>
+
+
+<p>Frustrated with the Clojure REPL? Wish you had more useful shortcuts? Decent line
+editing? Saving that nice function you&#8217;ve been working on right from the REPL? Then
+make sure you check out both the <a href="http://offbytwo.com/presentations/building-better-repl.pdf">presentation</a> and <a href="https://github.com/cosmin/IClojure">IClojure</a>, Cosmin&#8217;s
+project.</p>
+
+<p>Definetly worth a try.</p>
+
+<ul>
+<li><strong><a href="https://docs.google.com/open?id=0B-wuNsBziQXAZWZmMzdjMDQtYzM4Zi00NGNjLThhY2ItYTFhOTZkOTQ0OTBh">Where do I put my DependentStrategyTemplateAbstractFactory</a>?</strong> - Bayan Khalili</li>
+</ul>
+
+
+<p>Bayan was in one of our internal meetups. Some people raised the fact that we don&#8217;t
+see a lot of the design patterns made popular by the <a href="http://amzn.to/wdq6Lr">GoF book</a> in languages such as Ruby, Python or Clojure
+and the overall opinion is that in those languages, some of the problems these
+patterns solve in, say, Java, simply don&#8217;t exist.</p>
+
+<p>Bayan decided to dig up a few and show what&#8217;s the alternative in Clojure. Interesting
+perspective.</p>
+
+<h2>Want more?</h2>
+
+<p>Join us on <a href="http://groups.google.com/group/clj-syd">Google Groups</a>, submit a talk proposal on the <a href="https://github.com/clj-syd/clj-syd/wiki">wiki</a> and RSVP to
+the <a href="http://www.meetup.com/clj-syd/">next meetup</a>!</p>
+
+<p>See you next time!</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-22T21:14:00+11:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clj-syd/'>clj-syd</a>, <a class='category' href='/writings/tags/clojure/'>clojure</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2012/02/22/clj-syd-report-number-0/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

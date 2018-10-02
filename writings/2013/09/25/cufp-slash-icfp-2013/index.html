@@ -1,0 +1,254 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CUFP/ICFP 2013 - Leonardo Borges</title>
+	<meta name="author" content="Leonardo Borges">
+
+	
+	<meta name="description" content="I&#8217;m sitting in the Lobby of the Hilton in Boston and since my flight back to Australia isn&#8217;t for a few hours I thought I&#8217;d write my &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="http://feeds.feedburner.com/leonardoborges" rel="alternate" title="Leonardo Borges" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/writings/favicon.png" rel="shortcut icon">
+	<link href="/writings/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/writings/">Leonardo Borges</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/writings/">Blog</a></li>
+  <li><a href="/writings/about">About</a></li>
+  <li><a href="/writings/projects">Projects</a></li>
+  <li><a href="/writings/presentations">Talks</a></li>
+  <li><a href="/writings/books">Books</a></li>
+  <li><a href="/writings/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/leonardo_borges" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/leonardoborges" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		<a class="rss" href="http://feeds.feedburner.com/leonardoborges" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:www.leonardoborges.com/writings">
+	</form>
+</nav>
+
+</header>
+	
+		
+<!-- <div id="banner" class="inner"> -->
+<!--     <div class="container"> -->
+<!--         <ul class="feed"></ul> -->
+<!--     </div> -->
+<!--     <small><a href="http://twitter.com/leonardo_borges">leonardo_borges</a> @ <a href="http://twitter.com">Twitter</a></small> -->
+<!--     <div class="loading">Loading...</div> -->
+<!-- </div> -->
+<!-- <script src="/writings/javascripts/twitter.js"></script> -->
+<!-- <script type="text/javascript"> -->
+<!--     (function($){ -->
+<!--         $('#banner').getTwitterFeed('leonardo_borges', 4, false); -->
+<!--     })(jQuery); -->
+<!-- </script> -->
+
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h1 class="title">CUFP/ICFP 2013</h1>
+	<div class="entry-content"><p>I&#8217;m sitting in the Lobby of the Hilton in Boston and since my flight back to Australia isn&#8217;t for a few hours I thought I&#8217;d write my experience report while everything is still fresh in my mind.</p>
+
+<p><img class="left" src="/writings/assets/images/posts/cufp2013-badge.jpg" width="318" height="400"></p>
+
+<p><a href="http://cufp.org/">CUFP - Commercial Users of Functional Programming -</a> is a Workshop-like conference targeting the practically-minded functional programming community.</p>
+
+<p>As it&#8217;s stated on their website, <em>&#8220;The CUFP workshop is a place where people can see how others are using functional programming to solve real world problems […]&#8221;</em>.</p>
+
+<p>One of the things that make the event special is that it runs together with <a href="http://icfpconference.org/icfp2013/">ICFP - International Conference on Functional Programming</a> - which is an event on the far opposite side of the spectrum with language designers, professors, compiler implementors getting together and thinking about the future of their languages and fields. The diversity of the event is astonishing.</p>
+
+<p>CUFP itself runs for three days and is divided into a traditional conference format day with several talks and two tutorial days.</p>
+
+<p>I was there for all three days and on the last one I delivered my own tutorial about writing macros in Clojure - more on that later.</p>
+
+<p>As far as the talks of day 1 go, someone already did a great job of summarising them. I highly recommend <a href="http://www.syslog.cl.cam.ac.uk/2013/09/22/liveblogging-cufp-2013/">you go read it</a>.</p>
+
+<h3>Day 2</h3>
+
+<p>In total there were 9 tutorials being offered - two of which made up a two-day Haskell tutorial. That&#8217;s the one I decided to attend.</p>
+
+<p>In the instructions, the instructors mentioned that we could use an online Haskell IDE to follow the course should we choose not to install the Haskell platform on our laptops.</p>
+
+<p>I decided to give it a go. The tool is called FP Haskell Center and has been developed by the awesome guys at <a href="https://www.fpcomplete.com">FP Complete</a>.</p>
+
+<p>It&#8217;s important to note this is an online IDE - but the editor isn&#8217;t the only thing being offered though. The Haskell Centre offers a complete deployment solution as well - though I didn&#8217;t have the chance to play with it.</p>
+
+<p>Back to the tutorial, I used the FP Haskell Centre for day one and it worked great as far as online IDEs go. Compilation and inspecting types do suffer from the round trip over the web and by the end of the day I was feeling a little frustrated with all the waiting. The tool is great and if they offered an offline version, I&#8217;m sure the experience would have been improved tenfold.</p>
+
+<p>Day one was taught by <a href="http://www.well-typed.com/people/andres">Andres Löh</a> from <a href="http://www.well-typed.com/">Well-Typed</a>, a Haskell consultancy.</p>
+
+<p>It was full of exercises in the various basics of Haskell such as expressions, functions, IO, pattern matching and even Monads. I had a lot of fun working through them and it reinforced my opinion about Haskell being as practical a language as any other - but with several advantages.</p>
+
+<h3>Day 3</h3>
+
+<p>Given my frustration with FP Haskell Center being a bit slow I decided to install the Haskell platform on my new laptop and configure emacs with haskell-mode. I was <em>much</em> happier with this setup. haskell-mode has a lot of nifty features that were extremely useful during the tutorial.</p>
+
+<p>The second day of the Haskell tutorial gave way to <a href="http://community.haskell.org/~simonmar/">Simon Marlow</a>, a software engineer from Facebook UK and author of  <a href="http://community.haskell.org/~simonmar/pcph/">Parallel and Concurrent Programming in Haskell</a> - also available freely <a href="http://chimera.labs.oreilly.com/books/1230000000929/index.html">online</a>.</p>
+
+<p>Not surprisingly, his half of the tutorial was about Concurrency. We started with several exercises on IO involving more Monadic functions that we hadn&#8217;t learned the previous day. We then moved on to study the basic Haskell concurrency constructs and primitives. All very interesting stuff.</p>
+
+<p>If you have the chance to attend a tutorial by these guys, do yourself a favour and go for it.</p>
+
+<h3>Day 3 - 2pm onwards</h3>
+
+<p>Unfortunately I missed the second half of the second day as I, too, had to deliver my own tutorial/workshop.</p>
+
+<p>Titled <em>&#8220;Bending Clojure to your will: Macros and Domain Specific Languages&#8221;</em>, the tutorial had participants work their way through several difference exercises aimed at teaching the various nuances of writing macros.</p>
+
+<p>The tutorial has failing tests for all exercises so it&#8217;s dead easy to know when you have arrived at a solution - all participants seemed to have had a great time learning this stuff and I even saw a couple of positive tweets about it - I&#8217;m really happy with how everything went.</p>
+
+<p>The best tweet though was the one saying that someone from the Haskell tutorial decided to switch to mine half-way through. So I see that as a win :) <a href="https://twitter.com/prasincs/status/382585215694413824">Here&#8217;s said tweet</a>.</p>
+
+<p>I&#8217;ve <a href="https://github.com/leonardoborges/clojure-macros-workshop">pushed the exercises to github</a> should you want to try them by yourself. <a href="http://www.slideshare.net/borgesleonardo/clojure-macros-workshop-lambdajam-2013-cufp-2013">Slides are also available</a> though they will likely not make sense out of context.</p>
+
+<p>Enjoy! :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T13:17:00+10:00" pubdate data-updated="true">Sep 25<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/writings/tags/clojure/'>clojure</a>, <a class='category' href='/writings/tags/functional-programming/'>functional-programming</a>, <a class='category' href='/writings/tags/haskell/'>haskell</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	<a class="addthis_button_facebook_like" fb:like:layout="button_count" addthis:url="http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/"></a>
+	
+	
+	<a class="addthis_button_tweet" addthis:url="http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/"></a>
+	
+	
+	<a class="addthis_button_google_plusone" g:plusone:size="medium" addthis:url="http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/"></a>
+	
+	<a class="addthis_counter addthis_pill_style" addthis:url="http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2018
+
+    Leonardo Borges
+
+</footer>
+	<script src="/writings/javascripts/slash.js"></script>
+<script src="/writings/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'leonardoborges';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/';
+        var disqus_url = 'http://www.leonardoborges.com/writings/2013/09/25/cufp-slash-icfp-2013/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2811271-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

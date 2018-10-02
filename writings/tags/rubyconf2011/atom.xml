@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rubyconf2011 | Leonardo Borges]]></title>
+  <link href="http://www.leonardoborges.com/writings/tags/rubyconf2011/atom.xml" rel="self"/>
+  <link href="http://www.leonardoborges.com/writings/"/>
+  <updated>2018-02-19T20:38:30+11:00</updated>
+  <id>http://www.leonardoborges.com/writings/</id>
+  <author>
+    <name><![CDATA[Leonardo Borges]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RubyConf Brazil 2011]]></title>
+    <link href="http://www.leonardoborges.com/writings/2011/11/10/rubyconf-brazil-2011/"/>
+    <updated>2011-11-10T00:00:00+11:00</updated>
+    <id>http://www.leonardoborges.com/writings/2011/11/10/rubyconf-brazil-2011</id>
+    <content type="html"><![CDATA[<p><img src="/assets/images/rubyconfBR2011-speakers.jpg"></p>
+
+<p>I was in São Paulo last week - the 3rd and 4th of November - for <a href="http://rubyconf.com.br">RubyConf Brazil</a>. For those who don't know, RubyConf Brazil is the evolution of Rails Summit Latin America, where <a href="http://www.leonardoborges.com/writings/2009/10/18/my-slides-from-rails-summit-09/">I had the privilege to speak in 2009</a>.</p>
+
+<p>This year though, all bets were off. <a href="http://akitaonrails.com">Fabio Akita</a> and <a href="http://www.locaweb.com/">Locaweb</a> put together a great event, with over 700 attendees and about 30 speakers split in two streams and two awesome days.</p>
+
+<p>Once more I had the chance to speak at the event and different from previous years, all talks were recorded and streamed live! You can check mine - in portuguese - <a href="http://www.eventials.com/rubyconfbr/recorded/M2UzZTJkMzY2MzdiNTg2NTUxNWM1MzI3NWY1YjRhMzYjIzM4Mg_3D_3D">here</a> as well as my slides - in english - <a href="http://www.slideshare.net/borgesleonardo/clouds-against-the-floods-rubyconfbr2011">on slideshare</a>.</p>
+
+<p><img src="/assets/images/leo-speaking-rubyconfBR2011.jpg"></p>
+
+<p>All other talks can be watched from the <a href="http://www.eventials.com/rubyconfbr">eventials' RubyConf Brazil page</a>. Locaweb has also published the official <a href="http://www.flickr.com/photos/locaweb/sets/72157628091808954/">Flickr album</a> of the event.</p>
+
+<p>It was great to meet up with great friends again as well as to meet amazing new people such as the guys from ThoughtWorks Brazil. I promise I'll make the detour next time! :)</p>
+
+<p>I hope to see you all again soon!</p>
+]]></content>
+  </entry>
+  
+</feed>
