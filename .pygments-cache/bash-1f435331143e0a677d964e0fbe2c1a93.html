@@ -1,0 +1,28 @@
+<div class="highlight"><pre><span class="c">#! /bin/sh</span>
+
+<span class="c">### BEGIN INIT INFO</span>
+<span class="c">### END INIT INFO</span>
+
+<span class="nv">set_path</span><span class="o">=</span><span class="s2">&quot;cd /your/rails/app/root; export GEM_HOME=/path/to/your/gems; RAILS_ENV=production;&quot;</span>
+
+<span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+  start<span class="o">)</span>
+        <span class="nb">echo</span> -n <span class="s2">&quot;Starting sphinx: &quot;</span>
+                su - deploy -c <span class="s2">&quot;$set_path rake ts:start&quot;</span> &gt;&gt; /var/log/sphinx.log 2&gt;&amp;1
+        <span class="nb">echo</span> <span class="s2">&quot;done.&quot;</span>
+        ;;
+  stop<span class="o">)</span>
+        <span class="nb">echo</span> -n <span class="s2">&quot;Stopping sphinx: &quot;</span>
+                su - deploy -c <span class="s2">&quot;$set_path rake ts:stop&quot;</span> &gt;&gt; /var/log/sphinx.log 2&gt;&amp;1
+        <span class="nb">echo</span> <span class="s2">&quot;done.&quot;</span>
+        ;;
+      *<span class="o">)</span>
+            <span class="nv">N</span><span class="o">=</span>/etc/init.d/sphinx
+            <span class="nb">echo</span> <span class="s2">&quot;Usage: $N {start|stop}&quot;</span> &gt;&amp;2
+            <span class="nb">exit </span>1
+            ;;
+    <span class="k">esac</span>
+
+<span class="k">    </span><span class="nb">exit </span>0
+</pre>
+</div>

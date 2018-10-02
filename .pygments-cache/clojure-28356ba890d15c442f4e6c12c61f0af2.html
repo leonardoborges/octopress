@@ -1,0 +1,23 @@
+<div class="highlight"><pre><span class="c1">;; first, the plus-monoid</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">mempty</span> <span class="p">(</span><span class="nf">plus-monoid</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1">;; This...</span>
+<span class="p">(</span><span class="nf">plus-monoid</span> <span class="nv">mempty</span> <span class="nv">x</span><span class="p">)</span> <span class="c1">;; 10</span>
+
+<span class="c1">;; ...is the same as:</span>
+<span class="p">(</span><span class="nf">plus-monoid</span> <span class="nv">x</span> <span class="nv">mempty</span><span class="p">)</span> <span class="c1">;; 10</span>
+
+<span class="c1">;;now, the list-monoid</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">mempty</span> <span class="p">(</span><span class="nf">list-monoid</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="c1">;; This...</span>
+<span class="p">(</span><span class="nf">list-monoid</span> <span class="nv">mempty</span> <span class="nv">x</span><span class="p">)</span> <span class="c1">;; (1 2 3)</span>
+
+<span class="c1">;; ...is the same as:</span>
+<span class="p">(</span><span class="nf">list-monoid</span> <span class="nv">x</span> <span class="nv">mempty</span><span class="p">)</span> <span class="c1">;; (1 2 3)</span>
+</pre>
+</div>

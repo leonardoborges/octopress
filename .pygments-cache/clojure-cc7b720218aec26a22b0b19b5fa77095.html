@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span> <span class="nv">mempty</span> <span class="p">(</span><span class="nf">+</span><span class="p">))</span> <span class="c1">;; 0</span>
+<span class="p">(</span><span class="k">def </span> <span class="nv">mappend</span> <span class="nv">+</span><span class="p">)</span>
+<span class="p">(</span><span class="k">defn </span><span class="nv">mconcat</span> <span class="p">[</span><span class="nv">ms</span><span class="p">]</span> 
+    <span class="p">(</span><span class="nb">reduce </span><span class="nv">mappend</span> <span class="nv">mempty</span> <span class="nv">ms</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nf">mappend</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; 7</span>
+
+<span class="p">(</span><span class="nf">mconcat</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span> <span class="c1">;; 9</span>
+</pre>
+</div>

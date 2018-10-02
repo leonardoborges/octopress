@@ -1,0 +1,10 @@
+<div class="highlight"><pre>  <span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="n">parts</span> <span class="n">compose</span> <span class="n">make</span>
+  <span class="n">f</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+  <span class="c1">// List[Part] = List(Part(1,Gear Box), Part(2,Clutch cable))</span>
+  
+ <span class="c1">// alternatively you can use &#39;andThen&#39; which works like compose, but with the arguments flipped:</span>
+ <span class="k">val</span> <span class="n">g</span> <span class="k">=</span> <span class="n">make</span> <span class="n">andThen</span> <span class="n">parts</span>
+ <span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+ <span class="c1">// List[Part] = List(Part(1,Gear Box), Part(2,Clutch cable))</span>
+</pre>
+</div>

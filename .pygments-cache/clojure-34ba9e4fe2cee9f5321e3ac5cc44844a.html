@@ -1,0 +1,21 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">monad-steps</span>
+    <span class="p">([</span><span class="nv">monad</span> <span class="nv">steps</span> <span class="nv">expr</span><span class="p">]</span>
+        <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">seq </span><span class="nv">steps</span><span class="p">)</span>
+            <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">fst</span> <span class="p">(</span><span class="nb">first </span><span class="nv">steps</span><span class="p">)</span>
+                  <span class="nv">snd</span> <span class="p">(</span><span class="nb">second </span><span class="nv">steps</span><span class="p">)]</span>
+                  <span class="o">`</span><span class="p">((</span><span class="nf">:bind</span> <span class="nv">~monad</span><span class="p">)</span> 
+                    <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">~</span><span class="p">(</span><span class="nb">symbol </span><span class="nv">fst</span><span class="p">)]</span>
+                        <span class="p">(</span><span class="nb">-&gt; </span> <span class="nv">~snd</span> <span class="nv">~</span><span class="p">(</span><span class="nf">monad-steps</span> <span class="nv">monad</span> <span class="p">(</span><span class="nb">subvec </span><span class="nv">steps</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">expr</span><span class="p">)))))</span>
+            <span class="nv">expr</span><span class="p">)))</span>
+
+
+<span class="p">(</span><span class="k">defmacro </span><span class="nv">domonad</span> <span class="p">[</span><span class="nv">monad</span> <span class="nv">steps</span> <span class="nv">expr</span><span class="p">]</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">args</span> <span class="p">(</span><span class="nb">map </span><span class="nv">first</span> <span class="p">(</span><span class="nf">partition</span> <span class="mi">2</span> <span class="nv">steps</span><span class="p">))</span>
+          <span class="nv">forms</span> <span class="p">(</span><span class="nb">map </span><span class="nv">second</span> <span class="p">(</span><span class="nf">partition</span> <span class="mi">2</span> <span class="nv">steps</span><span class="p">))</span>
+          <span class="nv">new-steps</span> <span class="p">(</span><span class="nb">subvec </span><span class="p">(</span><span class="nf">vec</span> <span class="p">(</span><span class="nb">interleave </span><span class="p">(</span><span class="nb">cons </span><span class="nv">nil</span> <span class="nv">args</span><span class="p">)</span> <span class="nv">forms</span><span class="p">))</span> <span class="mi">2</span><span class="p">)]</span>
+          <span class="o">`</span><span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">m</span><span class="o">#</span> <span class="nv">~monad</span><span class="p">]</span>  
+            <span class="p">(</span><span class="nb">-&gt; </span><span class="nv">~</span><span class="p">(</span><span class="nb">second </span><span class="nv">steps</span><span class="p">)</span>
+                <span class="nv">~</span><span class="p">(</span><span class="nf">monad-steps</span> <span class="nv">monad</span> <span class="nv">new-steps</span> 
+                    <span class="o">`</span><span class="p">((</span><span class="nf">:bind</span> <span class="nv">~monad</span><span class="p">)</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">~</span><span class="p">(</span><span class="nb">symbol </span><span class="p">(</span><span class="nb">last </span><span class="nv">args</span><span class="p">))]</span> <span class="p">((</span><span class="nf">:return</span> <span class="nv">~monad</span><span class="p">)</span> <span class="nv">~expr</span><span class="p">))))))))</span>
+</pre>
+</div>

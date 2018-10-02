@@ -1,0 +1,14 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">u</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">)]))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">v</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">10</span> <span class="nv">%</span><span class="p">)]))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">w</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]))</span>
+
+<span class="c1">;; Given the above, this...</span>
+<span class="p">(</span><span class="nb">-&gt; </span><span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">x</span><span class="p">]</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">comp</span> <span class="nv">x</span><span class="p">)))</span> 
+  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">u</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">v</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">w</span><span class="p">))</span> <span class="c1">;; List{:wrapped (22 24 26)}</span>
+
+<span class="c1">;; ...is the same as:</span>
+<span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">u</span> <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">v</span> <span class="nv">w</span><span class="p">))</span> <span class="c1">;; List{:wrapped (22 24 26)}</span>
+</pre>
+</div>

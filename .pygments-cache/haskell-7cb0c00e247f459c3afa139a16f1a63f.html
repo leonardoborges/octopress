@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="kr">let</span> <span class="n">double</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">a</span> <span class="o">*</span> <span class="mi">2</span> <span class="c1">-- helper function. it doubles its argument</span>
+
+<span class="c1">-- given the above, this...</span>
+<span class="p">((</span><span class="o">$</span> <span class="mi">10</span><span class="p">)</span> <span class="n">double</span><span class="p">)</span> <span class="c1">-- 20</span>
+
+<span class="c1">-- ...is the same as:</span>
+<span class="kr">let</span> <span class="n">dollarTen</span> <span class="ow">=</span> <span class="p">(</span><span class="nf">\</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="mi">10</span><span class="p">))</span>  <span class="c1">-- this is Haskell&#39;s lambda syntax. It&#39;s equivalent to ($ 10)</span>
+<span class="p">((</span><span class="n">dollarTen</span><span class="p">)</span> <span class="n">double</span><span class="p">)</span> <span class="c1">-- 20</span>
+</pre>
+</div>

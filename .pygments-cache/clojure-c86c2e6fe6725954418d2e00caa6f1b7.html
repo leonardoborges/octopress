@@ -1,0 +1,20 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">calculate-shipping-rate</span> <span class="p">[</span><span class="nv">address</span><span class="p">]</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nf">:country</span> <span class="nv">address</span><span class="p">)</span> <span class="s">&quot;Australia&quot;</span><span class="p">)</span>
+        <span class="mf">10.0</span>
+        <span class="nv">nil</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">apply-shipping-costs</span> <span class="p">[</span><span class="nv">order</span> <span class="nv">shipping-rate</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">assoc </span><span class="nv">order</span> <span class="nv">:total</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">:total</span> <span class="nv">order</span><span class="p">)</span> <span class="nv">shipping-rate</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">lookup-discount-code</span> <span class="p">[</span><span class="nv">code</span><span class="p">]</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">code</span> <span class="s">&quot;XMAS2012&quot;</span><span class="p">)</span>
+        <span class="mf">5.0</span>
+        <span class="nv">nil</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">apply-discount-code</span> <span class="p">[</span><span class="nv">order</span> <span class="nv">discount</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">assoc </span><span class="nv">order</span> <span class="nv">:total</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">:total</span> <span class="nv">order</span><span class="p">)</span> <span class="nv">discount</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">place</span> <span class="p">[</span><span class="nv">order</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">prn </span><span class="p">(</span><span class="nb">str </span><span class="s">&quot;Off you go! Order total: $&quot;</span> <span class="p">(</span><span class="nf">:total</span> <span class="nv">order</span><span class="p">))))</span>
+</pre>
+</div>

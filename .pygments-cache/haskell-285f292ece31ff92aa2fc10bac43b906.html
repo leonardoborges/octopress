@@ -1,0 +1,7 @@
+<div class="highlight"><pre><span class="kr">class</span> <span class="kt">Monoid</span> <span class="n">m</span> <span class="kr">where</span>
+    <span class="n">mempty</span> <span class="ow">::</span> <span class="n">m</span>
+    <span class="n">mappend</span> <span class="ow">::</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">m</span> <span class="ow">-&gt;</span> <span class="n">m</span>
+    <span class="n">mconcat</span> <span class="ow">::</span> <span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">m</span>
+    <span class="n">mconcat</span> <span class="n">ms</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="n">mappend</span> <span class="n">mempty</span> <span class="n">ms</span>
+</pre>
+</div>

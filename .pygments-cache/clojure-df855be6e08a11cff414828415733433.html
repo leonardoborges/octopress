@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">total-weight</span> <span class="p">[{</span><span class="nv">:keys</span> <span class="p">[</span><span class="nv">left</span> <span class="nv">right</span><span class="p">]</span> <span class="nv">:as</span> <span class="nv">structure</span><span class="p">}]</span>
+	<span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">number?</span> <span class="nv">structure</span><span class="p">)</span>
+		<span class="nv">structure</span>
+		<span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">total-weight-branch</span> <span class="nv">left</span><span class="p">)</span>
+		   <span class="p">(</span><span class="nf">total-weight-branch</span> <span class="nv">right</span><span class="p">))))</span>
+		   
+<span class="p">(</span><span class="k">defn </span><span class="nv">total-weight-branch</span> <span class="p">[{</span><span class="nv">structure</span> <span class="nv">:structure</span><span class="p">}]</span>
+	<span class="p">(</span><span class="nf">total-weight</span> <span class="nv">structure</span><span class="p">))</span>		   
+</pre>
+</div>

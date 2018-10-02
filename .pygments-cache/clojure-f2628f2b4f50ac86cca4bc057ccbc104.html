@@ -1,0 +1,17 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">google2-1</span> <span class="p">[</span><span class="nv">query</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">c</span> <span class="p">(</span><span class="nf">chan</span><span class="p">)</span>
+        <span class="nv">t</span> <span class="p">(</span><span class="nf">timeout</span> <span class="mi">500</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">web</span> <span class="nv">query</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">image</span> <span class="nv">query</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">go</span> <span class="p">(</span><span class="nf">&gt;!</span> <span class="nv">c</span> <span class="p">(</span><span class="nf">video</span> <span class="nv">query</span><span class="p">)))</span>
+    
+    <span class="p">(</span><span class="nb">reduce </span><span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">results</span> <span class="nv">_</span><span class="p">]</span>
+              <span class="p">(</span><span class="nb">conj </span><span class="nv">results</span> <span class="p">(</span><span class="nb">first </span><span class="p">(</span><span class="nf">alts!!</span> <span class="p">[</span><span class="nv">c</span> <span class="nv">t</span><span class="p">]))))</span>
+            <span class="p">[]</span>
+            <span class="p">(</span><span class="nb">range </span><span class="mi">3</span><span class="p">))))</span>
+
+
+<span class="p">(</span><span class="nf">google2-1</span> <span class="s">&quot;Clojure&quot;</span><span class="p">)</span>
+<span class="c1">;; prints [&quot;Video result for Clojure&quot; nil nil]</span>
+</pre>
+</div>

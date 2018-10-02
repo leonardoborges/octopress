@@ -1,0 +1,8 @@
+<div class="highlight"><pre><span class="n">c</span> <span class="p">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="nb">string</span><span class="p">)</span>
+<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span> 
+  <span class="n">time</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="p">*</span> <span class="n">time</span><span class="p">.</span><span class="n">Millisecond</span><span class="p">)</span>
+  <span class="n">c</span> <span class="p">&lt;-</span> <span class="s">&quot;Leo&quot;</span> 
+<span class="p">}()</span>
+<span class="n">fmt</span><span class="p">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;Hello: %s\n&quot;</span><span class="p">,</span> <span class="p">&lt;-</span><span class="n">c</span><span class="p">)</span> <span class="c1">//this will block until the channel has something to give us </span>
+</pre>
+</div>

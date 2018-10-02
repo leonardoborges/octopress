@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">fake-search</span> <span class="p">[</span><span class="nv">kind</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">query</span><span class="p">]</span>
+    <span class="p">(</span><span class="nf">Thread/sleep</span> <span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">lang</span><span class="o">.</span><span class="nv">Math/random</span><span class="p">)</span> <span class="mi">1000</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nb">str </span><span class="nv">kind</span> <span class="s">&quot; result for &quot;</span> <span class="nv">query</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">web</span>   <span class="p">(</span><span class="nf">fake-search</span> <span class="s">&quot;Web&quot;</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">image</span> <span class="p">(</span><span class="nf">fake-search</span> <span class="s">&quot;Image&quot;</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">video</span> <span class="p">(</span><span class="nf">fake-search</span> <span class="s">&quot;Video&quot;</span><span class="p">))</span>
+</pre>
+</div>

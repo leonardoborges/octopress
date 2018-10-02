@@ -1,0 +1,14 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">message-fn</span>
+  <span class="s">&quot;Receives a locale, tscope and a map containing error metadata.</span>
+
+<span class="s">  Uses this information to return a I18n&#39;ed string&quot;</span>
+  <span class="p">[</span><span class="nv">locale</span> <span class="nv">tscope</span> <span class="p">{</span><span class="nv">:keys</span> <span class="p">[</span><span class="nv">path</span> <span class="nv">value</span><span class="p">]</span>
+                  <span class="p">{</span><span class="nv">validator</span> <span class="nv">:validator</span><span class="p">}</span> <span class="nv">:metadata</span><span class="p">}]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">tr-key</span> <span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">(</span><span class="nf">flatten</span> <span class="p">[</span><span class="nv">path</span> <span class="nv">validator</span><span class="p">])</span>
+                    <span class="p">(</span><span class="nb">map </span><span class="nv">name</span><span class="p">)</span>
+                    <span class="p">(</span><span class="nf">clojure</span><span class="o">.</span><span class="nv">string/join</span> <span class="s">&quot;/&quot;</span><span class="p">)</span>
+                    <span class="nv">keyword</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nf">with-tscope</span> <span class="nv">tscope</span>
+      <span class="p">(</span><span class="nf">t</span> <span class="nv">locale</span> <span class="nv">my-tconfig</span> <span class="nv">tr-key</span> <span class="nv">value</span><span class="p">))))</span>
+</pre>
+</div>

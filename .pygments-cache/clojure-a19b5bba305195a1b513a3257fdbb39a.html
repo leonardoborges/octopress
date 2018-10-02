@@ -1,0 +1,13 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">require</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">clojure</span><span class="o">.</span><span class="nv">algo</span><span class="o">.</span><span class="nv">monads</span> <span class="nv">:as</span> <span class="nv">m</span><span class="p">])</span>
+
+<span class="p">((</span><span class="nf">m/domonad</span> <span class="nv">m/state-m</span>
+    <span class="p">[</span><span class="nv">a</span> <span class="nv">pure-rand</span>
+     <span class="nv">b</span> <span class="nv">pure-rand</span>
+     <span class="nv">c</span> <span class="nv">pure-rand</span><span class="p">]</span>
+     <span class="p">[</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">])</span>
+     <span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">util</span><span class="o">.</span><span class="nv">Random</span><span class="o">.</span> <span class="mi">100</span><span class="p">))</span>
+
+<span class="c1">;; [[0.7220096548596434 0.19497605734770518 0.6671595726539502] </span>
+<span class="c1">;; #&lt;Random java.util.Random@358ddfd6&gt;]</span>
+</pre>
+</div>

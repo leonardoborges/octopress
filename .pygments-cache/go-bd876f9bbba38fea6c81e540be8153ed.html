@@ -1,0 +1,16 @@
+<div class="highlight"><pre><span class="k">var</span> <span class="p">(</span>
+    <span class="n">Web</span>   <span class="p">=</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="s">&quot;web&quot;</span><span class="p">)</span>
+    <span class="n">Image</span> <span class="p">=</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="s">&quot;image&quot;</span><span class="p">)</span>
+    <span class="n">Video</span> <span class="p">=</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="s">&quot;video&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">type</span> <span class="n">Search</span> <span class="k">func</span><span class="p">(</span><span class="n">query</span> <span class="nb">string</span><span class="p">)</span> <span class="n">Result</span>
+
+<span class="k">func</span> <span class="n">fakeSearch</span><span class="p">(</span><span class="n">kind</span> <span class="nb">string</span><span class="p">)</span> <span class="n">Search</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">func</span><span class="p">(</span><span class="n">query</span> <span class="nb">string</span><span class="p">)</span> <span class="n">Result</span> <span class="p">{</span>
+              <span class="n">time</span><span class="p">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">rand</span><span class="p">.</span><span class="n">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> <span class="p">*</span> <span class="n">time</span><span class="p">.</span><span class="n">Millisecond</span><span class="p">)</span>
+              <span class="k">return</span> <span class="n">Result</span><span class="p">(</span><span class="n">fmt</span><span class="p">.</span><span class="n">Sprintf</span><span class="p">(</span><span class="s">&quot;%s result for %q\n&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">query</span><span class="p">))</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre>
+</div>

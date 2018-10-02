@@ -1,0 +1,12 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">eval</span> <span class="p">[</span><span class="nv">e</span> <span class="nv">t</span><span class="p">]</span> 
+  <span class="p">(</span><span class="k">cond </span><span class="p">(</span><span class="nf">variable?</span> <span class="nv">t</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">lookup</span> <span class="nv">e</span> <span class="p">(</span><span class="nf">variable-name</span> <span class="nv">t</span><span class="p">))</span>
+        <span class="p">(</span><span class="nf">lambda?</span> <span class="nv">t</span><span class="p">)</span>
+        <span class="p">(</span><span class="nf">make-closure</span> <span class="nv">e</span> <span class="p">(</span><span class="nf">lambda-var</span> <span class="nv">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">lambda-body</span> <span class="nv">t</span><span class="p">))</span>
+        <span class="p">(</span><span class="nf">apply?</span> <span class="nv">t</span><span class="p">)</span>
+        <span class="p">(</span><span class="nb">apply </span><span class="p">(</span><span class="nb">eval </span><span class="nv">e</span> <span class="p">(</span><span class="nf">apply-operator</span> <span class="nv">t</span><span class="p">))</span>
+               <span class="p">(</span><span class="nb">eval </span><span class="nv">e</span> <span class="p">(</span><span class="nf">apply-operand</span> <span class="nv">t</span><span class="p">)))))</span>
+               
+<span class="o">...</span>
+</pre>
+</div>

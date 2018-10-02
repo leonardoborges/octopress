@@ -1,0 +1,19 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">validate</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">message-fn</span> <span class="nv">:pt-BR</span> <span class="nv">:person</span><span class="p">)</span>
+          <span class="nv">person</span>
+          <span class="nv">:name</span> <span class="nv">v/required</span>
+          <span class="nv">:age</span>  <span class="nv">v/number</span>
+          <span class="p">[</span><span class="nv">:address</span> <span class="nv">:postcode</span><span class="p">]</span> <span class="nv">v/required</span><span class="p">)</span>
+
+
+<span class="c1">;; [{:address {:postcode (&quot;Endereço deve ter um código postal&quot;)},</span>
+<span class="c1">;;   :age</span>
+<span class="c1">;;   (&quot;Atributo Idade para Pessoa deve ser um número. Valor recebido foi &#39;NaN&#39;&quot;),</span>
+<span class="c1">;;   :name (&quot;Atributo Nome para Pessoa é obrigatório.&quot;)}</span>
+<span class="c1">;;  {:age &quot;NaN&quot;,</span>
+<span class="c1">;;   :bouncer.core/errors</span>
+<span class="c1">;;   {:address {:postcode (&quot;Endereço deve ter um código postal&quot;)},</span>
+<span class="c1">;;    :age</span>
+<span class="c1">;;    (&quot;Atributo Idade para Pessoa deve ser um número. Valor recebido foi &#39;NaN&#39;&quot;),</span>
+<span class="c1">;;    :name (&quot;Atributo Nome para Pessoa é obrigatório.&quot;)}}]</span>
+</pre>
+</div>

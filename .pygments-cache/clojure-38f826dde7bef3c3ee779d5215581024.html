@@ -1,0 +1,17 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">order</span> <span class="p">{</span>
+    <span class="nv">:items</span> <span class="p">[{</span><span class="nv">:name</span> <span class="s">&quot;Jalapeño sauce&quot;</span> <span class="nv">:price</span> <span class="mf">20.0</span><span class="p">}]</span>
+    <span class="nv">:address</span> <span class="p">{</span><span class="nv">:country</span> <span class="s">&quot;Australia&quot;</span><span class="p">}</span>
+    <span class="nv">:discount-code</span> <span class="s">&quot;XMAS2012&quot;</span>
+    <span class="nv">:total</span> <span class="mf">20.0</span>
+<span class="p">})</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">shipping-rate</span> <span class="p">(</span><span class="nf">calculate-shipping-rate</span> <span class="p">(</span><span class="nf">:address</span> <span class="nv">order</span><span class="p">)))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">discount</span> <span class="p">(</span><span class="nf">lookup-discount-code</span> <span class="p">(</span><span class="nf">:discount-code</span> <span class="nv">order</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">-&gt; </span><span class="nv">order</span>
+    <span class="p">(</span><span class="nf">apply-shipping-costs</span> <span class="nv">shipping-rate</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">apply-discount-code</span> <span class="nv">discount</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">place</span><span class="p">))</span>
+<span class="c1">;; &quot;Off you go! Order total: $25.0&quot;</span>
+</pre>
+</div>

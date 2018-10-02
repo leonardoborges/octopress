@@ -1,0 +1,20 @@
+<div class="highlight"><pre><span class="c">#undo last commit</span>
+git reset HEAD^
+
+<span class="c">#show files in a given commit</span>
+git show --pretty<span class="o">=</span><span class="s2">&quot;format:&quot;</span> --name-only rev_number
+
+<span class="c">#remove untracked files and directories</span>
+git clean -f -d
+
+<span class="c">#track remote branch</span>
+git branch --track branch_name origin/master
+
+<span class="c"># given you created a new local branch &#39;branch_name&#39;</span>
+<span class="c"># pushes &#39;branch_name&#39; to &#39;origin/branch_name&#39;, creating the remote branch for you</span>
+git push origin branch_name
+
+<span class="c">#delete remote branch</span>
+git push origin :remote_branch_name
+</pre>
+</div>

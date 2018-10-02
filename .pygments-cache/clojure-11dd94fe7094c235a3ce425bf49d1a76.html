@@ -1,0 +1,15 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">apply-shipping-costs</span> <span class="p">[</span><span class="nv">order</span> <span class="nv">shipping-rate</span><span class="p">]</span>
+    <span class="p">(</span><span class="k">if </span><span class="nv">shipping-rate</span>
+        <span class="p">(</span><span class="nb">assoc </span><span class="nv">order</span> <span class="nv">:total</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">:total</span> <span class="nv">order</span><span class="p">)</span> <span class="nv">shipping-rate</span><span class="p">))</span>
+        <span class="nv">order</span><span class="p">))</span>
+
+
+<span class="c1">;;Remember we only support one discount code so the same problem could happen again</span>
+<span class="c1">;;We need to change the apply-discount-code function as well</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">apply-discount-code</span> <span class="p">[</span><span class="nv">order</span> <span class="nv">discount</span><span class="p">]</span>
+    <span class="p">(</span><span class="k">if </span><span class="nv">discount</span>
+        <span class="p">(</span><span class="nb">assoc </span><span class="nv">order</span> <span class="nv">:total</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">:total</span> <span class="nv">order</span><span class="p">)</span> <span class="nv">discount</span><span class="p">))</span>
+        <span class="nv">order</span><span class="p">))</span>
+</pre>
+</div>

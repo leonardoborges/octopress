@@ -1,0 +1,11 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">defprotocol</span> <span class="nv">Heap</span>
+  <span class="p">(</span><span class="nf">is-empty?</span>   <span class="p">[</span><span class="nv">this</span><span class="p">])</span>
+  <span class="p">(</span><span class="nf">insert</span>      <span class="p">[</span><span class="nv">this</span> <span class="nv">v</span><span class="p">])</span>
+  <span class="p">(</span><span class="nb">merge </span>      <span class="p">[</span><span class="nv">this</span> <span class="nv">other</span><span class="p">])</span>
+  <span class="p">(</span><span class="nf">rank</span>        <span class="p">[</span><span class="nv">this</span><span class="p">])</span>
+  <span class="p">(</span><span class="nf">find-min</span>    <span class="p">[</span><span class="nv">this</span><span class="p">])</span>
+  <span class="p">(</span><span class="nf">delete-min</span>  <span class="p">[</span><span class="nv">this</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="nf">defrecord</span> <span class="nv">LeftistHeap</span> <span class="p">[</span><span class="nv">rank</span> <span class="nv">value</span> <span class="nv">left</span> <span class="nv">right</span><span class="p">])</span>
+</pre>
+</div>

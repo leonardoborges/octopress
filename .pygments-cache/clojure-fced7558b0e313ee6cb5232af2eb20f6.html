@@ -1,0 +1,11 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">u</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">10</span> <span class="nv">%</span><span class="p">)))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">y</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1">;; given the above, this...</span>
+<span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="nv">u</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">y</span><span class="p">))</span> <span class="c1">;; List{:wrapped (60)}</span>
+
+<span class="c1">;; ...is the same as:</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">dollar-y</span> <span class="o">#</span><span class="p">(</span><span class="nv">%</span> <span class="nv">y</span><span class="p">))</span> <span class="c1">;; it&#39;s called dollar-y to show the correlation with the explanation above</span>
+<span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">dollar-y</span><span class="p">)</span> <span class="nv">u</span><span class="p">)</span> <span class="c1">;; List{:wrapped (60)}</span>
+</pre>
+</div>

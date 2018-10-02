@@ -1,0 +1,9 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">ensure-leftist</span>
+ <span class="p">[</span><span class="nv">this</span> <span class="nv">other</span> <span class="nv">v</span><span class="p">]</span>
+ <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">rank-this</span> <span class="p">(</span><span class="nf">rank</span> <span class="nv">this</span><span class="p">)</span>
+       <span class="nv">rank-other</span> <span class="p">(</span><span class="nf">rank</span> <span class="nv">other</span><span class="p">)]</span>
+   <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt;= </span><span class="nv">rank-this</span> <span class="nv">rank-other</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">-&gt;LeftistHeap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-other</span><span class="p">)</span> <span class="nv">v</span> <span class="nv">this</span> <span class="nv">other</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">-&gt;LeftistHeap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-this</span><span class="p">)</span> <span class="nv">v</span> <span class="nv">other</span> <span class="nv">this</span><span class="p">))))</span>
+</pre>
+</div>

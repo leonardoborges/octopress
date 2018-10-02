@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">shipping-rate</span> <span class="p">(</span><span class="nf">calculate-shipping-rate</span> <span class="p">(</span><span class="nf">:address</span> <span class="nv">another-order</span><span class="p">)))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">discount</span> <span class="p">(</span><span class="nf">lookup-discount-code</span> <span class="p">(</span><span class="nf">:discount-code</span> <span class="nv">another-order</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nb">-&gt; </span><span class="nv">another-order</span>
+    <span class="p">(</span><span class="nf">apply-shipping-costs</span> <span class="nv">shipping-rate</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">apply-discount-code</span> <span class="nv">discount</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">place</span><span class="p">))</span>
+<span class="c1">;; &quot;Off you go! Order total: $15.0&quot;</span>
+</pre>
+</div>

@@ -1,0 +1,23 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">list-monad</span> <span class="p">{</span>
+    <span class="nv">:return</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">v</span><span class="p">]</span> <span class="p">[</span><span class="nv">v</span><span class="p">])</span>
+    <span class="nv">:bind</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">mv</span> <span class="nv">f</span><span class="p">]</span> 
+        <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">seq </span><span class="nv">mv</span><span class="p">)</span>
+            <span class="p">(</span><span class="nb">apply </span><span class="nv">concat</span> <span class="p">(</span><span class="nb">map </span><span class="nv">f</span> <span class="nv">mv</span><span class="p">))</span>
+            <span class="p">[]))</span>
+    <span class="p">})</span>
+
+<span class="c1">;;let&#39;s play with it</span>
+
+<span class="p">(</span><span class="nf">domonad</span> <span class="nv">list-monad</span>
+    <span class="p">[</span><span class="nv">a</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="nv">b</span> <span class="p">[</span><span class="nv">a,</span> <span class="p">(</span><span class="nb">- </span><span class="nv">a</span><span class="p">)]]</span>
+     <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="nv">b</span><span class="p">))</span>
+<span class="c1">;; (3 -3 6 -6)</span>
+
+<span class="p">(</span><span class="nf">domonad</span> <span class="nv">list-monad</span>
+    <span class="p">[</span><span class="nv">a</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+     <span class="nv">b</span> <span class="p">[]]</span>
+     <span class="p">(</span><span class="nb">* </span><span class="mi">3</span> <span class="nv">b</span><span class="p">))</span>
+<span class="c1">;; () - an empty list. </span>
+</pre>
+</div>

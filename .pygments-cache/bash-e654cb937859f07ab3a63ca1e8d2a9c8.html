@@ -1,0 +1,35 @@
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+
+killall <span class="s2">&quot;iPhone Simulator&quot;</span>
+rm /tmp/KIF-*
+
+<span class="nb">echo</span> <span class="s2">&quot;Build the &quot;</span>UI Tests<span class="s2">&quot; target to run in the simulator&quot;</span>
+xcodebuild -target <span class="s2">&quot;UI Tests&quot;</span> -configuration Release -sdk iphonesimulator clean build
+
+<span class="nv">OUT_FILE</span><span class="o">=</span>/tmp/KIF-<span class="nv">$$</span>.out
+<span class="c"># Run the app we just built in the simulator and send its output to a file</span>
+<span class="c"># /path/to/MyApp.app should be the relative or absolute path to the application bundle that was built in the previous step</span>
+<span class="nb">echo</span> <span class="s2">&quot;Running KIF tests&quot;</span>
+/tmp/waxsim -f <span class="s2">&quot;ipad&quot;</span> <span class="s2">&quot;build/Release-iphonesimulator/MyApp.app&quot;</span> &gt; <span class="nv">$OUT_FILE</span> 2&gt;&amp;1
+
+<span class="c"># WaxSim hides the return value from the app, so to determine success we search for a &quot;no failures&quot; line</span>
+grep -q <span class="s2">&quot;TESTING FINISHED: 0 failures&quot;</span> <span class="nv">$OUT_FILE</span>
+
+<span class="nv">success</span><span class="o">=</span><span class="sb">`</span><span class="nb">exec </span>grep -c <span class="s2">&quot;TESTING FINISHED: 0 failures&quot;</span> <span class="nv">$OUT_FILE</span><span class="sb">`</span>
+
+
+<span class="c"># if there was a failure, show what waxsim was hiding and crucially return with a non-zero exit code</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$success&quot;</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span> <span class="o">]</span>
+<span class="k">then </span>
+<span class="k">    </span>cat <span class="nv">$OUT_FILE</span>
+    <span class="nb">echo</span> <span class="s2">&quot;===========================================&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;GUI Tests failed&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;===========================================&quot;</span>
+    <span class="nb">exit </span>1
+<span class="k">else</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s2">&quot;===========================================&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;GUI Tests passed&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;===========================================&quot;</span>
+<span class="k">fi</span>
+</pre>
+</div>

@@ -1,0 +1,27 @@
+<div class="highlight"><pre>  <span class="kp">private</span><span class="p">\</span><span class="n">n</span>  <span class="k">def</span> <span class="nf">make_post_request</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="n">temp_file</span> <span class="o">=</span> <span class="no">Tempfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;minisite_upload_&#39;</span><span class="p">)</span>
+    <span class="n">temp_file</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="n">file_data</span><span class="p">)\</span><span class="n">n</span>    <span class="n">c</span> <span class="o">=</span> <span class="no">Curl</span><span class="o">::</span><span class="no">Easy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">service_uri_base</span><span class="s1">&#39;]}/photoupld&quot;)</span>
+<span class="s1">    c.multipart_form_post = true</span>
+<span class="s1">    c.http_post(*build_params_list(temp_file.path, hotel_id, options))\n    temp_file.delete</span>
+<span class="s1">    raise_and_log_error(&quot;File upload failed with code: #{c.response_code}&quot;) if c.response_code != SUCCESS</span>
+<span class="s1">    c.body_str</span>
+<span class="s1">  end\n  def build_params_list(file_path, hotel_id, options)</span>
+<span class="s1">    params = [Curl::PostField.file(&#39;</span><span class="n">photo</span><span class="s1">&#39;, file_path), Curl::PostField.content(&#39;</span><span class="n">hotel</span><span class="s1">&#39;, hotel_id), Curl::PostField.content(&#39;</span><span class="n">source</span><span class="s1">&#39;,&#39;</span><span class="no">PhotoUploadTest</span><span class="s1">&#39;)]</span>
+<span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">status</span><span class="s1">&#39;, options[:status]) if options[:status]</span>
+<span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">upload_source</span><span class="s1">&#39;, options[:upload_source]) if options[:upload_source]</span>
+<span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">uploader_ip</span><span class="s1">&#39;, options[:uploader_ip]) if options[:uploader_ip]</span>
+<span class="s1">    params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">uploader_email</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span>
+    <span class="n">params</span>
+  <span class="k">end</span><span class="p">\</span><span class="n">n</span>  <span class="k">def</span> <span class="nf">raise_and_log_error</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
+    <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span> <span class="n">error_msg</span>
+    <span class="k">raise</span> <span class="n">error_msg</span>
+  <span class="k">end</span><span class="p">\</span><span class="n">n</span>  <span class="k">def</span> <span class="nf">original_upload_url</span><span class="p">(</span><span class="n">jphotos_response</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="k">end</span><span class="p">\</span><span class="n">n</span>  <span class="k">def</span> <span class="nf">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">photo_url</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="k">end</span><span class="p">\</span><span class="n">n</span>  <span class="k">def</span> <span class="nf">manage_images_link</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</div>

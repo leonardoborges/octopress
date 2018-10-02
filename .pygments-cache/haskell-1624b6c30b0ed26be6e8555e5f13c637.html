@@ -1,0 +1,12 @@
+<div class="highlight"><pre><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Map</span> <span class="k">as</span> <span class="n">Map</span> <span class="c1">-- just giving Data.Map an alias</span>
+<span class="nf">mkVec</span> <span class="ow">::</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">Map</span><span class="o">.</span><span class="kt">Map</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span> <span class="n">a</span> <span class="c1">-- this is the type signature</span>
+
+<span class="nf">mkVec</span> <span class="n">x</span> <span class="n">y</span> <span class="ow">=</span> <span class="kt">Map</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)]</span> <span class="c1">-- this is the implementation. You can ignore this part.</span>
+
+<span class="c1">-- using it</span>
+<span class="nf">myVec</span> <span class="ow">=</span> <span class="n">mkVec</span> <span class="mi">10</span> <span class="mi">15</span>
+<span class="kt">Map</span><span class="o">.</span><span class="n">lookup</span> <span class="s">&quot;x&quot;</span> <span class="n">myVec</span> <span class="c1">-- Just 10 </span>
+<span class="c1">--</span>
+<span class="c1">-- ignore the actual value that is returned. Read it as 10 for now.</span>
+</pre>
+</div>

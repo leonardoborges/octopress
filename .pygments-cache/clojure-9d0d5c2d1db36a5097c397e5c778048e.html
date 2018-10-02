@@ -1,0 +1,13 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">plus-monoid</span> 
+    <span class="p">([]</span>
+        <span class="mi">0</span><span class="p">)</span>
+    <span class="p">([</span><span class="nv">a</span> <span class="nv">b</span><span class="p">]</span>
+        <span class="p">(</span><span class="nb">+ </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nf">plus-monoid</span><span class="p">)</span> <span class="c1">;; 0 - same as mempty</span>
+
+<span class="p">(</span><span class="nf">plus-monoid</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">;; 7 - same as mappend</span>
+
+<span class="p">(</span><span class="nb">reduce </span><span class="nv">plus-monoid</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">])</span> <span class="c1">;; 9 - when working with monoids, reduce is the same as mconcat</span>
+</pre>
+</div>

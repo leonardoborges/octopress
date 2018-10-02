@@ -1,0 +1,37 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">mk-heap</span> <span class="p">[</span><span class="nv">rank</span> <span class="nv">value</span> <span class="nv">left</span> <span class="nv">right</span><span class="p">]</span>
+  <span class="p">{</span><span class="nv">:rank</span> <span class="nv">rank</span> <span class="nv">:value</span> <span class="nv">value</span> <span class="nv">:left</span> <span class="nv">left</span> <span class="nv">:right</span> <span class="nv">right</span><span class="p">})</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">heap-rank</span> <span class="p">[</span><span class="nv">heap</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">nil? </span><span class="nv">heap</span><span class="p">)</span>
+    <span class="mi">0</span>
+    <span class="p">(</span><span class="nf">:rank</span> <span class="nv">heap</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">ensure-leftist-heap</span> <span class="p">[</span><span class="nv">value</span> <span class="nv">heap-a</span> <span class="nv">heap-b</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">rank-a</span> <span class="p">(</span><span class="nf">heap-rank</span> <span class="nv">heap-a</span><span class="p">)</span>
+        <span class="nv">rank-b</span> <span class="p">(</span><span class="nf">heap-rank</span> <span class="nv">heap-b</span><span class="p">)]</span>
+    <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt;= </span><span class="nv">rank-a</span> <span class="nv">rank-b</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">mk-heap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-b</span><span class="p">)</span> <span class="nv">value</span> <span class="nv">heap-a</span> <span class="nv">heap-b</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">mk-heap</span> <span class="p">(</span><span class="nb">inc </span><span class="nv">rank-a</span><span class="p">)</span> <span class="nv">value</span> <span class="nv">heap-b</span> <span class="nv">heap-a</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">merge-heaps</span> <span class="p">[{</span><span class="nv">val-a</span> <span class="nv">:value</span> <span class="nv">left-a</span> <span class="nv">:left</span> <span class="nv">right-a</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">heap-a</span><span class="p">}</span>
+                   <span class="p">{</span><span class="nv">val-b</span> <span class="nv">:value</span> <span class="nv">left-b</span> <span class="nv">:left</span> <span class="nv">right-b</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">heap-b</span><span class="p">}]</span>
+  <span class="p">(</span><span class="nf">cond</span>
+   <span class="p">(</span><span class="nb">nil? </span><span class="nv">heap-a</span><span class="p">)</span> <span class="nv">heap-b</span>
+   <span class="p">(</span><span class="nb">nil? </span><span class="nv">heap-b</span><span class="p">)</span> <span class="nv">heap-a</span>
+   <span class="p">(</span><span class="nb">&lt;= </span><span class="nv">val-a</span> <span class="nv">val-b</span><span class="p">)</span> <span class="p">(</span><span class="nf">ensure-leftist-heap</span> <span class="nv">val-a</span>
+                                         <span class="nv">left-a</span>
+                                         <span class="p">(</span><span class="nf">merge-heaps</span> <span class="nv">right-a</span> <span class="nv">heap-b</span><span class="p">))</span>
+   <span class="nv">:else</span> <span class="p">(</span><span class="nf">ensure-leftist-heap</span> <span class="nv">val-b</span>
+                              <span class="nv">left-b</span>
+                              <span class="p">(</span><span class="nf">merge-heaps</span> <span class="nv">heap-a</span> <span class="nv">right-b</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">heap-insert</span> <span class="p">[</span><span class="nv">value</span> <span class="nv">heap</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">merge-heaps</span> <span class="p">(</span><span class="nf">mk-heap</span> <span class="mi">1</span> <span class="nv">value</span> <span class="nv">nil</span> <span class="nv">nil</span><span class="p">)</span>
+               <span class="nv">heap</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">heap-find-min</span> <span class="p">[{</span><span class="nv">v</span> <span class="nv">:value</span><span class="p">}]</span> <span class="nv">v</span><span class="p">)</span>
+  
+<span class="p">(</span><span class="k">defn </span><span class="nv">heap-delete-min</span> <span class="p">[{</span><span class="nv">left</span> <span class="nv">:left</span> <span class="nv">right</span> <span class="nv">:right</span><span class="p">}]</span>
+  <span class="p">(</span><span class="nf">merge-heaps</span> <span class="nv">right</span> <span class="nv">left</span><span class="p">))</span>
+</pre>
+</div>

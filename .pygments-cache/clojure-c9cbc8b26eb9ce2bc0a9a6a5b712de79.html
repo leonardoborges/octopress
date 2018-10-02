@@ -1,0 +1,11 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">f</span> <span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">x</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1">;; given the above, this...</span>
+<span class="p">(</span><span class="nb">-&gt; </span><span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">f</span><span class="p">)</span> 
+  <span class="p">(</span><span class="nf">&lt;*&gt;</span> <span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="nv">x</span><span class="p">)))</span> <span class="c1">;; List{:wrapped (20)}</span>
+
+<span class="c1">;; ...is the same as:</span>
+<span class="p">(</span><span class="nf">pure</span> <span class="nv">List</span> <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">))</span> <span class="c1">;; List{:wrapped (20)}</span>
+</pre>
+</div>

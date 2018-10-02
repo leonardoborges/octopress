@@ -1,0 +1,18 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">mk-tree</span> <span class="p">[</span><span class="nv">color</span> <span class="nv">left</span> <span class="nv">value</span> <span class="nv">right</span><span class="p">]</span>
+  <span class="p">{</span><span class="nv">:color</span> <span class="nv">color</span> <span class="nv">:left</span> <span class="nv">left</span> <span class="nv">:value</span> <span class="nv">value</span> <span class="nv">:right</span> <span class="nv">right</span><span class="p">})</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">balance</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+    <span class="c1">;; case 1</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[{</span><span class="nv">z</span> <span class="nv">:value</span> <span class="nv">d</span> <span class="nv">:right</span><span class="p">}</span> <span class="nv">tree</span>
+          <span class="p">{</span><span class="nv">x-color</span> <span class="nv">:color</span> <span class="nv">x</span> <span class="nv">:value</span> <span class="nv">a</span> <span class="nv">:left</span><span class="p">}</span> <span class="p">(</span><span class="nb">-&gt; </span><span class="nv">tree</span> <span class="nv">:left</span><span class="p">)</span>
+          <span class="p">{</span><span class="nv">y-color</span> <span class="nv">:color</span> <span class="nv">y</span> <span class="nv">:value</span> <span class="nv">b</span> <span class="nv">:left</span> <span class="nv">c</span> <span class="nv">:right</span><span class="p">}</span> <span class="p">(</span><span class="nb">-&gt; </span><span class="nv">tree</span> <span class="nv">:left</span> <span class="nv">:right</span><span class="p">)</span>
+          <span class="nv">d</span> <span class="p">(</span><span class="nf">:right</span> <span class="nv">tree</span><span class="p">)]</span>
+      <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">and </span><span class="p">(</span><span class="nb">= </span><span class="nv">x-color</span> <span class="nv">:red</span><span class="p">)</span> <span class="p">(</span><span class="nb">= </span><span class="nv">y-color</span> <span class="nv">:red</span><span class="p">))</span>
+        <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:red</span>
+                    <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">)</span>
+                    <span class="nv">y</span>
+                    <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">))</span>
+        <span class="nv">tree</span><span class="p">)</span>
+        <span class="o">...</span><span class="p">))</span>
+</pre>
+</div>

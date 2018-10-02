@@ -1,0 +1,6 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">defrecord</span> <span class="nv">List</span> <span class="p">[</span><span class="nv">wrapped</span><span class="p">]</span> 
+    <span class="nv">Functor</span> 
+    <span class="p">(</span><span class="nf">fmap</span> <span class="p">[</span><span class="nv">f</span> <span class="nv">fn</span><span class="p">]</span> 
+        <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">(</span><span class="nb">map </span><span class="k">fn </span><span class="p">(</span><span class="nf">:wrapped</span> <span class="nv">f</span><span class="p">)))))</span>
+</pre>
+</div>

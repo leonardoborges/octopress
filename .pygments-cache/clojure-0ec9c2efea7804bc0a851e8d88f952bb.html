@@ -1,0 +1,6 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">sum</span> <span class="p">[</span><span class="nv">coll</span><span class="p">]</span>
+	<span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">empty?</span> <span class="nv">coll</span><span class="p">)</span>
+		<span class="mi">0</span>
+		<span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">first </span><span class="nv">coll</span><span class="p">)</span> <span class="p">(</span><span class="nf">sum</span> <span class="p">(</span><span class="nb">rest </span><span class="nv">coll</span><span class="p">)))))</span>
+</pre>
+</div>

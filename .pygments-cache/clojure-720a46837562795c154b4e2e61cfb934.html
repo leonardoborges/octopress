@@ -1,0 +1,5 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defmacro </span><span class="nv">my-if</span> <span class="p">[</span><span class="nv">pred</span> <span class="nv">then</span> <span class="nv">else</span><span class="p">]</span>
+  <span class="o">`</span><span class="p">(</span><span class="k">cond </span><span class="nv">~pred</span> <span class="nv">~then</span>
+  		<span class="nv">:else</span> <span class="nv">~else</span><span class="p">))</span>
+</pre>
+</div>

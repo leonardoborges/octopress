@@ -1,0 +1,8 @@
+<div class="highlight"><pre><span class="kr">data</span> <span class="kt">Term</span> <span class="ow">=</span> <span class="kt">Var</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
+			<span class="o">|</span> <span class="kt">Lambda</span> <span class="kt">Var</span> <span class="kt">Term</span>
+			<span class="o">|</span> <span class="kt">Apply</span> <span class="kt">Term</span> <span class="kt">Term</span>
+			<span class="o">|</span> <span class="kt">Closure</span> <span class="kt">Env</span> <span class="kt">Var</span> <span class="kt">Term</span>
+<span class="kr">type</span> <span class="kt">Env</span> <span class="ow">=</span> <span class="p">[(</span><span class="kt">Var</span><span class="p">,</span> <span class="kt">Term</span><span class="p">)]</span> 
+<span class="kr">type</span> <span class="kt">Var</span> <span class="ow">=</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
+</pre>
+</div>

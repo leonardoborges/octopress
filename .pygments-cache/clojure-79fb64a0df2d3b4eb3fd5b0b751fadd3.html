@@ -1,0 +1,13 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">ns</span> <span class="nv">lobos</span><span class="o">.</span><span class="nv">config</span>
+  <span class="p">(</span><span class="nf">:use</span> <span class="nv">lobos</span><span class="o">.</span><span class="nv">connectivity</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">db</span>
+  <span class="p">{</span><span class="nv">:classname</span> <span class="s">&quot;org.postgresql.Driver&quot;</span>
+   <span class="nv">:subprotocol</span> <span class="s">&quot;postgresql&quot;</span>
+   <span class="nv">:user</span> <span class="s">&quot;test&quot;</span>
+   <span class="nv">:password</span> <span class="s">&quot;test123&quot;</span>
+   <span class="nv">:subname</span> <span class="s">&quot;//localhost:5432/test&quot;</span><span class="p">})</span>
+
+<span class="p">(</span><span class="nf">open-global</span> <span class="nv">db</span><span class="p">)</span>
+</pre>
+</div>

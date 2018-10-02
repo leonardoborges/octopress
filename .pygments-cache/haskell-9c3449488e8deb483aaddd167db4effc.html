@@ -1,0 +1,7 @@
+<div class="highlight"><pre><span class="nf">eval</span> <span class="n">e</span> <span class="p">(</span><span class="kt">Var</span> <span class="n">v</span><span class="p">)</span> <span class="ow">=</span> <span class="n">lookup</span> <span class="n">e</span> <span class="n">v</span>
+<span class="nf">eval</span> <span class="n">e</span> <span class="p">(</span><span class="kt">Lambda</span> <span class="n">v</span> <span class="n">t</span><span class="p">)</span> <span class="ow">=</span> <span class="kt">Closure</span> <span class="n">e</span> <span class="n">v</span> <span class="n">t</span>
+<span class="nf">eval</span> <span class="n">e</span> <span class="p">(</span><span class="kt">Apply</span> <span class="n">t0</span> <span class="n">t1</span><span class="p">)</span> <span class="ow">=</span> <span class="n">apply</span> <span class="p">(</span><span class="n">eval</span> <span class="n">e</span> <span class="n">t0</span><span class="p">)</span> <span class="p">(</span><span class="n">eval</span> <span class="n">e</span> <span class="n">t1</span><span class="p">)</span>
+
+<span class="o">...</span>
+</pre>
+</div>

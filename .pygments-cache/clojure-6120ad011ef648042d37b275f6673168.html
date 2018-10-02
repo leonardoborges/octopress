@@ -1,0 +1,5 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">my-list-functor</span> <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]))</span> <span class="c1">;; List{:wrapped (1 2 3)}</span>
+
+<span class="p">(</span><span class="nf">fmap</span> <span class="nv">my-list-functor</span> <span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">))</span> <span class="c1">;; List{:wrapped (2 4 6)}</span>
+</pre>
+</div>

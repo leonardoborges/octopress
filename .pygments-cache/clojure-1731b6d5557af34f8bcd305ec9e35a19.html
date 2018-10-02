@@ -1,0 +1,31 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">balance</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="p">[</span><span class="nv">tree</span><span class="p">]</span>
+         <span class="p">[(</span><span class="nf">:or</span> <span class="p">{</span><span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+                       <span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span> <span class="nv">:left</span> <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span> <span class="nv">:right</span> <span class="nv">b</span><span class="p">}</span>
+                       <span class="nv">:value</span> <span class="nv">y</span> <span class="nv">:right</span> <span class="nv">c</span><span class="p">}</span>
+                <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}</span>
+
+               <span class="p">{</span><span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>                    
+                       <span class="nv">:left</span>  <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span>
+                       <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span> <span class="nv">:value</span> <span class="nv">y</span> <span class="nv">:left</span> <span class="nv">b</span> <span class="nv">:right</span> <span class="nv">c</span><span class="p">}}</span>
+                <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}</span>
+
+               <span class="p">{</span><span class="nv">:left</span> <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span>
+                <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+                        <span class="nv">:left</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+                               <span class="nv">:left</span> <span class="nv">b</span> <span class="nv">:value</span> <span class="nv">y</span> <span class="nv">:right</span> <span class="nv">c</span><span class="p">}</span>
+                        <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}}</span>
+
+               <span class="p">{</span><span class="nv">:left</span> <span class="nv">a</span> <span class="nv">:value</span> <span class="nv">x</span>
+                <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+                        <span class="nv">:left</span> <span class="nv">b</span> <span class="nv">:value</span> <span class="nv">y</span>
+                        <span class="nv">:right</span> <span class="p">{</span><span class="nv">:color</span> <span class="nv">:red</span>
+                                <span class="nv">:left</span> <span class="nv">c</span> <span class="nv">:value</span> <span class="nv">z</span> <span class="nv">:right</span> <span class="nv">d</span><span class="p">}}})]</span>
+         <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:red</span>
+                     <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">a</span> <span class="nv">x</span> <span class="nv">b</span><span class="p">)</span>
+                     <span class="nv">y</span>
+                     <span class="p">(</span><span class="nf">mk-tree</span> <span class="nv">:black</span> <span class="nv">c</span> <span class="nv">z</span> <span class="nv">d</span><span class="p">))</span>
+
+         <span class="nv">:else</span> <span class="nv">tree</span><span class="p">))</span>
+</pre>
+</div>

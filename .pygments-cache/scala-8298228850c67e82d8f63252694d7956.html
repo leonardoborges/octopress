@@ -1,0 +1,7 @@
+<div class="highlight"><pre>  <span class="k">val</span> <span class="n">make</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="nc">Make</span> <span class="k">=</span> <span class="o">(</span><span class="n">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Make</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Suzuki&quot;</span><span class="o">)</span>
+
+  <span class="k">val</span> <span class="n">parts</span><span class="k">:</span> <span class="kt">Make</span> <span class="o">=&gt;</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Part</span><span class="o">]</span> <span class="k">=</span> <span class="k">_</span> <span class="k">match</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Make</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Part</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;Gear Box&quot;</span><span class="o">),</span> <span class="nc">Part</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">&quot;Clutch cable&quot;</span><span class="o">))</span>
+  <span class="o">}</span>
+</pre>
+</div>

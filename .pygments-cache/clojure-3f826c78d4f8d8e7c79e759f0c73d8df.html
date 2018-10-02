@@ -1,0 +1,10 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">f</span> <span class="o">#</span><span class="p">(</span><span class="nv">+</span> <span class="mi">10</span> <span class="nv">%</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">g</span> <span class="o">#</span><span class="p">(</span><span class="nv">*</span> <span class="mi">2</span> <span class="nv">%</span><span class="p">))</span>
+
+<span class="c1">;; given the above, this...</span>
+<span class="p">(</span><span class="nf">fmap</span> <span class="nv">my-list-functor</span> <span class="p">(</span><span class="nb">comp </span> <span class="nv">f</span> <span class="nv">g</span><span class="p">))</span> <span class="c1">;; List{:wrapped (12 14 16)}</span>
+
+<span class="c1">;; is the same as:</span>
+<span class="p">(</span><span class="nb">-&gt; </span><span class="nv">my-list-functor</span> <span class="p">(</span><span class="nf">fmap</span> <span class="nv">g</span><span class="p">)</span> <span class="p">(</span><span class="nf">fmap</span> <span class="nv">f</span><span class="p">))</span> <span class="c1">;; List{:wrapped (12 14 16)}</span>
+</pre>
+</div>

@@ -1,0 +1,8 @@
+<div class="highlight"><pre><span class="c1">;;word count</span>
+<span class="p">(</span><span class="nb">reduce </span><span class="o">#</span><span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">%1</span> <span class="nv">%2</span><span class="p">)</span>
+              <span class="p">(</span><span class="nb">assoc </span><span class="nv">%1</span> <span class="nv">%2</span> <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nf">%1</span> <span class="nv">%2</span><span class="p">)))</span>
+              <span class="p">(</span><span class="nb">assoc </span><span class="nv">%1</span> <span class="nv">%2</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">{}</span>
+<span class="p">(</span><span class="nf">clojure</span><span class="o">.</span><span class="nv">string/split</span> <span class="s">&quot;Clojure 101 - this is is gonna be be great great great&quot;</span> <span class="o">#</span><span class="s">&quot;\s&quot;</span><span class="p">))</span>
+</pre>
+</div>

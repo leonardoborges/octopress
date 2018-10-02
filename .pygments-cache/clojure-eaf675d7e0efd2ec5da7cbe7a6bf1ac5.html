@@ -1,0 +1,22 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">ns</span> <span class="nv">bouncer+tower</span><span class="o">.</span><span class="nv">core</span>
+  <span class="p">(</span><span class="nf">:require</span> <span class="p">[</span><span class="nv">taoensso</span><span class="o">.</span><span class="nv">tower</span> <span class="nv">:as</span> <span class="nv">tower</span>
+             <span class="nv">:refer</span> <span class="p">(</span><span class="nf">with-locale</span> <span class="nv">with-tscope</span> <span class="nv">t</span> <span class="nv">*locale*</span><span class="p">)]</span>
+            <span class="p">[</span><span class="nv">bouncer</span><span class="o">.</span><span class="nv">core</span> <span class="nv">:refer</span> <span class="p">[</span><span class="nv">validate</span><span class="p">]]</span>
+            <span class="p">[</span><span class="nv">bouncer</span><span class="o">.</span><span class="nv">validators</span> <span class="nv">:as</span> <span class="nv">v</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">my-tconfig</span>
+  <span class="p">{</span><span class="nv">:dev-mode?</span> <span class="nv">true</span>
+   <span class="nv">:fallback-locale</span> <span class="nv">:en</span>
+   <span class="nv">:dictionary</span>
+   <span class="p">{</span><span class="nv">:en</span>
+    <span class="p">{</span><span class="nv">:person</span>  <span class="p">{</span><span class="nv">:name</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;A person must have a name&quot;</span><span class="p">}</span>
+               <span class="nv">:age</span>  <span class="p">{</span><span class="nv">:number</span>   <span class="s">&quot;A person&#39;s age must be a number. You provided &#39;%s&#39;&quot;</span><span class="p">}</span>
+               <span class="nv">:address</span> <span class="p">{</span><span class="nv">:postcode</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;Missing postcode in address&quot;</span><span class="p">}}}</span>
+     <span class="nv">:missing</span>  <span class="s">&quot;&lt;Missing translation: [%1$s %2$s %3$s]&gt;&quot;</span><span class="p">}</span>
+    <span class="nv">:pt-BR</span>
+    <span class="p">{</span><span class="nv">:person</span>  <span class="p">{</span><span class="nv">:name</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;Atributo Nome para Pessoa é obrigatório.&quot;</span><span class="p">}</span>
+               <span class="nv">:age</span>  <span class="p">{</span><span class="nv">:number</span>   <span class="s">&quot;Atributo Idade para Pessoa deve ser um número. Valor recebido foi &#39;%s&#39;&quot;</span><span class="p">}</span>
+               <span class="nv">:address</span> <span class="p">{</span><span class="nv">:postcode</span> <span class="p">{</span><span class="nv">:required</span> <span class="s">&quot;Endereço deve ter um código postal&quot;</span><span class="p">}}}</span>
+     <span class="nv">:missing</span>  <span class="s">&quot;&lt;Tradução ausente: [%1$s %2$s %3$s]&gt;&quot;</span><span class="p">}}})</span>
+</pre>
+</div>

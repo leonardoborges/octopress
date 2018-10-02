@@ -1,0 +1,12 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">gen</span> <span class="p">(</span><span class="nf">java</span><span class="o">.</span><span class="nv">util</span><span class="o">.</span><span class="nv">Random</span><span class="o">.</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">defn </span><span class="nv">pure-rand</span> <span class="p">[</span><span class="nv">g</span><span class="p">]</span>
+    <span class="p">[(</span><span class="o">.</span><span class="nv">nextDouble</span> <span class="nv">g</span><span class="p">)</span> <span class="nv">g</span><span class="p">])</span>
+
+<span class="p">(</span><span class="nf">pure-rand</span> <span class="nv">gen</span><span class="p">)</span>
+<span class="c1">;; [0.5783608063218478 #&lt;Random java.util.Random@7f30ab6&gt;]</span>
+
+<span class="p">(</span><span class="nf">pure-rand</span> <span class="nv">gen</span><span class="p">)</span>
+<span class="c1">;; [0.9251968987499839 #&lt;Random java.util.Random@7f30ab6&gt;]</span>
+</pre>
+</div>

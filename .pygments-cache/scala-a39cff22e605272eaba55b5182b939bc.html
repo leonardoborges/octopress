@@ -1,0 +1,8 @@
+<div class="highlight"><pre>  <span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Make</span><span class="o">]</span> <span class="k">=&gt;</span> <span class="nc">Option</span><span class="o">[</span><span class="kt">NonEmptyList</span><span class="o">[</span><span class="kt">Part</span><span class="o">]]</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">m</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">parts</span><span class="o">(</span><span class="n">m</span><span class="o">)</span>
+    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="nc">None</span>
+  <span class="o">}</span>
+  <span class="k">val</span> <span class="n">g</span> <span class="k">=</span> <span class="n">f</span> <span class="n">compose</span> <span class="n">make</span>
+  <span class="n">g</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="c1">// Some(NonEmptyList(Part(1,Gear Box), Part(2,Clutch cable)))  </span>
+</pre>
+</div>

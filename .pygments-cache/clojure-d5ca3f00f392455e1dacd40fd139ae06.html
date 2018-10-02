@@ -1,0 +1,34 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">extend-protocol</span> <span class="nv">Heap</span>
+  <span class="nv">nil</span>
+  <span class="p">(</span><span class="nf">rank</span> <span class="p">[</span><span class="nv">_</span><span class="p">]</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">(</span><span class="nb">merge </span><span class="p">[</span><span class="nv">_</span> <span class="nv">other</span><span class="p">]</span> <span class="nv">other</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">is-empty?</span> <span class="p">[</span><span class="nv">_</span><span class="p">]</span> <span class="nv">true</span><span class="p">)</span>
+
+  <span class="nv">LeftistHeap</span>
+  <span class="p">(</span><span class="nf">is-empty?</span> <span class="p">[</span><span class="nv">this</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">nil? </span><span class="nv">this</span><span class="p">))</span>
+
+  <span class="p">(</span><span class="nf">rank</span> <span class="p">[</span><span class="nv">this</span><span class="p">]</span>
+    <span class="p">(</span><span class="nf">:rank</span> <span class="nv">this</span><span class="p">))</span>
+  
+  <span class="p">(</span><span class="nb">merge </span><span class="p">[{</span><span class="nv">val-this</span> <span class="nv">:value</span> <span class="nv">left-this</span> <span class="nv">:left</span> <span class="nv">right-this</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">this</span><span class="p">}</span>
+          <span class="p">{</span><span class="nv">val-other</span> <span class="nv">:value</span> <span class="nv">left-other</span> <span class="nv">:left</span> <span class="nv">right-other</span> <span class="nv">:right</span> <span class="nv">:as</span> <span class="nv">other</span><span class="p">}]</span>
+    <span class="p">(</span><span class="nf">cond</span>
+     <span class="p">(</span><span class="nf">is-empty?</span> <span class="nv">other</span><span class="p">)</span> <span class="nv">this</span>
+     <span class="p">(</span><span class="nb">&lt;= </span><span class="nv">val-this</span> <span class="nv">val-other</span><span class="p">)</span> <span class="p">(</span><span class="nf">ensure-leftist</span> <span class="nv">left-this</span>
+                                             <span class="p">(</span><span class="nb">merge </span><span class="nv">right-this</span> <span class="nv">other</span><span class="p">)</span>
+                                             <span class="nv">val-this</span><span class="p">)</span>
+     <span class="nv">:else</span> <span class="p">(</span><span class="nf">ensure-leftist</span> <span class="nv">left-other</span>
+                           <span class="p">(</span><span class="nb">merge </span><span class="nv">this</span> <span class="nv">right-other</span><span class="p">)</span>
+                           <span class="nv">val-other</span><span class="p">)))</span>
+  
+  <span class="p">(</span><span class="nf">insert</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">v</span><span class="p">]</span>
+    <span class="p">(</span><span class="nb">merge </span><span class="p">(</span><span class="nf">-&gt;LeftistHeap</span> <span class="mi">1</span> <span class="nv">v</span> <span class="nv">nil</span> <span class="nv">nil</span><span class="p">)</span>
+           <span class="nv">this</span><span class="p">))</span>
+
+  <span class="p">(</span><span class="nf">find-min</span> <span class="p">[{</span><span class="nv">v</span> <span class="nv">:value</span><span class="p">}]</span> <span class="nv">v</span><span class="p">)</span>
+  
+  <span class="p">(</span><span class="nf">delete-min</span> <span class="p">[{</span><span class="nv">left</span> <span class="nv">:left</span> <span class="nv">right</span> <span class="nv">:right</span><span class="p">}]</span>
+    <span class="p">(</span><span class="nb">merge </span><span class="nv">right</span> <span class="nv">left</span><span class="p">)))</span>
+</pre>
+</div>

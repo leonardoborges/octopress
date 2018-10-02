@@ -1,0 +1,17 @@
+<div class="highlight"><pre><span class="p">(</span><span class="nf">validate</span> <span class="p">(</span><span class="nb">partial </span><span class="nv">message-fn</span> <span class="nv">:en</span> <span class="nv">:person</span><span class="p">)</span>
+          <span class="nv">person</span>
+          <span class="nv">:name</span> <span class="nv">v/required</span>
+          <span class="nv">:age</span>  <span class="nv">v/number</span>
+          <span class="p">[</span><span class="nv">:address</span> <span class="nv">:postcode</span><span class="p">]</span> <span class="nv">v/required</span><span class="p">)</span>
+
+
+<span class="c1">;; [{:address {:postcode (&quot;Missing postcode in address&quot;)},</span>
+<span class="c1">;;   :age (&quot;A person&#39;s age must be a number. You provided &#39;NaN&#39;&quot;),</span>
+<span class="c1">;;   :name (&quot;A person must have a name&quot;)}</span>
+<span class="c1">;;  {:age &quot;NaN&quot;,</span>
+<span class="c1">;;   :bouncer.core/errors</span>
+<span class="c1">;;   {:address {:postcode (&quot;Missing postcode in address&quot;)},</span>
+<span class="c1">;;    :age (&quot;A person&#39;s age must be a number. You provided &#39;NaN&#39;&quot;),</span>
+<span class="c1">;;    :name (&quot;A person must have a name&quot;)}}]</span>
+</pre>
+</div>

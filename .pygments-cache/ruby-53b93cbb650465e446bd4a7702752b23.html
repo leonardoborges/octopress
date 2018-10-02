@@ -1,0 +1,12 @@
+<div class="highlight"><pre>  <span class="k">def</span> <span class="nf">post_photo_and_send_rss</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+    <span class="n">response_body</span> <span class="o">=</span> <span class="n">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="n">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">original_upload_url</span><span class="p">(</span><span class="n">response_body</span><span class="p">)</span> <span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="k">def</span> <span class="nf">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+    <span class="n">response_body</span> <span class="o">=</span> <span class="n">make_post_request</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="n">hotel</span> <span class="o">=</span> <span class="no">Hotel</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+    <span class="n">hotel</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">destroy_all</span>
+    <span class="n">response_body</span>
+  <span class="k">end</span>
+</pre>
+</div>

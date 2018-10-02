@@ -1,0 +1,8 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">def </span><span class="nv">maybe-monad</span> <span class="p">{</span>
+    <span class="nv">:return</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">v</span><span class="p">]</span> <span class="nv">v</span><span class="p">)</span>
+    <span class="nv">:bind</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">mv</span> <span class="nv">f</span><span class="p">]</span> 
+            <span class="p">(</span><span class="k">if </span><span class="nv">mv</span>
+                <span class="p">(</span><span class="nf">f</span> <span class="nv">mv</span><span class="p">)</span>
+                <span class="nv">nil</span><span class="p">))})</span>
+</pre>
+</div>

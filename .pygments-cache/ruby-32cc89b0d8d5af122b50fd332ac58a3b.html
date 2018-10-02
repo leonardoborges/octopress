@@ -1,0 +1,52 @@
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Jphoto</span>
+ <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+ <span class="c1">#a few other methods ...</span>
+
+ <span class="k">def</span> <span class="nf">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">send_rss</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+   <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;tmp/</span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">to_i</span><span class="si">}</span><span class="s2">_</span><span class="si">#{</span><span class="nb">rand</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+   <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+     <span class="n">f</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+   <span class="k">end</span>
+
+   <span class="n">params</span> <span class="o">=</span> <span class="o">[</span><span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="s1">&#39;photo&#39;</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span>
+      <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;hotel&#39;</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">),</span>
+      <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span><span class="s1">&#39;PhotoUploadTest&#39;</span><span class="p">)</span><span class="o">]</span>
+   <span class="n">extract_extra_params!</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+
+   <span class="n">c</span> <span class="o">=</span> <span class="no">Curl</span><span class="o">::</span><span class="no">Easy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">service_uri_base</span><span class="si">}</span><span class="s2">/photoupld&quot;</span><span class="p">)</span>
+   <span class="n">c</span><span class="o">.</span><span class="n">multipart_form_post</span> <span class="o">=</span> <span class="kp">true</span>
+   <span class="n">c</span><span class="o">.</span><span class="n">http_post</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+
+   <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">response_code</span> <span class="o">!=</span> <span class="mi">200</span>
+     <span class="n">error_msg</span> <span class="o">=</span> <span class="s2">&quot;File upload failed with code: </span><span class="si">#{</span><span class="n">c</span><span class="o">.</span><span class="n">response_code</span><span class="si">}</span><span class="s2">&quot;</span>
+     <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span> <span class="n">error_msg</span>
+     <span class="k">raise</span> <span class="n">error_msg</span>
+   <span class="k">end</span>
+
+   <span class="no">File</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+
+   <span class="n">hotel</span> <span class="o">=</span> <span class="no">Hotel</span><span class="o">.</span><span class="n">find_by_id</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+   <span class="n">hotel</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">destroy_all</span>
+
+   <span class="n">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">original_upload_url</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">body_str</span><span class="p">)</span> <span class="p">,</span> <span class="n">options</span><span class="p">)</span> <span class="k">if</span> <span class="n">send_rss</span>
+ <span class="k">end</span>
+
+ <span class="kp">private</span>
+
+ <span class="k">def</span> <span class="nf">send_upload_rss</span><span class="p">(</span><span class="n">hotel</span><span class="p">,</span> <span class="n">photo_url</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+   <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+ <span class="k">end</span>
+ <span class="k">def</span> <span class="nf">manage_images_link</span><span class="p">(</span><span class="n">hotel_id</span><span class="p">)</span>
+   <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+ <span class="k">end</span>
+
+ <span class="k">def</span> <span class="nf">extract_extra_params!</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:status</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:status</span><span class="o">]</span>
+   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;upload_source&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:upload_source</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:upload_source</span><span class="o">]</span>
+   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;uploader_ip&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_ip</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_ip</span><span class="o">]</span>
+   <span class="n">params</span> <span class="o">&lt;&lt;</span> <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;uploader_email&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span>
+ <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</div>

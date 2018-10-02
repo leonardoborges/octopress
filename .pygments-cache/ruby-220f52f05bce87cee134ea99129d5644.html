@@ -1,0 +1,52 @@
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Jphoto</span>
+ <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+ <span class="c1">#a few other methods ...</span>
+
+ <span class="k">def</span> <span class="nf">post_photo</span><span class="p">(</span><span class="n">file_data</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">,</span> <span class="n">send_rss</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+   <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;tmp/</span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">to_i</span><span class="si">}</span><span class="s2">_</span><span class="si">#{</span><span class="nb">rand</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+   <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+     <span class="n">f</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="n">file_data</span><span class="p">)</span>
+   <span class="k">end</span>
+
+   <span class="n">params</span> <span class="o">=</span> <span class="o">[</span><span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">file</span><span class="p">(</span><span class="s1">&#39;photo&#39;</span><span class="p">,</span><span class="n">file_name</span><span class="p">),</span>
+      <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;hotel&#39;</span><span class="p">,</span> <span class="n">hotel_id</span><span class="p">),</span>
+      <span class="no">Curl</span><span class="o">::</span><span class="no">PostField</span><span class="o">.</span><span class="n">content</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span><span class="s1">&#39;PhotoUploadTest&#39;</span><span class="p">)</span><span class="o">]</span>
+   <span class="n">extract_extra_params!</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+
+   <span class="n">c</span> <span class="o">=</span> <span class="no">Curl</span><span class="o">::</span><span class="no">Easy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">service_uri_base</span><span class="s1">&#39;]}/photoupld&quot;)</span>
+<span class="s1">   c.multipart_form_post = true</span>
+<span class="s1">   c.http_post(*params)</span>
+
+<span class="s1">   if c.response_code != 200</span>
+<span class="s1">     error_msg = &quot;File upload failed with code: #{c.response_code}&quot;</span>
+<span class="s1">     Rails.logger.info error_msg</span>
+<span class="s1">     raise error_msg</span>
+<span class="s1">   end</span>
+
+<span class="s1">   File.delete(file_name)</span>
+
+<span class="s1">   hotel = Hotel.find_by_id(hotel_id)</span>
+<span class="s1">   hotel.cache.destroy_all</span>
+
+<span class="s1">   send_upload_rss(hotel, original_upload_url(c.body_str) , options) if send_rss</span>
+<span class="s1"> end</span>
+
+<span class="s1"> private</span>
+
+<span class="s1"> def send_upload_rss(hotel, photo_url, options)</span>
+<span class="s1">   ...</span>
+<span class="s1"> end</span>
+<span class="s1"> def manage_images_link(hotel_id)</span>
+<span class="s1">   ...</span>
+<span class="s1"> end</span>
+
+<span class="s1"> def extract_extra_params!(params, options)</span>
+<span class="s1">   params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">status</span><span class="s1">&#39;, options[:status]) if options[:status]</span>
+<span class="s1">   params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">upload_source</span><span class="s1">&#39;, options[:upload_source]) if options[:upload_source]</span>
+<span class="s1">   params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">uploader_ip</span><span class="s1">&#39;, options[:uploader_ip]) if options[:uploader_ip]</span>
+<span class="s1">   params &lt;&lt; Curl::PostField.content(&#39;</span><span class="n">uploader_email</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span><span class="p">)</span> <span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:uploader_email</span><span class="o">]</span>
+ <span class="k">end</span>
+<span class="k">end</span>
+</pre>
+</div>

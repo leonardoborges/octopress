@@ -1,0 +1,15 @@
+<div class="highlight"><pre><span class="c1">;; it dispatches on the record type since we could have implementations of pure for List, Maybe, Either etc...</span>
+<span class="p">(</span><span class="k">defmulti </span><span class="nv">pure</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">f</span> <span class="nv">_</span><span class="p">]</span> <span class="nv">f</span><span class="p">))</span> 
+<span class="p">(</span><span class="k">defmethod </span><span class="nv">pure</span> <span class="nv">List</span> <span class="p">[</span><span class="nv">_</span> <span class="nv">v</span><span class="p">]</span> 
+    <span class="s">&quot;Wraps value v in a list&quot;</span>
+    <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">[</span><span class="nv">v</span><span class="p">]))</span>
+
+<span class="c1">;; it dispatches on the class of the Functor instance passed in the 1st argument</span>
+<span class="p">(</span><span class="k">defmulti </span><span class="nv">&lt;*&gt;</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">fs</span> <span class="nv">_</span><span class="p">]</span> <span class="p">(</span><span class="nb">class </span><span class="nv">fs</span><span class="p">)))</span> 
+<span class="p">(</span><span class="k">defmethod </span><span class="nv">&lt;*&gt;</span> <span class="nv">List</span> <span class="p">[</span><span class="nv">fs</span> <span class="nv">xs</span><span class="p">]</span> 
+    <span class="s">&quot;Unwraps the functions in fs, applies them to the Functors in xs, wrapping the result at the end&quot;</span>
+    <span class="p">(</span><span class="nf">List</span><span class="o">.</span> <span class="p">(</span><span class="k">for </span><span class="p">[</span><span class="nv">f</span> <span class="p">(</span><span class="nf">:wrapped</span> <span class="nv">fs</span><span class="p">)</span>
+                 <span class="nv">x</span> <span class="p">(</span><span class="nf">:wrapped</span> <span class="nv">xs</span><span class="p">)]</span>
+                <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span><span class="p">))))</span>
+</pre>
+</div>

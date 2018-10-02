@@ -1,0 +1,13 @@
+<div class="highlight"><pre><span class="p">(</span><span class="k">defn </span><span class="nv">list-monoid</span> 
+    <span class="p">([]</span>
+        <span class="o">&#39;</span><span class="p">())</span>
+    <span class="p">([</span><span class="nv">a</span> <span class="nv">b</span><span class="p">]</span>
+        <span class="p">(</span><span class="nb">concat </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="nf">list-monoid</span><span class="p">)</span> <span class="c1">;; () - remember, same as mempty</span>
+
+<span class="p">(</span><span class="nf">list-monoid</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">])</span> <span class="c1">;; (1 2 3 4 5 6) - remember, same as mappend</span>
+
+<span class="p">(</span><span class="nb">reduce </span><span class="nv">list-monoid</span> <span class="p">[[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">]</span> <span class="p">[</span><span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span><span class="p">]])</span> <span class="c1">;; (1 2 3 4 5 6 7 8 9) - mconcat in action</span>
+</pre>
+</div>
